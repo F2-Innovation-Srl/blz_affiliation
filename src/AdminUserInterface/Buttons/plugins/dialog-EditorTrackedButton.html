@@ -1,0 +1,229 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Inserisci il link</title>
+    <script type="text/javascript" src="/wp/wp-includes/js/tinymce/tiny_mce_popup.js"></script>
+    
+    <script>
+
+        /** 
+         * Per gestire i campi
+         */
+        function FieldsManager() { 
+
+            this.default_ga_event = "mtz cta tn guide editorial amazon";
+            this.stores = {
+                amazon      : '{{amazon-tracking-id}}',
+                ebay        : '{{ebay-tracking-id}}',
+                ebay_used   : '{{ebay-tracking-id}}',
+                trovaprezzi : '{{trovaprezzi-tracking-id}}' ,
+                custom      : '{{amazon-tracking-id}}'
+            }
+            this.container_marketplace   = document.getElementById('container_marketplace');
+            this.container_non_custom    = document.getElementById('container_non_custom');
+            this.container_text          = document.getElementById('container_text');
+            this.asin_legend             = document.getElementById('asin_legend');
+
+            this.marketplace             = document.getElementById('marketplace');
+            this.marketplace_custom      = document.getElementById('marketplace_custom');
+            this.store                   = document.getElementById('store');     
+            this.min_price               = document.getElementById('min_price');       
+            this.keyword                 = document.getElementById('keyword');
+            this.text                    = document.getElementById('text');
+            this.asins                   = document.getElementById('asins');
+            this.ga_event                = document.getElementById('ga_event');
+            this.submit                  = document.getElementById('submit');
+            
+            this.writeShortCode = function () {
+                
+                var marketplace         = this.marketplace.value;
+                var marketplace_custom  = this.marketplace_custom.value;
+                var keyword             = this.keyword.value;
+                var asins               = this.asins.value;
+                var store               = this.store.value;
+                var min_price           = this.min_price.value;
+                var text                = this.text.value;
+                var ga_event            = (this.ga_event.value == "") ? this.default_ga_event : this.ga_event.value;
+
+                if (marketplace == "custom") {
+                    this.shortcode = '[affiliate_track url="' + asins +'" data-affiliate="'+ga_event+'"';
+                    
+                    if (tinymce.activeEditor.selection.getContent() != "") {
+                        this.shortcode += ' text="' + tinymce.activeEditor.selection.getContent() + '"';
+                        this.shortcode += '] ';
+                        tinyMCE.activeEditor.execCommand('mceReplaceContent', 0, this.shortcode);
+
+                    } else {
+                        this.shortcode += (text) ? ' text="' + text + '"' : '""';
+                        this.shortcode += '] ';
+                        tinyMCE.activeEditor.execCommand('mceInsertContent', 0, this.shortcode);
+                    }
+                }else{
+                    this.shortcode = '[affiliate_link marketplace=' + marketplace;
+                    this.shortcode += (keyword)     ? ' keyword=' + encodeURIComponent(keyword) : '';
+                    this.shortcode += (asins)       ? ' asins=' + asins : '';
+                    this.shortcode += (store)       ? ' store=' + store : '';
+                    this.shortcode += (min_price)   ? ' min_price=' + min_price : '';
+
+                    if (tinymce.activeEditor.selection.getContent() != "") {
+                        this.shortcode += ' text=' + encodeURIComponent(tinymce.activeEditor.selection.getContent());
+                        this.shortcode += '] ';
+                        tinyMCE.activeEditor.execCommand('mceReplaceContent', 0, this.shortcode);
+
+                    } else {
+                        this.shortcode += (text) ? ' text=' + encodeURIComponent(text) : '';
+                        this.shortcode += '] ';
+                        tinyMCE.activeEditor.execCommand('mceInsertContent', 0, this.shortcode);
+                    }
+                }
+                tinyMCEPopup.close();
+            }
+
+            // take the initial value of marketplace
+            this.store.value = this.stores[this.marketplace.value];
+            
+            // take visibility of container_text if user had selected text from editor
+            this.container_text.style.display = (tinymce.activeEditor.selection.getContent() != "")  ? "none"  : "block";   
+
+            // take the new value of marketplace
+            this.marketplace.addEventListener('change', function(e) {
+                this.store.value = this.stores[this.marketplace.value];
+                console.log(this.marketplace.value);
+                console.log(this.marketplace.value == "custom");
+                this.container_marketplace.style.display = (this.marketplace.value == "custom") ? "block" : "none"; 
+                this.container_non_custom.style.display  = (this.marketplace.value == "custom") ? "none"  : "block"; 
+                this.asin_legend.innerHTML =  (this.marketplace.value == "custom") ? "Url Maketplace"  : "Asin/Ean"; 
+                if (this.marketplace.value == "ebay" || this.marketplace.value == "amazon" ) this.asin_legend.innerHTML = "Asin/Ean/Url";
+            }.bind(this));
+
+            
+            this.submit.addEventListener('click', function(e) {
+ 
+                if (this.marketplace.value == "custom" && this.marketplace_custom.value == "" ) {
+                    alert("inserire un marketplace valido"); 
+                    return;
+                }
+                if (this.marketplace.value == "custom" && this.asins.value == "" ) {
+                    alert("inserire una url marketplace valida"); 
+                    return;
+                }
+                if (this.marketplace.value == "amazon" && this.keyword.value == "" && this.asins.value == "") {
+                    alert("inserire una chiave di ricerca o un asin"); 
+                    return;
+                }
+                if (this.marketplace.value != "amazon" &&  this.marketplace.value != "custom" && this.keyword.value == "" && this.asins.value == "") {
+                    alert("inserire una chiave di ricerca o un ean"); 
+                    return;
+                }
+                if (asins != "" && this.marketplace.value == "amazon" ){
+                    //TROVA CODICE DA LINK AMAZON
+                    if (this.asins.value.indexOf("www.amazon") !== -1) {
+                        temp = this.asins.value.split("/");
+                        this.asins.value = temp[temp.length-2]; 
+                    } 
+                }
+                if (asins != "" && this.marketplace.value == "ebay" ){
+                    let xhr = new XMLHttpRequest();
+                    //TROVA CODICE DA LINK EBAY
+                    if (this.asins.value.indexOf("www.ebay") !== -1) {
+                        temp = this.asins.value.substring(this.asins.value.lastIndexOf("/") + 1, this.asins.value.length);
+                        if (temp.indexOf("?") !== -1) temp = temp.split("?")[0];
+                        this.asins.value = temp; 
+                    } 
+                   
+                    xhr.open("GET", 'https://ean2epid.blazemedia.it/api/v1/converter/'+this.asins.value, true);
+                    xhr.send();
+                    xhr.onload = function() {
+                        if (xhr.status == 200) { 
+                            $response = JSON.parse(xhr.responseText);
+                            if ($response.epid != null) this.asins.value = this.asins.value+"EPID"+$response.epid;
+                            this.writeShortCode();
+                        } else { // show the result
+                            this.writeShortCode();
+                        }
+                    }.bind(this);
+                    xhr.onerror = function() {
+                        this.writeShortCode();
+                    }.bind(this);
+                    return;
+                }else{
+                    this.writeShortCode();
+                }
+                
+            }.bind(this));
+            
+        }
+
+        window.addEventListener('DOMContentLoaded', function() {
+            
+            new FieldsManager();
+
+        }.bind(this));
+
+    </script>
+
+    <style>
+        body { padding: 10px; background-color: #eee;}
+        
+        input, select { 
+            width: 90%; 
+            padding: 4px ;
+            font-size:13px;
+            border-radius: 5px;
+            margin-left: 5%;
+        }
+
+        legend {margin: 10px 0 2px 5%; font-size:13px; }
+
+        #submit {
+            width: 300px;
+            background-color: lightblue;
+            margin:20px auto;         
+            display: block;   
+        }
+    </style>
+    
+    
+</head>
+<body onload="tinyMCEPopup.executeOnLoad('init();')">
+    
+    <legend>Marketplace</legend>
+    <select id="marketplace">
+        <option selected value="amazon">Amazon</option>
+        <option value="ebay">Ebay</option>
+        <option value="ebay_used">Ebay usato</option>
+        <option value="trovaprezzi">Trovaprezzi</option>
+        <option value="custom">Custom</option>
+    </select>
+    <span id="container_marketplace" style="display: none;">
+        <input type="text" id="marketplace_custom">
+        <legend>Evento GA</legend>
+        <input type="text" id="ga_event">
+    </span>
+   
+
+    <legend id="asin_legend">Asin/Ean/Url</legend>
+    <input type="text" id="asins">
+
+    <span id="container_text">
+        <legend>Testo del link (se omesso viene riportato il prezzo del prodotto)</legend>
+        <input type="text" id="text">
+    </span>
+
+    <span id="container_non_custom">
+        <legend>keyword</legend>
+        <input type="text" id="keyword">
+
+        <legend>Tracking id (se omesso viene preso il tracking id sulla pagina autore)</legend>
+        <input type="text" id="store">
+
+
+        <legend>Min Price (Inserire un valore intero senza valuta, se omesso il default è 20 euro)</legend>
+        <input type="text" id="min_price" placeholder="20">
+
+    </span>
+    <input type="button" id="submit" value="Inserisci" />
+    
+</body>
+</html>
