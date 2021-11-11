@@ -1,5 +1,5 @@
 <?php
-namespace BLZ_AFFILIATION\AdminUserInterface\Buttons;
+namespace BLZ_AFFILIATION\AdminUserInterface;
 
 /**
  * Class AdminPage

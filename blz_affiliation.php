@@ -43,7 +43,7 @@ class BlzAffiliate {
 		Rendering\ParseLinkAndRender::init();
 		Rendering\AffiliateLinkButton::init();
 		new AdminUserInterface\Buttons\AffiliateLinkButton();
-		new AdminUserInterface\Settings();
+		new AdminUserInterface\PluginSettings();
 	}
 }
 
