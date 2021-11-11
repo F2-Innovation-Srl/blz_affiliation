@@ -1,9 +1,9 @@
 <?php
-namespace BLZ\AdminUserInterface;
+namespace BLZ_AFFILIATION\AdminUserInterface;
 
 class AdminNotice
 {
-    const NOTICE_FIELD = 'blz-message';
+    const NOTICE_FIELD = 'blz-affiliation-message';
     const NOTICE_LEVELS = ['notice-error','notice-warning','notice-info','notice-success'];
     
     public function displayAdminNotice()

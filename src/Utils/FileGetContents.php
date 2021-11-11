@@ -1,6 +1,6 @@
 <?php
 
-namespace BLZ\Utils;
+namespace BLZ_AFFILIATION\Utils;
 
 class FileGetContents {
 

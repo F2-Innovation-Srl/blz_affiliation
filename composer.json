@@ -1,5 +1,5 @@
 {
-  "name": "blazemedia/blz_affiliate",
+  "name": "blazemedia/blz_affiliation",
   "description": "This is a Blazemedia plugin for links affiliation management",
   "license":"MIT",
   "type": "wordpress-plugin",
@@ -21,7 +21,7 @@
   "prefer-stable": true,
   "autoload": {
     "psr-4": {
-        "EMAILDATABASECONNECT\\": "src/"
+        "BLZ_AFFILIATION\\": "src/"
     }
   }
 }

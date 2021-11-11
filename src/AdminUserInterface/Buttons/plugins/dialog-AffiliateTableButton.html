@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Seleziona la tabella</title>
+    <script type="text/javascript" src="/wp/wp-includes/js/tinymce/tiny_mce_popup.js"></script>
+    
+    <script>
+
+        var affiliate_tables = {{affiliate_tables}};
+        console.log(affiliate_tables);
+
+        /** 
+         * Per gestire i campi
+         */
+        function FieldsManager() { 
+            
+            this.table_id = document.getElementById('table_id');
+            
+            this.submit   = document.getElementById('submit');
+    
+            
+            this.submit.addEventListener('click', function(e) {
+
+                var table_id = this.table_id.value;
+                
+                if (table_id  == '') {
+                    alert("Selezionare una tabella"); 
+                    return;
+                }
+                
+                this.shortcode = '[affiliate_table id=' + table_id +']';
+                
+                tinyMCE.activeEditor.execCommand( 'mceInsertContent', 0, this.shortcode );
+                
+                tinyMCEPopup.close();
+
+            }.bind(this));
+        }
+
+        window.addEventListener('DOMContentLoaded', function() {
+            
+            new FieldsManager();
+
+        }.bind(this));
+
+    </script>
+
+    <style>
+        body { padding: 10px; background-color: #eee;}
+        
+        input, select { 
+            width: 90%; 
+            padding: 4px ;
+            font-size:13px;
+            border-radius: 5px;
+            margin-left: 5%;
+        }
+
+        legend {margin: 10px 0 2px 5%; font-size:13px; }
+
+        #submit {
+            width: 300px;
+            background-color: lightblue;
+            margin:20px auto;         
+            display: block;   
+        }
+    </style>
+    
+    
+</head>
+<body onload="tinyMCEPopup.executeOnLoad('init();')">
+    
+    <legend>Seleziona la tabella</legend>
+                        
+    <select name="table_id" id="table_id">
+        <option value="">-- scegli --</option>        
+    </select>
+    <script>
+        var table_select = document.getElementById('table_id');
+        affiliate_tables.forEach( function(item) { 
+            table_select.insertAdjacentHTML('beforeend', `<option value="${item.id}">${item.title}</option>`); 
+        });      
+    </script>
+    
+    <input type="button" id="submit" value="Inserisci" />
+    
+</body>
+</html>

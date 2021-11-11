@@ -1,10 +1,10 @@
 <?php
 
-namespace BLZ\Core\Shortcodes;
-use BLZ\Utils\FileGetContents;
-use BLZ\Utils\Shortener;
+namespace BLZ_AFFILIATION\Rendering;
+use BLZ_AFFILIATION\Utils\FileGetContents;
+use BLZ_AFFILIATION\Utils\Shortener;
 
-class AffiliateButtonsShortcode {
+class AffiliateLinkButton {
 
     static function init() {
 

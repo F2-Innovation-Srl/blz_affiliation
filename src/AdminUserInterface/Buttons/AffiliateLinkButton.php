@@ -1,12 +1,12 @@
 <?php
 
-namespace BLZ\AdminUserInterface\Buttons;
+namespace BLZ_AFFILIATION\AdminUserInterface\Buttons;
 
 /*
- *  Class EditorTrackedButton
+ *  Class AffiliateLinkButton
  *  
  */
-class EditorTrackedButton extends Button {
+class AffiliateLinkButton extends Button {
 
     function __construct() { 
         
@@ -32,7 +32,7 @@ class EditorTrackedButton extends Button {
         if (! current_user_can('publish_posts'))  { die( __("Vietato") ); } 
         
         // get the template 
-        $html = file_get_contents( $this->base_dir .'plugins/dialog-EditorTrackedButton.html');
+        $html = file_get_contents( $this->base_dir .'plugins/dialog-AffiliateLinkButton.html');
         //include_once(get_template_directory() .'/src/UserInterface/Editor/Buttons/plugins/dialog-AffiliateButton.html' );
 
         $tracking_ids =  [

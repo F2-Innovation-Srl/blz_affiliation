@@ -1,10 +1,10 @@
 <?php
 
-namespace BLZ\Hooks;
+namespace BLZ_AFFILIATION\Rendering;
 
-use BLZ\Utils\Shortener;
+use BLZ_AFFILIATION\Utils\Shortener;
 
-class AffiliateContentHooks {
+class ParseLinkAndRender {
 
     static function init() {
 

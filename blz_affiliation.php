@@ -15,10 +15,13 @@
  * Copyright 2021 Blazemedia (email: techteam@f2innovation.com)
  *
  */
+define( 'PLUGIN_PATH' , plugin_dir_path( __FILE__ ) );
+define( 'PLUGIN_URI'  , plugin_dir_url( __FILE__ ));
 
-use BLZ\Core;
-use BLZ\Hooks;
-use BLZ\AdminUserInterface;
+require_once PLUGIN_PATH . '/vendor/autoload.php';
+
+use BLZ_AFFILIATION\Rendering;
+use BLZ_AFFILIATION\AdminUserInterface;
 
 /**
  * Purge Class
@@ -37,9 +40,10 @@ class BlzAffiliate {
 	
 	public function __construct() {
 		
-		Hooks\AffiliateContentHooks::init();
-		Core\Shortcodes\AffiliateButtonsShortcode::init();
-		$this->btn = new AdminUserInterface\Buttons\EditorTrackedButton();
+		ParseLinkAndRender::init();
+		AffiliateLinkButton::init();
+		new AdminUserInterface\Buttons\AffiliateLinkButton();
+		new AdminUserInterface\Settings();
 	}
 }
 

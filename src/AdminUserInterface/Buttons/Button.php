@@ -1,6 +1,6 @@
 <?php
 
-namespace BLZ\AdminUserInterface\Buttons;
+namespace BLZ_AFFILIATION\AdminUserInterface\Buttons;
 
 /*
  * Class Button
@@ -39,9 +39,9 @@ abstract class Button {
     protected $action;
 
     function __construct($name, $action) { 
-
-        $this->base_url = plugin_dir_url( __FILE__ ) .'/src/AdminUserInterface/Buttons/';
-        $this->base_dir = plugin_dir_path( __FILE__ )     .'/src/AdminUserInterface/Buttons/';
+      
+        $this->base_url = PLUGIN_URI .'/src/AdminUserInterface/Buttons/';
+        $this->base_dir = PLUGIN_PATH .'/src/AdminUserInterface/Buttons/';
 
         $this->name   = $name;
         $this->action = $action;
