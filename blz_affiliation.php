@@ -40,8 +40,8 @@ class BlzAffiliate {
 	
 	public function __construct() {
 		
-		ParseLinkAndRender::init();
-		AffiliateLinkButton::init();
+		Rendering\ParseLinkAndRender::init();
+		Rendering\AffiliateLinkButton::init();
 		new AdminUserInterface\Buttons\AffiliateLinkButton();
 		new AdminUserInterface\Settings();
 	}

@@ -1,6 +1,7 @@
 <?php
 
 namespace BLZ_AFFILIATION\Rendering;
+
 use BLZ_AFFILIATION\Utils\FileGetContents;
 use BLZ_AFFILIATION\Utils\Shortener;
 
