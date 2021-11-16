@@ -5,14 +5,99 @@ namespace BLZ_AFFILIATION\Rendering;
 use BLZ_AFFILIATION\Utils\FileGetContents;
 use BLZ_AFFILIATION\Utils\Shortener;
 
+
+use BLZ_AFFILIATION\AffiliateMarketing\OfferRetriever;
+
 class AffiliateLinkButton {
 
-    static function init() {
+    private $post;
+    private $category;
+    private $is_paid;
+    private $author;
+
+
+    public function __construct() {
+
+        /// [ REVIEW ] documentiamo che differenza c'è tra i due
 
         // Add the shortcode to print the links
-        add_shortcode( 'affiliate_track', [ get_called_class(), 'print_affiliate_tracking'] ,2,2 );
+        add_shortcode( 'affiliate_track', [ $this, 'printAffiliateTracking'] );
 
-        add_shortcode( 'affiliate_link', [ get_called_class(), 'print_affiliate_link'] ,2,2 );
+        add_shortcode( 'affiliate_link',  [ $this, 'printAffiliateLink'] );
+
+    }
+
+
+    /**
+     * Stampa il bottone impostato da shortcode
+     *     
+     */
+    public function printAffiliateTracking( $atts, $content, $tag ) {
+
+        /// imposta i valori relativi al post
+        $this->setPostData();
+
+
+        $offers = new OfferRetriever()
+
+        
+
+    }
+
+    /**
+     * Stampa il bottone impostato da shortcode
+     *     
+     */
+    public function printAffiliateLink( $atts, $content, $tag ) {
+        
+        $offerRetriever = new OfferRetriever([
+            'Trovaprezzi',
+            'Ebay',
+            'Amazon',
+        ]);
+
+        $offers =  $offerRetriever->getOffers();
+
+        $template = '<a href="{{ DetailPageURL }}" data-vars-affiliate="{{ vars }}" class="affiliation-intext" target="_blank" rel="sponsored">{{ CurrentPrice }}</a>';
+
+
+        
+    }
+
+    /**
+     * Imposta i valori relativi al post
+     *     
+     */
+    private function setPostData() {
+
+        global $post;    
+        
+        $categories = get_the_category($post->ID);
+        $author_id = $post->post_author;
+
+        /// cerca il nome dell'autore
+        $author_nicename = get_the_author_meta( 'user_nicename', $author_id);
+
+        /// cerca il custom field 'analitics_name' associato all'utente 
+        $analytics_name = get_field( 'analitics_name', 'user_' . $author_id );
+
+
+        $author_name    = empty( $author_nicename ) ? 'author'     : $author_nicename;  // autore
+        $analytics_name = empty( $analytics_name  ) ? $author_name : $analytics_name;   // author
+
+        /// se è vuoto prende un valore di default
+        $this->author = (object) [
+            'name'      => $author_name,
+            'analytics' => $analytics_name
+        ];
+
+        /// categoria
+        $this->category = isset( $categories[0] ) ? $categories[ 0 ]->slug : "";
+        
+        /// aggiunge paid al marketplace
+        $this->is_paid = has_tag( "paid", $post ) ;
+
+        $this->post = $post;
     }
 
     /**
@@ -20,11 +105,12 @@ class AffiliateLinkButton {
      *
      * @return void
      */
-    static function print_affiliate_link($atts, $content = null) {
-
+    static function print_affiliate_link( $atts, $content = null ) {
 
         global $post;
+        
         $categories = get_the_category($post->ID);
+        
         $category = (isset($categories[0])) ? $categories[0]->slug : "";
 
         $author_id = $post->post_author;
@@ -165,6 +251,8 @@ class AffiliateLinkButton {
         return $output; // do_shortcode allows for nested Shortcodes
 
     }
+
+    
 
     /**
      * stampa il link prodotto dallo shortcode

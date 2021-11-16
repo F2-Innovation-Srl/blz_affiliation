@@ -47,6 +47,7 @@
                 var ga_event            = (this.ga_event.value == "") ? this.default_ga_event : this.ga_event.value;
 
                 if (marketplace == "custom") {
+                    
                     this.shortcode = '[affiliate_track url="' + asins +'" data-affiliate="'+ga_event+'"';
                     
                     if (tinymce.activeEditor.selection.getContent() != "") {
@@ -59,7 +60,9 @@
                         this.shortcode += '] ';
                         tinyMCE.activeEditor.execCommand('mceInsertContent', 0, this.shortcode);
                     }
-                }else{
+
+                } else {
+
                     this.shortcode = '[affiliate_link marketplace=' + marketplace;
                     this.shortcode += (keyword)     ? ' keyword=' + encodeURIComponent(keyword) : '';
                     this.shortcode += (asins)       ? ' asins=' + asins : '';

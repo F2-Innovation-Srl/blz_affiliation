@@ -5,6 +5,7 @@ namespace BLZ_AFFILIATION\AdminUserInterface\Buttons;
 /*
  *  Class AffiliateLinkButton
  *  
+ *  Bottone e UI per la creazione degli shortcode dei link
  */
 class AffiliateLinkButton extends Button {
 

@@ -1,8 +1,12 @@
 <?php
 
 namespace BLZ_AFFILIATION\AdminUserInterface\Buttons;
-/*
+
+/**
  * AffiliateTableButton
+ * 
+ * Bottone e UI per la creazione degli shortcode che richiama la tabella
+ * 
  */
 class AffiliateTableButton extends Button {
 

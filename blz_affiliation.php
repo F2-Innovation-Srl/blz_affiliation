@@ -22,11 +22,10 @@ require_once PLUGIN_PATH . '/vendor/autoload.php';
 
 use BLZ_AFFILIATION\Rendering;
 use BLZ_AFFILIATION\AdminUserInterface;
+use BLZ_AFFILIATION\CustomPostTypes;
 
 /**
- * Purge Class
  *
- * @since 1.0
  */
 class BlzAffiliate {
 	
@@ -40,10 +39,33 @@ class BlzAffiliate {
 	
 	public function __construct() {
 		
-		Rendering\ParseLinkAndRender::init();
+		/// crea il custom post type per le tabelle 
+		/// di affiliazione
+		CustomPostTypes\AffiliateTables::init();
+
+		/// effettua il rendering degli shortcode dei bottoni 
+		/// di affiliazione
 		Rendering\AffiliateLinkButton::init();
+
+		/// abilita il parsing e il rendering dei link
+		/// di affiliazione nel testo
+		Rendering\ParseLinkAndRender::init();
+
+		/// effettua il rendering degli shortcode delle 
+		/// tabelle di affiliazione		
+		new Rendering\AffiliateTable();
+		
+		
+		/// aggiunge il bottone per i link di affiliazione nell'editor
 		new AdminUserInterface\Buttons\AffiliateLinkButton();
+
+		/// aggiunge il bottone per selezionare le tabelle di affiliazione
+		/// a aggiungere il relativo shortcode in pagina
+		new AdminUserInterface\Buttons\AffiliateTableButton();
+
+		/// aggiunge la pagina dei settings del plugin
 		new AdminUserInterface\PluginSettings();
+		
 	}
 }
 
