@@ -3,16 +3,164 @@
 namespace BLZ_AFFILIATION\Rendering;
 
 use BLZ_AFFILIATION\Utils\Shortener;
+use BLZ_AFFILIATION\AffiliateMarketing\Offer;
 
 class ParseLinkAndRender {
 
-    static function init() {
+
+    private $post;
+    private $category;
+    private $is_paid;
+    private $author;
+
+    private $templates = [
+        
+        'affiliate_link' => <<<HTML
+            <a href="{{ url }}" data-vars-affiliate="{{ ga_event }}" 
+               class="affiliation-intext" target="_blank" rel="sponsored"
+            >{{ content }}</a>
+        HTML,
+
+        'editorial_link' => <<<HTML
+
+            <a href="{{ url }}" data-vars-affiliate="{{ ga_event }}" 
+               class="affiliation-intext" target="_blank" rel="sponsored"
+            >{{ content }}</a>
+        HTML,
+
+        'ga_event' => <<<EVT
+            mtz cta {{ website }} {{ category }} editorial {{ author }} {{ marketplace }}
+        EVT
+    ];
+
+    
+    
+
+
+    public function __construct() {
 
         // Add the custom columns to the posts post type:
-        add_filter( 'the_content', [ get_called_class(), 'fix_editorial_link'] );
-
+        add_filter( 'the_content', [ $this, 'ParseAndRender'] );
     }
 
+
+    public function ParseAndRender( $content ) {
+
+        /// se non è una single non fa nulla
+        if ( !is_singular() ) return $content;
+
+        $this->setPostData();
+
+        $content = $this->ParsePrettyLink( $content );
+
+          
+
+        $merchants = [
+            (object) [ 'signature' => 'amz',     'tracking_code' => 'amazon' . ($is_paid ? '-paid' : '') ],
+            (object) [ 'signature' => 'ebay.us', 'tracking_code' => 'ebay'   . ($is_paid ? '-paid' : '') ]
+        ];
+
+        foreach( $merchants as $merchant ) {
+
+            $regexp = '/<a([^>]*?)href="https:\/\/'.$merchant->signature.'([^"]*?)"(.*?)>/';
+            
+            $complete_tracking_id = $trackingIDAuthor . $merchant->tracking_code . $print_amp;
+            
+            $link = '<a target="_blank" data-vars-affiliate="' . $complete_tracking_id .'" class="affiliation-intext" $1href="https://' . $merchant->signature . '$2"$3>';
+            
+            $content = preg_replace( $regexp, $link, $content, -1 );
+        }      
+
+
+        return $content;
+    }
+
+
+    private function ParsePrettyLink( $content ) {
+        
+        $link_pattern = '/<a([^>]*?)href="https:\/\/([^"]*?)mtz-editorial\/([^"]*?)"(.*?)>/';
+
+       
+        $content = preg_replace_callback( $link_pattern, 
+        
+            function($match) use ( $trackingID ) {
+
+                $offer = new Offer([
+                    'link'  => 'https://' . $match[2] . 'mtz-editorial/' . $match[3],
+                    'price' => ''
+                ]);
+
+                $ga_event = strtolower( $trackingID ) . strtolower( $match[3] ) . ($this->is_paid ? "-paid" : '' );
+                
+                return $this->FillTemplate( $offer, $ga_event, $trackingID, $this->templates['affiliate_link']);
+
+            }        
+        , $content, -1);
+        
+        // SE IL LINK HA UN -- NELLA URL ALLORA PRENDO IL MERCHANT 
+        $content = preg_replace_callback('/<a([^>]*?)href="https:\/\/([^"]*?)mtz-editorial\/([^"]*?)--([^"]*?)"(.*?)>/',
+        function($matches) use ($trackingID,$is_paid) {
+            return  '<a target="_blank" data-vars-affiliate="'.strtolower($trackingID).strtolower($matches[3]).($is_paid ? "-paid" : "").'" class="affiliation-intext" '.$matches[1].'href="https://'.$matches[2].'mtz-editorial/'.$matches[3].'--'.$matches[4].'"'.$matches[5].'>';
+        }, $content, -1);
+       
+        return $content;
+    }
+
+
+    private function FillTemplate( Offer $offer, $ga_event, $tracking, $template) {
+
+        $link = str_replace( '{tracking-id}', $tracking, $offer->link);
+
+        return str_replace([ '{{ url }}', '{{ ga-event }}', '{{ content }}' ], [ $link, $ga_event, $offer->price ], $template);
+    }
+
+
+    /**
+     * Imposta i valori relativi al post
+     *     
+     */
+    private function setPostData() {
+
+        global $post;    
+
+        $this->marketPlace = "amazon";
+        if ( has_tag( "ebay" ) )        $this->marketPlace = "ebay";
+        if ( has_tag( "trovaprezzi" ) ) $this->marketPlace = "trovaprezzi";
+        
+        
+        $categories = get_the_category($post->ID);
+        $author_id = $post->post_author;
+
+        /// cerca il nome dell'autore
+        $author_nicename = get_the_author_meta( 'user_nicename', $author_id);
+
+        /// cerca il custom field 'analitics_name' associato all'utente 
+        $analytics_name = get_field( 'analitics_name', 'user_' . $author_id );
+
+
+        $author_name    = empty( $author_nicename ) ? 'author'     : $author_nicename;  // autore
+        $analytics_name = empty( $analytics_name  ) ? $author_name : $analytics_name;   // author
+
+        /// se è vuoto prende un valore di default
+        $this->author = (object) [
+            'name'      => $author_name,
+            'analytics' => $analytics_name
+        ];
+
+        /// categoria
+        $this->category = isset( $categories[0] ) ? $categories[ 0 ]->slug : "";
+        
+        /// aggiunge paid al marketplace
+        $this->is_paid = has_tag( "paid", $post ) ;
+
+        $this->marketPlace .= $this->is_paid ? "-paid" : "";
+
+        $this->is_amp = is_amp_endpoint();
+        
+        $this->post = $post;
+    }
+
+    
     static function fix_editorial_link( $content ) {
 
          // Check if we're inside the main loop in a single Post.
@@ -39,19 +187,6 @@ class ParseLinkAndRender {
             $trackingIDAuthor = $trackingID . $author . " ";
             $print_amp = (is_amp_endpoint()) ? " amp" : ""; // per tracciamento AMP
              
-            // PRETTILINKS
-            $content = preg_replace_callback('/<a([^>]*?)href="https:\/\/([^"]*?)mtz-editorial\/([^"]*?)"(.*?)>/',
-            function($match) use ($trackingID,$is_paid) {
-                return '<a target="_blank" data-vars-affiliate="' . strtolower($trackingID).strtolower($match[3]).($is_paid ? "-paid" : "").'" class="affiliation-intext" '.$match[1].'href="https://'.$match[2].'mtz-editorial/'.$match[3].'"'.$match[4].'>';
-            }, $content, -1);
-            
-            // SE IL LINK HA UN -- NELLA URL ALLORA PRENDO IL MERCHANT 
-            $content = preg_replace_callback('/<a([^>]*?)href="https:\/\/([^"]*?)mtz-editorial\/([^"]*?)--([^"]*?)"(.*?)>/',
-            function($matches) use ($trackingID,$is_paid) {
-                return  '<a target="_blank" data-vars-affiliate="'.strtolower($trackingID).strtolower($matches[3]).($is_paid ? "-paid" : "").'" class="affiliation-intext" '.$matches[1].'href="https://'.$matches[2].'mtz-editorial/'.$matches[3].'--'.$matches[4].'"'.$matches[5].'>';
-            }, $content, -1);
-            // FINE PRETTILINKS
-
             
 
             $merchants = [

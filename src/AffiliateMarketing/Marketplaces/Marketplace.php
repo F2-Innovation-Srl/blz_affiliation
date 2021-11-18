@@ -2,19 +2,51 @@
 
 namespace BLZ_AFFILIATION\AffiliateMarketing\Marketplaces;
 
+use BLZ_AFFILIATION\Utils\FileGetContents;
+use BLZ_AFFILIATION\AffiliateMarketing\Offer;
+use BLZ_AFFILIATION\AffiliateMarketing\Request;
 
 abstract class Marketplace {
 
-    protected $keyword;
-    protected $code;
+    /// i componenti del template di base della query
+    protected $apiBase    = 'https://querydispatcher.justearn.it/api/v1/getoffer/';
+    protected $apiQuery   = '{{ query }}/marketplace/{{ marketplace }}';
+    protected $apiParams  = '/items/1/category/elettronica?min_price=20';
 
-    public function __construct( array $args ) {
+    protected $name = '';
+    
+    /// la richiesta 
+    protected $request;
 
-        $this->keyword = isset( $args['keyword'] ) ? $args['keyword'] : null;
-        $this->code    = isset( $args['asins'] )   ? $args['asins']   : null;
+    public function __construct( Request $request ) {
+
+        $this->request = $request;                
+    }
+
+    /**
+     * Ritorna le offerte 
+     *
+     * @return array
+     */
+    public function getOffers() {
+
+        $offers_json = FileGetContents::getContent( $this->getQueryURL() );
+
+        return array_map( function( $offer ) {
+
+            return new Offer( $offer );
+
+        }, json_decode( $offers_json, true ) );
 
     }
 
-    abstract public function getOffers();
+    /**
+     * Serve ad ogni Marketplace per definire il modo
+     * in cui scrivere la richiesta all'api 
+     * querydispatcher
+     *
+     * @return string
+     */
+    abstract protected function getQueryURL();
 
 }
