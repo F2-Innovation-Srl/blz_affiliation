@@ -39,10 +39,10 @@ class BlzAffiliate {
 	
 	public function __construct() {
 		
-		/// crea il custom post type per le tabelle 
-		/// di affiliazione
+		/// crea i custom post type (tabelle e link "centralizzati")
 		CustomPostTypes\AffiliateTables::init();
-
+		CustomPostTypes\AffiliateLinkProgamStored::init();
+		
 		/// effettua il rendering degli shortcode dei bottoni 
 		/// di affiliazione
 		Rendering\AffiliateLinkButton::init();
@@ -55,10 +55,12 @@ class BlzAffiliate {
 		/// tabelle di affiliazione		
 		new Rendering\AffiliateTable();
 		
-		
-		/// aggiunge il bottone per i link di affiliazione nell'editor
-		new AdminUserInterface\Buttons\AffiliateLinkButton();
 
+		/// aggiunge i bottoni per i link di affiliazione
+		new AdminUserInterface\Buttons\AffiliateLinkButton();
+		new AdminUserInterface\Buttons\AffiliateLinkProgramsButton();		
+		new AdminUserInterface\Buttons\AffiliateLinkProgramStoredButton();
+		
 		/// aggiunge il bottone per selezionare le tabelle di affiliazione
 		/// a aggiungere il relativo shortcode in pagina
 		new AdminUserInterface\Buttons\AffiliateTableButton();

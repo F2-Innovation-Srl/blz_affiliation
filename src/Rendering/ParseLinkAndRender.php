@@ -21,13 +21,6 @@ class ParseLinkAndRender {
             >{{ content }}</a>
         HTML,
 
-        'editorial_link' => <<<HTML
-
-            <a href="{{ url }}" data-vars-affiliate="{{ ga_event }}" 
-               class="affiliation-intext" target="_blank" rel="sponsored"
-            >{{ content }}</a>
-        HTML,
-
         'ga_event' => <<<EVT
             mtz cta {{ website }} {{ category }} editorial {{ author }} {{ marketplace }}
         EVT
@@ -53,20 +46,34 @@ class ParseLinkAndRender {
 
         $content = $this->ParsePrettyLink( $content );
 
-          
-
         $merchants = [
-            (object) [ 'signature' => 'amz',     'tracking_code' => 'amazon' . ($is_paid ? '-paid' : '') ],
-            (object) [ 'signature' => 'ebay.us', 'tracking_code' => 'ebay'   . ($is_paid ? '-paid' : '') ]
+            (object) [ 'signature' => 'amz',     'tracking_code' => 'amazon' . ($this->is_paid ? '-paid' : '') ],
+            (object) [ 'signature' => 'ebay.us', 'tracking_code' => 'ebay'   . ($this->is_paid ? '-paid' : '') ]
         ];
 
         foreach( $merchants as $merchant ) {
 
+//             $link = '<a target="_blank" data-vars-affiliate="' .  .'" class="affiliation-intext" href="https://' . $merchant->signature . '$2"$3>';
+
             $regexp = '/<a([^>]*?)href="https:\/\/'.$merchant->signature.'([^"]*?)"(.*?)>/';
+
+            $offer = new Offer([
+                'link' => 'https://' . $merchant->signature . preg_filter($regexp, '$2', ([^"]*?)"
+            ])
             
-            $complete_tracking_id = $trackingIDAuthor . $merchant->tracking_code . $print_amp;
+            $tracking_id = $this->author_tracking_id . $merchant->tracking_code . ( $this->is_amp ? '-amp': '' );
             
-            $link = '<a target="_blank" data-vars-affiliate="' . $complete_tracking_id .'" class="affiliation-intext" $1href="https://' . $merchant->signature . '$2"$3>';
+            
+
+
+            $link = '<a data-vars-affiliate="' . $complete_tracking_id .'" class="affiliation-intext" href="https://' . $merchant->signature . '$2"$3>';
+
+
+
+
+            $link = $this->FillTemplate($offer, $ga_event, $tracking_id, $this->templates['affiliate_link']);
+
+            
             
             $content = preg_replace( $regexp, $link, $content, -1 );
         }      
@@ -105,6 +112,8 @@ class ParseLinkAndRender {
        
         return $content;
     }
+
+    
 
 
     private function FillTemplate( Offer $offer, $ga_event, $tracking, $template) {
