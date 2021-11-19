@@ -11,10 +11,11 @@ class Request {
 
     function __construct( $args ) 
     {
-        $this->marketplace = isset( $args['marketplace'] ) ? $args['marketplace'] : 'amazon';
-        $this->keyword = isset( $args['keyword'] ) ? $args['keyword'] : '__default__';
-        $this->code    = isset( $args['code'] ) ? $args['code'] : null;
+        $this->marketplace  = isset( $args['marketplace'] ) ? $args['marketplace'] : 'amazon';
+        $this->keyword      = isset( $args['keyword'] ) ? $args['keyword'] : '__default__';
+        $this->code         = isset( $args['code'] ) ? $args['code'] : null;
         $this->min_price    = isset( $args['min_price'] ) ? $args['min_price'] : '20';
+
     }
 
     /**
@@ -33,7 +34,7 @@ class Request {
     public function getMinPrice()    { return $this->min_price; } 
     public function getMarketplace() {
 
-        $marketplace = [
+        $MarketPlaceMap = [
             "ebay" => "Ebay" ,
             "ebay_used" => "EbayUsed", 
             "trovaprezzi" => "Trovaprezzi",  

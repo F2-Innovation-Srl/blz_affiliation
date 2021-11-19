@@ -90,8 +90,8 @@ class AffiliateLinkButton {
         
         $ga_event = str_replace(
             [ '{{ website }}', '{{ category }}', '{{ author }}', '{{ marketplace }}'],
-            [ $this->domain, $this->category, $this->author, $offer->marketplace . $this->paid ],
-            $this->templates['ga_event']
+            [ $this->domain, $this->category, $this->author->analytics, $offer->marketplace . $this->paid ],
+            $this->templates["ga_event"]
         );
 
         switch( $offer->marketplace ) {
