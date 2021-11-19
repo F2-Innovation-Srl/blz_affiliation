@@ -4,7 +4,7 @@ namespace BLZ_AFFILIATION\Rendering;
 
 use BLZ_AFFILIATION\Utils\Shortener;
 
-use BLZ_AFFILIATION\Utils\FileGetContents;
+use BLZ_AFFILIATION\Utils\HttpRequest;
 use BLZ_AFFILIATION\AffiliateMarketing\Offer;
 
 

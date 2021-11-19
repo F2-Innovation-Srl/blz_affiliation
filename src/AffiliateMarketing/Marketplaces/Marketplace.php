@@ -2,7 +2,7 @@
 
 namespace BLZ_AFFILIATION\AffiliateMarketing\Marketplaces;
 
-use BLZ_AFFILIATION\Utils\FileGetContents;
+use BLZ_AFFILIATION\Utils\HttpRequest;
 use BLZ_AFFILIATION\AffiliateMarketing\Offer;
 use BLZ_AFFILIATION\AffiliateMarketing\Request;
 
@@ -30,7 +30,7 @@ abstract class Marketplace {
      */
     public function getOffers() {
 
-        $offers_json = FileGetContents::getContent( $this->getQueryURL() );
+        $offers_json = HttpRequest::getContent( $this->getQueryURL() );
 
         return array_map( function( $offer ) {
 

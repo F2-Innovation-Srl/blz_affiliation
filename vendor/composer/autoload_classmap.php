@@ -13,7 +13,7 @@ return array(
     'BLZ_AFFILIATION\\AdminUserInterface\\Buttons\\PluginSettings' => $baseDir . '/src/AdminUserInterface/PluginSettings.php',
     'BLZ_AFFILIATION\\Rendering\\AffiliateLinkButton' => $baseDir . '/src/Rendering/AffiliateLinkButton.php',
     'BLZ_AFFILIATION\\Rendering\\ParseLinkAndRender' => $baseDir . '/src/Rendering/ParseLinkAndRender.php',
-    'BLZ_AFFILIATION\\Utils\\FileGetContents' => $baseDir . '/src/Utils/FileGetContents.php',
+    'BLZ_AFFILIATION\\Utils\\HttpRequest' => $baseDir . '/src/Utils/HttpRequest.php',
     'BLZ_AFFILIATION\\Utils\\Shortener' => $baseDir . '/src/Utils/Shortener.php',
     'Composer\\Installers\\AglInstaller' => $vendorDir . '/composer/installers/src/Composer/Installers/AglInstaller.php',
     'Composer\\Installers\\AimeosInstaller' => $vendorDir . '/composer/installers/src/Composer/Installers/AimeosInstaller.php',
