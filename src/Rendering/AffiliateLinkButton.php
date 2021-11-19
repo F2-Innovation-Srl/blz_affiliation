@@ -88,7 +88,7 @@ class AffiliateLinkButton {
                     }else{
                         $key= $atts["keyword"];
                     }
-                    $marketplace = ($atts["marketplace"] == "ebay") ? "ebayBrowseApi" : "ebay-used";
+                    $marketplace = ($atts["marketplace"] == "ebay") ? "ebay" : "ebay-used";
 
                     // EBAY //
                     // look for used E-BAY offer  using version's slug and replacing - with +
