@@ -4,13 +4,9 @@ namespace BLZ_AFFILIATION\Rendering;
 
 use BLZ_AFFILIATION\Utils\Shortener;
 
-use BLZ_AFFILIATION\Utils\HttpRequest;
+use BLZ_AFFILIATION\Utils\FileGetContents;
 use BLZ_AFFILIATION\AffiliateMarketing\Offer;
 
-
-
-
-use BLZ_AFFILIATION\AffiliateMarketing\OfferRetriever;
 use BLZ_AFFILIATION\AffiliateMarketing\OffersRetriever;
 use BLZ_AFFILIATION\AffiliateMarketing\Request;
 
@@ -48,7 +44,7 @@ class AffiliateLinkButton {
         /// [ REVIEW ] documentiamo che differenza c'è tra i due
 
         // Add the shortcode to print the links
-        add_shortcode( 'affiliate_track', [ $this, 'printAffiliateTracking'] );
+       //  add_shortcode( 'affiliate_track', [ $this, 'printAffiliateTracking'] );
 
         add_shortcode( 'affiliate_link',  [ $this, 'printAffiliateLink'] );
 
