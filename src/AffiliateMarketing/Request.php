@@ -31,7 +31,7 @@ class Request {
     public function getKeyword() { return $this->keyword; } 
     public function getCode()    { return  $this->code; } 
     public function getMinPrice()    { return $this->min_price; } 
-    public function getMarketplace(String $marketplace) {
+    public function getMarketplace() {
 
         $marketplace = [
             "ebay" => "Ebay" ,
@@ -40,7 +40,7 @@ class Request {
             "amazon" => "Amazon", 
             "custom" => "custom"
         ];
-        return isset($MarketPlaceMap[$marketplace]) ? $MarketPlaceMap[$marketplace] : $marketplace;
+        return isset($MarketPlaceMap[$this->marketplace]) ? $MarketPlaceMap[$marketplace] : $this->marketplace;
     }
 
 }
