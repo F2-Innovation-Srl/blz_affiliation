@@ -9,8 +9,8 @@ use BLZ_AFFILIATION\AffiliateMarketing\Offer;
 
 use BLZ_AFFILIATION\AffiliateMarketing\OffersRetriever;
 use BLZ_AFFILIATION\AffiliateMarketing\Request;
-use BLZ_AFFILIATION\Rendering\postData;
-use BLZ_AFFILIATION\Rendering\settingsData;
+use BLZ_AFFILIATION\Rendering\PostData;
+use BLZ_AFFILIATION\Rendering\SettingsData;
 
 
 
@@ -47,7 +47,7 @@ class AffiliateLinkButton {
         $ga_event = str_replace(
             [ '{{ website }}', '{{ category }}', '{{ author }}', '{{ marketplace }}'],
             [ $this->domain, $this->category, $this->author->analytics, $offer->marketplace . $this->paid ],
-            settingsData::getTemplate("ga_event")
+            SettingsData::getTemplate("ga_event")
         );
 
         switch( $offer->marketplace ) {
@@ -97,7 +97,7 @@ class AffiliateLinkButton {
 
             $tracking = $this->getTracking( $offers[ 0 ], $atts['tracking_id'] );
 
-            return $this->FillTemplate( $offers[ 0 ], $tracking->ga_event, $tracking->tracking_id, settingsData::getTemplate("affiliate_link"),$request );
+            return $this->FillTemplate( $offers[ 0 ], $tracking->ga_event, $tracking->tracking_id, SettingsData::getTemplate("affiliate_link"),$request );
         }
             
         return '';        

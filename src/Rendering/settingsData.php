@@ -3,7 +3,7 @@
 namespace BLZ_AFFILIATION\Rendering;
 
 
-class settingsData {
+class SettingsData {
 
     private $templates = [
         
