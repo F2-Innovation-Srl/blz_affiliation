@@ -75,11 +75,13 @@ class AffiliateLinkButton {
     }
 
 
-    private function FillTemplate( Offer $offer, $ga_event, $tracking, $template) {
+    private function FillTemplate( Offer $offer, $ga_event, $tracking, $template, $request) {
 
         $link = str_replace( '{tracking-id}', $tracking, $offer->link);
 
-        return str_replace([ '{{ url }}', '{{ ga-event }}', '{{ content }}' ], [ $link, $ga_event, $offer->price ], $template);
+        $content = (!empty($request->content) ? $request->content : $offer->price . " euro";
+
+        return str_replace([ '{{ url }}', '{{ ga-event }}', '{{ content }}' ], [ $link, $ga_event, $offer->price ], $template,$content);
     }
 
     
@@ -90,8 +92,8 @@ class AffiliateLinkButton {
         
         $ga_event = str_replace(
             [ '{{ website }}', '{{ category }}', '{{ author }}', '{{ marketplace }}'],
-            [ $this->domain, $this->category, $this->author, $offer->marketplace . $this->paid ],
-            $this->templates['ga_event']
+            [ $this->domain, $this->category, $this->author->analytics, $offer->marketplace . $this->paid ],
+            $this->templates["ga_event"]
         );
 
         switch( $offer->marketplace ) {
@@ -127,15 +129,12 @@ class AffiliateLinkButton {
 
         /// prende tutti i dati del post
         $this->setPostData();
-        
+        /// prendo la request
+        $request = new Request($atts);
         /// cerca le offerte nei tre marketplace
         /// effettua una chiamata a querydispatcher 
         /// per ogni marketplace        
-        $offerRetriever = new OffersRetriever( new Request( $atts ), [
-            'Trovaprezzi',
-            'Ebay',
-            'Amazon',
-        ]  );
+        $offerRetriever = new OffersRetriever($request);
 
         /// riceve le offerte in ordine di marketplace
         $offers = $offerRetriever->getOffers();
@@ -144,7 +143,7 @@ class AffiliateLinkButton {
 
             $tracking = $this->getTracking( $offers[ 0 ], $atts['store'] );
 
-            return $this->FillTemplate( $offers[ 0 ], $tracking->ga_event, $tracking->tracking_id, $this->templates['affiliate_link'] );
+            return $this->FillTemplate( $offers[ 0 ], $tracking->ga_event, $tracking->tracking_id, $this->templates['affiliate_link'],$request );
         }
             
         return '';        

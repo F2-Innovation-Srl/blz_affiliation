@@ -13,7 +13,7 @@
         function FieldsManager() { 
 
             this.default_ga_event = "mtz cta tn guide editorial amazon";
-            this.stores = {
+            this.tracking_ids = {
                 amazon      : '{{amazon-tracking-id}}',
                 ebay        : '{{ebay-tracking-id}}',
                 ebay_used   : '{{ebay-tracking-id}}',
@@ -27,7 +27,7 @@
 
             this.marketplace             = document.getElementById('marketplace');
             this.marketplace_custom      = document.getElementById('marketplace_custom');
-            this.store                   = document.getElementById('store');     
+            this.tracking_id             = document.getElementById('tracking_id');     
             this.min_price               = document.getElementById('min_price');       
             this.keyword                 = document.getElementById('keyword');
             this.text                    = document.getElementById('text');
@@ -41,7 +41,7 @@
                 var marketplace_custom  = this.marketplace_custom.value;
                 var keyword             = this.keyword.value;
                 var code                = this.code.value;
-                var store               = this.store.value;
+                var tracking_id         = this.tracking_id.value;
                 var min_price           = this.min_price.value;
                 var text                = this.text.value;
                 var ga_event            = (this.ga_event.value == "") ? this.default_ga_event : this.ga_event.value;
@@ -65,8 +65,8 @@
 
                     this.shortcode = '[affiliate_link marketplace=' + marketplace;
                     this.shortcode += (keyword)     ? ' keyword=' + encodeURIComponent(keyword) : '';
-                    this.shortcode += (code)       ? ' code=' + code : '';
-                    this.shortcode += (store)       ? ' store=' + store : '';
+                    this.shortcode += (code)        ? ' code=' + code : '';
+                    this.shortcode += (tracking_id)       ? ' tracking_id=' + tracking_id : '';
                     this.shortcode += (min_price)   ? ' min_price=' + min_price : '';
 
                     if (tinymce.activeEditor.selection.getContent() != "") {
@@ -84,14 +84,14 @@
             }
 
             // take the initial value of marketplace
-            this.store.value = this.stores[this.marketplace.value];
+            this.tracking_id.value = this.tracking_ids[this.marketplace.value];
             
             // take visibility of container_text if user had selected text from editor
             this.container_text.style.display = (tinymce.activeEditor.selection.getContent() != "")  ? "none"  : "block";   
 
             // take the new value of marketplace
             this.marketplace.addEventListener('change', function(e) {
-                this.store.value = this.stores[this.marketplace.value];
+                this.tracking_id.value = this.tracking_ids[this.marketplace.value];
                 console.log(this.marketplace.value);
                 console.log(this.marketplace.value == "custom");
                 this.container_marketplace.style.display = (this.marketplace.value == "custom") ? "block" : "none"; 
@@ -219,7 +219,7 @@
         <input type="text" id="keyword">
 
         <legend>Tracking id (se omesso viene preso il tracking id sulla pagina autore)</legend>
-        <input type="text" id="store">
+        <input type="text" id="tracking_id">
 
 
         <legend>Min Price (Inserire un valore intero senza valuta, se omesso il default è 20 euro)</legend>

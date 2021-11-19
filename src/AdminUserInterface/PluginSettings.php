@@ -47,7 +47,20 @@ class PluginSettings {
     **/
     private function printForm()
     {
+        /*
+        return array_reduce( $this->marketplaces, function( $result, $marketplace ) {
+
+            $base = 'BLZ_AFFILIATION\\AffiliateMarketing\\Marketplaces\\';
+            
+            $result = array_merge( $result, ( new ($base.$marketplace)( $this->request ) )->getOffers() );
+
+            return $result;
+
+        }, []);
+        */
         ?>
+
+
         <div class="wrap"><h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
         <form method="post" action="<?php echo esc_html( admin_url( 'admin.php?page='.$this->page.'&tab='.$this->current_tab ) ); ?>">
             <input type="hidden" name="edc-sendForm" value="OK" />
