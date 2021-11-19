@@ -4,18 +4,19 @@ namespace BLZ_AFFILIATION\Rendering\ParseLinkAndRender\Patterns;
 
 use BLZ_AFFILIATION\Rendering\ParseLinkAndRender\Link;
 
+
 /**
  * Un pattern è il testo del link che deve essere
  * sostituito, specifico per ogni marketplace
  * da esso estraiamo la url del link da costruire
  * oltre che il marketplace
  */
-class Amazon extends Pattern {
+class EbayShorted extends Pattern {
 
     /// il pattern da riconoscere nel testo da ridefinire
-    protected $pattern = '/<a[^>]*href="(https:\/\/www.amazon.it[^"]*?)".*?>/';
-
-    protected $tracking_code = 'amazon';
+    protected $pattern = '/<a.*?href="(https:\/\/.*?ebay\.us.*?)".*?>/';
+    
+    protected $tracking_code = '';
     
     /// il nome del marketplace di cui parsare i link
     protected $name = 'amazon';
@@ -27,11 +28,9 @@ class Amazon extends Pattern {
 
         return array_map( function( $link, $url ) {
 
-            $url = ( strpos( $url, '?' ) === false ) ? $url : preg_filter('/(.*)\?.*/', '$1', $url );
-
             return new Link ([
                 'old_link'    => $link,
-                'url'         => $url . '?tag={tracking_id}',
+                'url'         => $url,
                 'marketplace' => $this->name
             ]);
 

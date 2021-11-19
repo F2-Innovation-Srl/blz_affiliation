@@ -4,7 +4,7 @@ namespace BLZ_AFFILIATION\Rendering\ParseLinkAndRender;
 
 use BLZ_AFFILIATION\AffiliateMarketing\Offer;
 use BLZ_AFFILIATION\Rendering\ParseLinkAndRender\Link;
-use BLZ_AFFILIATION\Rendering\ParseLinkAndRender\PostData;
+use BLZ_AFFILIATION\Rendering\PostData;
 use BLZ_AFFILIATION\Utils\Shortener; 
 
 class ParseLinkAndRender {
@@ -82,6 +82,9 @@ class ParseLinkAndRender {
      */
     private function FillTemplate( Link $linkData ) {
 
+        $paid = $this->postData->is_paid ? '-paid' : '';
+        $amp  = $this->postData->is_amp  ? ' amp'  : '';
+
         $ga_event = str_replace([ 
             '{{ website }}',
             '{{ category }}',
@@ -92,15 +95,10 @@ class ParseLinkAndRender {
             $this->postData->website,
             $this->postData->category,
             $this->postData->author->name,
-            $linkData->marketplace
+            $linkData->marketplace . $paid . $amp
 
         ], $this->templates['ga_event']);
 
-
-        /// QUI MANCANO I CONTROLLLI 
-        /// PAID 
-        /// AMP  
-        /// come vanno messi?
 
         $link = str_replace( '{tracking-id}', $tracking, $linkData->url);
 
@@ -124,7 +122,8 @@ class ParseLinkAndRender {
 
         return [
             'Amazon',
-            'Ebay'
+            'Ebay',
+            'PrettyPink'
         ];
     }
 
@@ -153,17 +152,10 @@ class ParseLinkAndRender {
             
             $tracking_id = $this->author_tracking_id . $merchant->tracking_code . ( $this->is_amp ? '-amp': '' );
             
-            
-
-
             $link = '<a data-vars-affiliate="' . $complete_tracking_id .'" class="affiliation-intext" href="https://' . $merchant->signature . '$2"$3>';
 
 
-
-
             $link = $this->FillTemplate($offer, $ga_event, $tracking_id, $this->templates['affiliate_link']);
-
-            
             
             $content = preg_replace( $regexp, $link, $content, -1 );
         }      
@@ -199,8 +191,10 @@ class ParseLinkAndRender {
         
         // SE IL LINK HA UN -- NELLA URL ALLORA PRENDO IL MERCHANT 
         $content = preg_replace_callback('/<a([^>]*?)href="https:\/\/([^"]*?)mtz-editorial\/([^"]*?)--([^"]*?)"(.*?)>/',
+        
         function($matches) use ($trackingID,$is_paid) {
-            return  '<a target="_blank" data-vars-affiliate="'.strtolower($trackingID).strtolower($matches[3]).($is_paid ? "-paid" : "").'" class="affiliation-intext" '.$matches[1].'href="https://'.$matches[2].'mtz-editorial/'.$matches[3].'--'.$matches[4].'"'.$matches[5].'>';
+            return  '<a target="_blank" data-vars-affiliate="'.strtolower($trackingID).
+            strtolower($matches[3]).($is_paid ? "-paid" : "").'" class="affiliation-intext" '.$matches[1].'href="https://'.$matches[2].'mtz-editorial/'.$matches[3].'--'.$matches[4].'"'.$matches[5].'>';
         }, $content, -1);
        
         return $content;
