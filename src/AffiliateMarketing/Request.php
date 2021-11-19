@@ -32,7 +32,7 @@ class Request {
     public function getKeyword()     { return $this->keyword; } 
     public function getCode()        { return  $this->code; } 
     public function getMinPrice()    { return $this->min_price; } 
-    public function geContent()      { return $this->content; } 
+    public function getContent()      { return $this->content; } 
     public function getTrackingId()  { return $this->tracking_id; } 
     public function getMarketplace() {
 
