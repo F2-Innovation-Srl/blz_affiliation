@@ -37,10 +37,12 @@ class Amazon implements Marketplace {
      */
     private function whatCode( string $code ){
 
+        $amazon_id = preg_filter( '/.*www.amazon.*\/(.+)\/[ref|\?].*/', '$1', $code);
+        if (!$amazon_id)  $amazon_id = $code;
         /// codice ASIN
         return (object) [
             'type'  => 'asin',
-            'value' =>  preg_filter( '/.*www.amazon.*\/(.+)\/[ref|\?].*/', '$1', $code)
+            'value' =>  $amazon_id
         ];                
     }
 

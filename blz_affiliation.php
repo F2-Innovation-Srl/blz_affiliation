@@ -45,7 +45,7 @@ class BlzAffiliate {
 		
 		/// effettua il rendering degli shortcode dei bottoni 
 		/// di affiliazione
-		Rendering\AffiliateLinkButton::init();
+		new Rendering\AffiliateLinkButton();
 
 		/// abilita il parsing e il rendering dei link
 		/// di affiliazione nel testo
