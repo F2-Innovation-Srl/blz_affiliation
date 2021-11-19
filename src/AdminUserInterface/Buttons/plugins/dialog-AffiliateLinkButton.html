@@ -64,7 +64,7 @@
                     this.shortcode = '[affiliate_link marketplace=' + marketplace;
                     this.shortcode += (keyword)     ? ' keyword=' + encodeURIComponent(keyword) : '';
                     this.shortcode += (code)        ? ' code=' + code : '';
-                    this.shortcode += (tracking_id)       ? ' tracking_id=' + tracking_id : '';
+                    this.shortcode += (tracking_id) ? ' tracking_id=' + tracking_id : '';
                     this.shortcode += (min_price)   ? ' min_price=' + min_price : '';
 
                     if (tinymce.activeEditor.selection.getContent() != "") {
