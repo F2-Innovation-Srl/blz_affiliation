@@ -1,7 +1,7 @@
 <?php
 
 namespace BLZ_AFFILIATION\AffiliateMarketing\Marketplaces;
-class Ebay implements Marketplace {
+class Ebay extends Marketplace {
 
     protected $name = "ebay";
     
@@ -10,8 +10,7 @@ class Ebay implements Marketplace {
 
         /// per default prende una keyword
         $query = $this->request->getKeyword();
-        $code_suffix = '';
-        
+    
         /// se la request contiene un codice
         if ( $this->request->hasCode() ){
     
@@ -19,16 +18,15 @@ class Ebay implements Marketplace {
             $code = $this->whatCode( $this->request->getCode() );
 
             /// cerca il codice 
-            $query =  $code->value;
+            $query =   $code;
             
-            $code_suffix = ( $code->type == 'epid' ) ? '&code=true' : '';
         }
 
         /// sostituisce i valori nella query
         $apiQuery = str_replace(['{{ query }}', '{{ marketplace }}'], [ urldecode( $query ), $this->name ], $this->apiQuery );
         
         /// ritorna la query
-        return $this->apiBase . $apiQuery . $this->apiParams . $code_suffix;
+        return $this->apiBase . $apiQuery . $this->apiParams;
     }
 
     /**
@@ -39,20 +37,11 @@ class Ebay implements Marketplace {
      */
     private function whatCode( string $code ){
 
-        /// cerca il codice EPID
-        $epid = preg_filter( '/EPID(.+)/', '$1', $code );
-            
         /// codice prodotto
         $ebay_id = preg_filter( '/.*www.ebay.*\/(\d+)\?.*/', '$1', $code );
-        
+        if (!$ebay_id)  $ebay_id = $code;
         /// ritorna tipo e codice rilevati
-        return (object) ( $epid ) ? [
-            'type'  => 'epid',
-            'value' => $epid
-        ] : [
-            'type'  => 'ebay_id',
-            'value' => $ebay_id
-        ]; 
+        return $code; 
     }
       
 }
