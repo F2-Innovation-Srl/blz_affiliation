@@ -131,11 +131,7 @@ class AffiliateLinkButton {
         /// cerca le offerte nei tre marketplace
         /// effettua una chiamata a querydispatcher 
         /// per ogni marketplace        
-        $offerRetriever = new OffersRetriever( new Request( $atts ), [
-            'Trovaprezzi',
-            'Ebay',
-            'Amazon',
-        ]  );
+        $offerRetriever = new OffersRetriever( new Request( $atts ));
 
         /// riceve le offerte in ordine di marketplace
         $offers = $offerRetriever->getOffers();
