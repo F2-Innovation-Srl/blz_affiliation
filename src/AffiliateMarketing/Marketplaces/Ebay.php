@@ -1,7 +1,7 @@
 <?php
 
 namespace BLZ_AFFILIATION\AffiliateMarketing\Marketplaces;
-class Ebay implements Marketplace {
+class Ebay extends Marketplace {
 
     protected $name = "ebay";
     
