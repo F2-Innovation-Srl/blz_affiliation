@@ -79,7 +79,7 @@ class AffiliateLinkButton {
 
         $link = str_replace( '{tracking-id}', $tracking, $offer->link);
 
-        $content = (!empty($request->content) ? $request->content : $offer->price . " euro";
+        $content = (!empty($request->getContent())) ? $request->getContent() : $offer->price . " euro";
 
         return str_replace([ '{{ url }}', '{{ ga-event }}', '{{ content }}' ], [ $link, $ga_event, $offer->price ], $template,$content);
     }
