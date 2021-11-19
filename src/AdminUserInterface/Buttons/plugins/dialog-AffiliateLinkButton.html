@@ -26,7 +26,6 @@
             this.asin_legend             = document.getElementById('asin_legend');
 
             this.marketplace             = document.getElementById('marketplace');
-            this.marketplace_custom      = document.getElementById('marketplace_custom');
             this.tracking_id             = document.getElementById('tracking_id');     
             this.min_price               = document.getElementById('min_price');       
             this.keyword                 = document.getElementById('keyword');
@@ -38,7 +37,6 @@
             this.writeShortCode = function () {
                 
                 var marketplace         = this.marketplace.value;
-                var marketplace_custom  = this.marketplace_custom.value;
                 var keyword             = this.keyword.value;
                 var code                = this.code.value;
                 var tracking_id         = this.tracking_id.value;
@@ -48,7 +46,7 @@
 
                 if (marketplace == "custom") {
                     
-                    this.shortcode = '[affiliate_track url="' + code +'" data-affiliate="'+ga_event+'"';
+                    this.shortcode = '[affiliate_track url="' + code +'" ga_event="'+ga_event+'"';
                     
                     if (tinymce.activeEditor.selection.getContent() != "") {
                         this.shortcode += ' text="' + tinymce.activeEditor.selection.getContent() + '"';
@@ -103,7 +101,7 @@
             
             this.submit.addEventListener('click', function(e) {
  
-                if (this.marketplace.value == "custom" && this.marketplace_custom.value == "" ) {
+                if (this.marketplace.value == "custom" ) {
                     alert("inserire un marketplace valido"); 
                     return;
                 }
@@ -200,7 +198,6 @@
         <option value="custom">Custom</option>
     </select>
     <span id="container_marketplace" style="display: none;">
-        <input type="text" id="marketplace_custom">
         <legend>Evento GA</legend>
         <input type="text" id="ga_event">
     </span>

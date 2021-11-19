@@ -8,6 +8,9 @@ class Request {
     private $keyword;
     private $code;
     private $min_price;
+    // FOR CUSTOM URL
+    private $link;
+    private $ga_event;
 
     function __construct( $args ) 
     {
@@ -17,6 +20,9 @@ class Request {
         $this->min_price    = isset( $args['min_price'] ) ? $args['min_price'] : '20';
         $this->content      = isset( $args['text'] ) ? $args['text'] : '';
         $this->tracking_id  = isset( $args['tracking_id'] ) ? $args['tracking_id'] : (isset( $args['store'] ) ? $args['store'] : null); //CONTROLLO store PER RETROCOMPATIBILITA'
+        $this->link         = isset( $args['url'] ) ? $args['url'] : '';
+        $this->ga_event     = isset( $args['ga_event'] ) ? $args['ga_event'] : (isset( $args['data-affiliate'] ) ? $args['data-affiliate'] : null); //CONTROLLO data-affiliate PER RETROCOMPATIBILITA'
+        
     }
 
     /**
@@ -32,8 +38,10 @@ class Request {
     public function getKeyword()     { return $this->keyword; } 
     public function getCode()        { return  $this->code; } 
     public function getMinPrice()    { return $this->min_price; } 
-    public function getContent()      { return $this->content; } 
+    public function getContent()     { return $this->content; } 
     public function getTrackingId()  { return $this->tracking_id; } 
+    public function getLink()        { return $this->link; } 
+    public function getGaEvent()     { return $this->ga_event; } 
     public function getMarketplace() {
 
         $MarketPlaceMap = [
