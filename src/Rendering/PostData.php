@@ -1,6 +1,6 @@
 <?php
 
-namespace BLZ_AFFILIATION\Rendering\ParseLinkAndRender;
+namespace BLZ_AFFILIATION\Rendering;
 
 
 class PostData {

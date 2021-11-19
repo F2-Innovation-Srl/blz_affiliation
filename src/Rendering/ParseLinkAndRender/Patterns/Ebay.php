@@ -25,14 +25,14 @@ class Ebay extends Pattern {
 
         preg_match_all( $this->pattern, $this->content, $matches );
 
-        return array_map( function( $link ) {
+        return array_map( function( $link , $url ) {
 
             return new Link ([
-                'old_link'    => $link[ 0 ],
-                'url'         => $link[ 1 ] . '?mkcid=1&mkrid=724-53478-19255-0&siteid=101&campid=5338741871&customid={tracking_id}',
+                'old_link'    => $link,
+                'url'         => $url . '?mkcid=1&mkrid=724-53478-19255-0&siteid=101&campid=5338741871&customid={tracking_id}',
                 'marketplace' => $this->name
             ]);
 
-        }, $matches );
+        }, $matches[ 0 ], $matches[ 1 ] );
     }
 }
