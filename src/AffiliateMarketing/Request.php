@@ -40,7 +40,7 @@ class Request {
             "amazon" => "Amazon", 
             "custom" => "custom"
         ];
-        return $MarketPlaceMap[$marketplace];
+        return isset($MarketPlaceMap[$marketplace]) ? $MarketPlaceMap[$marketplace] : $marketplace;
     }
 
 }
