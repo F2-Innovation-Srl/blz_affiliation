@@ -1,7 +1,7 @@
 <?php
 
 namespace BLZ_AFFILIATION\AffiliateMarketing\Marketplaces;
-class Amazon implements Marketplace {
+class Amazon extends Marketplace {
 
     protected $name = 'amazon';
 

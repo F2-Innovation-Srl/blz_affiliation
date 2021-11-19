@@ -1,7 +1,7 @@
 <?php
 
 namespace BLZ_AFFILIATION\AffiliateMarketing\Marketplaces;
-class Trovaprezzi implements Marketplace {
+class Trovaprezzi extends Marketplace {
 
     private $name = "trovaprezziVG";
 
