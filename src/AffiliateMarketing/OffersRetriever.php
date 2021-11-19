@@ -13,7 +13,7 @@ class OffersRetriever {
     private $marketplaces;
     private $request;
 
-    public function __construct( Request $request, array $marketplaces = null ) {
+    public function __construct( Request $request, Array $marketplaces = null ) {
 
         $this->marketplaces = ($marketplaces) ? $marketplaces : [$request->getMarketplace()];
         $this->request = $request;

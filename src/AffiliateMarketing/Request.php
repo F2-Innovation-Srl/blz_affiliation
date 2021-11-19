@@ -31,7 +31,7 @@ class Request {
     public function getKeyword() { return $this->keyword; } 
     public function getCode()    { return  $this->code; } 
     public function getMinPrice()    { return $this->min_price; } 
-    private function getMarketplace(String $marketplace) {
+    public function getMarketplace(String $marketplace) {
 
         $marketplace = [
             "ebay" => "Ebay" ,
