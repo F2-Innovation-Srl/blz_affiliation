@@ -40,8 +40,8 @@ class BlzAffiliate {
 	public function __construct() {
 		
 		/// crea i custom post type (tabelle e link "centralizzati")
-		CustomPostTypes\AffiliateTables::init();
-		CustomPostTypes\AffiliateLinkProgamStored::init();
+		//CustomPostTypes\AffiliateTables::init();
+		//CustomPostTypes\AffiliateLinkProgamStored::init();
 		
 		/// effettua il rendering degli shortcode dei bottoni 
 		/// di affiliazione
@@ -49,21 +49,21 @@ class BlzAffiliate {
 
 		/// abilita il parsing e il rendering dei link
 		/// di affiliazione nel testo
-		Rendering\ParseLinkAndRender::init();
+		//Rendering\ParseLinkAndRender::init();
 
 		/// effettua il rendering degli shortcode delle 
 		/// tabelle di affiliazione		
-		new Rendering\AffiliateTable();
+		//new Rendering\AffiliateTable();
 		
 
 		/// aggiunge i bottoni per i link di affiliazione
 		new AdminUserInterface\Buttons\AffiliateLinkButton();
-		new AdminUserInterface\Buttons\AffiliateLinkProgramsButton();		
-		new AdminUserInterface\Buttons\AffiliateLinkProgramStoredButton();
+		//new AdminUserInterface\Buttons\AffiliateLinkProgramsButton();		
+		//new AdminUserInterface\Buttons\AffiliateLinkProgramStoredButton();
 		
 		/// aggiunge il bottone per selezionare le tabelle di affiliazione
 		/// a aggiungere il relativo shortcode in pagina
-		new AdminUserInterface\Buttons\AffiliateTableButton();
+		//new AdminUserInterface\Buttons\AffiliateTableButton();
 
 		/// aggiunge la pagina dei settings del plugin
 		new AdminUserInterface\PluginSettings();
