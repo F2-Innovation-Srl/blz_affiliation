@@ -11,7 +11,7 @@ abstract class Marketplace {
     /// i componenti del template di base della query
     protected $apiBase    = 'https://querydispatcher.justearn.it/api/v1/getoffer/';
     protected $apiQuery   = '{{ query }}/marketplace/{{ marketplace }}';
-    protected $apiParams  = '/items/1/category/elettronica?min_price=20';
+    protected $apiParams  = '/items/1/category/elettronica?min_price={{ min_price }}';
 
     protected $name = '';
     
