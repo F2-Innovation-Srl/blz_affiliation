@@ -38,7 +38,7 @@
                     return;
                 }
                 
-                this.shortcode = `[affiliate_program_link link="${link}" author_tracking_id="${author_tracking_id} "subject="${subject}" program="${program}" ]`;
+                this.shortcode = `[affiliate_program_link link="${link}" author_tracking_id="${author_tracking_id} subject="${subject}" program="${program}"]`;
                 
                 tinyMCE.activeEditor.execCommand( 'mceInsertContent', 0, this.shortcode );
                 
