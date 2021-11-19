@@ -6,6 +6,7 @@ class Offer {
 
     public $price;
     public $link;
+    public $marketplace;
 
     function __construct( $args ) 
     {
