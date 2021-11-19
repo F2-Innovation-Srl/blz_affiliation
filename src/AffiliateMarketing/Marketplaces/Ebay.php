@@ -23,7 +23,7 @@ class Ebay extends Marketplace {
         }
 
         /// sostituisce i valori nella query
-        $apiQuery = str_replace(['{{ query }}', '{{ marketplace }}'], [ urldecode( $query ), $this->name ], $this->apiQuery );
+        $apiQuery = str_replace(['{{ query }}', '{{ marketplace }}', '{{ min_price }}'], [ urldecode( $query ), $this->name, $this->min_price ], $this->apiQuery );
         
         /// ritorna la query
         return $this->apiBase . $apiQuery . $this->apiParams;

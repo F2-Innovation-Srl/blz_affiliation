@@ -9,7 +9,8 @@ class Trovaprezzi extends Marketplace {
 
         $query = $this->request->hasCode() ? $this->request->getCode() : $this->request->getKeyword();
 
-        $apiQuery = str_replace(['{{ query }}', '{{ marketplace }}'], [ urldecode( $query ), $this->name ], $this->apiQuery );
+        /// sostituisce i valori nella query
+        $apiQuery = str_replace(['{{ query }}', '{{ marketplace }}', '{{ min_price }}'], [ urldecode( $query ), $this->name, $this->min_price ], $this->apiQuery );
         
         return $this->apiBase . $apiQuery . $this->apiParams;
     }
