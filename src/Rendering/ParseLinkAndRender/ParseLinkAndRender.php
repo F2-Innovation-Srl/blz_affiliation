@@ -2,13 +2,10 @@
 
 namespace BLZ_AFFILIATION\Rendering\ParseLinkAndRender;
 
-
 use BLZ_AFFILIATION\AffiliateMarketing\Offer;
 use BLZ_AFFILIATION\Rendering\ParseLinkAndRender\Link;
 use BLZ_AFFILIATION\Rendering\ParseLinkAndRender\PostData;
-
-
-use BLZ_AFFILIATION\Utils\Shortener; // dove lo utilizziamo?
+use BLZ_AFFILIATION\Utils\Shortener; 
 
 class ParseLinkAndRender {
 
@@ -59,7 +56,7 @@ class ParseLinkAndRender {
 
         },  $this->setPatterns() );
 
-        /// a questo punto dovremmo avere tutti 
+        /// a questo punto dovremmo avere tutti
         /// gli elementi per costruire i link
 
         /// per ogni pattern
@@ -107,7 +104,14 @@ class ParseLinkAndRender {
 
         $link = str_replace( '{tracking-id}', $tracking, $linkData->url);
 
-        return str_replace([ '{{ url }}', '{{ ga-event }}'], [ $link, $ga_event ], $template);
+        /// se il marketplace è tra quelli che prevedono lo shortlink
+        if( in_array( $linkData->marketplace, $this->postData->shortables ) ) {
+            
+            /// viene accorciato il link
+            $link = ( new Shortener() )->generateShortLink( $link );
+        }
+        
+        return str_replace([ '{{ url }}', '{{ ga-event }}'], [ $link, $ga_event ], $this->templates['affiliate_link']);
     }
 
 

@@ -10,6 +10,12 @@ class PostData {
     public $is_amp;
     public $author;
     public $website;
+
+    /// elenco dei marketplace da shortlinkare
+    public $shortables = [
+        'amazon',
+        'trovaprezzi'
+    ];
     
     public function __construct() {
 
