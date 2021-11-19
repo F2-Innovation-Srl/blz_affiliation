@@ -3,7 +3,7 @@
 namespace BLZ_AFFILIATION\AffiliateMarketing\Marketplaces;
 class Trovaprezzi extends Marketplace {
 
-    protected $name = "trovaprezziVG";
+    protected $name = "custom";
 
     public function getQueryURL() {
 

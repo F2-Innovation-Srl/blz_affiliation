@@ -26,7 +26,7 @@ class Amazon extends Marketplace {
         $apiParams = str_replace('{{ min_price }}', $this->request->getMinPrice() , $this->apiParams );
         
         /// ritorna la query
-        return $this->apiBase . $apiQuery . $this->apiParams . $code_suffix;
+        return $this->apiBase . $apiQuery . $apiParams . $code_suffix;
     }
 
 
