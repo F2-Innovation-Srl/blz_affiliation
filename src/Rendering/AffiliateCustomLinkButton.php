@@ -14,7 +14,7 @@ use BLZ_AFFILIATION\Rendering\SettingsData;
 
 
 
-class AffiliateLinkButton {
+class AffiliateCustomLinkButton {
 
     private $post;
     private $category;
