@@ -5,7 +5,7 @@ namespace BLZ_AFFILIATION\Rendering;
 
 class SettingsData { 
 
-    private $templates = [
+    static $templates = [
         
         'affiliate_link' => <<<HTML
 
