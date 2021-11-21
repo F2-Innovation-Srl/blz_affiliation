@@ -4,6 +4,9 @@ namespace BLZ_AFFILIATION\AffiliateMarketing\Marketplaces;
 class Trovaprezzi extends Marketplace {
 
     protected $name = "trovaprezziVG";
+    protected $panelName = "trovaprezzi";
+    protected $panelDescription = 'Pannello per la configurazione di trovaprezzi';
+    protected $active = true;
 
     public function getQueryURL() {
 
@@ -12,7 +15,7 @@ class Trovaprezzi extends Marketplace {
         /// sostituisce i valori nella query
         $apiQuery = str_replace(['{{ query }}', '{{ marketplace }}'], [ urldecode( $query ), $this->name], $this->apiQuery );
         $apiParams = str_replace('{{ min_price }}', $this->request->getMinPrice() , $this->apiParams );
-        
+
         return $this->apiBase . $apiQuery . $apiParams . $code_suffix;
     }
 }

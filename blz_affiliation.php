@@ -67,7 +67,21 @@ class BlzAffiliate {
 		//new AdminUserInterface\Buttons\AffiliateTableButton();
 
 		/// aggiunge la pagina dei settings del plugin
-		new AdminUserInterface\PluginSettings();
+
+		# load services
+		$files = glob(PLUGIN_PATH.'/src/AffiliateMarketing/Marketplaces*.{php}', GLOB_BRACE);
+		foreach($files as $file) {
+			$className = basename($file, ".php");  
+			
+			if ($className != "Marketplace") {      
+				$className = "\\BLZ_AFFILIATION\\AffiliateMarketing\\Marketplaces\\".$className;
+				//echo $className;
+				$class = new $className;
+				$marketplaces[$class->getPanelName()] = $class;
+			}
+		}
+
+		new AdminUserInterface\PluginSettings($marketplaces);
 		
 	}
 }

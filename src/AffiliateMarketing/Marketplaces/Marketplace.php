@@ -14,7 +14,9 @@ abstract class Marketplace {
     protected $apiParams  = '/items/1/category/elettronica?min_price={{ min_price }}';
 
     protected $name = '';
-    
+    protected $panelName = "";
+    protected $panelDescription = '';
+    protected $active = '';
     /// la richiesta 
     protected $request;
 
@@ -49,4 +51,7 @@ abstract class Marketplace {
      */
     abstract protected function getQueryURL();
 
+    public function getPanelName() { return $this->panelName; }
+    public function getPanelDescription() { return $this->panelDescription; }
+    public function getActive() { return $this->active; }
 }

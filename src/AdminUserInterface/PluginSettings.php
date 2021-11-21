@@ -13,8 +13,8 @@ class PluginSettings {
 	/**
 	 * AdminPage constructor.
 	 */
-	function __construct() {
-        $this->marketplaces = ["AMAZON", "EBAY", "TROVAPREZZI"];
+	function __construct($marketplaces) {
+        $this->marketplaces = $marketplaces;
         $this->types = ["GA TRACKING", "TRACKING ID"];
         # set admin actions callback
         add_action('admin_menu', [ $this, 'adminMenu' ]);
@@ -66,9 +66,9 @@ class PluginSettings {
             <input type="hidden" name="edc-sendForm" value="OK" />
             <?php 
             $this->printTabs();
-            $description = $this->marketplaces[$this->current_tab]->getDescription();
+            $description = $this->marketplaces[$this->current_tab]->getPanelDescription();
             $active = $this->marketplaces[$this->current_tab]->getActive();
-            $params = $this->marketplaces[$this->current_tab]->getParams();
+            $params = [];
             ?>
             
             <div class="edc-container">
