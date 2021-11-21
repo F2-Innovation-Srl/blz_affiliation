@@ -23,7 +23,8 @@ require_once PLUGIN_PATH . '/vendor/autoload.php';
 use BLZ_AFFILIATION\Rendering;
 use BLZ_AFFILIATION\AdminUserInterface;
 use BLZ_AFFILIATION\CustomPostTypes;
-
+use BLZ_AFFILIATION\AffiliateMarketing\Marketplace;
+use BLZ_AFFILIATION\AffiliateMarketing\Request;
 /**
  *
  */
@@ -67,16 +68,15 @@ class BlzAffiliate {
 		//new AdminUserInterface\Buttons\AffiliateTableButton();
 
 		/// aggiunge la pagina dei settings del plugin
-
 		# load services
-		$files = glob(PLUGIN_PATH.'/src/AffiliateMarketing/Marketplaces*.{php}', GLOB_BRACE);
+		$request = new Request([]);
+		$files = glob(PLUGIN_PATH.'src/AffiliateMarketing/Marketplaces/*.{php}', GLOB_BRACE);
 		foreach($files as $file) {
 			$className = basename($file, ".php");  
 			
 			if ($className != "Marketplace") {      
-				$className = "\\BLZ_AFFILIATION\\AffiliateMarketing\\Marketplaces\\".$className;
-				//echo $className;
-				$class = new $className;
+				$className = "BLZ_AFFILIATION\\AffiliateMarketing\\Marketplaces\\".$className;
+				$class = new $className($request);
 				$marketplaces[$class->getPanelName()] = $class;
 			}
 		}

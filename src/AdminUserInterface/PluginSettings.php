@@ -9,6 +9,7 @@ namespace BLZ_AFFILIATION\AdminUserInterface;
 class PluginSettings {
     public $page = "blz-affiliation";
     protected $marketplaces;
+    protected $current_tab;
     protected $types;
 	/**
 	 * AdminPage constructor.
@@ -37,6 +38,8 @@ class PluginSettings {
         if (!current_user_can('manage_options')) {
             wp_die('Non hai i permessi per visualizzare questa pagina');
         } else{
+            $this->current_tab = (isset($_GET['tab'])) ? $_GET['tab'] : array_key_first($this->marketplaces);
+            if (isset($_POST["blz-affiliation-sendForm"])) $this->saveForm();
             $this->printForm();
         }
 
@@ -120,8 +123,8 @@ class PluginSettings {
         echo '<div id="icon-themes" class="icon32"><br></div>';
         echo '<h2 class="nav-tab-wrapper">';
         foreach($this->marketplaces as $marketplace) {
-            $classTab = ( $marketplace == $this->current_tab ) ? " nav-tab-active" : "";
-            echo "<a class='nav-tab".$classTab."' href='?page=".$this->page."&tab=".$marketplace."'>".$marketplace."</a>";
+            $classTab = ( $marketplace->getPanelName() == $this->current_tab ) ? " nav-tab-active" : "";
+            echo "<a class='nav-tab".$classTab."' href='?page=".$this->page."&tab=".$marketplace->getPanelName()."'>".$marketplace->getPanelName()."</a>";
     
         }
         echo '</h2>';
