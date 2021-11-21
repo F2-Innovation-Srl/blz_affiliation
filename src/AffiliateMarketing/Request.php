@@ -36,9 +36,9 @@ class Request {
     }
 
     public function getKeyword()     { return $this->keyword; } 
-    public function getCode()        { return  $this->code; } 
+    public function getCode()        { return $this->code; } 
     public function getMinPrice()    { return $this->min_price; } 
-    public function getContent()     { return $this->content; } 
+    public function getContent()     { return urldecode($this->content); } 
     public function getTrackingId()  { return $this->tracking_id; } 
     public function getLink()        { return $this->link; } 
     public function getGaEvent()     { return $this->ga_event; } 
