@@ -16,7 +16,6 @@ abstract class Marketplace {
     protected $name = '';
     protected $panelName = "";
     protected $panelDescription = '';
-    protected $active = '';
     /// la richiesta 
     protected $request;
 
@@ -53,5 +52,4 @@ abstract class Marketplace {
 
     public function getPanelName() { return $this->panelName; }
     public function getPanelDescription() { return $this->panelDescription; }
-    public function getActive() { return $this->active; }
 }

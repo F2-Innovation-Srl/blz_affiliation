@@ -22,6 +22,7 @@ require_once PLUGIN_PATH . '/vendor/autoload.php';
 
 use BLZ_AFFILIATION\Rendering;
 use BLZ_AFFILIATION\AdminUserInterface;
+use BLZ_AFFILIATION\AdminUserInterface\Settings;
 use BLZ_AFFILIATION\CustomPostTypes;
 use BLZ_AFFILIATION\AffiliateMarketing\Marketplace;
 use BLZ_AFFILIATION\AffiliateMarketing\Request;
@@ -81,7 +82,7 @@ class BlzAffiliate {
 			}
 		}
 
-		new AdminUserInterface\PluginSettings($marketplaces);
+		new AdminUserInterface\Settings\AdminPage($marketplaces);
 		
 	}
 }

@@ -6,7 +6,6 @@ class Trovaprezzi extends Marketplace {
     protected $name = "trovaprezziVG";
     protected $panelName = "trovaprezzi";
     protected $panelDescription = 'Pannello per la configurazione di trovaprezzi';
-    protected $active = true;
 
     public function getQueryURL() {
 

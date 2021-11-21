@@ -6,7 +6,7 @@ class Ebay extends Marketplace {
     protected $name = "ebay";
     protected $panelName = "ebay";
     protected $panelDescription = 'Pannello per la configurazione di eBay';
-    protected $active = true;
+    
     public function getQueryURL() {
 
         /// per default prende una keyword
