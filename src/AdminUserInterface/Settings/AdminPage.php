@@ -9,11 +9,17 @@ namespace BLZ_AFFILIATION\AdminUserInterface\Settings;
 class AdminPage {
     public $page = "blz-affiliation";
     protected $marketplaces;
+    protected $tabs;
     protected $current_tab;
+    protected $current_sub_tab;
 	/**
 	 * AdminPage constructor.
 	 */
 	function __construct($marketplaces) {
+        $this->tabs = [
+            "editorial-link-button" => "Editorial Link Button",
+            "editorial-automatic" => "Editorial Automatici",
+        ];
         $this->marketplaces = $marketplaces;
         # set admin actions callback
         add_action('admin_menu', [ $this, 'adminMenu' ]);
@@ -69,7 +75,7 @@ class AdminPage {
     <?php
     }
 
-    private function printTabs($current = 'homepage' ) {
+    private function printTabs() {
         echo '<div id="icon-themes" class="icon32"><br></div>';
         echo '<h2 class="nav-tab-wrapper">';
         foreach($this->marketplaces as $marketplace) {

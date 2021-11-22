@@ -21,6 +21,7 @@ class FormBuilder {
     **/
     public function printForm()
     {
+        $this->printParam("Il marketplace ".$this->marketplace. " è attivo?","boolean","blz-affiliation-".$this->marketplace."-active"); 
         $this->printParam("Default TrackingID per ".$this->marketplace,"text","blz-affiliation-".$this->marketplace."-default"); 
         $this->printParam("Default Ga Event per ".$this->marketplace,"text","blz-affiliation-".$this->marketplace."-default"); 
         $this->printTypeTracking();
@@ -29,11 +30,13 @@ class FormBuilder {
 
 
     private function printTypeTracking(){
+        $blz_affiliation_type=get_option("blz-affiliation-type",'');
         ?>
         <div class="options"><p><label><strong>Seleziona tipologia di tracciamento:</strong></label><br>
             <select name="blz-affiliation-type">
-             <option value="<?php echo (get_option("blz-affiliation-type",'') == "POSTTYPE") ? "selected" : ""?>" >POSTTYPE</option>
-             <option value="<?php echo (get_option("blz-affiliation-type",'') == "CATEGORY") ? "selected" : ""?>" >CATEGORY</option>
+            <option value="">Seleziona un tipologia</option>
+             <option value="<?php echo $blz_affiliation_type ?>" <?php echo ($blz_affiliation_type == "POSTTYPE") ? "selected" : ""?>>POSTTYPE</option>
+             <option value="<?php echo $blz_affiliation_type ?>" <?php echo ($blz_affiliation_type == "CATEGORY") ? "selected" : ""?>>CATEGORY</option>
             </select>
         </p></div>
         <?php
@@ -43,6 +46,7 @@ class FormBuilder {
         ?>
         <div class="options"><p><label><strong>Elenco Utenti:</strong></label><br>
             <select name="blz-affiliation-users">
+                <option value="0">Seleziona un utente</option>
             <?php
             $blogusers = get_users(['role__in' => ['author', 'subscriber']]);
             // Array of WP_User objects.
@@ -71,8 +75,8 @@ class FormBuilder {
                 break;
             case "boolean":
                 ?>
-                SI <input type="radio" name="<?php echo $name?>" <?php echo (get_option($name,'') == "true") ? "checked" : ""?> value="true" />
-                NO <input type="radio" name="<?php echo $name?>" <?php echo (get_option($name,'') == "false") ? "checked" : ""?> value="false" />
+                SI <input type="radio" name="<?php echo $name?>" <?php echo (get_option($name,'true') == "true" ) ? "checked" : ""?> value="true" />
+                NO <input type="radio" name="<?php echo $name?>" <?php echo (get_option($name,'true') == "false") ? "checked" : ""?> value="false" />
                 <?php
                 break;
         }
