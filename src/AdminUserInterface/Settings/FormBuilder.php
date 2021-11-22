@@ -1,4 +1,4 @@
-o<?php
+<?php
 namespace BLZ_AFFILIATION\AdminUserInterface\Settings;
 
 /**
@@ -19,7 +19,7 @@ class FormBuilder {
    /**
      * Print form
     **/
-    private function printForm()
+    public function printForm()
     {
         $this->printParam("Default TrackingID per ".$this->marketplace,"text","blz-affiliation-".$this->marketplace."-default"); 
         $this->printParam("Default Ga Event per ".$this->marketplace,"text","blz-affiliation-".$this->marketplace."-default"); 
@@ -34,6 +34,7 @@ class FormBuilder {
             <select name="blz-affiliation-type">
              <option value="<?php echo (get_option("blz-affiliation-type",'') == "POSTTYPE") ? "selected" : ""?>" >POSTTYPE</option>
              <option value="<?php echo (get_option("blz-affiliation-type",'') == "CATEGORY") ? "selected" : ""?>" >CATEGORY</option>
+            </select>
         </p></div>
         <?php
     }
@@ -83,7 +84,7 @@ class FormBuilder {
     /**
      * Save form
     **/
-    private function saveForm()
+    public function saveForm()
     {
         foreach (array_filter($_POST, function($k) { return strpos($k, "blz-affiliation-") !== false; }, ARRAY_FILTER_USE_KEY) as $key => $val)
             update_option($key,$val);

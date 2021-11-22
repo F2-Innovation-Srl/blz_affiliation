@@ -9,6 +9,7 @@ namespace BLZ_AFFILIATION\AdminUserInterface\Settings;
 class AdminPage {
     public $page = "blz-affiliation";
     protected $marketplaces;
+    protected $current_tab;
 	/**
 	 * AdminPage constructor.
 	 */
@@ -45,9 +46,12 @@ class AdminPage {
     **/
     private function printPage()
     {
-        $current_tab = (isset($_GET['tab'])) ? $_GET['tab'] : array_key_first($this->marketplaces);
-        $formBuilder = new FormBuilder($current_tab);
+        
+        $this->current_tab = (isset($_GET['tab'])) ? $_GET['tab'] : array_key_first($this->marketplaces);
+        
+        $formBuilder = new FormBuilder($this->current_tab);
         if (isset($_POST["blz-affiliation-sendForm"])) $formBuilder->saveForm();
+        
         ?>
         <form method="post" action="<?php echo esc_html( admin_url( 'admin.php?page='.$this->page.'&tab='.$this->current_tab ) ); ?>">
             <input type="hidden" name="blz-affiliation-sendForm" value="OK" />
