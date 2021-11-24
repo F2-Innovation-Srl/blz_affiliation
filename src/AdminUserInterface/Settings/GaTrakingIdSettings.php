@@ -8,6 +8,7 @@ namespace BLZ_AFFILIATION\AdminUserInterface\Settings;
  */
 class GaTrakingIdSettings {
 
+    private   $page = "blz-affiliation";
     protected $marketplaces;
     protected $tabs;
     protected $current_tab;
@@ -16,8 +17,8 @@ class GaTrakingIdSettings {
 	 * AdminPage constructor.
 	 */
 	function __construct() {
-        $this->tabs = CONFIG["tabs"];
-        $this->marketplaces = CONFIG["marketplaces"];
+        $this->tabs = CONFIG["Items"][array_search($this->$page, array_column(CONFIG["Items"], 'suffix'))]["tabs"];
+        $this->marketplaces = CONFIG["Items"][array_search($this->$page, array_column(CONFIG["Items"], 'suffix'))]["marketplaces"];
 	}
 
 	

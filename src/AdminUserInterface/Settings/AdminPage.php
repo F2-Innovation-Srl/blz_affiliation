@@ -7,7 +7,6 @@ namespace BLZ_AFFILIATION\AdminUserInterface\Settings;
  * @package BLZ_AFFILIATION
  */
 class AdminPage {
-    public $page = "blz-affiliation";
 	/**
 	 * AdminPage constructor.
 	 */
@@ -23,13 +22,9 @@ class AdminPage {
      * Create admin menu 
     **/
 	public function adminMenu() {
-
-        $gaTrakingIdSettings = new GaTrakingIdSettings();
-        $programLinksOptions = new ProgramLinksOptions();
-        add_menu_page('Blazemedia Affilitation', 'Blazemedia Affilitation', 'manage_options', $this->page);
-        add_submenu_page($this->page,'GA e TrackingID Settings', 'GA e TrackingID Settings', 'manage_options', $this->page, [ $gaTrakingIdSettings, 'render']);
-        add_submenu_page($this->page,'Program Links Options', 'Program Links Options', 'manage_options', $this->page."-program-links-options", [ $programLinksOptions, 'render']);
-
+        add_menu_page(CONFIG["plugin_name"], CONFIG["plugin_name"], 'manage_options', CONFIG["plugin_suffix"]);
+        foreach(CONFIG["Items"] as $item)
+            add_submenu_page(CONFIG["plugin_suffix"], $item["name"],$item["name"], 'manage_options', $item["suffix"], [ new $item["class_name"], 'render']);
 	}
 
     public static function custom_enqueue()

@@ -7,7 +7,7 @@ namespace BLZ_AFFILIATION\AdminUserInterface\Settings;
  * @package BLZ_AFFILIATION
  */
 class FormBuilder {
-    public $page = "blz-affiliation";
+    
     protected $marketplace;
 	/**
 	 * AdminPage constructor.

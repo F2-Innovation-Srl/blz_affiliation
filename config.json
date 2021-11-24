@@ -1,36 +1,52 @@
 {
-    "tabs":[
-            {
-                "name"        : "Editorial Links",
-                "slug"        : "linkButton",
-                "description" : "Link Editoriali da Bottone"
-            },
-            {
-                "name"        : "Altri Programmi",
-                "slug"        : "linkPrograms",
-                "description" : "Link Editoriali Altri Programmi"
-            },{
-                "name"        : "Parse and Render",
-                "slug"        : "parseLinkAndRender",
-                "description" : "Pannello per la configurazione di eBay"
+    "plugin_name"     : "Blazemedia Affilitation",
+    "plugin_suffix"   : "blz-affiliation",
+    "Items"  : [
+        {
+            "name"       : "Blazemedia Affilitation",
+            "suffix"     : "blz-affiliation",
+            "class_name" : "GaTrakingIdSettings",
+            "settings" : {
+                "tabs" : [
+                    {
+                        "name"        : "Editorial Links",
+                        "suffix"      : "linkButton",
+                        "description" : "Link Editoriali da Bottone"
+                    },
+                    {
+                        "name"        : "Altri Programmi",
+                        "suffix"      : "linkPrograms",
+                        "description" : "Link Editoriali Altri Programmi"
+                    },{
+                        "name"        : "Parse and Render",
+                        "suffix"      : "parseLinkAndRender",
+                        "description" : "Pannello per la configurazione di eBay"
+                    }
+                ],
+                "marketplaces":[
+                        {
+                            "name"        : "Amazon",
+                            "suffix"      : "amazon",
+                            "description" : "Pannello per la configurazione di Amazon"
+                        },
+                        {
+                            "name"        : "eBay",
+                            "suffix"      : "ebay",
+                            "description" : "Pannello per la configurazione di eBay"
+                        },
+                        {
+                            "name"        : "Trovaprezzi",
+                            "suffix"      : "trovaprezzi",
+                            "description" : "Pannello per la configurazione di Trovaprezzi"
+                        }
+                ]
             }
-    ],
-    "marketplaces":[
-            {
-                "name"        : "Amazon",
-                "slug"        : "amazon",
-                "description" : "Pannello per la configurazione di Amazon"
-            },
-            {
-                "name"        : "eBay",
-                "slug"        : "ebay",
-                "description" : "Pannello per la configurazione di eBay"
-            },
-            {
-                "name"        : "Trovaprezzi",
-                "slug"        : "trovaprezzi",
-                "description" : "Pannello per la configurazione di Trovaprezzi"
-            }
+        },
+        {
+            "name"       : "Blazemedia Affilitation",
+            "suffix"     : "blz-affiliation",
+            "class_name" : "ProgramLinksOptions"
+        }
     ]
   }
   
