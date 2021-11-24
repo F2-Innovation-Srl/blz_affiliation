@@ -15,7 +15,7 @@ class Settings {
     /**
      * Torna l'api name dal settings
      */
-    public static function getMarketPlace(){
+    public static function getApiSlug(){
         $settings = $self::findbySuffix(CONFIG["Items"],$_GET["page"])["settings"];
         $marketPlace = $self::findbySuffix($settings["marketplaces"],$_GET["sub_tab"])["api_slug"];
     }
