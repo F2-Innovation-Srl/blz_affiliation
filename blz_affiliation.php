@@ -71,9 +71,10 @@ class BlzAffiliate {
 		/// a aggiungere il relativo shortcode in pagina
 		//new AdminUserInterface\Buttons\AffiliateTableButton();
 
+		//load Settings
+		BLZ_AFFILIATION\Utils\Settings::loadSettings();
+
 		/// aggiunge la pagina dei settings del plugin
-		# load config
-		define('CONFIG', json_decode(file_get_contents(PLUGIN_PATH.'config.json'), true));
 		new AdminUserInterface\Settings\AdminPage();
 		
 	}

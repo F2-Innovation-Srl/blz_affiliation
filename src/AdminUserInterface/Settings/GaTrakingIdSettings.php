@@ -19,8 +19,8 @@ class GaTrakingIdSettings {
         $this->tabs = $settings["settings"]["tabs"];
         $this->marketplaces = $settings["settings"]["marketplaces"];
         $this->current = [
-            "tab" => (isset($_GET['tab'])) ? \BLZ_AFFILIATION\Utils\Settings::findbySuffix($this->tabs,$_GET["tab"]) : $this->tabs[0],
-            "sub_tab" => (isset($_GET['sub_tab'])) ? \BLZ_AFFILIATION\Utils\Settings::findbySuffix($this->marketplaces,$_GET["sub_tab"]) : $this->marketplaces[0]
+            "tab" => (isset($_GET['tab'])) ? \BLZ_AFFILIATION\Utils\Settings::findbySuffix($this->marketplaces,$_GET["tab"]) : $this->marketplaces[0],
+            "sub_tab" => (isset($_GET['sub_tab'])) ? \BLZ_AFFILIATION\Utils\Settings::findbySuffix($this->tabs,$_GET["sub_tab"]) : $this->tabs[0]
         ];
     }
 
@@ -42,17 +42,15 @@ class GaTrakingIdSettings {
     **/
     private function printPage()
     {
-        
-        $formBuilder = new FormBuilder($this->current["sub_tab"]["suffix"]);
-        if (isset($_POST["blz-affiliation-sendForm"])) $formBuilder->saveForm();
-        
+        if (isset($_POST["blz-affiliation-sendForm"])) $this->saveForm();
         ?>
         <form method="post" action="<?php echo esc_html( admin_url( 'admin.php?page='.$_GET["page"].'&tab='.$this->current["tab"]["suffix"].'&sub_tab='.$this->current["sub_tab"]["suffix"] ) ); ?>">
             <input type="hidden" name="blz-affiliation-sendForm" value="OK" />
             <?php $this->printTabs(); ?>
             <div class="blz-affiliation-container">
                 <h2><?php echo $this->current["sub_tab"]["description"] . " per i " .$this->current["tab"]["description"];?></h2>
-                <?php $formBuilder->printForm(); ?>
+                <?php $this->printTable(); ?>
+                <?php $this->printTemplate(); ?>
             </div>
             <div><hr></div>
             <?php 
@@ -79,6 +77,29 @@ class GaTrakingIdSettings {
         }
         echo '</h2>';
     }
+
+    private function printTable() {
+        echo '<div id="icon-themes" class="icon32"><br></div>';
+        echo '<h2 class="nav-tab-wrapper">';
+        
+        echo '</h2>';
+    }
+
+    private function printTemplate() {
+        echo '<div id="icon-themes" class="icon32"><br></div>';
+        echo '<h2 class="nav-tab-wrapper">';
+        
+        echo '</h2>';
+    }
     
+    /**
+     * Save form
+    **/
+    public function saveForm()
+    {
+        foreach (array_filter($_POST, function($k) { return strpos($k, "blz-affiliation-") !== false; }, ARRAY_FILTER_USE_KEY) as $key => $val)
+            update_option($key,$val);
     
+        echo "<div class=\"updated notice\"><p>Dati salvati con successo</p></div>";
+    }
 }
