@@ -7,8 +7,7 @@ namespace BLZ_AFFILIATION\AdminUserInterface\Settings;
  * @package BLZ_AFFILIATION
  */
 class ProgramLinksOptions {
-    
-    
+     
     protected $programs;
     protected $subjects;
     protected $default_tracking_id = 'tn-news';
@@ -88,7 +87,7 @@ class ProgramLinksOptions {
     
     private function form()
     { 
-        $action = esc_html( admin_url( 'admin.php?page='.$this->page ) );
+        $action = esc_html( admin_url( 'admin.php?page='.$GET["page"] ) );
 
         $programs = $this->getPrograms();
         $subjects = $this->getSubjects();

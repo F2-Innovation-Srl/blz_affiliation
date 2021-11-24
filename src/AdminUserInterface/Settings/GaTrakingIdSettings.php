@@ -7,6 +7,7 @@ namespace BLZ_AFFILIATION\AdminUserInterface\Settings;
  * @package BLZ_AFFILIATION
  */
 class GaTrakingIdSettings {
+
     protected $marketplaces;
     protected $tabs;
     protected $current_tab;
@@ -46,7 +47,7 @@ class GaTrakingIdSettings {
         if (isset($_POST["blz-affiliation-sendForm"])) $formBuilder->saveForm();
         
         ?>
-        <form method="post" action="<?php echo esc_html( admin_url( 'admin.php?page='.$this->page.'&tab='.$this->current_tab.'&parent_tab='.$this->current_parent_tab ) ); ?>">
+        <form method="post" action="<?php echo esc_html( admin_url( 'admin.php?page='.$GET["page"].'&tab='.$this->current_tab.'&parent_tab='.$this->current_parent_tab ) ); ?>">
             <input type="hidden" name="blz-affiliation-sendForm" value="OK" />
             <?php $this->printTabs(); ?>
             <div class="blz-affiliation-container">
@@ -67,14 +68,14 @@ class GaTrakingIdSettings {
         echo '<h2 class="nav-tab-wrapper">';
         foreach($this->tabs as $tabs) {
             $classTab = ( $tabs["slug"] == $this->current_parent_tab ) ? " nav-tab-active" : "";
-            echo "<a class='nav-tab".$classTab."' href='?page=".$this->page."&tab=".$this->current_tab."&parent_tab=".$tabs["slug"]."'>".$tabs["name"]."</a>";
+            echo "<a class='nav-tab".$classTab."' href='?page=".$GET["page"]."&tab=".$this->current_tab."&parent_tab=".$tabs["slug"]."'>".$tabs["name"]."</a>";
         }
         echo '</h2>';
         echo '<div id="icon-themes" class="icon32"><br></div>';
         echo '<h2 class="nav-tab-wrapper">';
         foreach($this->marketplaces as $tabs) {
             $classTab = ( $tabs["slug"] == $this->current_tab ) ? " nav-tab-active" : "";
-            echo "<a class='nav-tab".$classTab."' href='?page=".$this->page."&tab=".$tabs["slug"]."&parent_tab=".$this->current_parent_tab."'>".$tabs["name"]."</a>";
+            echo "<a class='nav-tab".$classTab."' href='?page=".$GET["page"]."&tab=".$tabs["slug"]."&parent_tab=".$this->current_parent_tab."'>".$tabs["name"]."</a>";
         }
         echo '</h2>';
     }
