@@ -3,8 +3,6 @@
 namespace BLZ_AFFILIATION\AffiliateMarketing\Marketplaces;
 class Amazon extends Marketplace {
 
-    protected $name = 'amazon';
-
     public function getQueryURL() {
 
         /// per default prende una keyword

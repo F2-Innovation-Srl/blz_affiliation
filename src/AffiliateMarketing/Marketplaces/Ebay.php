@@ -3,8 +3,6 @@
 namespace BLZ_AFFILIATION\AffiliateMarketing\Marketplaces;
 class Ebay extends Marketplace {
 
-    protected $name = "ebay";
-    
     public function getQueryURL() {
 
         /// per default prende una keyword

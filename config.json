@@ -7,39 +7,49 @@
             "suffix"     : "blz-affiliation",
             "class_name" : "GaTrakingIdSettings",
             "settings" : {
+                "marketplaces":[
+                        {
+                            "name"              : "Amazon",
+                            "suffix"            : "amazon",
+                            "description"       : "Pannello per la configurazione di Amazon",
+                            "api_slug"          : "amazon",
+                            "ga_event_template" : "{website}{marketplace}{label}{amp}{author}",
+                            "tracking_id"       : "{website}-{marketplace}-{label}-{author}-{amp}-21"
+                        },
+                        {
+                            "name"              : "eBay",
+                            "suffix"            : "ebay",
+                            "description"       : "Pannello per la configurazione di eBay",
+                            "api_slug"          : "ebay",
+                            "ga_event_template" : "{website}{marketplace}{label}{paid}{amp}{author}",
+                            "tracking_id"       : "{website}-{marketplace}-{label}-{author}-{amp}"
+                        },
+                        {
+                            "name"              : "Trovaprezzi",
+                            "suffix"            : "trovaprezzi",
+                            "description"       : "Pannello per la configurazione di Trovaprezzi",
+                            "api_slug"          : "trovaprezziVG",
+                            "ga_event_template" : "{website}{marketplace}{label}{paid}{amp}{author}",
+                            "tracking_id"       : ""
+                        }
+                ],
                 "tabs" : [
                     {
                         "name"        : "Editorial Links",
                         "suffix"      : "linkButton",
-                        "description" : "Link Editoriali da Bottone"
+                        "description" : "link Editoriali da Bottone"
                     },
                     {
                         "name"        : "Altri Programmi",
                         "suffix"      : "linkPrograms",
-                        "description" : "Link Editoriali Altri Programmi"
+                        "description" : "link Editoriali Altri Programmi"
                     },{
                         "name"        : "Parse and Render",
                         "suffix"      : "parseLinkAndRender",
-                        "description" : "Pannello per la configurazione di eBay"
+                        "description" : "link automatici nel content"
                     }
-                ],
-                "marketplaces":[
-                        {
-                            "name"        : "Amazon",
-                            "suffix"      : "amazon",
-                            "description" : "Pannello per la configurazione di Amazon"
-                        },
-                        {
-                            "name"        : "eBay",
-                            "suffix"      : "ebay",
-                            "description" : "Pannello per la configurazione di eBay"
-                        },
-                        {
-                            "name"        : "Trovaprezzi",
-                            "suffix"      : "trovaprezzi",
-                            "description" : "Pannello per la configurazione di Trovaprezzi"
-                        }
                 ]
+                
             }
         },
         {
