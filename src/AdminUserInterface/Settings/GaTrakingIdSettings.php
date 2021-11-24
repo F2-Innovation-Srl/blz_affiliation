@@ -16,11 +16,11 @@ class GaTrakingIdSettings {
 	 * AdminPage constructor.
 	 */
 	function __construct() {
-        $this->tabs = findInConfig(CONFIG["Items"],"tabs",$_GET["page"]);
-        $this->marketplaces = findInConfig(CONFIG["Items"],"marketplaces",$_GET["page"]);
+        $this->tabs = $this->findInConfig(CONFIG["Items"],"tabs",$_GET["page"]);
+        $this->marketplaces = $this->findInConfig(CONFIG["Items"],"marketplaces",$_GET["page"]);
        
-        $this->current_tab = (isset($_GET['tab'])) ? $this->tabs[array_search($_GET["tab"], array_column($this->tabs, 'suffix'))] : $this->marketplaces[0];
-        $this->current_parent_tab = (isset($_GET['parent_tab'])) ? $this->marketplaces[array_search($_GET["parent_tab"], array_column($this->marketplaces, 'suffix'))] : $this->tabs[0];
+        $this->current_tab = (isset($_GET['tab'])) ? $this->findInConfig($this->tabs,'suffix',$_GET["tab"]) : $this->marketplaces[0];
+        $this->current_parent_tab = (isset($_GET['parent_tab'])) ? $this->findInConfig($this->marketplaces,'suffix',$_GET["parent_tab"]) : $this->tabs[0];
     }
 
 	private function findInConfig($obj,$key,$val){
