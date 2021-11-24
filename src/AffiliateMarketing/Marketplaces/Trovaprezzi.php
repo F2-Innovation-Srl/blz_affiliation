@@ -3,6 +3,10 @@
 namespace BLZ_AFFILIATION\AffiliateMarketing\Marketplaces;
 class Trovaprezzi extends Marketplace {
 
+    public function __construct( Request $request ) {
+        $this->name = \BLZ_AFFILIATION\Utils\Settings::getApiSlug("trovaprezzi");                
+    }
+
     public function getQueryURL() {
 
         $query = $this->request->hasCode() ? $this->request->getCode() : $this->request->getKeyword();

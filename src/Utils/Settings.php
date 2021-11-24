@@ -20,9 +20,9 @@ class Settings {
     /**
      * Torna l'api name dal settings
      */
-    public static function getApiSlug(){
-        $settings = Settings::findbySuffix(CONFIG["Items"],$_GET["page"])["settings"];
-        return  Settings::findbySuffix($settings["marketplaces"],$_GET["sub_tab"])["api_slug"];
+    public static function getApiSlug($marketplace){
+        $settings = Settings::findbySuffix(CONFIG["Items"],CONFIG["plugin_suffix"])["settings"];
+        return  Settings::findbySuffix($settings["marketplaces"],$marketplace)["api_slug"];
     }
    
 

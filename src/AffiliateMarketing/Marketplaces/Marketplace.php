@@ -19,7 +19,6 @@ abstract class Marketplace {
     protected $request;
 
     public function __construct( Request $request ) {
-        $this->name = \BLZ_AFFILIATION\Utils\Settings::getApiSlug();
         $this->request = $request;                
     }
 

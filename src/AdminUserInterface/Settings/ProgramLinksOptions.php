@@ -113,17 +113,6 @@ class ProgramLinksOptions {
                     </tr>
 
                 <?php endforeach; ?>
-            </table>
-            
-            <div><hr></div>
-            
-            <?php endif; ?>
-            
-            <h2>Add a program</h2>
-            <table >
-                <tr valign="top" style="text-align:left">
-                    <th>Program slug</th><th>Program name</th>                    
-                </tr>
                 <tr valign="top">                    
                     <td><input type="text" name="programs_slug_new" value="" /></td>
                     <td><input type="text" name="programs_name_new" value="" /></td>
@@ -131,6 +120,9 @@ class ProgramLinksOptions {
                 </tr>
             </table>
             
+            <div><hr></div>
+            
+            <?php endif; ?>
 
             <div><hr></div>
 
@@ -148,21 +140,15 @@ class ProgramLinksOptions {
                     </tr>
 
                 <?php endforeach; ?>
-            </table>
-            
-            <div><hr></div>
-            <?php endif; ?>
-            
-            <h2>Add a subject</h2>
-            <table >
                 <tr valign="top" style="text-align:left">
                     <th>Subject</th>
                     <td><input type="text" name="subject_new" value="" /></td>
                     <td><?php submit_button('Add', 'primary', 'submit', false ); ?></td>     
                 </tr>
-                
             </table>
             
+            <div><hr></div>
+            <?php endif; ?>
 
 
             <?php wp_nonce_field( 'program-links-options-save', 'blz-affiliation-custom-message' ); ?>

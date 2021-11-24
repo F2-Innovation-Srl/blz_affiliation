@@ -3,6 +3,9 @@
 namespace BLZ_AFFILIATION\AffiliateMarketing\Marketplaces;
 class Ebay extends Marketplace {
 
+    public function __construct( Request $request ) {
+        $this->name = \BLZ_AFFILIATION\Utils\Settings::getApiSlug("ebay");                
+    }
     public function getQueryURL() {
 
         /// per default prende una keyword

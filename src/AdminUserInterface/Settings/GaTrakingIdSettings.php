@@ -8,16 +8,19 @@ namespace BLZ_AFFILIATION\AdminUserInterface\Settings;
  */
 class GaTrakingIdSettings {
 
+    protected $settings;
     protected $marketplaces;
     protected $tabs;
     protected $current;
+    protected $option_name;
 	/**
 	 * AdminPage constructor.
 	 */
 	function __construct() {
-        $settings = \BLZ_AFFILIATION\Utils\Settings::findbySuffix(CONFIG["Items"],$_GET["page"]);
-        $this->tabs = $settings["settings"]["tabs"];
-        $this->marketplaces = $settings["settings"]["marketplaces"];
+        $this->settings = \BLZ_AFFILIATION\Utils\Settings::findbySuffix(CONFIG["Items"],$_GET["page"]);
+        $this->option_name = $this->settings["suffix"]."-".$_GET["tab"]."-".$_GET["sub_tab"];
+        $this->tabs = $this->settings["settings"]["tabs"];
+        $this->marketplaces = $this->settings["settings"]["marketplaces"];
         $this->current = [
             "tab" => (isset($_GET['tab'])) ? \BLZ_AFFILIATION\Utils\Settings::findbySuffix($this->marketplaces,$_GET["tab"]) : $this->marketplaces[0],
             "sub_tab" => (isset($_GET['sub_tab'])) ? \BLZ_AFFILIATION\Utils\Settings::findbySuffix($this->tabs,$_GET["sub_tab"]) : $this->tabs[0]
@@ -42,19 +45,19 @@ class GaTrakingIdSettings {
     **/
     private function printPage()
     {
-        if (isset($_POST["blz-affiliation-sendForm"])) $this->saveForm();
+        if (isset($_POST[$this->settings["prefix"]."-sendForm"])) $this->saveForm();
         ?>
         <form method="post" action="<?php echo esc_html( admin_url( 'admin.php?page='.$_GET["page"].'&tab='.$this->current["tab"]["suffix"].'&sub_tab='.$this->current["sub_tab"]["suffix"] ) ); ?>">
-            <input type="hidden" name="blz-affiliation-sendForm" value="OK" />
+            <input type="hidden" name="<?php echo $this->settings["prefix"];?>-sendForm" value="OK" />
             <?php $this->printTabs(); ?>
-            <div class="blz-affiliation-container">
+            <div class="<?php echo $this->settings["prefix"];?>-container">
                 <h2><?php echo $this->current["sub_tab"]["description"] . " per i " .$this->current["tab"]["description"];?></h2>
                 <?php $this->printTable(); ?>
                 <?php $this->printTemplate(); ?>
             </div>
             <div><hr></div>
             <?php 
-                wp_nonce_field( 'blz-affiliation-settings-save', 'blz-affiliation-custom-message' );
+                wp_nonce_field( $this->settings["prefix"].'-settings-save', $this->settings["prefix"].'-custom-message' );
                 submit_button();
             ?>
         </form></div><!-- .wrap -->
@@ -64,14 +67,14 @@ class GaTrakingIdSettings {
     private function printTabs() {
         echo '<div id="icon-themes" class="icon32"><br></div>';
         echo '<h2 class="nav-tab-wrapper">';
-        foreach($this->tabs as $tab) {
+        foreach($this->marketplaces as $tab) {
             $classTab = ( $tab["suffix"] == $this->current["tab"]["suffix"] ) ? " nav-tab-active" : "";
             echo "<a class='nav-tab".$classTab."' href='?page=".$_GET["page"]."&tab=".$tab["suffix"]."&sub_tab=".$this->current["sub_tab"]["suffix"]."'>".$tab["name"]."</a>";
         }
         echo '</h2>';
         echo '<div id="icon-themes" class="icon32"><br></div>';
         echo '<h2 class="nav-tab-wrapper">';
-        foreach($this->marketplaces as $tab) {
+        foreach($this->tabs as $tab) {
             $classTab = ( $tab["suffix"] == $this->current["sub_tab"]["suffix"] ) ? " nav-tab-active" : "";
             echo "<a class='nav-tab".$classTab."' href='?page=".$_GET["page"]."&tab=".$this->current["tab"]["suffix"]."&sub_tab=".$tab["suffix"]."'>".$tab["name"]."</a>";
         }
@@ -79,12 +82,72 @@ class GaTrakingIdSettings {
     }
 
     private function printTable() {
-        echo '<div id="icon-themes" class="icon32"><br></div>';
-        echo '<h2 class="nav-tab-wrapper">';
-        
-        echo '</h2>';
+       $rules = $this->getRules();
+       ?>
+       <div><h2>Tabella di attivazione</h2></div>
+        <table>
+            <tr valign="top" style="text-align:left">
+                <th>Attivatore</th><th>Regola</th><th>Valore GA</th><th>Valore TRK_ID</th><th>Label GA</th><th>Label TRK_ID</th>                        
+            </tr>
+            <?php foreach( $rules as $idx => $rule ) : ?>
+
+                <tr valign="top">                    
+                    <td><input type="text" name="rules_attivatore<?=$idx?>" value="<?=$rule['attivatore']?>" /></td>
+                    <td><input type="text" name="rules_regola<?=$idx?>" value="<?=$rule['regola']?>" /></td>
+                    <td><input type="text" name="rules_ga_val<?=$idx?>" value="<?=$rule['ga_val']?>" /></td>
+                    <td><input type="text" name="rules_trk_val<?=$idx?>" value="<?=$rule['trk_val']?>" /></td>
+                    <td><input type="text" name="rules_ga_label<?=$idx?>" value="<?=$rule['ga_label']?>" /></td>
+                    <td><input type="text" name="rules_trk_label<?=$idx?>" value="<?=$rule['trk_label']?>" /></td>
+                    <td><?php submit_button('Aggiorna', 'primary', 'submit', false ); ?></td> 
+                </tr>
+
+            <?php endforeach; ?>
+            <tr valign="top">                    
+            <td><input type="text" name="rules_attivatore_new" value="" /></td>
+                    <td><input type="text" name="rules_regola_new" value="" /></td>
+                    <td><input type="text" name="rules_ga_val_new" value="" /></td>
+                    <td><input type="text" name="rules_trk_val_new" value="" /></td>
+                    <td><input type="text" name="rules_ga_label_new" value="" /></td>
+                    <td><input type="text" name="rules_trk_label_new" value="" /></td>
+                <td><?php submit_button('Aggiungi', 'primary', 'submit', false ); ?></td>                    
+            </tr>
+        </table>
+       <?php
     }
 
+    private function getRules(){
+
+        $rules = get_option($this->option_name);
+
+        $rules = ($rules) ? array_map( function ( $rule, $idx  )  {
+
+            return [
+                'attivatore' => isset( $_POST[ 'rules_attivatore'.$idx ] ) ? $_POST[ 'rules_attivatore'.$idx ] : $rule['attivatore'],
+                'regola' => isset( $_POST[ 'rules_regola'.$idx ] ) ? $_POST[ 'rules_regola'.$idx ] : $rule['regola'],
+                'ga_val' => isset( $_POST[ 'rules_ga_val'.$idx ] ) ? $_POST[ 'rules_ga_val'.$idx ] : $rule['ga_val'],
+                'trk_val' => isset( $_POST[ 'rules_trk_val'.$idx ] ) ? $_POST[ 'rules_trk_val'.$idx ] : $rule['trk_val'],
+                'ga_label' => isset( $_POST[ 'rules_ga_label'.$idx ] ) ? $_POST[ 'rules_ga_label'.$idx ] : $rule['ga_label'],
+                'trk_label' => isset( $_POST[ 'rules_trk_label'.$idx ] ) ? $_POST[ 'rules_trk_label'.$idx ] : $rule['trk_label'],
+            ];
+
+        }, $rules, array_keys($rules) ) : [];
+        if( !empty( $_POST['rules_attivatore_new'] ) && !empty( $_POST['rules_regola_new'] ) ) {
+
+            $rules[] = [
+                'attivatore' => $_POST['rules_attivatore_new'],
+                'regola' => $_POST['rules_regola_new'],
+                'ga_val' => $_POST['rules_ga_val_new'],
+                'trk_val' => $_POST['rules_trk_val_new'],
+                'ga_label' => $_POST['rules_ga_label_new'],
+                'trk_label' => $_POST['rules_trk_label_new']
+            ];
+        }
+
+        update_option($this->option_name, $rules );
+
+        return $rules;
+
+    }
     private function printTemplate() {
         echo '<div id="icon-themes" class="icon32"><br></div>';
         echo '<h2 class="nav-tab-wrapper">';
@@ -97,7 +160,7 @@ class GaTrakingIdSettings {
     **/
     public function saveForm()
     {
-        foreach (array_filter($_POST, function($k) { return strpos($k, "blz-affiliation-") !== false; }, ARRAY_FILTER_USE_KEY) as $key => $val)
+        foreach (array_filter($_POST, function($k) { return strpos($k, $this->settings["prefix"]."-") !== false; }, ARRAY_FILTER_USE_KEY) as $key => $val)
             update_option($key,$val);
     
         echo "<div class=\"updated notice\"><p>Dati salvati con successo</p></div>";

@@ -3,6 +3,10 @@
 namespace BLZ_AFFILIATION\AffiliateMarketing\Marketplaces;
 class Amazon extends Marketplace {
 
+    public function __construct( Request $request ) {
+        $this->name = \BLZ_AFFILIATION\Utils\Settings::getApiSlug("amazon");                
+    }
+
     public function getQueryURL() {
 
         /// per default prende una keyword
