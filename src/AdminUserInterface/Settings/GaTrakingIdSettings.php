@@ -1,7 +1,6 @@
 <?php
 namespace BLZ_AFFILIATION\AdminUserInterface\Settings;
 
-use BLZ_AFFILIATION\Utils;
 /**
  * Class GaTrakingIdSettings
  *
@@ -16,12 +15,12 @@ class GaTrakingIdSettings {
 	 * AdminPage constructor.
 	 */
 	function __construct() {
-        $settings = Settings::findbySuffix(CONFIG["Items"],$_GET["page"]);
+        $settings = BLZ_AFFILIATION\Utils\Settings::findbySuffix(CONFIG["Items"],$_GET["page"]);
         $this->tabs = $settings["settings"]["tabs"];
         $this->marketplaces = $settings["settings"]["marketplaces"];
         $this->current = [
-            "tab" => (isset($_GET['tab'])) ? Settings::findbySuffix($this->tabs,$_GET["tab"]) : $this->tabs[0],
-            "sub_tab" => (isset($_GET['sub_tab'])) ? Settings::findbySuffix($this->marketplaces,$_GET["sub_tab"]) : $this->marketplaces[0]
+            "tab" => (isset($_GET['tab'])) ? BLZ_AFFILIATION\Utils\Settings::findbySuffix($this->tabs,$_GET["tab"]) : $this->tabs[0],
+            "sub_tab" => (isset($_GET['sub_tab'])) ? BLZ_AFFILIATION\Utils\Settings::findbySuffix($this->marketplaces,$_GET["sub_tab"]) : $this->marketplaces[0]
         ];
     }
 

@@ -5,7 +5,6 @@ namespace BLZ_AFFILIATION\AffiliateMarketing\Marketplaces;
 use BLZ_AFFILIATION\Utils\HttpRequest;
 use BLZ_AFFILIATION\AffiliateMarketing\Offer;
 use BLZ_AFFILIATION\AffiliateMarketing\Request;
-use BLZ_AFFILIATION\Utils;
 abstract class Marketplace {
 
     /// i componenti del template di base della query
@@ -20,7 +19,7 @@ abstract class Marketplace {
     protected $request;
 
     public function __construct( Request $request ) {
-        $this->name = Settings::getApiSlug();
+        $this->name = BLZ_AFFILIATION\Utils\Settings::getApiSlug();
         $this->request = $request;                
     }
 
