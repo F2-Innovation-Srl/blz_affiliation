@@ -11,7 +11,7 @@ class AdminPage {
     protected $marketplaces;
     protected $tabs;
     protected $current_tab;
-    protected $current_sub_tab;
+    protected $current_parent_tab;
 	/**
 	 * AdminPage constructor.
 	 */
@@ -51,17 +51,18 @@ class AdminPage {
     private function printPage()
     {
         
-        $this->current_tab = (isset($_GET['tab'])) ? $_GET['tab'] : array_key_first($this->marketplaces);
+        $this->current_tab = (isset($_GET['tab'])) ? $_GET['tab'] : $this->marketplaces[0];
+        $this->current_parent_tab = (isset($_GET['parent_tab'])) ? $_GET['parent_tab'] : $this->tabs[0];
         
         $formBuilder = new FormBuilder($this->current_tab);
         if (isset($_POST["blz-affiliation-sendForm"])) $formBuilder->saveForm();
         
         ?>
-        <form method="post" action="<?php echo esc_html( admin_url( 'admin.php?page='.$this->page.'&tab='.$this->current_tab ) ); ?>">
+        <form method="post" action="<?php echo esc_html( admin_url( 'admin.php?page='.$this->page.'&tab='.$this->current_tab["slug"].'&parent_tab='.$this->current_parent_tab["slug"] ) ); ?>">
             <input type="hidden" name="blz-affiliation-sendForm" value="OK" />
             <?php $this->printTabs(); ?>
             <div class="blz-affiliation-container">
-                <h2><?php echo $this->marketplaces[$this->current_tab]->getPanelDescription();?></h2>
+                <h2><?php echo $this->current_tab["description"];?></h2>
                 <?php $formBuilder->printForm(); ?>
             </div>
             <div><hr></div>
@@ -76,9 +77,16 @@ class AdminPage {
     private function printTabs() {
         echo '<div id="icon-themes" class="icon32"><br></div>';
         echo '<h2 class="nav-tab-wrapper">';
-        foreach($this->marketplaces as $marketplace) {
-            $classTab = ( $marketplace->getPanelName() == $this->current_tab ) ? " nav-tab-active" : "";
-            echo "<a class='nav-tab".$classTab."' href='?page=".$this->page."&tab=".$marketplace->getPanelName()."'>".$marketplace->getPanelName()."</a>";
+        foreach($this->tabs as $tabs) {
+            $classTab = ( $tabs["slug"] == $this->current_tab["slug"] ) ? " nav-tab-active" : "";
+            echo "<a class='nav-tab".$classTab."' href='?page=".$this->page."&tab=".$this->current_tab["slug"]."'>".$tabs["name"]."&parent_tab=".$tabs["slug"]."'>".$tabs["name"]."</a>";
+        }
+        echo '</h2>';
+        echo '<div id="icon-themes" class="icon32"><br></div>';
+        echo '<h2 class="nav-tab-wrapper">';
+        foreach($this->marketplaces as $tabs) {
+            $classTab = ( $tabs["slug"] == $this->current_tab["slug"] ) ? " nav-tab-active" : "";
+            echo "<a class='nav-tab".$classTab."' href='?page=".$this->page."&tab=".$tabs["slug"]."&parent_tab=".$current_parent_tab["slug"]."'>".$tabs["name"]."</a>";
         }
         echo '</h2>';
     }
