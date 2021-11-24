@@ -70,8 +70,8 @@ class BlzAffiliate {
 
 		/// aggiunge la pagina dei settings del plugin
 		# load config
-		$config = json_decode(file_get_contents(PLUGIN_PATH.'config.json'), true);
-		new AdminUserInterface\Settings\AdminPage($config);
+		define('CONFIG', json_decode(file_get_contents(PLUGIN_PATH.'config.json'), true));
+		new AdminUserInterface\Settings\AdminPage();
 		
 	}
 }

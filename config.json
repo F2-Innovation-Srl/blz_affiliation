@@ -7,7 +7,7 @@
             },
             {
                 "name"        : "Altri Programmi",
-                "slug"        : "Link Editoriali Automatici",
+                "slug"        : "linkPrograms",
                 "description" : "Link Editoriali Altri Programmi"
             },{
                 "name"        : "Parse and Render",
