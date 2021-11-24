@@ -11,11 +11,15 @@ class ProgramLinksOptions {
     protected $programs;
     protected $subjects;
     protected $default_tracking_id = 'tn-news';
-    
+    protected $option_name;
 	/**
 	 * 
 	 */
-	function __construct( ) {}
+	function __construct( ) {
+
+        $this->settings = \BLZ_AFFILIATION\Utils\Settings::findbySuffix(CONFIG["Items"],$_GET["page"]);
+        $this->option_name = $this->settings["suffix"];
+    }
 
 	/**
      * Print page if have correct permission
@@ -36,7 +40,7 @@ class ProgramLinksOptions {
 
     private function getPrograms(){
 
-        $programs = get_option( 'blz_programs' );
+        $programs = get_option($this->option_name);
 
         $programs = ($programs) ? array_map( function ( $program, $idx  )  {
 
@@ -55,7 +59,7 @@ class ProgramLinksOptions {
             ];
         }
 
-        update_option('blz_programs', $programs );
+        update_option($this->option_name, $programs );
 
         return $programs;
 
@@ -64,7 +68,7 @@ class ProgramLinksOptions {
 
     private function getSubjects(){
 
-        $subjects = get_option( 'blz_programs_subjects' );
+        $subjects = get_option( $this->option_name.'_subjects' );
 
         $subjects = ($subjects) ? array_map( function ( $subject, $idx  )  {
 
@@ -78,7 +82,7 @@ class ProgramLinksOptions {
             $subjects[] = $_POST['subject_new'];
         }
 
-        update_option('blz_programs_subjects', $subjects );
+        update_option($this->option_name.'_subjects', $subjects );
 
         return $subjects;
 
@@ -141,7 +145,6 @@ class ProgramLinksOptions {
 
                 <?php endforeach; ?>
                 <tr valign="top" style="text-align:left">
-                    <th>Subject</th>
                     <td><input type="text" name="subject_new" value="" /></td>
                     <td><?php submit_button('Add', 'primary', 'submit', false ); ?></td>     
                 </tr>

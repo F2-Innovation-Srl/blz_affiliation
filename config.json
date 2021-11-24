@@ -54,7 +54,7 @@
         },
         {
             "name"       : "Program Links Options",
-            "suffix"     : "blz-affiliation-program-links-options",
+            "suffix"     : "blz-affiliation-program",
             "class_name" : "ProgramLinksOptions"
         }
     ]

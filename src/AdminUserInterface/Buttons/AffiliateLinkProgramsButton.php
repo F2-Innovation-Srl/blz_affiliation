@@ -19,7 +19,8 @@ class AffiliateLinkProgramsButton extends Button {
          * >> affiliate_link_programs_action
          */
         parent::__construct('affiliate_link_programs_button', 'affiliate_link_programs_action');
-        
+        $this->settings = \BLZ_AFFILIATION\Utils\Settings::findbySuffix(CONFIG["Items"],"blz-affiliation-program");
+        $this->option_name = $this->settings["suffix"];
     }
 
 
@@ -40,8 +41,8 @@ class AffiliateLinkProgramsButton extends Button {
  
          $fields_to_inject =  [ 
              //'author_tracking_ids' => get_field( 'amazon_tracking_id', 'user_'.get_current_user_id() ) ,
-             'subjects'  => json_encode( get_option( 'blz_programs_subjects' )),
-             'programs'  => json_encode( get_option( 'blz_programs' )),
+             'subjects'  => json_encode( get_option( $this->option_name.'_subjects' )),
+             'programs'  => json_encode( get_option( $this->option_name )),
              'is_stored' => $this->isStoredPost( $post_id ) ? 'true' : 'false'
          ];
  
