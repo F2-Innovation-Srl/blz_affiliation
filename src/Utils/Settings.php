@@ -1,6 +1,4 @@
 <?php
-
-
 namespace BLZ_AFFILIATION\Utils;
 
 class Settings {
@@ -16,8 +14,8 @@ class Settings {
      * Torna l'api name dal settings
      */
     public static function getApiSlug(){
-        $settings = $self::findbySuffix(CONFIG["Items"],$_GET["page"])["settings"];
-        return  $self::findbySuffix($settings["marketplaces"],$_GET["sub_tab"])["api_slug"];
+        $settings = Settings::findbySuffix(CONFIG["Items"],$_GET["page"])["settings"];
+        return  Settings::findbySuffix($settings["marketplaces"],$_GET["sub_tab"])["api_slug"];
     }
    
 
