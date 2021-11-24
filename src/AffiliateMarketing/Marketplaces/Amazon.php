@@ -4,8 +4,6 @@ namespace BLZ_AFFILIATION\AffiliateMarketing\Marketplaces;
 class Amazon extends Marketplace {
 
     protected $name = 'amazon';
-    protected $panelName = "amazon";
-    protected $panelDescription = 'Pannello per la configurazione di Amazon';
 
     public function getQueryURL() {
 

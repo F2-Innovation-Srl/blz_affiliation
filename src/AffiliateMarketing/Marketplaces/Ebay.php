@@ -4,8 +4,6 @@ namespace BLZ_AFFILIATION\AffiliateMarketing\Marketplaces;
 class Ebay extends Marketplace {
 
     protected $name = "ebay";
-    protected $panelName = "ebay";
-    protected $panelDescription = 'Pannello per la configurazione di eBay';
     
     public function getQueryURL() {
 

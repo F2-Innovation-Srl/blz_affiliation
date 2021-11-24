@@ -1,0 +1,36 @@
+{
+    "tabs":[
+            {
+                "name"        : "Editorial Links",
+                "slug"        : "linkButton",
+                "description" : "Link Editoriali da Bottone"
+            },
+            {
+                "name"        : "Altri Programmi",
+                "slug"        : "linkPrograms",
+                "description" : "Link Editoriali Altri Programmi"
+            },{
+                "name"        : "Parse and Render",
+                "slug"        : "parseLinkAndRender",
+                "description" : "Pannello per la configurazione di eBay"
+            }
+    ],
+    "marketplaces":[
+            {
+                "name"        : "Amazon",
+                "slug"        : "amazon",
+                "description" : "Pannello per la configurazione di Amazon"
+            },
+            {
+                "name"        : "eBay",
+                "slug"        : "ebay",
+                "description" : "Pannello per la configurazione di eBay"
+            },
+            {
+                "name"        : "Trovaprezzi",
+                "slug"        : "trovaprezzi",
+                "description" : "Pannello per la configurazione di Trovaprezzi"
+            }
+    ]
+  }
+  
