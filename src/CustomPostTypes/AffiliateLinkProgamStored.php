@@ -22,14 +22,14 @@ class AffiliateLinkProgamStored {
      */
     static function add_affiliate_link_program_stored_post_type() {
 
-        register_post_type('affiliate_link_program_stored', [
+        register_post_type('program_stored_link', [
 
             'public'          => false,
             'show_ui'         => true,
             'capability_type' => 'post',
             'hierarchical'    => false,
             'rewrite'         => [ 'slug' => 'link_program', 'with_front' => false  ],
-            'supports'        => [ 'title', 'custom-fields' ],
+            'supports'        => [ 'title', 'editor', 'custom-fields' ],
 
             'labels' => [
                 'name' => 'Link Programma Affiliazione',

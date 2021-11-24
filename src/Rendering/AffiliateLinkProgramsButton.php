@@ -4,19 +4,17 @@ namespace BLZ_AFFILIATION\Rendering;
 
 use BLZ_AFFILIATION\Utils\Shortener;
 
-use BLZ_AFFILIATION\Rendering\PostData;
-
-
-
 /**
- * 
+ * Sostiruisce nella pagina il link selezionato al posto 
+ * dello shortcode
  */
 class AffiliateLinkProgramsButton {
 
-    private $postData;
-    private $request;
+    protected $domain = 'vg';
+    protected $request;
+    protected $content;
 
-    private $templates = [
+    protected $templates = [
         
         'affiliate_link' => <<<HTML
 
@@ -26,7 +24,7 @@ class AffiliateLinkProgramsButton {
         HTML,
 
         'ga_event' => <<<HTML
-            mtz cta {{ website }} {{ category }} editorial {{ author }} {{ marketplace }}
+            mtz cta {{ domain }} {{ subject }} {{ program }} {{ amp }}
         HTML
     ];
 
@@ -46,7 +44,6 @@ class AffiliateLinkProgramsButton {
         add_shortcode( 'affiliate_program_link',  [ $this, 'printAffiliateLink'] );
     }
 
-
  
     /**
      * Stampa il bottone impostato da shortcode
@@ -55,56 +52,65 @@ class AffiliateLinkProgramsButton {
     public function printAffiliateLink( $atts, $content, $tag ) {
 
         /// prende tutti i dati del post
-        $this->postData = new PostData();
+        //$this->postData = new PostData();
 
         /// prendo la request
         $this->request = $atts;
+        $this->content = $content;
 
         $tracking = $this->getTracking();
-
         
         return $this->FillTemplate( $tracking->ga_event, $tracking->tracking_id, $this->templates['affiliate_link'] );
     }
 
 
-    private function FillTemplate( $ga_event, $template ) {
+    private function FillTemplate( $ga_event, $tracking_id, $template ) {
 
-        $link    = ( new Shortener )->generateShortLink( $this->request['link'] ) ;
-        $content = $this->request['content'];
+        /// se possibile inserisce il tracking id
+        $link = str_replace( '{tracking-id}', $tracking_id, $this->request['link'] );
+
+        /// poi accorcia il link
+        $link = ( new Shortener )->generateShortLink( $link ) ;
         
-        return str_replace([ '{{ url }}', '{{ ga-event }}', '{{ content }}' ], [ $link, $ga_event, $content ], $template );
+        return trim( str_replace(
+            [ '{{ url }}', '{{ ga_event }}', '{{ content }}' ],
+            [ $link, $ga_event, $this->content ], 
+            $template 
+        ) );        
     }
 
     
     /**
      * Genera un oggetto che ha sia il ga_event, sia il tracking id
      * bisogna capire se serve
+     * 
+     * [ REVIEW ] riscrivere tutta la parte dei tracking ID 
      *
      * @return object { ga_event, tracking_id }
      */
     private function getTracking() {
+
+        $amp = is_amp_endpoint() ? 'amp' : '';
     
-        $ga_event = str_replace(
-            [ '{{ website }}', '{{ category }}', '{{ author }}', '{{ marketplace }}'],
-            [ $this->domain, $this->category, $this->author->analytics, $offer->marketplace . $this->paid ],
-            $this->templates["ga_event"]
-        );
+        /// se è stato impostato un ga_event nello shortcode        
+        $ga_event = isset( $this->request['ga_event'] ) ? 
+        
+            /// prendi quello
+            $this->request['ga_event'] : 
+
+            /// altrimenti usa il template
+            trim(str_replace(
+                [ '{{ domain }}', '{{ subject }}', '{{ program }}', '{{ amp }}' ],
+                [ $this->domain, $this->request['subject'], $this->request['program'], $amp ],
+                $this->templates["ga_event"]
+            ));
 
 
-        /// [ REVIEW ]  vedere se il tracking id è corretto 
-        ///             credo che sia da rivedere tutto il tracciamento
-        ///             dei link "ex prettylink"
-
-        $tracking = $this->request['author_tracking_id'] . ' ' . $this->request['subject'] . ' ' . $this->request['prova'];
+        $tracking = $this->request['tracking_id'];
 
         return (object) [
             'ga_event'    => $ga_event,
             'tracking_id' => $tracking
         ];
     }
-
-
-   
-
-
 }

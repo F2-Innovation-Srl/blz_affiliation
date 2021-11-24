@@ -44,36 +44,11 @@ class ProgramLinksOptions {
 
         } else {
 
-            $this->printPage();
+            $this->form();
         }
     }
 
-    /**
-     * Print Page
-     */
-    private function printPage()
-    {
-        $this->form();
-
-
-        /*
-        ?>
-        <form method="post" action="<?php echo esc_html( admin_url( 'admin.php?page='.$this->page.'&tab='.$this->current_tab ) ); ?>">
-            <input type="hidden" name="blz-affiliation-sendForm" value="OK" />
-            <?php $this->printTabs(); ?>
-            <div class="blz-affiliation-container">
-                <h2><?php echo $this->marketplaces[$this->current_tab]->getPanelDescription();?></h2>
-                <?php $formBuilder->printForm(); ?>
-            </div>
-            <div><hr></div>
-            <?php 
-                wp_nonce_field( 'blz-affiliation-settings-save', 'blz-affiliation-custom-message' );
-                submit_button();
-            ?>
-        </form></div><!-- .wrap -->
-    <?php */
-    }
-
+ 
 
     private function getPrograms(){
 

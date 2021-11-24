@@ -1,6 +1,6 @@
 (function() {
 
-        var plugin_name = 'affiliate_link_programs_button';
+        var plugin_name = 'affiliate_link_program_stored_button';
         
         
         // "editor_tracked_button" is the name of the registered plugin
@@ -22,7 +22,7 @@
                             title : 'Inserisci Link affiliazione',
                             cmd : plugin_name + '_cmd',
                             icon: 'link',
-                            image : url + '/assets/favourite.svg'
+                            image : url + '/assets/stardatabase.svg'
                     });
     
                     
@@ -32,18 +32,16 @@
                             
                             // callback
                             function() {
-
-                                var post = window.location.search.replace(/.*(post=\d+).*/,'$1');
-                                
-                                ed.windowManager.open({                                        
-                                        file : ajaxurl + '?action=affiliate_link_programs_action&' + post,
-                                        width  : 650,
-                                        height : 400,
-                                        inline : 1
-                                }, {
-                                        plugin_url : url, // Plugin absolute URL
-                                        //some_custom_arg : 'custom arg' // Custom argument
-                                });
+                                    
+                                    ed.windowManager.open({                                        
+                                            file : ajaxurl + '?action=affiliate_link_program_stored_action',                                            
+                                            width  : 650,
+                                            height : 400,
+                                            inline : 1
+                                    }, {
+                                            plugin_url : url, // Plugin absolute URL
+                                            //some_custom_arg : 'custom arg' // Custom argument
+                                    });
                             }
                     );
     

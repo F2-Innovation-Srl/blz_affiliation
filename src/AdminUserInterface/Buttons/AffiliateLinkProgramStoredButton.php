@@ -33,10 +33,10 @@ class AffiliateLinkProgramStoredButton extends Button {
         if (! current_user_can('publish_posts'))  { die( __("Vietato") ); } 
         
         // get the template 
-        $html = file_get_contents( $this->base_dir .'plugins/dialog-AffiliateLinkProgramsButton.html');
+        $html = file_get_contents( $this->base_dir .'plugins/dialog-AffiliateLinkProgramStoredButton.html');
 
         $fields_to_inject =  [ 
-            'stored_links' => json_encode( $this->getStoredLinks() ),            
+            'stored_links' => json_encode( $this->getStoredLinks() )
         ];    
         
         

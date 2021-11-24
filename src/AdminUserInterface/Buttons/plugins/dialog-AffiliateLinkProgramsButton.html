@@ -8,37 +8,47 @@
     <script>
 
         /// dati iniettati dal controller
-        var author_tracking_id = {{author_tracking_id}};
-        var subjects = {{subjects}};
-        var programs = {{programs}};
+        var subjects  = {{subjects}};
+        var programs  = {{programs}};
+        var is_stored = {{is_stored}};
 
         /** 
          * Per gestire i campi
          */
-         function FieldsManager() { 
+        function FieldsManager() { 
             
-            this.subject = document.getElementById('subject');
-            this.program = document.getElementById('program');
+            this.subject      = document.getElementById('subject');
+            this.program      = document.getElementById('program');
+            this.link         = document.getElementById('link');
+            this.tracking_id  = document.getElementById('tracking_id');
+            this.content      = document.getElementById('content');            
+            this.submit       = document.getElementById('submit');
+            this.ga_event     = document.getElementById('ga_event');  
+
+            if(is_stored)
+                /// rende visibile la text input
+                [].forEach.call( document.querySelectorAll('.ga_event'), function( item ) {
+                    item.classList.remove('ga_event'); 
+                });                    
             
-            this.submit   = document.getElementById('submit');
-    
+            this.content.value = tinymce.activeEditor.selection.getContent();
             
             this.submit.addEventListener('click', function(e) {
 
-                var subject = this.subject.value;
-                var program = this.program.value;
-                
-                if (subject  == '') {
-                    alert("Selezionare un subject"); 
-                    return;
-                }
+                var subject     = `subject="${this.subject.value}"`;
+                var program     = `program="${this.program.value}"`;
+                var tracking_id = `tracking_id="${this.tracking_id.value}"`;
+                var link        = `link="${this.link.value}"`;
+                var content     = this.content.value;
+                var ga_event    = (is_stored) ? `ga_event="${this.ga_event.value}"` : '';
 
-                if (program  == '') {
-                    alert("Selezionare un programma"); 
-                    return;
-                }
+
+                if (link            == '') { alert("Inserire un link");         return; }
+                if (content.trim()  == '') { alert("Inserire un testo");        return; }
+                if (subject         == '') { alert("Selezionare un subject");   return; }
+                if (program         == '') { alert("Selezionare un programma"); return; }
                 
-                this.shortcode = `[affiliate_program_link link="${link}" author_tracking_id="${author_tracking_id} subject="${subject}" program="${program}"]`;
+                this.shortcode = `[affiliate_program_link ${link} ${ga_event} ${tracking_id} ${subject} ${program}]${content}[/affiliate_program_link]`;
                 
                 tinyMCE.activeEditor.execCommand( 'mceInsertContent', 0, this.shortcode );
                 
@@ -47,8 +57,7 @@
             }.bind(this));
         }
 
-
-        window.addEventListener('DOMContentLoaded', function() {
+        window.addEventListener('DOMContentLoaded', function() { 
             
             new FieldsManager();
 
@@ -75,12 +84,17 @@
             margin:20px auto;         
             display: block;   
         }
-    </style>
-    
-    
+        .ga_event { display: none;}
+    </style>    
 </head>
 <body onload="tinyMCEPopup.executeOnLoad('init();')">
     
+    <legend>Inserisci il link</legend>
+    <input type="text" id="link" name="link" value=""/>
+
+    <legend>Inserisci il testo</legend>
+    <input type="text" id="content" name="content" value=""/>
+
     <legend>Seleziona il subject</legend>
                         
     <select name="subject" id="subject">
@@ -101,11 +115,16 @@
     <script>
         var program_select = document.getElementById('program');
         programs.forEach( function(item) { 
-            program_select.insertAdjacentHTML('beforeend', `<option value="${item}">${item}</option>`); 
+            program_select.insertAdjacentHTML('beforeend', `<option value="${item.slug}">${item.name}</option>`); 
         });      
     </script>
 
+    <legend>Inserisci il tracking_id</legend>
+    <input type="text" id="tracking_id" name="tracking_id" value="tn-news"/>
+
+    <legend class="ga_event">Inserisci il ga_event</legend>
+    <input class="ga_event" type="text" id="ga_event" name="ga_event" value=""/>
+
     <input type="button" id="submit" value="Inserisci" />
-    
 </body>
 </html>

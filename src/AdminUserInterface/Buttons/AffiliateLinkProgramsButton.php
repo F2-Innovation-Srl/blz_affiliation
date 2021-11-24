@@ -29,29 +29,35 @@ class AffiliateLinkProgramsButton extends Button {
      */
     public function ajax_action() {
 
-        // check for rights
-        if (! current_user_can('publish_posts'))  { die( __("Vietato") ); } 
+         // check for rights
+         if (! current_user_can('publish_posts'))  { die( __("Vietato") ); } 
         
-        // get the template 
-        $html = file_get_contents( $this->base_dir .'plugins/dialog-AffiliateLinkProgramsButton.html');
-        //include_once(get_template_directory() .'/src/UserInterface/Editor/Buttons/plugins/dialog-AffiliateButton.html' );
+         /// prende il valore del post
+         $post_id = intval($_GET['post'] );
+         
+         // get the template 
+         $html = file_get_contents( $this->base_dir .'plugins/dialog-AffiliateLinkProgramsButton.html');
+ 
+         $fields_to_inject =  [ 
+             //'author_tracking_ids' => get_field( 'amazon_tracking_id', 'user_'.get_current_user_id() ) ,
+             'subjects'  => json_encode( get_option( 'blz_programs_subjects' )),
+             'programs'  => json_encode( get_option( 'blz_programs' )),
+             'is_stored' => $this->isStoredPost( $post_id ) ? 'true' : 'false'
+         ];
+ 
+         // inject the variables into the html template
+         foreach($fields_to_inject as $key => $value)
+             $html = str_replace ( '{{'.$key.'}}' , $value , $html );        
+ 
+         // print the block
+         header('Content-Type: ' . get_option('html_type') . '; charset=' . get_option('blog_charset'));
+         echo $html;        
+         die();
+    }
 
-
-        $fields_to_inject =  [ 
-            'author_tracking_ids' => get_field( 'amazon_tracking_id', 'user_'.get_current_user_id() ) ,
-            'subjects' => json_encode([ 'vpn', 'antivirus', 'hosting' ]),
-            'programs' => json_encode([ 'cj', 'awin', 'ciaone'])
-        ];    
+    private function isStoredPost( $post_id ) {
         
-        
-        // inject the variables into the html template
-        foreach($fields_to_inject as $key => $value)
-            $html = str_replace ( '{{'.$key.'}}' , $value , $html );
-        
-
-        // print the block
-        header('Content-Type: ' . get_option('html_type') . '; charset=' . get_option('blog_charset'));
-        echo $html;        
-        die();
+        $post = get_post($post_id);
+        return ( $post->post_type == 'program_stored_link' );        
     }
 }

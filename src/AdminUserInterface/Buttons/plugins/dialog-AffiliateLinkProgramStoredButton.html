@@ -9,36 +9,26 @@
 
         /// dati iniettati dal controller
         var storedLinks = {{stored_links}};
-        var subjects = {{subjects}};
-        var programs = {{programs}};
 
         /** 
          * Per gestire i campi
          */
          function FieldsManager() { 
             
-            this.subject = document.getElementById('subject');
-            this.program = document.getElementById('program');
-            
+            this.link = document.getElementById('link');
+        
             this.submit   = document.getElementById('submit');
     
             
             this.submit.addEventListener('click', function(e) {
 
-                var subject = this.subject.value;
-                var program = this.program.value;
+                var link = this.link.value;
                 
-                if (subject  == '') {
-                    alert("Selezionare un subject"); 
-                    return;
-                }
+                
+                if (link  == '') { alert("Selezionare un link");  return; }
 
-                if (program  == '') {
-                    alert("Selezionare un programma"); 
-                    return;
-                }
                 
-                this.shortcode = `[affiliate_program_link link="${link}" author_tracking_id="${author_tracking_id} "subject="${subject}" program="${program}" ]`;
+                this.shortcode = `[affiliate_program_stored_link id=${link}]`;
                 
                 tinyMCE.activeEditor.execCommand( 'mceInsertContent', 0, this.shortcode );
                 
@@ -81,27 +71,15 @@
 </head>
 <body onload="tinyMCEPopup.executeOnLoad('init();')">
     
-    <legend>Seleziona il subject</legend>
+    <legend>Seleziona il link</legend>
                         
-    <select name="subject" id="subject">
+    <select name="link" id="link">
         <option value="">-- scegli --</option>        
     </select>
     <script>
-        var subject_select = document.getElementById('subject');
-        subjects.forEach( function(item) { 
-            subject_select.insertAdjacentHTML('beforeend', `<option value="${item}">${item}</option>`); 
-        });      
-    </script>
-
-    <legend>Seleziona il programma</legend>
-                            
-    <select name="program" id="program">
-        <option value="">-- scegli --</option>        
-    </select>
-    <script>
-        var program_select = document.getElementById('program');
-        programs.forEach( function(item) { 
-            program_select.insertAdjacentHTML('beforeend', `<option value="${item}">${item}</option>`); 
+        var link_select = document.getElementById('link');        
+        storedLinks.forEach( function(item) {                         
+            link_select.insertAdjacentHTML('beforeend', `<option value="${item.id}">${item.title}</option>`); 
         });      
     </script>
 
