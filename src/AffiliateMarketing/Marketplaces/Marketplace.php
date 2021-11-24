@@ -50,6 +50,4 @@ abstract class Marketplace {
      */
     abstract protected function getQueryURL();
 
-    public function getPanelName() { return $this->panelName; }
-    public function getPanelDescription() { return $this->panelDescription; }
 }

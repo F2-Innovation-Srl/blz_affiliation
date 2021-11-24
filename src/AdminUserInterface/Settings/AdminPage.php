@@ -15,12 +15,10 @@ class AdminPage {
 	/**
 	 * AdminPage constructor.
 	 */
-	function __construct($marketplaces) {
-        $this->tabs = [
-            "editorial-link-button" => "Editorial Link Button",
-            "editorial-automatic" => "Editorial Automatici",
-        ];
-        $this->marketplaces = $marketplaces;
+	function __construct($config) {
+
+        $this->tabs = $config->tabs;
+        $this->marketplaces = $config->marketplaces;
         # set admin actions callback
         add_action('admin_menu', [ $this, 'adminMenu' ]);
 	}
