@@ -3,7 +3,7 @@
     "plugin_suffix"   : "blz-affiliation",
     "Items"  : [
         {
-            "name"       : "Blazemedia Affilitation",
+            "name"       : "GA e TrackingID Settings",
             "suffix"     : "blz-affiliation",
             "class_name" : "GaTrakingIdSettings",
             "settings" : {
@@ -43,8 +43,8 @@
             }
         },
         {
-            "name"       : "Blazemedia Affilitation",
-            "suffix"     : "blz-affiliation",
+            "name"       : "Program Links Options",
+            "suffix"     : "blz-affiliation-program-links-options",
             "class_name" : "ProgramLinksOptions"
         }
     ]
