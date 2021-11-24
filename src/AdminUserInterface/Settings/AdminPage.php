@@ -23,8 +23,12 @@ class AdminPage {
     **/
 	public function adminMenu() {
         add_menu_page(CONFIG["plugin_name"], CONFIG["plugin_name"], 'manage_options', CONFIG["plugin_suffix"]);
-        foreach(CONFIG["Items"] as $item)
-            add_submenu_page(CONFIG["plugin_suffix"], $item["name"],$item["name"], 'manage_options', $item["suffix"], [ new $item["class_name"], 'render']);
+        foreach(CONFIG["Items"] as $item){
+            $className = "BLZ_AFFILIATION\\AdminUserInterface\\Settings\\". $item["class_name"];
+            $class = new $className;
+            add_submenu_page(CONFIG["plugin_suffix"], $item["name"],$item["name"], 'manage_options', $item["suffix"], [ $class, 'render']);
+        }
+            
 	}
 
     public static function custom_enqueue()
