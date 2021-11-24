@@ -87,7 +87,7 @@ class ProgramLinksOptions {
     
     private function form()
     { 
-        $action = esc_html( admin_url( 'admin.php?page='.$GET["page"] ) );
+        $action = esc_html( admin_url( 'admin.php?page='.$_GET["page"] ) );
 
         $programs = $this->getPrograms();
         $subjects = $this->getSubjects();
