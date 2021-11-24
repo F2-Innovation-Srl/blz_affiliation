@@ -7,16 +7,17 @@
  * Author: Blazemedia
  * Author URI: https://halfelf.org/
  * License: http://www.apache.org/licenses/LICENSE-2.0
- * Text Domain: blz-affiliate
+ * Text Domain: blz-affiliation
  * Network: true
  *
- * @package blz-affiliate
+ * @package blz-affiliation
  *
  * Copyright 2021 Blazemedia (email: techteam@f2innovation.com)
  *
  */
 define( 'PLUGIN_PATH' , plugin_dir_path( __FILE__ ) );
 define( 'PLUGIN_URI'  , plugin_dir_url( __FILE__ ));
+define( 'PLUGIN_VERSION'  , "1.0");
 
 require_once PLUGIN_PATH . '/vendor/autoload.php';
 

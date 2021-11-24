@@ -8,7 +8,6 @@ namespace BLZ_AFFILIATION\AdminUserInterface\Settings;
  */
 class ProgramLinksOptions {
     
-    public $page = "blz-affiliation-program-links-options";
     
     protected $programs;
     protected $subjects;
@@ -17,21 +16,7 @@ class ProgramLinksOptions {
 	/**
 	 * 
 	 */
-	function __construct( ) {
-                
-        // set admin actions callback
-        add_action( 'admin_menu', [ $this, 'adminMenu' ] );
-	}
-
-	/**
-     * Invoked on admin_menu action
-     * Create admin menu 
-    **/
-	public function adminMenu() {
-
-        add_menu_page('Program Links Options', 'Program Links Options', 'manage_options', $this->page, [ $this, 'render']);
-
-	}
+	function __construct( ) {}
 
 	/**
      * Print page if have correct permission

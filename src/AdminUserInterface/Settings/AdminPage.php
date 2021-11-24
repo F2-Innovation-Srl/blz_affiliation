@@ -8,20 +8,14 @@ namespace BLZ_AFFILIATION\AdminUserInterface\Settings;
  */
 class AdminPage {
     public $page = "blz-affiliation";
-    protected $marketplaces;
-    protected $tabs;
-    protected $current_tab;
-    protected $current_parent_tab;
 	/**
 	 * AdminPage constructor.
 	 */
 	function __construct() {
-
         
-        $this->tabs = CONFIG["tabs"];
-        $this->marketplaces = CONFIG["marketplaces"];
         # set admin actions callback
         add_action('admin_menu', [ $this, 'adminMenu' ]);
+        add_action('init', [ $this, 'custom_enqueue' ]);
 	}
 
 	/**
@@ -29,68 +23,29 @@ class AdminPage {
      * Create admin menu 
     **/
 	public function adminMenu() {
-        add_menu_page('Blazemedia Affilitate', 'Blz Affilitate', 'manage_options', $this->page, [ $this, 'render']);
+
+        $gaTrakingIdSettings = new GaTrakingIdSettings();
+        $programLinksOptions = new ProgramLinksOptions();
+        add_menu_page('Blazemedia Affilitation', 'Blazemedia Affilitation', 'manage_options', $this->page);
+        add_submenu_page($this->page,'GA e TrackingID Settings', 'GA e TrackingID Settings', 'manage_options', $this->page, [ $gaTrakingIdSettings, 'render']);
+        add_submenu_page($this->page,'Program Links Options', 'Program Links Options', 'manage_options', $this->page, [ $programLinksOptions, 'render']);
 
 	}
 
-	/**
-     * Print page if have correct permission
-    **/
-    public function render()
+    public static function custom_enqueue()
     {
-        if (!current_user_can('manage_options')) {
-            wp_die('Non hai i permessi per visualizzare questa pagina');
-        } else{
-            $this->printPage();
+        /*
+        if (! is_admin()) {
+            # enqueue scripts
+            wp_enqueue_script(
+                'blz-affiliation-javascripts',
+                plugins_url("assets/js/tracker.js", dirname(__FILE__)),
+                [],
+                PLUGIN_VERSION,
+                true
+            );
         }
-
+        */
     }
-
-    /**
-     * Print Page
-    **/
-    private function printPage()
-    {
-        
-        $this->current_tab = (isset($_GET['tab'])) ? $_GET['tab'] : $this->marketplaces[0]["slug"];
-        $this->current_parent_tab = (isset($_GET['parent_tab'])) ? $_GET['parent_tab'] : $this->tabs[0]["slug"];
-        
-        $formBuilder = new FormBuilder($this->current_tab);
-        if (isset($_POST["blz-affiliation-sendForm"])) $formBuilder->saveForm();
-        
-        ?>
-        <form method="post" action="<?php echo esc_html( admin_url( 'admin.php?page='.$this->page.'&tab='.$this->current_tab.'&parent_tab='.$this->current_parent_tab ) ); ?>">
-            <input type="hidden" name="blz-affiliation-sendForm" value="OK" />
-            <?php $this->printTabs(); ?>
-            <div class="blz-affiliation-container">
-                <h2><?php echo $this->current_tab;?></h2>
-                <?php $formBuilder->printForm(); ?>
-            </div>
-            <div><hr></div>
-            <?php 
-                wp_nonce_field( 'blz-affiliation-settings-save', 'blz-affiliation-custom-message' );
-                submit_button();
-            ?>
-        </form></div><!-- .wrap -->
-    <?php
-    }
-
-    private function printTabs() {
-        echo '<div id="icon-themes" class="icon32"><br></div>';
-        echo '<h2 class="nav-tab-wrapper">';
-        foreach($this->tabs as $tabs) {
-            $classTab = ( $tabs["slug"] == $this->current_parent_tab ) ? " nav-tab-active" : "";
-            echo "<a class='nav-tab".$classTab."' href='?page=".$this->page."&tab=".$this->current_tab."&parent_tab=".$tabs["slug"]."'>".$tabs["name"]."</a>";
-        }
-        echo '</h2>';
-        echo '<div id="icon-themes" class="icon32"><br></div>';
-        echo '<h2 class="nav-tab-wrapper">';
-        foreach($this->marketplaces as $tabs) {
-            $classTab = ( $tabs["slug"] == $this->current_tab ) ? " nav-tab-active" : "";
-            echo "<a class='nav-tab".$classTab."' href='?page=".$this->page."&tab=".$tabs["slug"]."&parent_tab=".$this->current_parent_tab."'>".$tabs["name"]."</a>";
-        }
-        echo '</h2>';
-    }
-    
     
 }
