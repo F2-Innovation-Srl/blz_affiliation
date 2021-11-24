@@ -49,6 +49,8 @@ class BlzAffiliate {
 		/// di affiliazione
 		new Rendering\AffiliateLinkButton();
 		new Rendering\AffiliateCustomLinkButton();
+		new Rendering\AffiliateLinkProgramsButton();
+		new Rendering\AffiliateLinkProgramStoredButton();
 
 		/// abilita il parsing e il rendering dei link
 		/// di affiliazione nel testo
@@ -61,8 +63,8 @@ class BlzAffiliate {
 
 		/// aggiunge i bottoni per i link di affiliazione
 		new AdminUserInterface\Buttons\AffiliateLinkButton();
-		//new AdminUserInterface\Buttons\AffiliateLinkProgramsButton();		
-		//new AdminUserInterface\Buttons\AffiliateLinkProgramStoredButton();
+		new AdminUserInterface\Buttons\AffiliateLinkProgramsButton();		
+		new AdminUserInterface\Buttons\AffiliateLinkProgramStoredButton();
 		
 		/// aggiunge il bottone per selezionare le tabelle di affiliazione
 		/// a aggiungere il relativo shortcode in pagina
@@ -83,7 +85,6 @@ class BlzAffiliate {
 		}
 
 		new AdminUserInterface\Settings\AdminPage($marketplaces);
-		
 	}
 }
 
