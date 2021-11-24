@@ -3,9 +3,6 @@
 namespace BLZ_AFFILIATION\AffiliateMarketing\Marketplaces;
 class Ebay extends Marketplace {
 
-    public function __construct( Request $request ) {
-        $this->name = \BLZ_AFFILIATION\Utils\Settings::getApiSlug("ebay");                
-    }
     public function getQueryURL() {
 
         /// per default prende una keyword
@@ -23,7 +20,7 @@ class Ebay extends Marketplace {
         }
 
         /// sostituisce i valori nella query
-        $apiQuery = str_replace(['{{ query }}', '{{ marketplace }}'], [ urldecode( $query ), $this->name], $this->apiQuery );
+        $apiQuery = str_replace(['{{ query }}', '{{ marketplace }}'], [ urldecode( $query ), \BLZ_AFFILIATION\Utils\Settings::getApiSlug("ebay")], $this->apiQuery );
         $apiParams = str_replace('{{ min_price }}',  $this->request->getMinPrice() , $this->apiParams );
         /// ritorna la query
         return $this->apiBase . $apiQuery . $apiParams;
