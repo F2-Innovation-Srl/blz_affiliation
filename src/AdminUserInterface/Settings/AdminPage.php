@@ -27,8 +27,8 @@ class AdminPage {
         $gaTrakingIdSettings = new GaTrakingIdSettings();
         $programLinksOptions = new ProgramLinksOptions();
         add_menu_page('Blazemedia Affilitation', 'Blazemedia Affilitation', 'manage_options', $this->page);
-        add_submenu_page($this->page,'GA e TrackingID Settings', 'GA e TrackingID Settings', 'manage_options', $this->page, [ $gaTrakingIdSettings, 'render']);
-        add_submenu_page($this->page,'Program Links Options', 'Program Links Options', 'manage_options', $this->page, [ $programLinksOptions, 'render']);
+        add_submenu_page($this->page,'GA e TrackingID Settings', 'GA e TrackingID Settings', 'manage_options', $this->page."-tracking", [ $gaTrakingIdSettings, 'render']);
+        add_submenu_page($this->page,'Program Links Options', 'Program Links Options', 'manage_options', $this->page."-program-links-options", [ $programLinksOptions, 'render']);
 
 	}
 
