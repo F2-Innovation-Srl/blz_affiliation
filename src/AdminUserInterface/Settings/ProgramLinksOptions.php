@@ -141,7 +141,6 @@ class ProgramLinksOptions {
 
                 <?php endforeach; ?>
                 <tr valign="top" style="text-align:left">
-                    <th>Subject</th>
                     <td><input type="text" name="subject_new" value="" /></td>
                     <td><?php submit_button('Add', 'primary', 'submit', false ); ?></td>     
                 </tr>
