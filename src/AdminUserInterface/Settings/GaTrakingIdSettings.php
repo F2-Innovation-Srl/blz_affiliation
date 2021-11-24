@@ -8,7 +8,7 @@ namespace BLZ_AFFILIATION\AdminUserInterface\Settings;
  */
 class GaTrakingIdSettings {
 
-    protected $settings;
+    protected $item;
     protected $marketplaces;
     protected $tabs;
     protected $current;
@@ -17,10 +17,10 @@ class GaTrakingIdSettings {
 	 * AdminPage constructor.
 	 */
 	function __construct() {
-        $this->settings = \BLZ_AFFILIATION\Utils\Settings::findbySuffix(CONFIG["Items"],$_GET["page"]);
-        $this->option_name = $this->settings["suffix"]."-".$_GET["tab"]."-".$_GET["sub_tab"];
-        $this->tabs = $this->settings["settings"]["tabs"];
-        $this->marketplaces = $this->settings["settings"]["marketplaces"];
+        $this->item = \BLZ_AFFILIATION\Utils\Settings::findbySuffix(CONFIG["Items"],$_GET["page"]);
+        $this->option_name = $this->item["suffix"]."-".$_GET["tab"]."-".$_GET["sub_tab"];
+        $this->tabs = $this->item["settings"]["tabs"];
+        $this->marketplaces = $this->item["settings"]["marketplaces"];
         $this->current = [
             "tab" => (isset($_GET['tab'])) ? \BLZ_AFFILIATION\Utils\Settings::findbySuffix($this->marketplaces,$_GET["tab"]) : $this->marketplaces[0],
             "sub_tab" => (isset($_GET['sub_tab'])) ? \BLZ_AFFILIATION\Utils\Settings::findbySuffix($this->tabs,$_GET["sub_tab"]) : $this->tabs[0]
@@ -45,19 +45,19 @@ class GaTrakingIdSettings {
     **/
     private function printPage()
     {
-        if (isset($_POST[$this->settings["prefix"]."-sendForm"])) $this->saveForm();
+        if (isset($_POST[$this->item["prefix"]."-sendForm"])) $this->saveForm();
         ?>
         <form method="post" action="<?php echo esc_html( admin_url( 'admin.php?page='.$_GET["page"].'&tab='.$this->current["tab"]["suffix"].'&sub_tab='.$this->current["sub_tab"]["suffix"] ) ); ?>">
-            <input type="hidden" name="<?php echo $this->settings["prefix"];?>-sendForm" value="OK" />
+            <input type="hidden" name="<?php echo $this->item["prefix"];?>-sendForm" value="OK" />
             <?php $this->printTabs(); ?>
-            <div class="<?php echo $this->settings["prefix"];?>-container">
+            <div class="<?php echo $this->item["prefix"];?>-container">
                 <h2><?php echo $this->current["sub_tab"]["description"] . " per i " .$this->current["tab"]["description"];?></h2>
                 <?php $this->printTable(); ?>
                 <?php $this->printTemplate(); ?>
             </div>
             <div><hr></div>
             <?php 
-                wp_nonce_field( $this->settings["prefix"].'-settings-save', $this->settings["prefix"].'-custom-message' );
+                wp_nonce_field( $this->item["prefix"].'-settings-save', $this->item["prefix"].'-custom-message' );
                 submit_button();
             ?>
         </form></div><!-- .wrap -->
@@ -149,20 +149,19 @@ class GaTrakingIdSettings {
 
     }
     private function printTemplate() {
-        echo '<div id="icon-themes" class="icon32"><br></div>';
-        echo '<h2 class="nav-tab-wrapper">';
-        
-        echo '</h2>';
+        ?>
+        <div><h2>Template</h2></div>
+        <table>
+            <tr valign="top" style="text-align:left">
+               <td>GA EVENT</td>
+               <td><?php echo $this->current["tab"]["ga_event_template"];?></td>
+            </tr>
+            <tr valign="top" style="text-align:left">
+               <td>TRACKING ID</td>
+               <td><?php echo $this->current["tab"]["tracking_id"];?></td>
+            </tr>
+        </table>
+        <?php
     }
     
-    /**
-     * Save form
-    **/
-    public function saveForm()
-    {
-        foreach (array_filter($_POST, function($k) { return strpos($k, $this->settings["prefix"]."-") !== false; }, ARRAY_FILTER_USE_KEY) as $key => $val)
-            update_option($key,$val);
-    
-        echo "<div class=\"updated notice\"><p>Dati salvati con successo</p></div>";
-    }
 }
