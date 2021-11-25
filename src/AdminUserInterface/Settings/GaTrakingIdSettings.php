@@ -45,7 +45,6 @@ class GaTrakingIdSettings {
     **/
     private function printPage()
     {
-        if (isset($_POST[$this->item["prefix"]."-sendForm"])) $this->saveForm();
         ?>
         <form method="post" action="<?php echo esc_html( admin_url( 'admin.php?page='.$_GET["page"].'&tab='.$this->current["tab"]["suffix"].'&sub_tab='.$this->current["sub_tab"]["suffix"] ) ); ?>">
             <input type="hidden" name="<?php echo $this->item["prefix"];?>-sendForm" value="OK" />
