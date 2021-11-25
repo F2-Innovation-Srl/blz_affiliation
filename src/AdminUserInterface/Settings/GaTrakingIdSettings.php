@@ -154,7 +154,7 @@ class GaTrakingIdSettings {
             <?php 
             $listActivator = ["POSTTYPE","CATEOGORY","TAXONOMY","TAG","USERS"];
             foreach( $listActivator as $activator) :?>
-                <option value="<?php echo $activator?>" <?php ($value == $activator) ? "selected" : ""?> ><?php echo $activator?></option>
+                <option value="<?php echo $activator?>" <?php echo ($value == $activator) ? "selected" : ""?> ><?php echo $activator?></option>
             <?php endforeach;?>
         </select>
         <?php
@@ -166,7 +166,7 @@ class GaTrakingIdSettings {
             <?php
             $blogusers = get_users(['role__in' => ['author', 'subscriber']]);
             foreach( $blogusers as $user) :?>
-                <option value="<?php echo $user->display_name?>" <?php ($value == $user->display_name) ? "selected" : ""?> ><?php echo $user->display_name?></option>
+                <option value="<?php echo $user->display_name?>" <?php echo ($value == $user->display_name) ? "selected" : ""?> ><?php echo $user->display_name?></option>
             <?php endforeach;?>
             </select>
         <?php
