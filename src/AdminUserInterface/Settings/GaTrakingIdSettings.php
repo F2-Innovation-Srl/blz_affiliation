@@ -92,7 +92,7 @@ class GaTrakingIdSettings {
             <?php foreach( $rules as $idx => $rule ) : ?>
 
                 <tr valign="top">                    
-                    <td><?php echo printActivators("rules_attivatore".$idx,$rule['attivatore']) ?></td>
+                    <td><?php echo $this->printActivators("rules_attivatore".$idx,$rule['attivatore']) ?></td>
                     <td><input type="text" name="rules_regola<?=$idx?>" value="<?=$rule['regola']?>" /></td>
                     <td><input type="text" name="rules_ga_val<?=$idx?>" value="<?=$rule['ga_val']?>" /></td>
                     <td><input type="text" name="rules_trk_val<?=$idx?>" value="<?=$rule['trk_val']?>" /></td>
@@ -103,7 +103,7 @@ class GaTrakingIdSettings {
 
             <?php endforeach; ?>
             <tr valign="top">                    
-                <td><?php echo printActivators("rules_attivatore_new") ?></td>
+                <td><?php echo $this->printActivators("rules_attivatore_new") ?></td>
                     <td><input type="text" name="rules_regola_new" value="" /></td>
                     <td><input type="text" name="rules_ga_val_new" value="" /></td>
                     <td><input type="text" name="rules_trk_val_new" value="" /></td>
