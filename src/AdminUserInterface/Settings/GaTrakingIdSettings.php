@@ -18,13 +18,13 @@ class GaTrakingIdSettings {
 	 */
 	function __construct() {
         $this->item = \BLZ_AFFILIATION\Utils\Settings::findbySuffix(CONFIG["Items"],$_GET["page"]);
-        $this->option_name = $this->item["suffix"]."-".$_GET["tab"]."-".$_GET["sub_tab"];
         $this->tabs = $this->item["settings"]["tabs"];
         $this->marketplaces = $this->item["settings"]["marketplaces"];
         $this->current = [
             "tab" => (isset($_GET['tab'])) ? \BLZ_AFFILIATION\Utils\Settings::findbySuffix($this->marketplaces,$_GET["tab"]) : $this->marketplaces[0],
             "sub_tab" => (isset($_GET['sub_tab'])) ? \BLZ_AFFILIATION\Utils\Settings::findbySuffix($this->tabs,$_GET["sub_tab"]) : $this->tabs[0]
         ];
+        $this->option_name = $this->item["suffix"]."-".$this->current["tab"]["suffix"]."-".$this->current["sub_tab"]["suffix"];
     }
 
 	/**
@@ -92,7 +92,7 @@ class GaTrakingIdSettings {
             <?php foreach( $rules as $idx => $rule ) : ?>
 
                 <tr valign="top">                    
-                    <td><input type="text" name="rules_attivatore<?=$idx?>" value="<?=$rule['attivatore']?>" /></td>
+                    <td><?php echo printActivators("rules_attivatore".$idx,$rule['attivatore']) ?></td>
                     <td><input type="text" name="rules_regola<?=$idx?>" value="<?=$rule['regola']?>" /></td>
                     <td><input type="text" name="rules_ga_val<?=$idx?>" value="<?=$rule['ga_val']?>" /></td>
                     <td><input type="text" name="rules_trk_val<?=$idx?>" value="<?=$rule['trk_val']?>" /></td>
@@ -103,7 +103,7 @@ class GaTrakingIdSettings {
 
             <?php endforeach; ?>
             <tr valign="top">                    
-            <td><input type="text" name="rules_attivatore_new" value="" /></td>
+                <td><?php echo printActivators("rules_attivatore_new") ?></td>
                     <td><input type="text" name="rules_regola_new" value="" /></td>
                     <td><input type="text" name="rules_ga_val_new" value="" /></td>
                     <td><input type="text" name="rules_trk_val_new" value="" /></td>
@@ -148,17 +148,42 @@ class GaTrakingIdSettings {
         return $rules;
 
     }
+
+    private function printActivators($name,$value = null){
+        ?>
+        <select name="<?php echo $name?>"><option value="">Seleziona un attivatore</option>
+            <?php 
+            $listActivator = ["POSTTYPE","CATEOGORY","TAXONOMY","TAG","USERS"];
+            foreach( $listActivator as $activator) :?>
+                <option value="<?php echo $activator?>" <?php ($value == $activator) ? "selected" : ""?> ><?php echo $activator?></option>
+            <?php endforeach;?>
+        </select>
+        <?php
+    }
+
+    private function printUsers($value){
+        ?>
+            <select name="<?php echo $name?>"><option value="0">Seleziona un utente</option>
+            <?php
+            $blogusers = get_users(['role__in' => ['author', 'subscriber']]);
+            foreach( $blogusers as $user) :?>
+                <option value="<?php echo $user->display_name?>" <?php ($value == $user->display_name) ? "selected" : ""?> ><?php echo $user->display_name?></option>
+            <?php endforeach;?>
+            </select>
+        <?php
+    }
+
     private function printTemplate() {
         ?>
         <div><h2>Template</h2></div>
         <table>
             <tr valign="top" style="text-align:left">
                <td>GA EVENT</td>
-               <td><?php echo $this->current["tab"]["ga_event_template"];?></td>
+               <td><input type="text" readonly value="<?php echo $this->current["tab"]["ga_event_template"];?>"></td>
             </tr>
             <tr valign="top" style="text-align:left">
                <td>TRACKING ID</td>
-               <td><?php echo $this->current["tab"]["tracking_id"];?></td>
+               <td><input type="text" readonly value="<?php echo $this->current["tab"]["tracking_id"];?>"></td>
             </tr>
         </table>
         <?php
