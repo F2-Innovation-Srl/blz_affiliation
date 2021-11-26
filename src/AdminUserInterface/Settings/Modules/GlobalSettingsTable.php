@@ -18,7 +18,7 @@ class GlobalSettingsTable {
 
         $row = $this->getAndSetRow($option_name);
         $this->row =  [
-            (new Fields\Text($option_name."_ga_code".$i,$row["active"],"text"))
+            (new Fields\Text($option_name."_ga_code",$row["active"],"text"))
         ];
     }
 
@@ -40,16 +40,14 @@ class GlobalSettingsTable {
     private function getAndSetRow($option_name){
         
         //GET
-        $row = get_option($option_name."_settings");
-        echo "<pre>";
-
+        $row = get_option($option_name);
         //UPDATE
         $row = [
-            'ga_code' => isset( $_POST[$option_name. '_ga_code' ] ) ? $_POST[$option_name. '_ga_code' ] : (isset($row['ga_code']) ? $row['ga_code'] : "true")
+            'ga_code' => isset( $_POST[$option_name. '_ga_code' ] ) ? $_POST[$option_name. '_ga_code' ] : isset($row['ga_code'])
         ];
 
         //SET
-        update_option($option_name."_settings",$row);
+        update_option($option_name,$row);
         //RETURN
         return $row;
 

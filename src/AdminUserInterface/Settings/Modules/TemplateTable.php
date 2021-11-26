@@ -21,9 +21,9 @@ class TemplateTable {
         $row = $this->getAndSetRow($option_name);
 
         $this->row =  [
-            (new Fields\Text($option_name."_active".$i,$row["active"],"boolean")),
-            (new Fields\Text($option_name."_ga_default".$i,$row["ga_default"],"text")),
-            (new Fields\Text($option_name."_trk_default".$i,$row["trk_default"],"text"))
+            (new Fields\Text($option_name."_active",$row["active"],"boolean")),
+            (new Fields\Text($option_name."_ga_default",$row["ga_default"],"text")),
+            (new Fields\Text($option_name."_trk_default",$row["trk_default"],"text"))
         ];
     }
 
