@@ -46,7 +46,7 @@ class GaTrakingIdSettings {
                     <h2><?php echo $this->current["sub_tab"]["description"] . " per i " .$this->current["tab"]["description"];?></h2>
                     <?php 
                     (new ActivationTable($this->item["suffix"]."_",$this->getAndSetAttivationsRows()))->render(); 
-                    (new TemplateTable())->render(); 
+                    (new TemplateTable([]))->render(); 
                     ?>
                 </div>
                 <div><hr></div>
