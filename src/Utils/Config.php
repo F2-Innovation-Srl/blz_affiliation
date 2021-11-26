@@ -1,10 +1,10 @@
 <?php
 namespace BLZ_AFFILIATION\Utils;
 
-class Settings {
+class Config {
 
     /**
-     * Carica i settings da Json
+     * Carica le Config da Json
      */
     public static function loadSettings(){
         define('CONFIG', json_decode(file_get_contents(PLUGIN_PATH.'config.json'), true));
@@ -21,8 +21,8 @@ class Settings {
      * Torna l'api name dal settings
      */
     public static function getApiSlug($marketplace){
-        $settings = Settings::findbySuffix(CONFIG["Items"],CONFIG["plugin_suffix"])["settings"];
-        return  Settings::findbySuffix($settings["marketplaces"],$marketplace)["api_slug"];
+        $settings = Config::findbySuffix(CONFIG["Items"],CONFIG["plugin_suffix"])["settings"];
+        return  Config::findbySuffix($settings["marketplaces"],$marketplace)["api_slug"];
     }
    
 
