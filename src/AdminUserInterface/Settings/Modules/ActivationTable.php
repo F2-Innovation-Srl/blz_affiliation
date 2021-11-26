@@ -66,12 +66,14 @@ class ActivationTable {
 
     private function getAndSetRows($option_name){
         
+        //GET
         $activationRows = get_option($option_name);
-       
+
+        //UPDATE
         $activationRows = ($activationRows) ? array_map( function ( $activationRow, $idx  )  use ($option_name)  {
-            
-            if (!(!empty($_POST['hidden_for_delete']) && $_POST['hidden_for_delete'] == $idx))
+
             return [
+                'id' => $idx,
                 'attivatore' => isset( $_POST[$option_name. '_attivatore'.$idx ] ) ? $_POST[$option_name. '_attivatore'.$idx ] : $activationRow['attivatore'],
                 'regola' => isset( $_POST[ $option_name.'_regola'.$idx ] ) ? $_POST[ $option_name.'_regola'.$idx ] : $activationRow['regola'],
                 'ga_val' => isset( $_POST[ $option_name.'_ga_val'.$idx ] ) ? $_POST[$option_name. '_ga_val'.$idx ] : $activationRow['ga_val'],
@@ -79,8 +81,18 @@ class ActivationTable {
                 'ga_label' => isset( $_POST[ $option_name.'_ga_label'.$idx ] ) ? $_POST[ $option_name.'_ga_label'.$idx ] : $activationRow['ga_label'],
                 'trk_label' => isset( $_POST[ $option_name.'_trk_label'.$idx ] ) ? $_POST[$option_name. '_trk_label'.$idx ] : $activationRow['trk_label'],
             ];
-
+        
         }, $activationRows, array_keys($activationRows) ) : [];
+
+        //DELETE
+        $id_to_delete = $_POST['hidden_for_delete'];
+        if ($id_to_delete != "" && $id_to_delete != null){
+            $activationRows = array_values(array_filter($activationRows,function($row) use($id_to_delete) {
+                    return $row["id"] != $id_to_delete;
+            }));  
+        }
+
+        //INSERT 
         if( !empty( $_POST[$option_name.'_attivatore_new'] ) && !empty( $_POST[$option_name.'_regola_new'] ) ) {
 
             $activationRows[] = [
@@ -92,7 +104,11 @@ class ActivationTable {
                 'trk_label' => $_POST[$option_name.'_trk_label_new']
             ];
         }
+
+        //SET
         update_option($option_name,$activationRows);
+
+        //RETURN
         return $activationRows;
 
     }
