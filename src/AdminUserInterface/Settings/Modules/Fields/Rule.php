@@ -8,9 +8,7 @@ class Rule extends Field {
 
     /// viene richiamata dal costruttore
     public function Create() {
-        ?>
-        <input type="number" style="width:70px" name="<?php echo $this->name?>" value="<?php echo $this->value?>" />     
-        <?php
+        return '<input type="number" style="width:70px" name="'.$this->name.'" value="'.$this->value.'" />';    
     }
 
     private function printUsers(){

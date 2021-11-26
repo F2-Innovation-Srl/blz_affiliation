@@ -10,37 +10,26 @@ class Text extends Field {
     public function Create() {
         switch ($type) {
             case "number":
-                ?>
-                <input type="number" style="width:70px" name="<?php echo $this->name?>" value="<?php echo $this->value?>" />
-                <?php
+                return '<input type="number" name="'.$this->name.'" value="'.$this->value.'" />';
                 break;
             case "string":
-                ?>
-                <input type="text" name="<?php echo $this->name?>" value="<?php echo $this->value?>" />
-                <?php
+                return '<input type="text" name="'.$this->name.'" value="'.$this->value.'" />';
                 break;
             case "boolean":
-                ?>
-                SI <input type="radio" name="<?php echo $this->name?>" <?php echo ($this->value == "true") ? "checked" : ""?> value="true" />
-                NO <input type="radio" name="<?php echo $this->name?>" <?php echo ($this->value == "false") ? "checked" : ""?> value="false" />
-                <?php
+                foreach (["true","false"] as $options)
+                    $output .= 'SI <input type="radio" name="'.$this->name.'" .'( ($this->value == $options) ? "checked" : "").' value="'.$options.'" />';
+                return $output;
                 break;
             case "add":
-                ?>
-                <input type="submit" name="submit" class="button button-primary" value="Aggiungi">
-                <?php
-                 break;
+                return '<input type="submit" name="submit" class="button button-primary"  value="Aggiungi" />';
+                break;
             case "update":
-                ?>
-                <input type="hidden" name="<?php echo $this->name?>" value="<?php echo $this->value?>" />
-                <input type="submit" name="submit" class="button button-primary" value="Update">
-                <?php
+                return '<input type="hidden" name="'.$this->name.'" value="'.$this->value.'" />';
+                return '<input type="submit" name="submit"  class="button button-primary" value="Update" />';
                 break;
             case "delete":
-                ?>
-                <input type="hidden" name="<?php echo $this->name?>" value="<?php echo $this->value?>" />
-                <input type="submit" name="submit" class="button button-primary" value="cancella">
-                <?php
+                return '<input type="hidden" name="'.$this->name.'" value="'.$this->value.'" />';
+                return '<input type="submit" name="submit"  class="button button-primary" value="Cacnella" />';
                 break;
         }
         ?>

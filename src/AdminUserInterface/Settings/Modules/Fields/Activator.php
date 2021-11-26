@@ -10,14 +10,10 @@ class Activator extends Field {
 
     /// viene richiamata dal costruttore
     public function Create() {
-        ?>
-        <select name="<?php echo $this->name?>"><option value="">Seleziona un attivatore</option>
-            <?php 
-            
-            foreach( $this->listActivator as $activator) :?>
-                <option value="<?php echo $activator?>" <?php echo ($this->value == $activator) ? "selected" : ""?> ><?php echo $activator?></option>
-            <?php endforeach;?>
-        </select>
-        <?php
+        $output = '<select name="'.$this->name.'"><option value="">Seleziona un attivatore</option>';
+        foreach( $this->listActivator as $activator) 
+            $output.= '<option value="'.$activator.'" .'(($this->value == $activator) ? "selected" : "").' >'.$activator.'</option>';
+        $output.= '</select>';
+        return $output;
     }
 }
