@@ -17,7 +17,7 @@ class Text extends Field {
                 break;
             case "boolean":
                 foreach (["true","false"] as $options)
-                    $output .= 'SI <input type="radio" name="'.$this->name.'" .'( ($this->value == $options) ? "checked" : "").' value="'.$options.'" />';
+                    $output .= 'SI <input type="radio" name="'.$this->name.'" '.( ($this->value == $options) ? "checked" : "").' value="'.$options.'" />';
                 return $output;
                 break;
             case "hidden":
