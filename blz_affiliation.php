@@ -27,6 +27,7 @@ use BLZ_AFFILIATION\AdminUserInterface\Settings;
 use BLZ_AFFILIATION\CustomPostTypes;
 use BLZ_AFFILIATION\AffiliateMarketing\Marketplace;
 use BLZ_AFFILIATION\AffiliateMarketing\Request;
+use BLZ_AFFILIATION\Utils\Settings;
 /**
  *
  */
@@ -72,7 +73,7 @@ class BlzAffiliate {
 		//new AdminUserInterface\Buttons\AffiliateTableButton();
 
 		//load Settings
-		BLZ_AFFILIATION\Utils\Settings::loadSettings();
+		Settings::loadSettings();
 
 		/// aggiunge la pagina dei settings del plugin
 		new AdminUserInterface\Settings\AdminPage();
