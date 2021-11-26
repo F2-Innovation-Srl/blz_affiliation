@@ -1,7 +1,7 @@
 <?php
 namespace BLZ_AFFILIATION\AdminUserInterface\Settings;
 
-use BLZ_AFFILIATION\Utils\Settings;
+use BLZ_AFFILIATION\Utils\Config;
 use BLZ_AFFILIATION\AdminUserInterface\Settings\Modules\ActivationTable;
 use BLZ_AFFILIATION\AdminUserInterface\Settings\Modules\TemplateTable;
 /**
@@ -20,12 +20,12 @@ class GaTrakingIdSettings {
 	 * AdminPage constructor.
 	 */
 	function __construct() {
-        $this->item = Settings::findbySuffix(CONFIG["Items"],$_GET["page"]);
+        $this->item = Config::findbySuffix(CONFIG["Items"],$_GET["page"]);
         $this->tabs = $this->item["settings"]["tabs"];
         $this->marketplaces = $this->item["settings"]["marketplaces"];
         $this->current = [
-            "tab" => (isset($_GET['tab'])) ? Settings::findbySuffix($this->marketplaces,$_GET["tab"]) : $this->marketplaces[0],
-            "sub_tab" => (isset($_GET['sub_tab'])) ? Settings::findbySuffix($this->tabs,$_GET["sub_tab"]) : $this->tabs[0]
+            "tab" => (isset($_GET['tab'])) ? Config::findbySuffix($this->marketplaces,$_GET["tab"]) : $this->marketplaces[0],
+            "sub_tab" => (isset($_GET['sub_tab'])) ? Config::findbySuffix($this->tabs,$_GET["sub_tab"]) : $this->tabs[0]
         ];
         $this->option_name = $this->item["suffix"]."-".$this->current["tab"]["suffix"]."-".$this->current["sub_tab"]["suffix"];
     }
