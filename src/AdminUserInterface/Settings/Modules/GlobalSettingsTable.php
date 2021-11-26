@@ -3,16 +3,16 @@ namespace BLZ_AFFILIATION\AdminUserInterface\Settings\Modules;
 use BLZ_AFFILIATION\AdminUserInterface\Settings\Modules\Fields;
  
 /**
- * Class GeneralSettingsTable
+ * Class GlobalSettingsTable
  *
  * @package BLZ_AFFILIATION
  */
-class GeneralSettingsTable {
+class GlobalSettingsTable {
 
     protected $fields;
     private $row;
 	/**
-	 * GeneralSettingsTable constructor.
+	 * GlobalSettingsTable constructor.
 	 */
 	function __construct($option_name) {
 
@@ -27,7 +27,6 @@ class GeneralSettingsTable {
     **/
     public function render(){
         ?>
-        <div><h2>Settings</h2></div>
         <table>
             <tr valign="top" style="text-align:left">
                 <th>Analitics Code</th>         

@@ -2,13 +2,13 @@
 namespace BLZ_AFFILIATION\AdminUserInterface\Settings;
 
 use BLZ_AFFILIATION\Utils\Config;
-use BLZ_AFFILIATION\AdminUserInterface\Settings\Modules\GeneralSettingsTable;
+use BLZ_AFFILIATION\AdminUserInterface\Settings\Modules\GlobalSettingsTable;
 /**
- * Class GeneralSettings
+ * Class GlobalSettings
  *
  * @package BLZ_AFFILIATION
  */
-class GeneralSettings {
+class GlobalSettings {
 
     protected $item;
     protected $option_name;
@@ -32,9 +32,9 @@ class GeneralSettings {
             <form method="post" action="<?php echo esc_html( admin_url( 'admin.php?page='.$_GET["page"]))?>">
                 <input type="hidden" name="<?php echo $this->item["suffix"];?>-sendForm" value="OK" />
                 <div class="<?php echo $this->item["suffix"];?>-container">
-                    <h2>General Settings</h2>
+                    <h2>Global Settings</h2>
                     <?php 
-                    (new GeneralSettingsTable($this->option_name))->render(); 
+                    (new GlobalSettingsTable($this->option_name))->render(); 
                     ?>
                 </div>
                 <div><hr></div>

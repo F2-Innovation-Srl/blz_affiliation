@@ -3,11 +3,6 @@
     "plugin_suffix"   : "blz-affiliation",
     "Items"  : [
         {
-            "name"       : "General Settings",
-            "suffix"     : "blz-affiliation-settings",
-            "class_name" : "GeneralSettings"
-        },
-        {
             "name"       : "GA e TrackingID Settings",
             "suffix"     : "blz-affiliation",
             "class_name" : "GaTrakingIdSettings",
@@ -61,6 +56,11 @@
             "name"       : "Program Links Options",
             "suffix"     : "blz-affiliation-program",
             "class_name" : "ProgramLinksOptions"
+        },
+        {
+            "name"       : "Global Settings",
+            "suffix"     : "blz-affiliation-settings",
+            "class_name" : "GlobalSettings"
         }
     ]
   }
