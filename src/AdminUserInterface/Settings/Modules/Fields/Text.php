@@ -8,11 +8,11 @@ class Text extends Field {
 
     /// viene richiamata dal costruttore
     public function Create() {
-        switch ($type) {
+        switch ($this->type) {
             case "number":
                 return '<input type="number" name="'.$this->name.'" value="'.$this->value.'" />';
                 break;
-            case "string":
+            case "text":
                 return '<input type="text" name="'.$this->name.'" value="'.$this->value.'" />';
                 break;
             case "boolean":
@@ -20,16 +20,11 @@ class Text extends Field {
                     $output .= 'SI <input type="radio" name="'.$this->name.'" .'( ($this->value == $options) ? "checked" : "").' value="'.$options.'" />';
                 return $output;
                 break;
-            case "add":
-                return '<input type="submit" name="submit" class="button button-primary"  value="Aggiungi" />';
-                break;
-            case "update":
+            case "hidden":
                 return '<input type="hidden" name="'.$this->name.'" value="'.$this->value.'" />';
-                return '<input type="submit" name="submit"  class="button button-primary" value="Update" />';
                 break;
-            case "delete":
-                return '<input type="hidden" name="'.$this->name.'" value="'.$this->value.'" />';
-                return '<input type="submit" name="submit"  class="button button-primary" value="Cacnella" />';
+            case "button":
+                return '<input type="submit" name="submit" data-id="'.$this->name.'"  class="button button-primary" value="'.$this->value.'" />';
                 break;
         }
         ?>

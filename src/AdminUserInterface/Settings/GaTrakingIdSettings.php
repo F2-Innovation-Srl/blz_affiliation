@@ -45,7 +45,7 @@ class GaTrakingIdSettings {
                 <div class="<?php echo $this->item["suffix"];?>-container">
                     <h2><?php echo $this->current["sub_tab"]["description"] . " per i " .$this->current["tab"]["description"];?></h2>
                     <?php 
-                    (new ActivationTable($this->item["suffix"]."_",$this->getAndSetAttivationsRows()))->render(); 
+                    (new ActivationTable($this->option_name))->render(); 
                     (new TemplateTable([]))->render(); 
                     ?>
                 </div>
@@ -77,42 +77,6 @@ class GaTrakingIdSettings {
             echo "<a class='nav-tab".$classTab."' href='?page=".$_GET["page"]."&tab=".$this->current["tab"]["suffix"]."&sub_tab=".$tab["suffix"]."'>".$tab["name"]."</a>";
         }
         echo '</h2>';
-    }
-
- 
-
-    private function getAndSetAttivationsRows(){
-
-        $activationRows = get_option($this->option_name);
-
-        $activationRows = ($activationRows) ? array_map( function ( $activationRows, $idx  )  {
-            if (!(!empty( $_POST[$this->item["suffix"].'_delete'] ) && $_POST[$this->item["suffix"].'_delete'] == $idx))
-            return [
-                'attivatore' => isset( $_POST[$this->item["suffix"]. '_attivatore'.$idx ] ) ? $_POST[$this->item["suffix"]. '_attivatore'.$idx ] : $activationRow['attivatore'],
-                'regola' => isset( $_POST[ $this->item["suffix"].'_regola'.$idx ] ) ? $_POST[ $this->item["suffix"].'_regola'.$idx ] : $activationRow['regola'],
-                'ga_val' => isset( $_POST[ $this->item["suffix"].'_ga_val'.$idx ] ) ? $_POST[$this->item["suffix"]. '_ga_val'.$idx ] : $activationRow['ga_val'],
-                'trk_val' => isset( $_POST[ $this->item["suffix"].'_trk_val'.$idx ] ) ? $_POST[ $this->item["suffix"].'_trk_val'.$idx ] : $activationRow['trk_val'],
-                'ga_label' => isset( $_POST[ $this->item["suffix"].'_ga_label'.$idx ] ) ? $_POST[ $this->item["suffix"].'_ga_label'.$idx ] : $activationRow['ga_label'],
-                'trk_label' => isset( $_POST[ $this->item["suffix"].'_trk_label'.$idx ] ) ? $_POST[$this->item["suffix"]. '_trk_label'.$idx ] : $activationRow['trk_label'],
-            ];
-
-        }, $activationRows, array_keys($activationRows) ) : [];
-        if( !empty( $_POST[$this->item["suffix"].'_attivatore_new'] ) && !empty( $_POST[$this->item["suffix"].'_regola_new'] ) ) {
-
-            $activationRows[] = [
-                'attivatore' => $_POST[$this->item["suffix"].'_attivatore_new'],
-                'regola' => $_POST[$this->item["suffix"].'_regola_new'],
-                'ga_val' => $_POST[$this->item["suffix"].'_ga_val_new'],
-                'trk_val' => $_POST[$this->item["suffix"].'_trk_val_new'],
-                'ga_label' => $_POST[$this->item["suffix"].'_ga_label_new'],
-                'trk_label' => $_POST[$this->item["suffix"].'_trk_label_new']
-            ];
-        }
-
-        update_option($this->option_name, $activationRows );
-
-        return $activationRows;
-
     }
 
     
