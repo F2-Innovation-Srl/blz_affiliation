@@ -13,7 +13,7 @@ abstract class Field {
     protected $properties;
     
     /// prende in ingresso un nome e un valore per il field
-    public function __construct( String $name, String $value = '', String $type = '', String $properties = '' ) {
+    public function __construct( $name, $value = '', $type = '', $properties = '' ) {
         $this->name = $name;
         $this->value = $value;
         $this->type = $type;
