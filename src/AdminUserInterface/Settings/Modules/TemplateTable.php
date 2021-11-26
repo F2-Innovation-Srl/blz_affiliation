@@ -46,7 +46,7 @@ class TemplateTable {
                 <th>Valore TRK_ID Default</th><th>Valore GA Default</th><th>&nbsp;</th>                       
             </tr>
             <tr valign="top" style="text-align:left">
-            <?php  foreach( $row as $field )  echo "<td>" .$field->render() ."</td>"; ?>
+            <?php  foreach( $this->row as $field )  echo "<td>" .$field->render() ."</td>"; ?>
             </tr>
         </table>
     <?php
