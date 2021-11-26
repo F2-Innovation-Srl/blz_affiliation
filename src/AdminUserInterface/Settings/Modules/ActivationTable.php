@@ -39,7 +39,7 @@ class ActivationTable {
             (new Fields\Text($option_name."_ga_label_new","","text")),
             (new Fields\Text($option_name."_trk_label_new","","text")),
             (new Fields\Text($option_name."_new",'Aggiungi',"button")),
-            (new Fields\Text($option_name."_delete",'',"hidden"))
+            (new Fields\Text("hidden_for_delete",'',"hidden"))
         ];
     }
 

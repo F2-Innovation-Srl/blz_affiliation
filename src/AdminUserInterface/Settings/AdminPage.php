@@ -33,18 +33,18 @@ class AdminPage {
 
     public static function custom_enqueue()
     {
-        /*
-        if (! is_admin()) {
+        
+        if (is_admin()) {
             # enqueue scripts
             wp_enqueue_script(
-                'blz-affiliation-javascripts',
-                plugins_url("assets/js/tracker.js", dirname(__FILE__)),
+                'blz-affiliation-adminjs',
+                plugins_url("assets/js/admin.js", dirname(__FILE__)),
                 [],
                 PLUGIN_VERSION,
                 true
             );
         }
-        */
+        
     }
     
 }
