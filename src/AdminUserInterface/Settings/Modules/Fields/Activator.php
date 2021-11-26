@@ -12,7 +12,7 @@ class Activator extends Field {
     public function Create() {
         $output = '<select name="'.$this->name.'"><option value="">Seleziona un attivatore</option>';
         foreach( $this->listActivator as $activator) 
-            $output.= '<option value="'.$activator.'" .'(($this->value == $activator) ? "selected" : "").' >'.$activator.'</option>';
+            $output.= '<option value="'.$activator.'" '.(($this->value == $activator) ? "selected" : "").' >'.$activator.'</option>';
         $output.= '</select>';
         return $output;
     }
