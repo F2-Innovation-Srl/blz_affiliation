@@ -15,8 +15,8 @@ class TemplateTable {
 	 */
 	function __construct($rows) {
         $this->$fields = [
-            "Activator" => (new Activator($data["activator"])),
-            "Rule" => (new Rule($data["rule"],$data["activator"]))
+            "Activator" => (new Fields\Activator($data["activator"])),
+            "Rule" => (new Fields\Rule($data["rule"],$data["activator"]))
         ];
     }
 
