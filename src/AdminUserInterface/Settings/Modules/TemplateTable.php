@@ -13,7 +13,7 @@ class TemplateTable {
 	/**
 	 * AttivazioneRow constructor.
 	 */
-	function __construct($rows) {
+	function __construct() {
         $this->$fields = [
             "Activator" => (new Activator($data["activator"])),
             "Rule" => (new Rule($data["rule"],$data["activator"]))
