@@ -18,11 +18,10 @@ abstract class Field {
         $this->value = $value;
         $this->type = $type;
         $this->properties = $properties;
-        $this->render = $this->Create();
     }
 
     public function Render() {
-        return $this->render;
+        return $this->Create();
     }
 
     public abstract function Create();

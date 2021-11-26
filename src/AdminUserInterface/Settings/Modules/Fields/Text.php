@@ -25,6 +25,23 @@ class Text extends Field {
                 NO <input type="radio" name="<?php echo $this->name?>" <?php echo ($this->value == "false") ? "checked" : ""?> value="false" />
                 <?php
                 break;
+            case "add":
+                ?>
+                <input type="submit" name="submit" class="button button-primary" value="Aggiungi">
+                <?php
+                 break;
+            case "update":
+                ?>
+                <input type="hidden" name="<?php echo $this->name?>" value="<?php echo $this->value?>" />
+                <input type="submit" name="submit" class="button button-primary" value="Update">
+                <?php
+                break;
+            case "delete":
+                ?>
+                <input type="hidden" name="<?php echo $this->name?>" value="<?php echo $this->value?>" />
+                <input type="submit" name="submit" class="button button-primary" value="cancella">
+                <?php
+                break;
         }
         ?>
         <?php
