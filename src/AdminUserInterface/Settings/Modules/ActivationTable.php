@@ -19,12 +19,12 @@ class ActivationTable {
         foreach ($rows as $row){
 
             $this->$rows[] =  [
-                (new Activator($suffix."attivatore",$row["attivatore"]))->render(),
-                (new Rule($suffix."regola",$row["regola"],$row["attivatore"]))->render(),
-                (new Text($suffix."ga_val",$row["ga_val"],"text"))->render(),
-                (new Text($suffix."trk_val",$row["trk_val"],"text"))->render(),
-                (new Text($suffix."ga_label",$row["ga_label"],"text"))->render(),
-                (new Text($suffix."trk_label",$row["trk_label"],"text"))->render()
+                (new Fields\Activator($suffix."attivatore",$row["attivatore"]))->render(),
+                (new Fields\Rule($suffix."regola",$row["regola"],$row["attivatore"]))->render(),
+                (new Fields\Text($suffix."ga_val",$row["ga_val"],"text"))->render(),
+                (new Fields\Text($suffix."trk_val",$row["trk_val"],"text"))->render(),
+                (new Fields\Text($suffix."ga_label",$row["ga_label"],"text"))->render(),
+                (new Fields\Text($suffix."trk_label",$row["trk_label"],"text"))->render()
             ];
         }
     }
