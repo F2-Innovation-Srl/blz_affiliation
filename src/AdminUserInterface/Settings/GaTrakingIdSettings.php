@@ -86,7 +86,7 @@ class GaTrakingIdSettings {
         $activationRows = get_option($this->option_name);
 
         $activationRows = ($activationRows) ? array_map( function ( $activationRows, $idx  )  {
-
+            if (!(!empty( $_POST[$this->item["suffix"].'_delete'] ) && $_POST[$this->item["suffix"].'_delete'] == $idx))
             return [
                 'attivatore' => isset( $_POST[$this->item["suffix"]. '_attivatore'.$idx ] ) ? $_POST[$this->item["suffix"]. '_attivatore'.$idx ] : $activationRow['attivatore'],
                 'regola' => isset( $_POST[ $this->item["suffix"].'_regola'.$idx ] ) ? $_POST[ $this->item["suffix"].'_regola'.$idx ] : $activationRow['regola'],
@@ -97,7 +97,7 @@ class GaTrakingIdSettings {
             ];
 
         }, $activationRows, array_keys($activationRows) ) : [];
-        if( !empty( $_POST['_attivatore_new'] ) && !empty( $_POST['_regola_new'] ) ) {
+        if( !empty( $_POST[$this->item["suffix"].'_attivatore_new'] ) && !empty( $_POST[$this->item["suffix"].'_regola_new'] ) ) {
 
             $activationRows[] = [
                 'attivatore' => $_POST[$this->item["suffix"].'_attivatore_new'],
