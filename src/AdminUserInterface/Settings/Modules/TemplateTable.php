@@ -48,7 +48,7 @@ class TemplateTable {
                <td><input style="width:450px" type="text" readonly value="<?php echo $this->current["tab"]["ga_event_template"];?>"></td>
             </tr>
             <tr valign="top" style="text-align:left">
-               <td>TRACKING ID</td>
+               <th>TRACKING ID</th>
                <td><input style="width:450px" type="text" readonly value="<?php echo $this->current["tab"]["tracking_id"];?>"></td>
             </tr>
         </table>

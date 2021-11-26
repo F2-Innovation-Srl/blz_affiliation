@@ -54,7 +54,7 @@ class GaTrakingIdSettings {
                     wp_nonce_field( $this->item["suffix"].'-settings-save', $this->item["suffix"].'-custom-message' );
                     submit_button();
                 ?>
-            </form></div><!-- .wrap -->
+            </form><!-- .wrap -->
             <?php
         }
 
