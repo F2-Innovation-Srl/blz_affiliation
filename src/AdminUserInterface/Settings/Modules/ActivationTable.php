@@ -10,35 +10,36 @@ use BLZ_AFFILIATION\AdminUserInterface\Settings\Modules\Fields;
 class ActivationTable {
 
     protected $rows;
-    
+    private $option_name;
 	/**
 	 * AttivazioneRow constructor.
 	 */
 	function __construct($option_name) {
+        
+        $option_name = $this->option_name;
 
-        $rows = $this->getAndSetRows($option_name);
-
+        $rows = $this->getAndSetRows();
         for ($i=0; $i<count($rows); $i++){
             $this->rows[] =  [
-                (new Fields\Activator($option_name."_attivatore".$i,$rows[$i]["attivatore"])),
-                (new Fields\Rule($option_name."_regola".$i,$rows[$i]["regola"],$rows[$i]["attivatore"])),
-                (new Fields\Text($option_name."_ga_val".$i,$rows[$i]["ga_val"],"text")),
-                (new Fields\Text($option_name."_trk_val".$i,$rows[$i]["trk_val"],"text")),
-                (new Fields\Text($option_name."_ga_label".$i,$rows[$i]["ga_label"],"text")),
-                (new Fields\Text($option_name."_trk_label".$i,$rows[$i]["trk_label"],"text")),
+                (new Fields\Activator($this->option_name."_attivatore".$i,$rows[$i]["attivatore"])),
+                (new Fields\Rule($this->option_name."_regola".$i,$rows[$i]["regola"],$rows[$i]["attivatore"])),
+                (new Fields\Text($this->option_name."_ga_val".$i,$rows[$i]["ga_val"],"text")),
+                (new Fields\Text($this->option_name."_trk_val".$i,$rows[$i]["trk_val"],"text")),
+                (new Fields\Text($this->option_name."_ga_label".$i,$rows[$i]["ga_label"],"text")),
+                (new Fields\Text($this->option_name."_trk_label".$i,$rows[$i]["trk_label"],"text")),
                 (new Fields\Text($i,"Update","button")),
                 (new Fields\Text($i,"Delete","button"))
             ];
         }
         // FOR NEW INSERT
         $this->rows[] =  [
-            (new Fields\Activator($option_name."_attivatore_new","")),
-            (new Fields\Rule($option_name."_regola_new","")),
-            (new Fields\Text($option_name."_ga_val_new","","text")),
-            (new Fields\Text($option_name."_trk_val_new","","text")),
-            (new Fields\Text($option_name."_ga_label_new","","text")),
-            (new Fields\Text($option_name."_trk_label_new","","text")),
-            (new Fields\Text($option_name."_new",'Aggiungi',"button")),
+            (new Fields\Activator($this->option_name."_attivatore_new","")),
+            (new Fields\Rule($this->option_name."_regola_new","")),
+            (new Fields\Text($this->option_name."_ga_val_new","","text")),
+            (new Fields\Text($this->option_name."_trk_val_new","","text")),
+            (new Fields\Text($this->option_name."_ga_label_new","","text")),
+            (new Fields\Text($this->option_name."_trk_label_new","","text")),
+            (new Fields\Text($this->option_name."_new",'Aggiungi',"button")),
             (new Fields\Text("hidden_for_delete",'',"hidden"))
         ];
     }
@@ -64,22 +65,22 @@ class ActivationTable {
     <?php
     }
 
-    private function getAndSetRows($option_name){
+    private function getAndSetRows(){
         
         //GET
-        $activationRows = get_option($option_name);
+        $activationRows = get_option($this->option_name);
 
         //UPDATE
-        $activationRows = ($activationRows) ? array_map( function ( $activationRow, $idx  )  use ($option_name)  {
+        $activationRows = ($activationRows) ? array_map( function ( $activationRow, $idx  ) {
 
             return [
                 'id' => $idx,
-                'attivatore' => isset( $_POST[$option_name. '_attivatore'.$idx ] ) ? $_POST[$option_name. '_attivatore'.$idx ] : $activationRow['attivatore'],
-                'regola' => isset( $_POST[ $option_name.'_regola'.$idx ] ) ? $_POST[ $option_name.'_regola'.$idx ] : $activationRow['regola'],
-                'ga_val' => isset( $_POST[ $option_name.'_ga_val'.$idx ] ) ? $_POST[$option_name. '_ga_val'.$idx ] : $activationRow['ga_val'],
-                'trk_val' => isset( $_POST[ $option_name.'_trk_val'.$idx ] ) ? $_POST[ $option_name.'_trk_val'.$idx ] : $activationRow['trk_val'],
-                'ga_label' => isset( $_POST[ $option_name.'_ga_label'.$idx ] ) ? $_POST[ $option_name.'_ga_label'.$idx ] : $activationRow['ga_label'],
-                'trk_label' => isset( $_POST[ $option_name.'_trk_label'.$idx ] ) ? $_POST[$option_name. '_trk_label'.$idx ] : $activationRow['trk_label'],
+                'attivatore' => isset( $_POST[$this->option_name. '_attivatore'.$idx ] ) ? $_POST[$this->option_name. '_attivatore'.$idx ] : $activationRow['attivatore'],
+                'regola' => isset( $_POST[ $this->option_name.'_regola'.$idx ] ) ? $_POST[ $this->option_name.'_regola'.$idx ] : $activationRow['regola'],
+                'ga_val' => isset( $_POST[ $this->option_name.'_ga_val'.$idx ] ) ? $_POST[$this->option_name. '_ga_val'.$idx ] : $activationRow['ga_val'],
+                'trk_val' => isset( $_POST[ $this->option_name.'_trk_val'.$idx ] ) ? $_POST[ $this->option_name.'_trk_val'.$idx ] : $activationRow['trk_val'],
+                'ga_label' => isset( $_POST[ $this->option_name.'_ga_label'.$idx ] ) ? $_POST[ $this->option_name.'_ga_label'.$idx ] : $activationRow['ga_label'],
+                'trk_label' => isset( $_POST[ $this->option_name.'_trk_label'.$idx ] ) ? $_POST[$this->option_name. '_trk_label'.$idx ] : $activationRow['trk_label'],
             ];
         
         }, $activationRows, array_keys($activationRows) ) : [];
@@ -93,20 +94,20 @@ class ActivationTable {
         }
 
         //INSERT 
-        if( !empty( $_POST[$option_name.'_attivatore_new'] ) && !empty( $_POST[$option_name.'_regola_new'] ) ) {
+        if( !empty( $_POST[$this->option_name.'_attivatore_new'] ) && !empty( $_POST[$this->option_name.'_regola_new'] ) ) {
 
             $activationRows[] = [
-                'attivatore' => $_POST[$option_name.'_attivatore_new'],
-                'regola' => $_POST[$option_name.'_regola_new'],
-                'ga_val' => $_POST[$option_name.'_ga_val_new'],
-                'trk_val' => $_POST[$option_name.'_trk_val_new'],
-                'ga_label' => $_POST[$option_name.'_ga_label_new'],
-                'trk_label' => $_POST[$option_name.'_trk_label_new']
+                'attivatore' => $_POST[$this->option_name.'_attivatore_new'],
+                'regola' => $_POST[$this->option_name.'_regola_new'],
+                'ga_val' => $_POST[$this->option_name.'_ga_val_new'],
+                'trk_val' => $_POST[$this->option_name.'_trk_val_new'],
+                'ga_label' => $_POST[$this->option_name.'_ga_label_new'],
+                'trk_label' => $_POST[$this->option_name.'_trk_label_new']
             ];
         }
 
         //SET
-        update_option($option_name,$activationRows);
+        update_option($this->option_name,$activationRows);
 
         //RETURN
         return $activationRows;

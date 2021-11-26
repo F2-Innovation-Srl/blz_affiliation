@@ -10,10 +10,15 @@ use BLZ_AFFILIATION\AdminUserInterface\Settings\Modules\Fields;
 class TemplateTable {
 
     protected $fields;
+    private $option_name;
+    private $current;
 	/**
 	 * AttivazioneRow constructor.
 	 */
-	function __construct($rows) {
+	function __construct($option_name,$current) {
+        $this->option_name = $option_name;
+        $this->current = $current;
+        
         $this->$fields = [
             "Activator" => (new Fields\Activator($data["activator"])),
             "Rule" => (new Fields\Rule($data["rule"],$data["activator"]))
