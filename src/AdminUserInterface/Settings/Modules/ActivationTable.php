@@ -69,7 +69,8 @@ class ActivationTable {
         $activationRows = get_option($option_name);
        
         $activationRows = ($activationRows) ? array_map( function ( $activationRow, $idx  )  use ($option_name)  {
-            if (!($_POST['hidden_for_delete'] == $idx))
+            
+            if (!(!empty($_POST['hidden_for_delete']) && $_POST['hidden_for_delete'] == $idx))
             return [
                 'attivatore' => isset( $_POST[$option_name. '_attivatore'.$idx ] ) ? $_POST[$option_name. '_attivatore'.$idx ] : $activationRow['attivatore'],
                 'regola' => isset( $_POST[ $option_name.'_regola'.$idx ] ) ? $_POST[ $option_name.'_regola'.$idx ] : $activationRow['regola'],

@@ -38,7 +38,7 @@ class AdminPage {
             # enqueue scripts
             wp_enqueue_script(
                 'blz-affiliation-adminjs',
-                plugins_url("assets/js/admin.js", dirname(__FILE__)),
+                PLUGIN_URI ."assets/js/admin.js",
                 [],
                 PLUGIN_VERSION,
                 true
