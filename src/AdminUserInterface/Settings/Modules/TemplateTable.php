@@ -35,18 +35,24 @@ class TemplateTable {
        <div><h2>Template</h2></div>
         <table>
             <tr valign="top" style="text-align:left">
+                <td>Attivo</td>  
+                <td><?php echo $this->row[0]->render();?></td>                    
+            </tr>
+            <tr valign="top" style="text-align:left">
                <td>GA EVENT</td> 
-               <td colspan="2"><input style="width:350px" type="text" readonly value="<?php echo $this->current["tab"]["ga_event_template"];?>"></td>
+               <td><input style="width:350px" type="text" readonly value="<?php echo $this->current["tab"]["ga_event_template"];?>"></td>
             </tr>
             <tr valign="top" style="text-align:left">
                <td>TRACKING ID</td>
-               <td colspan="2"><input style="width:350px" type="text" readonly value="<?php echo $this->current["tab"]["tracking_id"];?>"></td>
+               <td><input style="width:350px" type="text" readonly value="<?php echo $this->current["tab"]["tracking_id"];?>"></td>
             </tr>
             <tr valign="top" style="text-align:left">
-                <th>Valore TRK_ID Default</th><th>Valore GA Default</th><th>&nbsp;</th>                       
+                <td>Valore TRK_ID Default</td>         
+                <td><?php echo $this->row[1]->render();?></td>               
             </tr>
             <tr valign="top" style="text-align:left">
-            <?php  foreach( $this->row as $field )  echo "<td>" .$field->render() ."</td>"; ?>
+                <td>Valore GA Default</td> 
+                <td><?php echo $this->row[2]->render();?></td>                
             </tr>
         </table>
     <?php
