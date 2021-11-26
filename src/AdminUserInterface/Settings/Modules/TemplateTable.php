@@ -35,12 +35,12 @@ class TemplateTable {
        <div><h2>Template</h2></div>
         <table>
             <tr valign="top" style="text-align:left">
-               <td>GA EVENT</td><th>Valore GA Default</th><th>&nbsp;</th>  
-               <td colspan="3"><input style="width:350px" type="text" readonly value="<?php echo $this->current["tab"]["ga_event_template"];?>"></td>
+               <td>GA EVENT</td> 
+               <td colspan="2"><input style="width:350px" type="text" readonly value="<?php echo $this->current["tab"]["ga_event_template"];?>"></td>
             </tr>
             <tr valign="top" style="text-align:left">
-               <td>TRACKING ID</td><th>Valore GA Default</th><th>&nbsp;</th>  
-               <td colspan="3"><input style="width:350px" type="text" readonly value="<?php echo $this->current["tab"]["tracking_id"];?>"></td>
+               <td>TRACKING ID</td>
+               <td colspan="2"><input style="width:350px" type="text" readonly value="<?php echo $this->current["tab"]["tracking_id"];?>"></td>
             </tr>
             <tr valign="top" style="text-align:left">
                 <th>Valore TRK_ID Default</th><th>Valore GA Default</th><th>&nbsp;</th>                       
