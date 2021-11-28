@@ -21,7 +21,7 @@ class ProgramSubjectTable {
 
         for ($i=0; $i<count($rows); $i++){
             $this->rows[] =  [
-                (new Fields\Text($option_name."subjects".$i,$rows[$i]["slug"],"text")),
+                (new Fields\Text($option_name."subjects".$i,$rows[$i]["subjects"],"text")),
                 (new Fields\Text($i,"Update","button")),
                 (new Fields\Text($i,"Delete","button"))
             ];
@@ -66,7 +66,7 @@ class ProgramSubjectTable {
 
             return [
                 'id' => $idx,
-                'subjects' => isset( $_POST[$option_name. 'subjects'.$idx ] ) ? $_POST[$option_name. 'subjects'.$idx ] : $activationRow['subjects']
+                'subjects' => isset( $_POST[$option_name.'subjects'.$idx ] ) ? $_POST[$option_name.'subjects'.$idx ] : $activationRow['subjects']
             ];
         
         }, $activationRows, array_keys($activationRows) ) : [];
