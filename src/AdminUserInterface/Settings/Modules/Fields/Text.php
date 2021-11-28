@@ -16,8 +16,8 @@ class Text extends Field {
                 return '<input type="text" name="'.$this->name.'" value="'.$this->value.'" />';
                 break;
             case "boolean":
-                foreach (["true","false"] as $options)
-                    $output .= 'SI <input type="radio" name="'.$this->name.'" '.( ($this->value == $options) ? "checked" : "").' value="'.$options.'" />';
+                foreach (["SI" => "true","NO" => "false"] as $key => $options)
+                    $output .= $key.' <input type="radio" name="'.$this->name.'" '.( ($this->value == $options) ? "checked" : "").' value="'.$options.'" />';
                 return $output;
                 break;
             case "hidden":
