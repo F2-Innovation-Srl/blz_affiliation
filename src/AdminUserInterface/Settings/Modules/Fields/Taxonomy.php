@@ -11,7 +11,6 @@ class Taxonomy extends Field {
        
         $output = "<select name=\"".$this->name."\"><option value=\"0\">Seleziona un postype</option>";
             $taxonomies = get_taxonomies();
-            print_r($taxonomies);exit;
             foreach( $taxonomies as $taxonomy) 
                 $output .= "<option value=\"".$taxonomy."\" ".(($this->value == $taxonomy) ? "selected" : "")." >".$taxonomy."</option>";
                 
