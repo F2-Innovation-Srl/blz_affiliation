@@ -93,7 +93,7 @@ class ActivationTable {
         }
 
         //INSERT 
-        if( !empty( $_POST[$option_name.'_attivatore_new'] ) && !empty( $_POST[$option_name.'_regola_new'] ) ) {
+        if( !empty( $_POST[$option_name.'_attivatore_new'] ) ) {
 
             $activationRows[] = [
                 'attivatore' => $_POST[$option_name.'_attivatore_new'],

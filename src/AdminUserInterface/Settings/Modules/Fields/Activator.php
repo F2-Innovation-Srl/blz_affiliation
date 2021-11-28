@@ -6,7 +6,7 @@ namespace BLZ_AFFILIATION\AdminUserInterface\Settings\Modules\Fields;
  */
 class Activator extends Field {
 
-    private $listActivator = ["POSTTYPE","CATEOGORY","TAXONOMY","TAG","USERS"];
+    private $listActivator = ["POSTTYPE","TAXONOMY","TAG","USERS"];
 
     /// viene richiamata dal costruttore
     public function Create() {

@@ -8,18 +8,64 @@ class Rule extends Field {
 
     /// viene richiamata dal costruttore
     public function Create() {
-        return '<input type="number" style="width:70px" name="'.$this->name.'" value="'.$this->value.'" />';    
+        switch ($this->type) {
+            case "":
+                return '<input type="text" readonly style="width:70px" name="'.$this->name.'" value="'.$this->value.'" />';
+                break;
+            case "POSTTYPE":
+                return $this->printPostTypes();
+                break;
+            case "TAXONOMY":
+                return $this->printTaxonomy();
+                break;
+            case "TAG":
+                return $this->printTag();
+                break;
+            case "USERS":
+                return $this->printUsers();
+                break;
+        } 
     }
 
-    private function printUsers(){
-        ?>
-            <select name="<?php echo $name?>"><option value="0">Seleziona un utente</option>
-            <?php
+    private function printPostTypes(){    
+       
+        $output = "<select name=\"".$this->name."\"><option value=\"0\">Seleziona un postype</option>";
+            $posttypes = get_post_types(['public' => 'true']);
+            
+            foreach( $posttypes as $posttype) 
+                $output .= "<option value=\"".$posttype."\" ".(($this->value == $posttype) ? "selected" : "")." >".$posttype."</option>";
+                
+        $output .= "</select>";
+        return $output;
+    }
+
+    private function printTaxonomy(){    
+       
+        $output = "<select name=\"".$this->name."\"><option value=\"0\">Seleziona un termine</option>";
+        $terms = get_terms( 'category', ['hide_empty' => true] );
+            foreach( $terms as $term) 
+                $output .= "<option value=\"".$term->term_id."\" ".(($this->value == $term->term_id) ? "selected" : "")." >".$term->name."</option>";
+        $output .= "</select>";
+        return $output;
+    }
+
+    private function printTag(){    
+
+        $output = "<select name=\"".$this->name."\"><option value=\"0\">Seleziona un termine</option>";
+        $terms = get_terms( 'post_tag', ['hide_empty' => true] );
+            foreach( $terms as $term) 
+                $output .= "<option value=\"".$term->term_id."\" ".(($this->value == $term->term_id) ? "selected" : "")." >".$term->name."</option>";
+        $output .= "</select>";
+        return $output;
+    }
+
+    private function printUsers(){    
+       
+        $output = "<select name=\"".$this->name."\"><option value=\"0\">Seleziona un utente</option>";
             $blogusers = get_users(['role__in' => ['author', 'subscriber']]);
-            foreach( $blogusers as $user) :?>
-                <option value="<?php echo $user->display_name?>" <?php echo ($value == $user->display_name) ? "selected" : ""?> ><?php echo $user->display_name?></option>
-            <?php endforeach;?>
-            </select>
-        <?php
+            foreach( $blogusers as $user) 
+                $output .= "<option value=\"".$user->ID."\" ".(($this->value == $user->ID) ? "selected" : "")." >".$user->display_name."</option>";
+        $output .= "</select>";
+        return $output;
     }
 }
