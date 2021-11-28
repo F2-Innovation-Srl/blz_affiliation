@@ -31,8 +31,7 @@ class ProgramTable {
         $this->rows[] =  [
             (new Fields\Text($option_name."programs_slug_new".$i,"","text")),
             (new Fields\Text($option_name."programs_name_new".$i,"","text")),
-            (new Fields\Text($option_name."_new",'Aggiungi',"button")),
-            (new Fields\Text("hidden_for_delete",'',"hidden")),
+            (new Fields\Text($option_name."_new",'Aggiungi',"button"))
             
         ];
     }
@@ -61,23 +60,23 @@ class ProgramTable {
     private function getAndSetRows($option_name){
         
         //GET
-        $activationRows = get_option($option_name);
+        $rows = get_option($option_name);
 
         //UPDATE
-        $activationRows = ($activationRows) ? array_map( function ( $activationRow, $idx  )  use ($option_name)  {
+        $rows = ($rows) ? array_map( function ( $row, $idx  )  use ($option_name)  {
 
             return [
                 'id' => $idx,
-                'slug' => isset( $_POST[$option_name. 'programs_slug'.$idx ] ) ? $_POST[$option_name. 'programs_slug'.$idx ] : $activationRow['slug'],
-                'name' => isset( $_POST[ $option_name.'programs_name'.$idx ] ) ? $_POST[ $option_name.'programs_name'.$idx ] : $activationRow['name']
+                'slug' => isset( $_POST[$option_name. 'programs_slug'.$idx ] ) ? $_POST[$option_name. 'programs_slug'.$idx ] : $row['slug'],
+                'name' => isset( $_POST[ $option_name.'programs_name'.$idx ] ) ? $_POST[ $option_name.'programs_name'.$idx ] : $row['name']
             ];
         
-        }, $activationRows, array_keys($activationRows) ) : [];
+        }, $rows, array_keys($rows) ) : [];
 
         //DELETE
         $id_to_delete = $_POST['hidden_for_delete'];
         if ($id_to_delete != "" && $id_to_delete != null){
-            $activationRows = array_values(array_filter($activationRows,function($row) use($id_to_delete) {
+            $rows = array_values(array_filter($rows,function($row) use($id_to_delete) {
                     return $row["id"] != $id_to_delete;
             }));  
         }
@@ -85,17 +84,17 @@ class ProgramTable {
         //INSERT 
         if( !empty( $_POST[$option_name.'programs_slug_new'] ) && !empty( $_POST[$option_name.'programs_name_new'] ) ) {
 
-            $activationRows[] = [
+            $rows[] = [
                 'slug' => $_POST[$option_name.'programs_slug'],
                 'name' => $_POST[$option_name.'programs_name']
             ];
         }
 
         //SET
-        update_option($option_name,$activationRows);
+        update_option($option_name,$rows);
 
         //RETURN
-        return $activationRows;
+        return $rows;
 
     }
 }

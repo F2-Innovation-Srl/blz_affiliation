@@ -21,14 +21,14 @@ class ProgramSubjectTable {
 
         for ($i=0; $i<count($rows); $i++){
             $this->rows[] =  [
-                (new Fields\Text($option_name."subjects".$i,$rows[$i]["subjects"],"text")),
-                (new Fields\Text($i,"Update","button")),
-                (new Fields\Text($i,"Delete","button"))
+                (new Fields\Text($option_name."subject".($i+1000),$rows[$i]["subject"],"text")),
+                (new Fields\Text(($i+1000),"Update","button")),
+                (new Fields\Text(($i+1000),"Delete","button"))
             ];
         }
         // FOR NEW INSERT
         $this->rows[] =  [
-            (new Fields\Text($option_name."subjects_new".$i,"","text")),
+            (new Fields\Text($option_name."subject_new","","text")),
             (new Fields\Text($option_name."_new",'Aggiungi',"button")),
             (new Fields\Text("hidden_for_delete",'',"hidden")),
             
@@ -59,39 +59,39 @@ class ProgramSubjectTable {
     private function getAndSetRows($option_name){
         
         //GET
-        $activationRows = get_option($option_name);
-
+        $rows = get_option($option_name);
+       
         //UPDATE
-        $activationRows = ($activationRows) ? array_map( function ( $activationRow, $idx  )  use ($option_name)  {
+        $rows = ($rows) ? array_map( function ( $row, $idx  )  use ($option_name)  {
 
             return [
                 'id' => $idx,
-                'subjects' => isset( $_POST[$option_name.'subjects'.$idx ] ) ? $_POST[$option_name.'subjects'.$idx ] : $activationRow['subjects']
+                'subject' => isset( $_POST[$option_name.'subject'.$idx ] ) ? $_POST[$option_name.'subject'.$idx ] : $row['subject']
             ];
         
-        }, $activationRows, array_keys($activationRows) ) : [];
+        }, $rows, array_keys($rows) ) : [];
 
         //DELETE
         $id_to_delete = $_POST['hidden_for_delete'];
         if ($id_to_delete != "" && $id_to_delete != null){
-            $activationRows = array_values(array_filter($activationRows,function($row) use($id_to_delete) {
+            $rows = array_values(array_filter($rows,function($row) use($id_to_delete) {
                     return $row["id"] != $id_to_delete;
             }));  
         }
 
         //INSERT 
-        if( !empty( $_POST[$option_name.'subjects'] ) ) {
+        if( !empty( $_POST[$option_name.'subject_new'] ) ) {
 
-            $activationRows[] = [
-                'slug' => $_POST[$option_name.'subjects']
+            $rows[] = [
+                'subject' => $_POST[$option_name.'subject_new']
             ];
         }
-
+        echo "<pre>";
         //SET
-        update_option($option_name,$activationRows);
+        update_option($option_name,$rows);
 
         //RETURN
-        return $activationRows;
+        return $rows;
 
     }
 }
