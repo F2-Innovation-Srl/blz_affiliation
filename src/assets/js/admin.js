@@ -1,7 +1,5 @@
-(function ($, root, undefined) {
+(function () {
 	
-	$(function () {
-		
 		'use strict';
 		
 		// DOM ready, take it away
@@ -18,7 +16,6 @@
                 document.getElementById('GaTrakingIdSettings').submit();
             });
         }
-		
-	});
+
 	
-})(jQuery, this);
+});
