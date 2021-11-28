@@ -10,7 +10,7 @@ class Activator extends Field {
 
     /// viene richiamata dal costruttore
     public function Create() {
-        $output = '<select onchange="this.GaTrakingIdSettings.submit()" class="attivatore" name="'.$this->name.'"><option value="">Seleziona un attivatore</option>';
+        $output = '<select class="attivatore" name="'.$this->name.'"><option value="">Seleziona un attivatore</option>';
         foreach( $this->listActivator as $activator) 
             $output.= '<option value="'.$activator.'" '.(($this->value == $activator) ? "selected" : "").' >'.$activator.'</option>';
         $output.= '</select>';
