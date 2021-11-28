@@ -85,8 +85,8 @@ class ProgramTable {
         if( !empty( $_POST[$option_name.'programs_slug_new'] ) && !empty( $_POST[$option_name.'programs_name_new'] ) ) {
 
             $rows[] = [
-                'slug' => $_POST[$option_name.'programs_slug'],
-                'name' => $_POST[$option_name.'programs_name']
+                'slug' => $_POST[$option_name.'programs_slug_new'],
+                'name' => $_POST[$option_name.'programs_name_new']
             ];
         }
 
