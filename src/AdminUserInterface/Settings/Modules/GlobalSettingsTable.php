@@ -18,8 +18,7 @@ class GlobalSettingsTable {
 
         $row = $this->getAndSetRow($option_name);
         $this->row =  [
-            (new Fields\Text($option_name."_ga_code",$row["ga_code"],"text"))
-            (new Fields\Taxonomy($option_name."_taxonomy",$row["taxonomy"]))
+            (new Fields\Text($option_name."_ga_code",$row["active"],"text"))
         ];
     }
 
@@ -30,7 +29,7 @@ class GlobalSettingsTable {
         ?>
         <table>
             <tr valign="top" style="text-align:left">
-                <th>Analitics Code</th><th>Taxonomia di riferimento</th>     
+                <th>Analitics Code</th>         
                 <?php foreach( $this->row as $field )  echo "<td>" .$field->render() ."</td>"; ?>
             </tr>
         </table>
@@ -44,8 +43,7 @@ class GlobalSettingsTable {
         $row = get_option($option_name);
         //UPDATE
         $row = [
-            'ga_code' => isset( $_POST[$option_name. '_ga_code' ] ) ? $_POST[$option_name. '_ga_code' ] : $row['ga_code'],
-            'taxonomy' => isset( $_POST[$option_name. '_taxonomy' ] ) ? $_POST[$option_name. '_taxonomy' ] : $row['taxonomy']
+            'ga_code' => isset( $_POST[$option_name. '_ga_code' ] ) ? $_POST[$option_name. '_ga_code' ] : isset($row['ga_code'])
         ];
 
         //SET
