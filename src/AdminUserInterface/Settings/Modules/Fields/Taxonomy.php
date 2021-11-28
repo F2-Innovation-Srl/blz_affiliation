@@ -13,7 +13,7 @@ class Taxonomy extends Field {
             $taxonomies = get_taxonomies();
             print_r($taxonomies);exit;
             foreach( $taxonomies as $taxonomy) 
-                $output .= "<option value=\"".$taxonomy."\" ".(($this->value == $postaxonomyttype) ? "selected" : "")." >".$taxonomy."</option>";
+                $output .= "<option value=\"".$taxonomy."\" ".(($this->value == $taxonomy) ? "selected" : "")." >".$taxonomy."</option>";
                 
         $output .= "</select>";
         return $output;
