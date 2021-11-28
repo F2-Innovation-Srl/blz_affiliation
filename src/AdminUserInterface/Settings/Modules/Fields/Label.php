@@ -14,7 +14,7 @@ class Label extends Field {
             case "GA":
                 $labels = $this->getLabels($this->params["tab"]["ga_event_template"],"{","}");
                 break;
-            case "TRACK":
+            case "TRK_ID":
                 $labels = $this->getLabels($this->params["tab"]["tracking_id"],"{","}");
                 break;
         } 

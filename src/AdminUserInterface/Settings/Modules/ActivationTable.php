@@ -37,7 +37,7 @@ class ActivationTable {
             (new Fields\Rule($option_name."_regola_new","")),
             (new Fields\Label($option_name."_ga_label_new","","GA")),
             (new Fields\Text($option_name."_ga_val_new","","text")),
-            (new Fields\Label($option_name."_trk_label_new","","TRACK",$current)),
+            (new Fields\Label($option_name."_trk_label_new","","TRK_ID",$current)),
             (new Fields\Text($option_name."_trk_val_new","","text")),
             (new Fields\Text($option_name."_new",'Aggiungi',"button",$current)),
             (new Fields\Text("hidden_for_delete",'',"hidden"))
@@ -52,7 +52,7 @@ class ActivationTable {
         <div><h2>Tabella di attivazione</h2></div>
             <table>
                 <tr valign="top" style="text-align:left">
-                    <th>Attivatore</th><th>Regola</th><th>Valore GA</th><th>Valore TRK_ID</th><th>Label GA</th><th>Label TRK_ID</th><th>&nbsp;</th>                       
+                    <th>Attivatore</th><th>Regola</th><th>Valore GA</th><th>Valore TRK_ID</th><th>Label TRK_ID</th><th>Label TRK_ID</th><th>&nbsp;</th>                       
                 </tr>
                 <?php 
                 foreach( $this->rows as $row ) {
