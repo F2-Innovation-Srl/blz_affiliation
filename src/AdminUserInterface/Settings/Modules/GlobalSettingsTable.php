@@ -42,7 +42,6 @@ class GlobalSettingsTable {
         
         //GET
         $row = get_option($option_name);
-        print_r($option_name);
         //UPDATE
         $row = [
             'ga_code' => isset( $_POST[$option_name. '_ga_code' ] ) ? $_POST[$option_name. '_ga_code' ] : isset($row['ga_code']),
