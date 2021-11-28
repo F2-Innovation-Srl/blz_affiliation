@@ -10,7 +10,8 @@ document.addEventListener("DOMContentLoaded", function() {
     var attivatoreLists = document.querySelectorAll(".attivatore")
     for (i = 0; i < attivatoreLists.length; i++) {
         attivatoreLists[i].addEventListener('change', function() {
-            document.GaTrakingIdSettings.submit();
+            var form = document.getElementById('GaTrakingIdSettings');
+            form.submit();
         });
     }
     
