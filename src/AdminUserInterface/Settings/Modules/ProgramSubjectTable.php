@@ -66,7 +66,7 @@ class ProgramSubjectTable {
 
             return [
                 'id' => $idx,
-                'subjects' => isset( $_POST[$option_name. 'subjects'.$idx ] ) ? $_POST[$option_name. 'subjects'.$idx ] : $activationRow['slug']
+                'subjects' => isset( $_POST[$option_name. 'subjects'.$idx ] ) ? $_POST[$option_name. 'subjects'.$idx ] : $activationRow['subjects']
             ];
         
         }, $activationRows, array_keys($activationRows) ) : [];
