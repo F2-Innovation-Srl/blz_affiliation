@@ -18,7 +18,7 @@ class GlobalSettingsTable {
 
         $row = $this->getAndSetRow($option_name);
         $this->row =  [
-            (new Fields\Text($option_name."_ga_code",$row["active"],"text"))
+            (new Fields\Text($option_name."_ga_code",$row["active"],"text")),
             (new Fields\Taxonomy($option_name."_taxonomy",$row["taxonomy"]))
         ];
     }
