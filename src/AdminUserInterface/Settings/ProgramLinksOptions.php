@@ -109,14 +109,14 @@ class ProgramLinksOptions {
                     <tr valign="top">                    
                         <td><input type="text" name="programs_slug<?=$idx?>" value="<?=$program['slug']?>" /></td>
                         <td><input type="text" name="programs_name<?=$idx?>" value="<?=$program['name']?>" /></td>
-                        <td><?php submit_button('Update', 'primary', 'submit', false ); ?></td> 
+                        <td><?php submit_button('Update', 'primary', 'btnSubmit', false ); ?></td> 
                     </tr>
 
                 <?php endforeach; ?>
                 <tr valign="top">                    
                     <td><input type="text" name="programs_slug_new" value="" /></td>
                     <td><input type="text" name="programs_name_new" value="" /></td>
-                    <td><?php submit_button('Add', 'primary', 'submit', false ); ?></td>                    
+                    <td><?php submit_button('Add', 'primary', 'btnSubmit', false ); ?></td>                    
                 </tr>
             </table>
             
@@ -136,13 +136,13 @@ class ProgramLinksOptions {
 
                     <tr valign="top">                    
                         <td><input type="text" name="subjects<?=$idx?>" value="<?=$subject?>" /></td>                        
-                        <td><?php submit_button('Update', 'primary', 'submit', false ); ?></td> 
+                        <td><?php submit_button('Update', 'primary', 'btnSubmit', false ); ?></td> 
                     </tr>
 
                 <?php endforeach; ?>
                 <tr valign="top" style="text-align:left">
                     <td><input type="text" name="subject_new" value="" /></td>
-                    <td><?php submit_button('Add', 'primary', 'submit', false ); ?></td>     
+                    <td><?php submit_button('Add', 'primary', 'btnSubmit', false ); ?></td>     
                 </tr>
             </table>
             
