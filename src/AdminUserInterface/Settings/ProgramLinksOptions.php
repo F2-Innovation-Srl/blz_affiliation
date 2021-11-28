@@ -1,6 +1,8 @@
 <?php
 namespace BLZ_AFFILIATION\AdminUserInterface\Settings;
 
+use BLZ_AFFILIATION\AdminUserInterface\Settings\Modules\ProgramTable;
+use BLZ_AFFILIATION\AdminUserInterface\Settings\Modules\ProgramSubjectTable;
 /**
  * È una pagina di settings provvisoria per fare dei test
  *
@@ -36,7 +38,7 @@ class ProgramLinksOptions {
                 
                 <?php  (new ProgramTable("blz_programs"))->render(); ?>
                 <div><hr></div>
-                <?php  (new ProgramTable("blz_programs_subjects"))->render(); ?>
+                <?php  (new ProgramSubjectTable("blz_programs_subjects"))->render(); ?>
                 
                 <?php wp_nonce_field( 'program-links-options-save', 'blz-affiliation-custom-message' ); ?>
                 
