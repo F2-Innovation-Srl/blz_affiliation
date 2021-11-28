@@ -10,14 +10,14 @@ abstract class Field {
     protected $name;
     protected $value;
     protected $type;
-    protected $properties;
+    protected $params;
     
     /// prende in ingresso un nome e un valore per il field
-    public function __construct( $name, $value = '', $type = '') {
+    public function __construct( $name, $value = '', $type = '', $params = []) {
         $this->name = $name;
         $this->value = $value;
         $this->type = $type;
-        $this->properties = $properties;
+        $this->params = $params;
     }
 
     public function Render() {
