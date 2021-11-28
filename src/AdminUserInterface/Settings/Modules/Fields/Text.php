@@ -24,7 +24,7 @@ class Text extends Field {
                 return '<input type="hidden" id="'.$this->name.'" name="'.$this->name.'" value="'.$this->value.'" />';
                 break;
             case "button":
-                return '<input type="submit" name="submit" data-id="'.$this->name.'"  class="button button-primary '.strtolower($this->value).'" value="'.$this->value.'" />';
+                return '<input type="submit" name="btnSubmit" data-id="'.$this->name.'"  class="button button-primary '.strtolower($this->value).'" value="'.$this->value.'" />';
                 break;
         }
         ?>
