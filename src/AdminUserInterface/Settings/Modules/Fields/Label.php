@@ -25,20 +25,15 @@ class Label extends Field {
     }
 
     private function getLabels($str, $startDelimiter, $endDelimiter) {
-        $contents = array();
-        $startDelimiterLength = strlen($startDelimiter);
-        $endDelimiterLength = strlen($endDelimiter);
+        $contents = [];
         $startFrom = $contentStart = $contentEnd = 0;
         while (false !== ($contentStart = strpos($str, $startDelimiter, $startFrom))) {
-          $contentStart += $startDelimiterLength;
+          $contentStart += strlen($startDelimiter);
           $contentEnd = strpos($str, $endDelimiter, $contentStart);
-          if (false === $contentEnd) {
-            break;
-          }
+          if (false === $contentEnd)  break;
           $contents[] = substr($str, $contentStart, $contentEnd - $contentStart);
-          $startFrom = $contentEnd + $endDelimiterLength;
+          $startFrom = $contentEnd + strlen($endDelimiter);
         }
-      
         return $contents;
     }
 }
