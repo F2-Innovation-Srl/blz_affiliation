@@ -18,7 +18,7 @@ class GlobalSettingsTable {
 
         $row = $this->getAndSetRow($option_name);
         $this->row =  [
-            (new Fields\Text($option_name."_ga_code",$row["active"],"text")),
+            (new Fields\Text($option_name."_ga_code",$row["ga_code"],"text")),
             (new Fields\Taxonomy($option_name."_taxonomy",$row["taxonomy"]))
         ];
     }
@@ -42,10 +42,11 @@ class GlobalSettingsTable {
         
         //GET
         $row = get_option($option_name);
+        
         //UPDATE
         $row = [
-            'ga_code' => isset( $_POST[$option_name. '_ga_code' ] ) ? $_POST[$option_name. '_ga_code' ] : isset($row['ga_code']),
-            'taxonomy' => isset( $_POST[$option_name. '_taxonomy' ] ) ? $_POST[$option_name. '_taxonomy' ] : isset($row['taxonomy'])
+            'ga_code' => isset( $_POST[$option_name. '_ga_code' ] ) ? $_POST[$option_name. '_ga_code' ] : $row['ga_code'],
+            'taxonomy' => isset( $_POST[$option_name. '_taxonomy' ] ) ? $_POST[$option_name. '_taxonomy' ] : $row['taxonomy']
         ];
 
         //SET
