@@ -25,7 +25,7 @@ class ActivationTable {
                 (new Fields\Rule($option_name."_regola".$i,$rows[$i]["regola"],$rows[$i]["attivatore"])),
                 (new Fields\Label($option_name."_ga_label".$i,$rows[$i]["ga_label"],"GA",$current)),
                 (new Fields\Text($option_name."_ga_val".$i,$rows[$i]["ga_val"],"text")),
-                (new Fields\Label($option_name."_trk_label".$i,$rows[$i]["trk_label"],"TRACK",$current)),
+                (new Fields\Label($option_name."_trk_label".$i,$rows[$i]["trk_label"],"TRK_ID",$current)),
                 (new Fields\Text($option_name."_trk_val".$i,$rows[$i]["trk_val"],"text")),
                 (new Fields\Text($i,"Update","button")),
                 (new Fields\Text($i,"Delete","button"))
@@ -35,11 +35,11 @@ class ActivationTable {
         $this->rows[] =  [
             (new Fields\Activator($option_name."_attivatore_new","")),
             (new Fields\Rule($option_name."_regola_new","")),
-            (new Fields\Label($option_name."_ga_label_new","","GA")),
+            (new Fields\Label($option_name."_ga_label_new","","GA",$current)),
             (new Fields\Text($option_name."_ga_val_new","","text")),
             (new Fields\Label($option_name."_trk_label_new","","TRK_ID",$current)),
             (new Fields\Text($option_name."_trk_val_new","","text")),
-            (new Fields\Text($option_name."_new",'Aggiungi',"button",$current)),
+            (new Fields\Text($option_name."_new",'Aggiungi',"button")),
             (new Fields\Text("hidden_for_delete",'',"hidden"))
         ];
     }
