@@ -29,8 +29,8 @@ class ProgramTable {
         }
         // FOR NEW INSERT
         $this->rows[] =  [
-            (new Fields\Text($option_name."programs_slug_new".$i,"","text")),
-            (new Fields\Text($option_name."programs_name_new".$i,"","text")),
+            (new Fields\Text($option_name."programs_slug_new","","text")),
+            (new Fields\Text($option_name."programs_name_new","","text")),
             (new Fields\Text($option_name."_new",'Aggiungi',"button"))
             
         ];

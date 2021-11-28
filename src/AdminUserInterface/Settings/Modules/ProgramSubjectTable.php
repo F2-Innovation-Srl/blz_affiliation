@@ -65,7 +65,7 @@ class ProgramSubjectTable {
         $rows = ($rows) ? array_map( function ( $row, $idx  )  use ($option_name)  {
 
             return [
-                'id' => $idx,
+                'id' => ($idx+1000),
                 'subject' => isset( $_POST[$option_name.'subject'.$idx ] ) ? $_POST[$option_name.'subject'.$idx ] : $row['subject']
             ];
         
