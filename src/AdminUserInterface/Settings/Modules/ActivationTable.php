@@ -49,7 +49,7 @@ class ActivationTable {
     **/
     public function render(){
         ?>
-        <div><h2>Tabella di attivazione</h2></div>
+        <div><h2 id="tabella" name="tabella">Tabella di attivazione</h2></div>
             <table>
                 <tr valign="top" style="text-align:left">
                     <th>Attivatore</th><th>Regola</th><th>Valore GA</th><th>Valore TRK_ID</th><th>Label TRK_ID</th><th>Label TRK_ID</th><th>&nbsp;</th>                       

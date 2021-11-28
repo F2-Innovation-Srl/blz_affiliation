@@ -10,7 +10,7 @@ class Rule extends Field {
     public function Create() {
         switch ($this->type) {
             case "":
-                return '<input type="text" readonly style="width:70px" name="'.$this->name.'" value="'.$this->value.'" />';
+                return '<input type="text" readonly name="'.$this->name.'" value="'.$this->value.'" />';
                 break;
             case "POSTTYPE":
                 return $this->printPostTypes();

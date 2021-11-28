@@ -39,7 +39,7 @@ class GaTrakingIdSettings {
             wp_die('Non hai i permessi per visualizzare questa pagina');
         } else{
             ?>
-            <form method="post" id="GaTrakingIdSettings" name="GaTrakingIdSettings" action="<?php echo esc_html( admin_url( 'admin.php?page='.$_GET["page"].'&tab='.$this->current["tab"]["suffix"].'&sub_tab='.$this->current["sub_tab"]["suffix"] ) ); ?>">
+            <form method="post" id="GaTrakingIdSettings" name="GaTrakingIdSettings" action="<?php echo esc_html( admin_url( 'admin.php?page='.$_GET["page"].'&tab='.$this->current["tab"]["suffix"].'&sub_tab='.$this->current["sub_tab"]["suffix"]."#tabella" ) ); ?>">
                 <input type="hidden" name="<?php echo $this->item["suffix"];?>-sendForm" value="OK" />
                 <?php $this->printTabs(); ?>
                 <div class="<?php echo $this->item["suffix"];?>-container">
