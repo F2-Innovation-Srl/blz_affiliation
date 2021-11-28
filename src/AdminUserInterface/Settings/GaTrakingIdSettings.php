@@ -52,7 +52,6 @@ class GaTrakingIdSettings {
                 <div><hr></div>
                 <?php 
                     wp_nonce_field( $this->item["suffix"].'-settings-save', $this->item["suffix"].'-custom-message' );
-                    submit_button('Salva le modifiche', 'primary', 'btnSubmit', false );
                 ?>
             </form><!-- .wrap -->
             <?php
