@@ -75,6 +75,8 @@ class BlzAffiliate {
 		//load Config
 		Config::loadSettings();
 
+		/// Create custom taxnomonies core structure
+		new AdminUserInterface\Settings\RegisterTaxonomies();
 		/// aggiunge la pagina dei settings del plugin
 		new AdminUserInterface\Settings\AdminPage();
 		

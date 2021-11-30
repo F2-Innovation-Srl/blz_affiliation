@@ -103,7 +103,7 @@
     <script>
         var subject_select = document.getElementById('subject');
         subjects.forEach( function(item) { 
-            subject_select.insertAdjacentHTML('beforeend', `<option value="${item}">${item}</option>`); 
+            subject_select.insertAdjacentHTML('beforeend', `<option value="${item.slug}">${item.name}</option>`); 
         });      
     </script>
 

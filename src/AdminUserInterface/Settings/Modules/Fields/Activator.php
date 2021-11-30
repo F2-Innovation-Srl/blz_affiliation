@@ -6,10 +6,15 @@ namespace BLZ_AFFILIATION\AdminUserInterface\Settings\Modules\Fields;
  */
 class Activator extends Field {
 
-    private $listActivator = ["POSTTYPE","TAXONOMY","TAG","USERS"];
+    private $listActivator = ["POSTTYPE","TAG","USERS"];
 
     /// viene richiamata dal costruttore
     public function Create() {
+        
+        $global_config = get_option("blz-affiliation-settings");
+        if (isset($global_config[0]["taxonomy"]))
+            $listActivator = array_merge($global_config[0]["taxonomy"],$listActivator);
+
         $output = '<select class="attivatore" name="'.$this->name.'"><option value="">Seleziona un attivatore</option>';
         foreach( $this->listActivator as $activator) 
             $output.= '<option value="'.$activator.'" '.(($this->value == $activator) ? "selected" : "").' >'.$activator.'</option>';

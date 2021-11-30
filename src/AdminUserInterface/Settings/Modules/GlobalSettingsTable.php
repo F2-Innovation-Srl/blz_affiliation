@@ -30,7 +30,9 @@ class GlobalSettingsTable {
         ?>
         <table>
             <tr valign="top" style="text-align:left">
-                <th>Analitics Code</th><th>Tassonomia di riferimento</th>           
+                <th>Analitics Code</th><th>Tassonomie di riferimento</th>    
+            </tr>
+            <tr valign="top" style="text-align:left">     
                 <?php foreach( $this->row as $field )  echo "<td>" .$field->render() ."</td>"; ?>
             </tr>
         </table>

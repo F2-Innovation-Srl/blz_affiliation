@@ -15,14 +15,14 @@ class Rule extends Field {
             case "POSTTYPE":
                 return $this->printPostTypes();
                 break;
-            case "TAXONOMY":
-                return $this->printTaxonomy();
-                break;
             case "TAG":
                 return $this->printTag();
                 break;
             case "USERS":
                 return $this->printUsers();
+                break;
+            default:
+                return $this->printTaxonomy();
                 break;
         } 
     }
@@ -41,10 +41,8 @@ class Rule extends Field {
 
     private function printTaxonomy(){    
        
-        $row = get_option("blz-affiliation-settings");
-        $tax = (isset($row["taxonomy"])) ? $row["taxonomy"] : "category";
         $output = "<select name=\"".$this->name."\"><option value=\"0\">Seleziona un termine</option>";
-        $terms = get_terms( $tax, ['hide_empty' => true] );
+        $terms = get_terms( $this->type, ['hide_empty' => true] );
             foreach( $terms as $term) 
                 $output .= "<option value=\"".$term->term_id."\" ".(($this->value == $term->term_id) ? "selected" : "")." >".$term->name."</option>";
         $output .= "</select>";
