@@ -22,8 +22,9 @@ class ProgramTable {
             $this->rows[] =  [
                 (new Fields\Text($option_name."slug".$i,$rows[$i]["slug"],"text")),
                 (new Fields\Text($option_name."name".$i,$rows[$i]["name"],"text")),
-                (new Fields\Text($i,"Update","button")),
-                (new Fields\Text($i,"Delete","button"))
+                (new Fields\Text($option_name."id".$i,$rows[$i]["id"],"hidden")),
+                (new Fields\Text($rows[$i]["id"],"Update","button")),
+                (new Fields\Text($rows[$i]["id"],"Delete","button"))
             ];
         }
         // FOR NEW INSERT
@@ -65,8 +66,8 @@ class ProgramTable {
         $rows = ($rows) ? array_map( function ( $row, $idx  )  use ($option_name)  {
 
             return [
-                'id' => $idx,
-                'slug' => isset( $_POST[$option_name. 'slug'.$idx ] ) ? $_POST[$option_name. 'slug'.$idx ] : $row['slug'],
+                'id' => isset( $_POST[ $option_name.'id'.$idx ] ) ? $_POST[ $option_name.'id'.$idx ] : $row['id'],
+                'slug' =>  isset( $_POST[$option_name. 'slug'.$idx ] ) ? $_POST[$option_name. 'slug'.$idx ] : $row['slug'],
                 'name' => isset( $_POST[ $option_name.'name'.$idx ] ) ? $_POST[ $option_name.'name'.$idx ] : $row['name']
             ];
         
@@ -76,17 +77,20 @@ class ProgramTable {
         $id_to_delete = $_POST['hidden_for_delete'];
         if ($id_to_delete != "" && $id_to_delete != null){
             $rows = array_values(array_filter($rows,function($row) use($id_to_delete) {
+                    wp_delete_term( $row["id"],$option_name );
                     return $row["id"] != $id_to_delete;
             }));  
         }
 
         //INSERT 
         if( !empty( $_POST[$option_name.'slug_new'] ) && !empty( $_POST[$option_name.'name_new'] ) ) {
-
-            $rows[] = [
-                'slug' => $_POST[$option_name.'slug_new'],
-                'name' => $_POST[$option_name.'name_new']
-            ];
+            $term = wp_insert_term($_POST[$option_name.'name_new'],$option_name, ['slug' => $_POST[$option_name.'slug_new']]);
+            if (! isset($term["error"]))
+                $rows[] = [
+                    'id' => $term["term_id"],
+                    'slug' => $term["slug"],
+                    'name' => $term["name"]
+                ];
         }
 
         //SET
