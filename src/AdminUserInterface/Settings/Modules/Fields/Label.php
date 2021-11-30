@@ -19,7 +19,7 @@ class Label extends Field {
                 break;
         } 
         foreach($labels as $label)
-            $output.= '<option value="'.$activator.'" '.(($this->value == $label) ? "selected" : "").' >'.$label.'</option>';    
+            $output.= '<option value="'.$label.'" '.(($this->value == $label) ? "selected" : "").' >'.$label.'</option>';    
         $output.= '</select>';
         return $output;
     }
