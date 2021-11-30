@@ -28,7 +28,7 @@ class ActivationTable {
                 (new Fields\Label($option_name."_trk_label".$i,$rows[$i]["trk_label"],"TRK_ID",$current)),
                 (new Fields\Text($option_name."_trk_val".$i,$rows[$i]["trk_val"],"text")),
                 (new Fields\Text($i,"Update","button")),
-                (new Fields\Text($i,"Delete","button"))
+                (new Fields\Text($i,"Delete","button",["hidden_field" => $option_name]))
             ];
         }
         // FOR NEW INSERT
@@ -40,7 +40,7 @@ class ActivationTable {
             (new Fields\Label($option_name."_trk_label_new","","TRK_ID",$current)),
             (new Fields\Text($option_name."_trk_val_new","","text")),
             (new Fields\Text($option_name."_new",'Aggiungi',"button")),
-            (new Fields\Text($option_name."_hidden_for_delete",'',"hidden",$option_name))
+            (new Fields\Text($option_name."_hidden_for_delete",'',"hidden"))
         ];
     }
 
