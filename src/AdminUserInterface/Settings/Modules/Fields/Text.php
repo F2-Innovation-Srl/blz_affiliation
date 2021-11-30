@@ -8,6 +8,7 @@ class Text extends Field {
 
     /// viene richiamata dal costruttore
     public function Create() {
+        
         switch ($this->type) {
             case "number":
                 return '<input type="number" name="'.$this->name.'" value="'.$this->value.'" />';

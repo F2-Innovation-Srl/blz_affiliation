@@ -23,7 +23,7 @@ class ProgramTable {
                 (new Fields\Text($option_name."slug".$i,$rows[$i]["slug"],"text")),
                 (new Fields\Text($option_name."name".$i,$rows[$i]["name"],"text")),
                 (new Fields\Text($rows[$i]["term_id"],"Update","button")),
-                (new Fields\Text($rows[$i]["term_id"],"Delete","button")),
+                (new Fields\Text($rows[$i]["term_id"],"Delete","button",["hidden_field" => $option_name])),
                 (new Fields\Text($option_name."term_id".$i,$rows[$i]["term_id"],"hidden")),
             ];
         }
@@ -32,7 +32,7 @@ class ProgramTable {
             (new Fields\Text($option_name."slug_new","","text")),
             (new Fields\Text($option_name."name_new","","text")),
             (new Fields\Text($option_name."_new",'Aggiungi',"button")),
-            (new Fields\Text($option_name."_hidden_for_delete",'',"hidden",["hidden_field" =>$option_name]))
+            (new Fields\Text($option_name."_hidden_for_delete",'',"hidden"))
         ];
         
     }
@@ -61,9 +61,8 @@ class ProgramTable {
     private function getAndSetRows($option_name){
         
         //DELETE
-        echo "<pre>";
+        //echo "<pre>";
         $id_to_delete = $_POST[$option_name."_hidden_for_delete"];
-        print_r($id_to_delete);
         if ($id_to_delete != "" && $id_to_delete != null)  wp_delete_term( $id_to_delete,$option_name );
 
         //INSERT 
@@ -81,10 +80,6 @@ class ProgramTable {
             $slug = isset( $_POST[$option_name. 'slug'.$idx ] ) ? $_POST[$option_name. 'slug'.$idx ] : $row->slug;
             $name = isset( $_POST[ $option_name.'name'.$idx ] ) ? $_POST[ $option_name.'name'.$idx ] : $row->name;
             $term_id = isset( $_POST[ $option_name.'term_id'.$idx ] ) ? $_POST[ $option_name.'term_id'.$idx ] : $row->term_id;
-            echo "UPDATE";
-            print_r($term_id);
-            print_r($name);
-            print_r($slug);
             $term = wp_update_term($term_id,$option_name, ['name' => $name,'slug' => $slug]); 
             return [
                 'term_id' => $term_id,
@@ -93,7 +88,7 @@ class ProgramTable {
             ];
         
         }, $rows, array_keys($rows) ) : [];
-        echo "</pre>";
+        //echo "</pre>";
         //RETURN
         return $rows;
 
