@@ -22,18 +22,19 @@ class ProgramTable {
             $this->rows[] =  [
                 (new Fields\Text($option_name."slug".$i,$rows[$i]["slug"],"text")),
                 (new Fields\Text($option_name."name".$i,$rows[$i]["name"],"text")),
-                (new Fields\Text($option_name."id".$i,$rows[$i]["id"],"hidden")),
-                (new Fields\Text($rows[$i]["id"],"Update","button")),
-                (new Fields\Text($rows[$i]["id"],"Delete","button"))
+                (new Fields\Text($rows[$i]["term_id"],"Update","button")),
+                (new Fields\Text($rows[$i]["term_id"],"Delete","button")),
+                (new Fields\Text($option_name."term_id".$i,$rows[$i]["term_id"],"hidden")),
             ];
         }
         // FOR NEW INSERT
         $this->rows[] =  [
             (new Fields\Text($option_name."slug_new","","text")),
             (new Fields\Text($option_name."name_new","","text")),
-            (new Fields\Text($option_name."_new",'Aggiungi',"button"))
-            
+            (new Fields\Text($option_name."_new",'Aggiungi',"button")),
+            (new Fields\Text($option_name."_hidden_for_delete",'',"hidden",$option_name))
         ];
+        
     }
 
 	/**
@@ -59,47 +60,40 @@ class ProgramTable {
 
     private function getAndSetRows($option_name){
         
-        //GET
-        $rows = get_option($option_name);
+        //DELETE
+        echo "<pre>";
+        $id_to_delete = $_POST[$option_name."_hidden_for_delete"];
+        print_r($id_to_delete);
+        if ($id_to_delete != "" && $id_to_delete != null)  wp_delete_term( $id_to_delete,$option_name );
 
+        //INSERT 
+        if( !empty( $_POST[$option_name.'slug_new'] ) && !empty( $_POST[$option_name.'name_new'] ) ) 
+            $term = wp_insert_term($_POST[$option_name.'name_new'],$option_name, ['slug' => $_POST[$option_name.'slug_new']]);
+    
+
+      
+        //GET
+        //$rows = get_option($option_name);
+        $rows = get_terms($option_name, ['hide_empty' => false] );
         //UPDATE
         $rows = ($rows) ? array_map( function ( $row, $idx  )  use ($option_name)  {
 
-            $slug = isset( $_POST[$option_name. 'slug'.$idx ] ) ? $_POST[$option_name. 'slug'.$idx ] : $row['slug'];
-            $name = isset( $_POST[ $option_name.'name'.$idx ] ) ? $_POST[ $option_name.'name'.$idx ] : $row['name'];
-            $id = isset( $_POST[ $option_name.'id'.$idx ] ) ? $_POST[ $option_name.'id'.$idx ] : $row['id'];
-            $term = wp_update_term($id,$option_name, ['name' => $name,'slug' => $slug]); 
+            $slug = isset( $_POST[$option_name. 'slug'.$idx ] ) ? $_POST[$option_name. 'slug'.$idx ] : $row->slug;
+            $name = isset( $_POST[ $option_name.'name'.$idx ] ) ? $_POST[ $option_name.'name'.$idx ] : $row->name;
+            $term_id = isset( $_POST[ $option_name.'term_id'.$idx ] ) ? $_POST[ $option_name.'term_id'.$idx ] : $row->term_id;
+            echo "UPDATE";
+            print_r($term_id);
+            print_r($name);
+            print_r($slug);
+            $term = wp_update_term($term_id,$option_name, ['name' => $name,'slug' => $slug]); 
             return [
-                'id' => $id,
+                'term_id' => $term_id,
                 'slug' =>  $slug,
                 'name' => $name
             ];
         
         }, $rows, array_keys($rows) ) : [];
-
-        //DELETE
-        $id_to_delete = $_POST['hidden_for_delete'];
-        if ($id_to_delete != "" && $id_to_delete != null){
-            $rows = array_values(array_filter($rows,function($row) use($id_to_delete) {
-                    wp_delete_term( $row["id"],$option_name );
-                    return $row["id"] != $id_to_delete;
-            }));  
-        }
-
-        //INSERT 
-        if( !empty( $_POST[$option_name.'slug_new'] ) && !empty( $_POST[$option_name.'name_new'] ) ) {
-            $term = wp_insert_term($_POST[$option_name.'name_new'],$option_name, ['slug' => $_POST[$option_name.'slug_new']]);
-            if (! isset($term["error"]))
-                $rows[] = [
-                    'id' => $term["term_id"],
-                    'slug' => $_POST[$option_name.'slug_new'],
-                    'name' => $_POST[$option_name.'name_new']
-                ];
-        }
-
-        //SET
-        update_option($option_name,$rows);
-
+        echo "</pre>";
         //RETURN
         return $rows;
 

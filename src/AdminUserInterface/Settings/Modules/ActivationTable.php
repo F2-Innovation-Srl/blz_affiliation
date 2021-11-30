@@ -40,7 +40,7 @@ class ActivationTable {
             (new Fields\Label($option_name."_trk_label_new","","TRK_ID",$current)),
             (new Fields\Text($option_name."_trk_val_new","","text")),
             (new Fields\Text($option_name."_new",'Aggiungi',"button")),
-            (new Fields\Text("hidden_for_delete",'',"hidden"))
+            (new Fields\Text($option_name."_hidden_for_delete",'',"hidden",$option_name))
         ];
     }
 
@@ -86,7 +86,7 @@ class ActivationTable {
         }, $activationRows, array_keys($activationRows) ) : [];
 
         //DELETE
-        $id_to_delete = $_POST['hidden_for_delete'];
+        $id_to_delete = $_POST[$option_name."_hidden_for_delete"];
         if ($id_to_delete != "" && $id_to_delete != null){
             $activationRows = array_values(array_filter($activationRows,function($row) use($id_to_delete) {
                     return $row["id"] != $id_to_delete;
