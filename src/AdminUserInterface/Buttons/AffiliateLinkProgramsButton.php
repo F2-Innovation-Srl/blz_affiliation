@@ -47,7 +47,6 @@ class AffiliateLinkProgramsButton extends Button {
              'programs'  => json_encode( get_terms($terms[1], ['hide_empty' => false] )),
              'is_stored' => $this->isStoredPost( $post_id ) ? 'true' : 'false'
          ];
- 
          // inject the variables into the html template
          foreach($fields_to_inject as $key => $value)
              $html = str_replace ( '{{'.$key.'}}' , $value , $html );        
