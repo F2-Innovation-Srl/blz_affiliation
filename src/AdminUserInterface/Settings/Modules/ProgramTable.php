@@ -65,10 +65,14 @@ class ProgramTable {
         //UPDATE
         $rows = ($rows) ? array_map( function ( $row, $idx  )  use ($option_name)  {
 
+            $slug = isset( $_POST[$option_name. 'slug'.$idx ] ) ? $_POST[$option_name. 'slug'.$idx ] : $row['slug'];
+            $name = isset( $_POST[ $option_name.'name'.$idx ] ) ? $_POST[ $option_name.'name'.$idx ] : $row['name'];
+            $id = isset( $_POST[ $option_name.'id'.$idx ] ) ? $_POST[ $option_name.'id'.$idx ] : $row['id'];
+            $term = wp_update_term($id,$option_name, ['name' => $name,'slug' => $slug]); 
             return [
-                'id' => isset( $_POST[ $option_name.'id'.$idx ] ) ? $_POST[ $option_name.'id'.$idx ] : $row['id'],
-                'slug' =>  isset( $_POST[$option_name. 'slug'.$idx ] ) ? $_POST[$option_name. 'slug'.$idx ] : $row['slug'],
-                'name' => isset( $_POST[ $option_name.'name'.$idx ] ) ? $_POST[ $option_name.'name'.$idx ] : $row['name']
+                'id' => $id,
+                'slug' =>  $slug,
+                'name' => $name
             ];
         
         }, $rows, array_keys($rows) ) : [];
