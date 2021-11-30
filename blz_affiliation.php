@@ -43,6 +43,9 @@ class BlzAffiliate {
 	
 	public function __construct() {
 		
+		//load Configurations
+		Config::loadSettings();
+
 		/// crea i custom post type (tabelle e link "centralizzati")
 		//CustomPostTypes\AffiliateTables::init();
 		//CustomPostTypes\AffiliateLinkProgamStored::init();
@@ -72,8 +75,7 @@ class BlzAffiliate {
 		/// a aggiungere il relativo shortcode in pagina
 		//new AdminUserInterface\Buttons\AffiliateTableButton();
 
-		//load Config
-		Config::loadSettings();
+	
 
 		/// Create custom taxnomonies core structure
 		AdminUserInterface\Settings\RegisterTaxonomies::init();

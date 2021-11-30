@@ -69,8 +69,6 @@ class ProgramTable {
         if( !empty( $_POST[$option_name.'slug_new'] ) && !empty( $_POST[$option_name.'name_new'] ) ) 
             $term = wp_insert_term($_POST[$option_name.'name_new'],$option_name, ['slug' => $_POST[$option_name.'slug_new']]);
     
-
-      
         //GET
         //$rows = get_option($option_name);
         $rows = get_terms($option_name, ['hide_empty' => false] );
