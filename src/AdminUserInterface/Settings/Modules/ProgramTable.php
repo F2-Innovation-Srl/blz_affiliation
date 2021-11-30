@@ -88,8 +88,8 @@ class ProgramTable {
             if (! isset($term["error"]))
                 $rows[] = [
                     'id' => $term["term_id"],
-                    'slug' => $term["slug"],
-                    'name' => $term["name"]
+                    'slug' => $_POST[$option_name.'slug_new'],
+                    'name' => $_POST[$option_name.'name_new']
                 ];
         }
 
