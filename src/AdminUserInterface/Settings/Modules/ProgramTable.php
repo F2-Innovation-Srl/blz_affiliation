@@ -32,7 +32,7 @@ class ProgramTable {
             (new Fields\Text($option_name."slug_new","","text")),
             (new Fields\Text($option_name."name_new","","text")),
             (new Fields\Text($option_name."_new",'Aggiungi',"button")),
-            (new Fields\Text($option_name."_hidden_for_delete",'',"hidden",$option_name))
+            (new Fields\Text($option_name."_hidden_for_delete",'',"hidden",["hidden_field" =>$option_name]))
         ];
         
     }
