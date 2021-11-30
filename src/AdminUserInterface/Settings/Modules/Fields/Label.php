@@ -31,7 +31,8 @@ class Label extends Field {
           $contentStart += strlen($startDelimiter);
           $contentEnd = strpos($str, $endDelimiter, $contentStart);
           if (false === $contentEnd)  break;
-          $contents[] = substr($str, $contentStart, $contentEnd - $contentStart);
+          $content = substr($str, $contentStart, $contentEnd - $contentStart);
+          if ("website" != $content) $contents[] = $content;
           $startFrom = $contentEnd + strlen($endDelimiter);
         }
         return $contents;
