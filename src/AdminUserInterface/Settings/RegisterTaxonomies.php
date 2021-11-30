@@ -22,13 +22,33 @@ Class RegisterTaxonomies {
         //TODO we need this taxonomy?
         $posttypes = get_post_types(['public' => 'true']);
         foreach (CONFIG["custom_taxonomies"] as $taxonomy_slug => $taxonomy_name){
-            register_taxonomy('blz_Programs', $posttypes, [
+            
+            register_taxonomy($taxonomy_slug, ['post'], [
                 'hierarchical' => false,
-                'labels' => $taxonomy_name,
-                'show_ui' => true, 'show_in_rest' => false, 'query_var' => false,
-                'rewrite' =>  ['slug' => $taxonomy_slug, 'with_front' => false],'public' => false,
-                'capabilities' => ['manage_terms' => 'manage_categories','edit_terms' => 'manage_categories','delete_terms' => 'manage_categories','assign_terms' => 'edit_posts'],
+                'labels' => [
+                    'name'          => $taxonomy_name,
+                    'singular_name' => $taxonomy_name,
+                    'search_items'  => 'Cerca tra gli '.$taxonomy_name,
+                    'all_items'     => 'Tutte gli '.$taxonomy_name,
+                    'edit_item'     => 'Modifica lo '.$taxonomy_name,
+                    'update_item'   => 'Aggiorna lo '.$taxonomy_name,
+                    'add_new_item'  => 'Aggiungi uno '.$taxonomy_name,
+                    'new_item_name' => 'Nuovo '.$taxonomy_name,
+                    'menu_name'     => $taxonomy_name,
+                ],
+                'show_ui'           => true,
+                'show_admin_column' => true,
+                'query_var'         => true,
+                'rewrite'           => true,
+                'show_in_rest'      => true,
+                'capabilities'      => [
+                    'manage_terms' => 'manage_categories',
+                    'edit_terms'   => 'manage_categories',
+                    'delete_terms' => 'manage_categories',
+                    'assign_terms' => 'edit_posts',
+                ]
             ]);
+
         }
     }
 }
