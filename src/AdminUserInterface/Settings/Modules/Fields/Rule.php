@@ -15,9 +15,6 @@ class Rule extends Field {
             case "POSTTYPE":
                 return $this->printPostTypes();
                 break;
-            case "TAG":
-                return $this->printTag();
-                break;
             case "USERS":
                 return $this->printUsers();
                 break;
@@ -43,16 +40,6 @@ class Rule extends Field {
        
         $output = "<select name=\"".$this->name."\"><option value=\"0\">Seleziona un termine</option>";
         $terms = get_terms( $this->type, ['hide_empty' => true] );
-            foreach( $terms as $term) 
-                $output .= "<option value=\"".$term->term_id."\" ".(($this->value == $term->term_id) ? "selected" : "")." >".$term->name."</option>";
-        $output .= "</select>";
-        return $output;
-    }
-
-    private function printTag(){    
-
-        $output = "<select name=\"".$this->name."\"><option value=\"0\">Seleziona un termine</option>";
-        $terms = get_terms( 'post_tag', ['hide_empty' => true] );
             foreach( $terms as $term) 
                 $output .= "<option value=\"".$term->term_id."\" ".(($this->value == $term->term_id) ? "selected" : "")." >".$term->name."</option>";
         $output .= "</select>";

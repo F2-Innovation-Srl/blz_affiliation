@@ -9,10 +9,10 @@ class Taxonomy extends Field {
     /// viene richiamata dal costruttore
     public function Create() {
        
-        $output = "<select multiple name=\"".$this->name."\"><option value=\"0\">Seleziona una tassonomia</option>";
+        $output = "<select size=\"8\" multiple name=\"".$this->name."[]\">";
             $taxonomies = get_taxonomies();
             foreach( $taxonomies as $taxonomy) 
-                $output .= "<option value=\"".$taxonomy."\" ".(($this->value == $taxonomy) ? "selected" : "")." >".$taxonomy."</option>";
+                $output .= "<option value=\"".$taxonomy."\" ".((in_array($taxonomy,$this->value)) ? "selected" : "")." >".$taxonomy."</option>";
                 
         $output .= "</select>";
         return $output;
