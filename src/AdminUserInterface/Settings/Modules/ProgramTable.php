@@ -9,28 +9,27 @@ use BLZ_AFFILIATION\AdminUserInterface\Settings\Modules\Fields;
  */
 class ProgramTable {
 
-    protected $rows;
-    protected $current;
+    protected $name;
     
 	/**
 	 * AttivazioneRow constructor.
 	 */
-	function __construct($option_name) {
+	function __construct($option_name,$name) {
 
         $rows = $this->getAndSetRows($option_name);
-
+        $this->name = $name;
         for ($i=0; $i<count($rows); $i++){
             $this->rows[] =  [
-                (new Fields\Text($option_name."programs_slug".$i,$rows[$i]["slug"],"text")),
-                (new Fields\Text($option_name."programs_name".$i,$rows[$i]["name"],"text")),
+                (new Fields\Text($option_name."slug".$i,$rows[$i]["slug"],"text")),
+                (new Fields\Text($option_name."name".$i,$rows[$i]["name"],"text")),
                 (new Fields\Text($i,"Update","button")),
                 (new Fields\Text($i,"Delete","button"))
             ];
         }
         // FOR NEW INSERT
         $this->rows[] =  [
-            (new Fields\Text($option_name."programs_slug_new","","text")),
-            (new Fields\Text($option_name."programs_name_new","","text")),
+            (new Fields\Text($option_name."slug_new","","text")),
+            (new Fields\Text($option_name."name_new","","text")),
             (new Fields\Text($option_name."_new",'Aggiungi',"button"))
             
         ];
@@ -41,10 +40,10 @@ class ProgramTable {
     **/
     public function render(){
         ?>
-        <div><h2>Program Links</h2></div>
+        <div><h2><?php echo $this->name?></h2></div>
             <table>
                 <tr valign="top" style="text-align:left">
-                    <th>Program slug</th><th>Program name</th>                    
+                    <th>Slug</th><th>Name</th>                    
                 </tr>
                 <?php 
                 foreach( $this->rows as $row ) {
@@ -67,8 +66,8 @@ class ProgramTable {
 
             return [
                 'id' => $idx,
-                'slug' => isset( $_POST[$option_name. 'programs_slug'.$idx ] ) ? $_POST[$option_name. 'programs_slug'.$idx ] : $row['slug'],
-                'name' => isset( $_POST[ $option_name.'programs_name'.$idx ] ) ? $_POST[ $option_name.'programs_name'.$idx ] : $row['name']
+                'slug' => isset( $_POST[$option_name. 'slug'.$idx ] ) ? $_POST[$option_name. 'slug'.$idx ] : $row['slug'],
+                'name' => isset( $_POST[ $option_name.'name'.$idx ] ) ? $_POST[ $option_name.'name'.$idx ] : $row['name']
             ];
         
         }, $rows, array_keys($rows) ) : [];
@@ -82,11 +81,11 @@ class ProgramTable {
         }
 
         //INSERT 
-        if( !empty( $_POST[$option_name.'programs_slug_new'] ) && !empty( $_POST[$option_name.'programs_name_new'] ) ) {
+        if( !empty( $_POST[$option_name.'slug_new'] ) && !empty( $_POST[$option_name.'name_new'] ) ) {
 
             $rows[] = [
-                'slug' => $_POST[$option_name.'programs_slug_new'],
-                'name' => $_POST[$option_name.'programs_name_new']
+                'slug' => $_POST[$option_name.'slug_new'],
+                'name' => $_POST[$option_name.'name_new']
             ];
         }
 

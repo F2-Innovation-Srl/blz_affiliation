@@ -32,14 +32,11 @@ class ProgramLinksOptions {
 
             $action = esc_html( admin_url( 'admin.php?page='.$_GET["page"] ) );
             ?>
-        
             <form method="post" action="<?=$action?>">
-                
-                
-                <?php  (new ProgramTable("blz_programs"))->render(); ?>
-                <div><hr></div>
-                <?php  (new ProgramSubjectTable("blz_programs_subjects"))->render(); ?>
-                
+                <?php 
+                foreach (CONFIG["custom_taxonomies"] as $taxonomy_slug => $taxonomy_name)
+                        (new ProgramTable($taxonomy_slug,$taxonomy_name))->render(); 
+                ?>
                 <?php wp_nonce_field( 'program-links-options-save', 'blz-affiliation-custom-message' ); ?>
                 
             </form>
