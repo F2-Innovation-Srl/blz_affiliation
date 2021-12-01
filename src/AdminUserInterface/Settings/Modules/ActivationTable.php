@@ -18,15 +18,17 @@ class ActivationTable {
 	function __construct($option_name,$current) {
         $this->current = $current;
         $rows = $this->getAndSetRows($option_name);
+        $hiddenGA = (empty($this->current["tab"]["ga_event_template"]) ) ? "hidden" : "text"; 
+        $hiddenTrack = (empty($this->current["tab"]["tracking_id"]) ) ? "hidden" : "text"; 
 
         for ($i=0; $i<count($rows); $i++){
             $this->rows[] =  [
                 (new Fields\Activator($option_name."_attivatore".$i,$rows[$i]["attivatore"])),
                 (new Fields\Rule($option_name."_regola".$i,$rows[$i]["regola"],$rows[$i]["attivatore"])),
                 (new Fields\Label($option_name."_ga_label".$i,$rows[$i]["ga_label"],"GA",$current)),
-                (new Fields\Text($option_name."_ga_val".$i,$rows[$i]["ga_val"],"text")),
+                (new Fields\Text($option_name."_ga_val".$i,$rows[$i]["ga_val"],$hiddenGA)),
                 (new Fields\Label($option_name."_trk_label".$i,$rows[$i]["trk_label"],"TRK_ID",$current)),
-                (new Fields\Text($option_name."_trk_val".$i,$rows[$i]["trk_val"],"text")),
+                (new Fields\Text($option_name."_trk_val".$i,$rows[$i]["trk_val"],$hiddenTrack)),
                 (new Fields\Text($i,"Update","button")),
                 (new Fields\Text($i,"Delete","button",["hidden_field" => $option_name]))
             ];
@@ -36,9 +38,9 @@ class ActivationTable {
             (new Fields\Activator($option_name."_attivatore_new","")),
             (new Fields\Rule($option_name."_regola_new","")),
             (new Fields\Label($option_name."_ga_label_new","","GA",$current)),
-            (new Fields\Text($option_name."_ga_val_new","","text")),
+            (new Fields\Text($option_name."_ga_val_new","",$hiddenGA)),
             (new Fields\Label($option_name."_trk_label_new","","TRK_ID",$current)),
-            (new Fields\Text($option_name."_trk_val_new","","text")),
+            (new Fields\Text($option_name."_trk_val_new","",$hiddenTrack)),
             (new Fields\Text($option_name."_new",'Aggiungi',"button")),
             (new Fields\Text($option_name."_hidden_for_delete",'',"hidden"))
         ];
@@ -52,7 +54,14 @@ class ActivationTable {
         <div><h2 id="tabella" name="tabella">Tabella di attivazione</h2></div>
             <table>
                 <tr valign="top" style="text-align:left">
-                    <th>Attivatore</th><th>Regola</th><th>Valore GA</th><th>Valore TRK_ID</th><th>Label TRK_ID</th><th>Label TRK_ID</th><th>&nbsp;</th>                       
+                    <th>Attivatore</th><th>Regola</th>
+                    <?php if (!empty($this->current["tab"]["ga_event_template"])) : ?>
+                    <th>Label GA</th><th>Valore GA</th>
+                    <?php endif;?>   
+                    <?php if (!empty($this->current["tab"]["tracking_id"])) : ?>
+                    <th>Label TRK_ID</th><th>Label TRK_ID</th>
+                    <?php endif;?>   
+                    <th>&nbsp;</th>                       
                 </tr>
                 <?php 
                 foreach( $this->rows as $row ) {

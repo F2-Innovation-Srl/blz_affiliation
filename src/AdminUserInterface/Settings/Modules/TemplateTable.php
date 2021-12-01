@@ -42,10 +42,10 @@ class TemplateTable {
             <tr valign="top" style="text-align:left">
                 <th>Attivo</th>   <th>Valore TRK_ID Default</th>  <th>Valore GA Default</th>  
                 <?php if (!empty($this->current["tab"]["ga_event_template"])) : ?>
-                <th>{website} TRK_ID </th>
+                <th>{website} GA </th>
                 <?php endif;?>    
                 <?php if (!empty($this->current["tab"]["tracking_id"])) : ?>
-                <th>{website} GA </th>  
+                <th>{website}  TRK_ID</th>  
                 <?php endif;?>   
             </tr>
             <tr valign="top" style="text-align:left">

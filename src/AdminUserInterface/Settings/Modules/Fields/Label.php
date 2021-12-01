@@ -9,18 +9,22 @@ class Label extends Field {
     /// viene richiamata dal costruttore
     public function Create() {
         $labels = [];
-        $output = '<select class="label" name="'.$this->name.'"><option value="">Seleziona una '.$this->type.' label</option>';
-        switch ($this->type) {
-            case "GA":
-                $labels = $this->getLabels($this->params["tab"]["ga_event_template"],"{","}");
-                break;
-            case "TRK_ID":
-                $labels = $this->getLabels($this->params["tab"]["tracking_id"],"{","}");
-                break;
-        } 
-        foreach($labels as $label)
-            $output.= '<option value="'.$label.'" '.(($this->value == $label) ? "selected" : "").' >'.$label.'</option>';    
-        $output.= '</select>';
+        if (($this->type == "GA" && !empty($this->params["tab"]["ga_event_template"])) OR ($this->type == "TRK_ID" && !empty($this->params["tab"]["tracking_id"]))){
+            $output = '<select class="label" name="'.$this->name.'"><option value="">Seleziona una '.$this->type.' label</option>';
+            switch ($this->type) {
+                case "GA":
+                    $labels = $this->getLabels($this->params["tab"]["ga_event_template"],"{","}");
+                    break;
+                case "TRK_ID":
+                    $labels = $this->getLabels($this->params["tab"]["tracking_id"],"{","}");
+                    break;
+            } 
+            foreach($labels as $label)
+                $output.= '<option value="'.$label.'" '.(($this->value == $label) ? "selected" : "").' >'.$label.'</option>';    
+            $output.= '</select>';
+        }else{
+            $output= '<input type="hidden" id="'.$this->name.'" name="'.$this->name.'" value="'.$this->value.'" />'; 
+        }
         return $output;
     }
 
