@@ -20,7 +20,6 @@ class AffiliateLinkButton {
     private $category;
     private $is_paid;
     private $author;
-    private $postData;
 
     public function __construct() {
 
@@ -35,7 +34,7 @@ class AffiliateLinkButton {
 
         $content = (!empty($request->getContent())) ? $request->getContent() : $offer->price . " euro";
 
-        return str_replace([ '{{ url }}', '{{ ga-event }}', '{{ content }}' ], [ $link, $ga_event, $content ], $template);
+        return str_replace([ '{{ url }}', '{{ ga_event }}', '{{ content }}' ], [ $link, $ga_event, $content ], $template);
     }
 
 
@@ -46,7 +45,7 @@ class AffiliateLinkButton {
     public function printAffiliateLink( $atts, $content, $tag ) {
 
         /// prende tutti i dati del post
-        $this->postData = new PostData();
+        $postData = new PostData();
         /// prendo la request
         $request = new Request($atts);
         /// cerca le offerte nei tre marketplace
@@ -63,7 +62,7 @@ class AffiliateLinkButton {
         if( !empty( $offers ) ){
 
             /// inizializzo i settingsData 
-            $SettingsData = new SettingsData($postData,"affiliate_link",$request->getMarketplaceKey());
+            $SettingsData = new SettingsData($postData,"linkButton",$request->getMarketplaceKey());
             return $this->FillTemplate( $offers[ 0 ], $SettingsData->getGAEvent(), $SettingsData->getTrackingID(), $SettingsData->getTemplate(),$request );
         }
             

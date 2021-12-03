@@ -2,11 +2,14 @@
 
 namespace BLZ_AFFILIATION\Rendering;
 
+use BLZ_AFFILIATION\Utils\Config;
 
 class SettingsData { 
 
+    private $postData;
     private $link_type;
     private $marketpalace;
+    private $option_name;
 
     
     private $templates = [
@@ -25,14 +28,16 @@ class SettingsData {
 
     public function __construct($postData,$link_type,$marketpalace) {
         $this->postData = $postData;
-        $this->type = $type;
+        $this->link_type = $link_type;
         $this->marketplace = $marketpalace;
+
+        $this->option_name = CONFIG["Items"][0]["suffix"]."-".$marketpalace."-".$link_type;
     }
 
 
     public function getTemplate() {
 
-        return $this->$templates[$this->link_type];
+        return $this->templates[$this->link_type];
     }
 
     public function getTrackingID() {
