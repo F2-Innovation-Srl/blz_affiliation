@@ -32,7 +32,7 @@ class SettingsData {
 
     public function getTemplate() {
 
-        return self::$templates[$this->link_type];
+        return $this->$templates[$this->link_type];
     }
 
     public function getTrackingID() {
