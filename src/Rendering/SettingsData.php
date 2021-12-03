@@ -5,7 +5,11 @@ namespace BLZ_AFFILIATION\Rendering;
 
 class SettingsData { 
 
-    static $templates = [
+    private $link_type;
+    private $marketpalace;
+
+    
+    private $templates = [
         
         'affiliate_link' => <<<HTML
 
@@ -19,10 +23,26 @@ class SettingsData {
         EVT
     ];
 
-    
-    public static function getTemplate($template) {
+    public function __construct($postData,$link_type,$marketpalace) {
+        $this->postData = $postData;
+        $this->type = $type;
+        $this->marketplace = $marketpalace;
+    }
 
-        return self::$templates[$template];
+
+    public function getTemplate() {
+
+        return self::$templates[$this->link_type];
+    }
+
+    public function getTrackingID() {
+
+        return "TRACKING ID";
+    }
+
+    public function getGAEvent() {
+
+        return "GA EVENT";
     }
 
 

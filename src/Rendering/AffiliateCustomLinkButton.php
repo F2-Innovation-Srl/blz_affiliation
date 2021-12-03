@@ -20,7 +20,6 @@ class AffiliateCustomLinkButton {
     private $category;
     private $is_paid;
     private $author;
-    private $postData;
 
 
     public function __construct() {
@@ -40,12 +39,15 @@ class AffiliateCustomLinkButton {
     public function printAffiliateTracking( $atts, $content, $tag ) {
 
         /// prende tutti i dati del post
-        $this->postData = new PostData();
+        $postData = new PostData();
+        
         /// prendo la request
         $request = new Request($atts);
-        $tracking = $this->getTracking( null, $atts['ga_event'] );
 
-        return $this->FillTemplate( $tracking->ga_event, $tracking->tracking_id, SettingsData::getTemplate("affiliate_link"),$request );
+        /// inizializzo i settingsData 
+        $SettingsData = new SettingsData($postData,"affiliate_link",$request->marketplace);
+
+        return $this->FillTemplate( $SettingsData->getGAEvent(), $SettingsData->getTrackingID(), $SettingsData->getTemplate(),$request );
 
     }
 
@@ -57,15 +59,6 @@ class AffiliateCustomLinkButton {
         $content = $request->getContent();
 
         return str_replace([ '{{ url }}', '{{ ga-event }}', '{{ content }}' ], [ $link, $ga_event, $content ], $template);
-    }
-
-    // #REVIEW
-    private function getTracking( $ga_event, $tracking ) {
-
-        return (object) [
-            'ga_event'    => $ga_event,
-            'tracking_id' => $tracking
-        ];
     }
    
 

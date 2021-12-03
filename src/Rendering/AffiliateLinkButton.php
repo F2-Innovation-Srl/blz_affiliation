@@ -38,42 +38,6 @@ class AffiliateLinkButton {
         return str_replace([ '{{ url }}', '{{ ga-event }}', '{{ content }}' ], [ $link, $ga_event, $content ], $template);
     }
 
-    
-    private function getTracking( Offer $offer, $store ) {
-
-        $class = "mtz cta vg ".$this->category." editorial " . $author . " " .  $atts["marketplace"];
-        
-        
-        $ga_event = str_replace(
-            [ '{{ website }}', '{{ category }}', '{{ author }}', '{{ marketplace }}'],
-            [ $this->domain, $this->category, $this->author->analytics, $offer->marketplace . $this->paid ],
-            SettingsData::getTemplate("ga_event")
-        );
-
-        switch( $offer->marketplace ) {
-
-            case 'trovaprezzi':
-                $tracking = $store;
-                break;
-
-            case 'ebay':
-                $tracking = (empty($store)) ? get_field('ebay_traking_id_editorial', 'user_'.$author_id) : $store;   
-                if (empty($tracking)) $tracking = "vgClassificheEditorial21";
-                break;
-
-            case 'amazon':
-                $tracking = (empty($store)) ? get_field('amazon_traking_id_editorial', 'user_'.$author_id) : $store;   
-                if (empty($tracking)) $tracking = "vg-classifiche-editorial-21";
-                break;
-        }
-
-
-        return (object) [
-            'ga_event'    => $ga_event,
-            'tracking_id' => $tracking
-        ];
-    }
-
 
     /**
      * Stampa il bottone impostato da shortcode
@@ -93,11 +57,16 @@ class AffiliateLinkButton {
         /// riceve le offerte in ordine di marketplace
         $offers = $offerRetriever->getOffers();
 
+        
+
+          
         if( !empty( $offers ) ){
 
-            $tracking = $this->getTracking( $offers[ 0 ], $atts['tracking_id'] );
+            /// inizializzo i settingsData 
+            $SettingsData = new SettingsData($postData,"affiliate_link",$request->marketplace);
 
-            return $this->FillTemplate( $offers[ 0 ], $tracking->ga_event, $tracking->tracking_id, SettingsData::getTemplate("affiliate_link"),$request );
+            $tracking = $this->getTracking( $offers[ 0 ], $atts['tracking_id'] );
+            return $this->FillTemplate( $offers[ 0 ], $SettingsData->getGAEvent(), $SettingsData->getTrackingID(), $SettingsData->getTemplate(),$request );
         }
             
         return '';        
