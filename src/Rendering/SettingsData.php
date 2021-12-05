@@ -7,14 +7,13 @@ use BLZ_AFFILIATION\Utils\Config;
 class SettingsData { 
 
     private $postData;
-    private $link_type;
     private $marketpalace;
-    private $option_name;
+    private $config;
 
-    
+
     private $templates = [
         
-        'affiliate_link' => <<<HTML
+        'linkButton' => <<<HTML
 
             <a href="{{ url }}" data-vars-affiliate="{{ ga_event }}" 
                class="affiliation-intext" target="_blank" rel="sponsored"
@@ -28,10 +27,15 @@ class SettingsData {
 
     public function __construct($postData,$link_type,$marketpalace) {
         $this->postData = $postData;
-        $this->link_type = $link_type;
-        $this->marketplace = $marketpalace;
+        $this->marketplace = Config::findbySuffix(CONFIG["Items"][0]["settings"]["marketplaces"],$marketpalace);
 
-        $this->option_name = CONFIG["Items"][0]["suffix"]."-".$marketpalace."-".$link_type;
+        $this->config = [
+            "settings" => get_option(CONFIG["Items"][0]["suffix"]."-".$marketpalace."-".$link_type."_settings"),
+            "activation_table" => get_option(CONFIG["Items"][0]["suffix"]."-".$marketpalace."-".$link_type),
+            "ga_event_template" =>  $this->marketplace["ga_event_template"],
+            "tracking_id" =>  $this->marketplace["tracking_id"],
+            
+        ];
     }
 
 
@@ -41,6 +45,13 @@ class SettingsData {
     }
 
     public function getTrackingID() {
+        //echo "<pre>";
+        //print_r($this->config);
+        //print_r($this->postData);
+        foreach($this->config["activation_table"] as $activation_table){
+
+        }
+        exit;
 
         return "TRACKING ID";
     }

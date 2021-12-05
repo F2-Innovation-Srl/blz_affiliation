@@ -24,7 +24,8 @@ require_once PLUGIN_PATH . '/vendor/autoload.php';
 use BLZ_AFFILIATION\Rendering;
 use BLZ_AFFILIATION\AdminUserInterface;
 use BLZ_AFFILIATION\AdminUserInterface\Settings;
-use BLZ_AFFILIATION\CustomPostTypes;
+use BLZ_AFFILIATION\core\CustomPostTypes;
+use BLZ_AFFILIATION\core\Taxonomies;
 use BLZ_AFFILIATION\AffiliateMarketing\Marketplace;
 use BLZ_AFFILIATION\AffiliateMarketing\Request;
 use BLZ_AFFILIATION\Utils\Config;
@@ -47,8 +48,10 @@ class BlzAffiliate {
 		Config::loadSettings();
 
 		/// crea i custom post type (tabelle e link "centralizzati")
-		//CustomPostTypes\AffiliateTables::init();
-		//CustomPostTypes\AffiliateLinkProgamStored::init();
+		CustomPostTypes\AffiliateTables::init();
+		CustomPostTypes\AffiliateLinkProgamStored::init();
+		/// crea i custom taxnomonies per i link program 
+		Taxonomies\AffiliateLinkProgram::init();
 		
 		/// effettua il rendering degli shortcode dei bottoni 
 		/// di affiliazione
@@ -76,9 +79,6 @@ class BlzAffiliate {
 		//new AdminUserInterface\Buttons\AffiliateTableButton();
 
 	
-
-		/// Create custom taxnomonies core structure
-		AdminUserInterface\Settings\RegisterTaxonomies::init();
 		/// aggiunge la pagina dei settings del plugin
 		new AdminUserInterface\Settings\AdminPage();
 		

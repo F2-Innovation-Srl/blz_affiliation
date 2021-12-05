@@ -1,6 +1,6 @@
 <?php
 
-namespace BLZ_AFFILIATION\CustomPostTypes;
+namespace BLZ_AFFILIATION\core\CustomPostTypes;
 
 /**
  * Crea il post-type delle tabelle di link per affiliazione

@@ -1,5 +1,5 @@
 <?php
-namespace BLZ_AFFILIATION\AdminUserInterface\Settings;
+namespace BLZ_AFFILIATION\core\Taxonomies;
 
 /*
  * Class TaxonomiesManager
@@ -8,7 +8,7 @@ namespace BLZ_AFFILIATION\AdminUserInterface\Settings;
  * Initilize the taxonomies of the website
  * 
  */
-Class RegisterTaxonomies {
+Class AffiliateLinkProgram {
     
     /**
      * Initializer for setting up action handler
