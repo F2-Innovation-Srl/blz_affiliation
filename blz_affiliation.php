@@ -82,7 +82,7 @@ class BlzAffiliate {
 		/// aggiunge la pagina dei settings del plugin backend
 		new AdminUserInterface\Settings\AdminPage();
 		/// aggiunge la pagina dei settings del plugin fontend
-		new AdminUserInterface\Settings\Page();
+		new BLZ_AFFILIATION\Rendering\Page();
 		
 	}
 }
