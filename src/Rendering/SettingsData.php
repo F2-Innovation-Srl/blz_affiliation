@@ -47,9 +47,7 @@ class SettingsData {
 
     public function getTrackingID() {
         $track_id = $this->config["settings"]["trk_default"];
-        //echo "<pre>";
-       // print_r($this->config);
-        //print_r($this->postData);
+    
         if (isset($this->config["activation_table"][0])) {
             $track_id = $this->config["tracking_id_template"];
             // rimuovo amp da template se non sono una pagina amp
@@ -58,10 +56,14 @@ class SettingsData {
             $track_id = str_replace("{website}",$this->config["settings"]["website_trk"],$track_id);
             // sostituisco il restante in base alle regole
             foreach($this->config["activation_table"] as $activation_table)
-                if ($this->isValidRule($activation_table))
+                if ($this->isValidRule($activation_table) && !empty($activation_table["ga_label"]))
                     $track_id = str_replace("{".$activation_table["trk_label"]."}",$activation_table["trk_val"],$track_id);
             // sostituisco Marketplace con un default se non è stato settato
             $track_id = str_replace("{marketplace}",$this->marketplace["suffix"],$track_id);
+            // sostituisco Author con un default se non è stato settato
+            $track_id = str_replace("{author}",$this->postData->author["name"],$track_id);
+            // rimuovi label non impostate
+            $track_id = $this->removeLabels($track_id);
         }
         return $track_id;
         
@@ -69,6 +71,7 @@ class SettingsData {
 
     public function getGAEvent() {
         $ga_event = $this->config["settings"]["ga_default"];
+
         if (isset($this->config["activation_table"][0])) {
             $ga_event = $this->config["ga_event_template"];
             // rimuovo amp da template se non sono una pagina amp
@@ -77,12 +80,14 @@ class SettingsData {
             $ga_event = str_replace("{website}",$this->config["settings"]["website_ga"],$ga_event);
             // sostituisco il restante in base alle regole
             foreach($this->config["activation_table"] as $activation_table)
-                if ($this->isValidRule($activation_table))
+                if ($this->isValidRule($activation_table) && !empty($activation_table["ga_label"]))
                     $ga_event = str_replace("{".$activation_table["ga_label"]."}",$activation_table["ga_val"],$ga_event);
             // sostituisco Marketplace con un default se non è stato settato
             $ga_event = str_replace("{marketplace}",$this->marketplace["suffix"],$ga_event);
             // sostituisco Author con un default se non è stato settato
             $ga_event = str_replace("{author}",$this->postData->author["name"],$ga_event);
+            // rimuovi label non impostate
+            $ga_event = $this->removeLabels($ga_event);
         }
         return $ga_event;
     }
@@ -100,6 +105,20 @@ class SettingsData {
                 return (in_array($activation_table["regola"],$this->postData->taxonomies[$activation_table["attivatore"]])) ? true : false;
                 break;
         } 
+    }
+
+    private function removeLabels($str) {
+        $str_temp = $str;
+        $startFrom = $contentStart = $contentEnd = 0;
+        while (false !== ($contentStart = strpos($str, "{", $startFrom))) {
+          $contentStart += strlen("{");
+          $contentEnd = strpos($str, "}", $contentStart);
+          if (false === $contentEnd)  break;
+          $str_temp = str_replace("{".substr($str, $contentStart, $contentEnd - $contentStart). "}","",$str_temp);
+          $str_temp = str_replace("--","-",$str_temp);
+          $startFrom = $contentEnd + strlen("}");
+        }
+        return $str_temp;
     }
 
 
