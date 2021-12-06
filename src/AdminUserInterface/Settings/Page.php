@@ -21,6 +21,6 @@ class Page {
         
     }
     function mytheme_enqueue_typekit() { 
-         wp_add_inline_script( 'mytheme-typekit', 'var blz-affiliation-ga=\'GA_sssss\'' );
+         wp_add_inline_script( 'mytheme-typekit', 'var blz_affiliation_ga=\'GA_sssss\'' );
     }
 }
