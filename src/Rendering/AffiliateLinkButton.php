@@ -33,7 +33,6 @@ class AffiliateLinkButton {
         $link = str_replace( '{tracking-id}', $tracking, $offer->link);
 
         $content = (!empty($request->getContent())) ? $request->getContent() : $offer->price . " euro";
-
         return str_replace([ '{{ url }}', '{{ ga_event }}', '{{ content }}' ], [ $link, $ga_event, $content ], $template);
     }
 
@@ -57,12 +56,13 @@ class AffiliateLinkButton {
         $offers = $offerRetriever->getOffers();
 
         
-
+       
           
         if( !empty( $offers ) ){
-
+            
             /// inizializzo i settingsData 
             $SettingsData = new SettingsData($postData,"linkButton",$request->getMarketplaceKey());
+           
             return $this->FillTemplate( $offers[ 0 ], $SettingsData->getGAEvent(), $SettingsData->getTrackingID(), $SettingsData->getTemplate(),$request );
         }
             

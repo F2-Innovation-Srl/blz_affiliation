@@ -18,11 +18,15 @@ class PostData {
         $this->post_type = $post->post_type;
         
         /// Author
-        $this->author = $post->post_author;
+        /// cerca il nome dell'autore
+        $author_nicename = get_the_author_meta( 'user_nicename', $author_id);
+        /// se è vuoto prende un valore di default
+        $author_name    = empty( $author_nicename ) ? 'author'     : $author_nicename;  // autore
 
-        /// tags
-        foreach( get_the_tags( $post->ID ) as $tag)
-            $this->tags[] = $tag->slug;
+        $this->author = [
+            'name'      => $author_name,
+            'id'        => $post->post_author
+        ];
 
         /// tassonomie 
         $taxonomies = get_taxonomies();
