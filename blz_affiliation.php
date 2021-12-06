@@ -79,8 +79,10 @@ class BlzAffiliate {
 		//new AdminUserInterface\Buttons\AffiliateTableButton();
 
 	
-		/// aggiunge la pagina dei settings del plugin
+		/// aggiunge la pagina dei settings del plugin backend
 		new AdminUserInterface\Settings\AdminPage();
+		/// aggiunge la pagina dei settings del plugin fontend
+		new AdminUserInterface\Settings\Page();
 		
 	}
 }

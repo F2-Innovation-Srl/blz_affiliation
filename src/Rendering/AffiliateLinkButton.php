@@ -24,7 +24,7 @@ class AffiliateLinkButton {
     public function __construct() {
 
         add_shortcode( 'affiliate_link',  [ $this, 'printAffiliateLink'] );
-
+        
     }
 
 
