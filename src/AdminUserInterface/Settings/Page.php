@@ -23,4 +23,20 @@ class Page {
     function mytheme_enqueue_typekit() { 
          wp_add_inline_script( 'mytheme-typekit', 'var blz_affiliation_ga=\'GA_sssss\'' );
     }
+
+    // inline script via wp_print_scripts
+    function shapeSpace_print_scripts() { 
+        
+        ?>
+        
+        <script>
+            var var1 = <?php echo json_encode('var1'); ?>;
+            var var2 = <?php echo json_encode('var2'); ?>;
+            var var3 = <?php echo json_encode('var3'); ?>;
+        </script>
+        
+        <?php
+        
+    }
+
 }
