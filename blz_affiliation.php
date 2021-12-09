@@ -81,8 +81,8 @@ class BlzAffiliate {
 	
 		/// aggiunge la pagina dei settings del plugin backend
 		new AdminUserInterface\Settings\AdminPage();
-		/// aggiunge la pagina dei settings del plugin fontend
-		new BLZ_AFFILIATION\Rendering\Page();
+		/// aggiunge le dipendenze js per il tracciamento
+		new BLZ_AFFILIATION\Rendering\JsTrackDependences();
 		
 	}
 }
