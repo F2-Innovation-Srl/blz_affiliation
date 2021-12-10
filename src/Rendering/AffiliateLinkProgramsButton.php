@@ -13,7 +13,6 @@ class AffiliateLinkProgramsButton {
     protected $domain = 'vg';
     protected $request;
     protected $content;
-
     protected $templates = [
         
         'affiliate_link' => <<<HTML
@@ -52,15 +51,15 @@ class AffiliateLinkProgramsButton {
         /// prende tutti i dati del post
         $postData = new PostData();
         /// prendo la request
-        $request = new Request($atts);
+        $this->request = new Request($atts);
 
         $this->content = $content;
 
 
         /// inizializzo i settingsData 
-        $SettingsData = new SettingsData($postData,"linkPrograms",$request);
+        $SettingsData = new SettingsData($postData,"linkPrograms",$this->request);
         
-        return $this->FillTemplate($SettingsData->getGAEvent(), $SettingsData->getTrackingID(), $SettingsData->getTemplate(),$request );
+        return $this->FillTemplate($SettingsData->getGAEvent(), $SettingsData->getTrackingID(), $SettingsData->getTemplate() );
     
 
         $tracking = $this->getTracking();
