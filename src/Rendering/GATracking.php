@@ -2,12 +2,12 @@
 namespace BLZ_AFFILIATION\Rendering;
 
 /**
- * Class JsTrackDependences
- * this class manage all track dependences in page and amp page
+ * Class GATracking
+ * Activate GA Tracking in both normal and AMP pages
  *
  * @package BLZ_AFFILIATION
  */
-class JsTrackDependences {
+class GATracking {
 	/**
 	 * Page constructor.
 	 */
