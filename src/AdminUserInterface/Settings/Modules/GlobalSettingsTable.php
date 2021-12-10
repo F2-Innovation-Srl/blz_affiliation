@@ -11,22 +11,27 @@ class GlobalSettingsTable {
 
     protected $fields;
     private $row;
+
 	/**
 	 * GlobalSettingsTable constructor.
 	 */
-	function __construct($option_name) {
+	function __construct( $option_name ) {
 
-        $row = $this->getAndSetRow($option_name);
+        $row = $this->getAndSetRow( $option_name );
+        
+        $ga_code =  ( $row[ 'ga_code' ]  != null ) ? $row[ 'ga_code' ] : '';
+        $taxonomies = ( $row[ 'taxonomy' ] != null ) ? $row[ 'taxonomy' ] : '';
+
         $this->row =  [
-            (new Fields\Text($option_name."_ga_code",$row["ga_code"],"text")),
-            (new Fields\Taxonomy($option_name."_taxonomy",$row["taxonomy"]))
+            (new Fields\Text( $option_name."_ga_code", $ga_code, "text" )),
+            (new Fields\Taxonomy( $option_name."_taxonomy", serialize( $taxonomies ) ))
         ];
     }
 
 	/**
      * Print page if have correct permission
-    **/
-    public function render(){
+     */
+    public function render() {
         ?>
         <table>
             <tr valign="top" style="text-align:left">
@@ -40,21 +45,27 @@ class GlobalSettingsTable {
        
     }
 
+    /**
+     * Ritorna una riga
+     *
+     * @param [type] $option_name
+     * @return array
+     */
     private function getAndSetRow($option_name){
         
-        //GET
-        $row = get_option($option_name);
-        
-        //UPDATE
+        // GET
+        $row = get_option( $option_name );
+
+        // UPDATE
         $row = [
-            'ga_code' => isset( $_POST[$option_name. '_ga_code' ] ) ? $_POST[$option_name. '_ga_code' ] : $row['ga_code'],
-            'taxonomy' => isset( $_POST[$option_name. '_taxonomy' ] ) ? $_POST[$option_name. '_taxonomy' ] : $row['taxonomy']
+            'ga_code'  => isset( $_POST[$option_name. '_ga_code'  ] ) ? $_POST[$option_name. '_ga_code' ]  : $row[ 'ga_code'  ],
+            'taxonomy' => isset( $_POST[$option_name. '_taxonomy' ] ) ? $_POST[$option_name. '_taxonomy' ] : $row[ 'taxonomy' ]
         ];
 
-        //SET
-        update_option($option_name,$row);
+        // SET
+        update_option( $option_name, $row );
+
         //RETURN
         return $row;
-
     }
 }

@@ -12,11 +12,19 @@ abstract class Field {
     protected $type;
     protected $params;
     
-    /// prende in ingresso un nome e un valore per il field
-    public function __construct( $name, $value = '', $type = '', $params = []) {
-        $this->name = $name;
-        $this->value = $value;
-        $this->type = $type;
+    /**
+     * prende in ingresso un nome e un valore per il field
+     *
+     * @param string $name
+     * @param string $value
+     * @param string $type
+     * @param array $params
+     */
+    public function __construct( string $name, string $value = '', string $type = '', array $params = []) {
+
+        $this->name   = $name;
+        $this->value  = $value;
+        $this->type   = $type;
         $this->params = $params;
     }
 
@@ -24,5 +32,10 @@ abstract class Field {
         return $this->Create();
     }
 
+    /**
+     * Returns the HTML markup of the field
+     *
+     * @return string
+     */
     public abstract function Create();
 }
