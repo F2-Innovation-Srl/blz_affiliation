@@ -2,20 +2,34 @@
 namespace BLZ_AFFILIATION\AdminUserInterface\Settings\Modules\Fields;
 
 /**
- * Una Row è un field di un modulo e ne gestisce tutte le sue caratteristiche
+ * Campo della tabella di tipo "taxonomy"
  */
 class Taxonomy extends Field {
 
-    /// viene richiamata dal costruttore
+    /**
+     * HTML markup del campo
+     *
+     * @return string
+     */
     public function Create() {
+
+        // di default torna i nomi delle tassonomie
+        // sarebbe meglio prendere gli slug
+        $taxonomies = array_keys( get_taxonomies() );
        
-        $output = "<select size=\"8\" multiple name=\"".$this->name."[]\">";
-            $taxonomies = get_taxonomies();
-            foreach( $taxonomies as $taxonomy) 
-                $output .= "<option value=\"".$taxonomy."\" ".((in_array($taxonomy,$this->value)) ? "selected" : "")." >".$taxonomy."</option>";
-                
-        $output .= "</select>";
-        return $output;
+        $selected_taxonomies = unserialize( $this->value );
+
+        $select = '<select size="8" multiple name="'.$this->name.'[]">{{ options }}</select>';
+        
+        $options = array_reduce( $taxonomies, function( $markup, $taxonomy ) use  ($selected_taxonomies ) {
+            
+            $selected = in_array( $taxonomy, $selected_taxonomies ) ? ' selected ' : '';
+
+            $markup .= '<option value="' . $taxonomy . '"' . $selected .'>' . $taxonomy . '</option>';
+            return $markup;
+        }, '');
+    
+        return str_replace('{{ options }}', $options, $select );        
     }
 
 }

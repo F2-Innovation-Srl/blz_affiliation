@@ -2,12 +2,12 @@
 namespace BLZ_AFFILIATION\Rendering;
 
 /**
- * Class JsTrackDependences
- * this class manage all track dependences in page and amp page
+ * Class GATracking
+ * Activate GA Tracking in both normal and AMP pages
  *
  * @package BLZ_AFFILIATION
  */
-class JsTrackDependences {
+class GATracking {
 	/**
 	 * Page constructor.
 	 */
@@ -55,21 +55,32 @@ class JsTrackDependences {
     HTML;
 
 	function __construct() {
-        $this->ga_code = get_option("blz-affiliation-settings")["ga_code"];
-        add_action('init', [ $this, 'onInit' ]);
+        
+        $settings = get_option( "blz-affiliation-settings" );
+
+        if( isset( $settings[ 'ga_code' ] ) ){
+
+            $this->ga_code = [ 'ga_code' ];
+        
+            add_action( 'init', [ $this, 'onInit' ] );
+        }
 	}
 
 	function onInit() { 
-        if (!is_admin()) {
+        if ( !is_admin() ) {
+            
             //aggiunge variabile GA in header
             add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_js' ] );
+            
             //aggiunge dipendenze js per tracciamento
             wp_enqueue_script('blz-affiliation-tracker',PLUGIN_URI ."src/assets/js/libs/tracker.min.js",[], PLUGIN_VERSION,true);
             wp_enqueue_script('blz-affiliation-activator',PLUGIN_URI ."src/assets/js/affiliate-link-activator.js",["blz-affiliation-tracker"], PLUGIN_VERSION,true);
+            
             //aggiunge analitics su pagine AMP
             add_filter( 'the_content',  [ $this, 'add_amp_track'], 20 );
         }
     }
+
     function enqueue_js() { 
         ?>
         <script>
