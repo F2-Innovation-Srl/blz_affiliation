@@ -61,7 +61,7 @@ class AffiliateLinkButton {
         if( !empty( $offers ) ){
             
             /// inizializzo i settingsData 
-            $SettingsData = new SettingsData($postData,"linkButton",$request->getMarketplaceKey());
+            $SettingsData = new SettingsData($postData,"linkButton",$request);
            
             return $this->FillTemplate( $offers[ 0 ], $SettingsData->getGAEvent(), $SettingsData->getTrackingID(), $SettingsData->getTemplate(),$request );
         }

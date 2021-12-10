@@ -44,7 +44,7 @@ class AffiliateCustomLinkButton {
         $request = new Request($atts);
 
         /// inizializzo i settingsData 
-        $SettingsData = new SettingsData($postData,"linkButton",$request->getMarketplaceKey());
+        $SettingsData = new SettingsData($postData,"linkButton",$request);
 
         return $this->FillTemplate( $SettingsData->getGAEvent(), $SettingsData->getTrackingID(), $SettingsData->getTemplate(),$request );
 
