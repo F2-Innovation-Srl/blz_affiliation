@@ -25,15 +25,15 @@ class Label extends Field {
     /// viene richiamata dal costruttore
     public function Create() {
         
-        $typeGA    = ( $this->type == "GA"     && !empty( $this->params["tab"]["ga_event_template"] ));
-        $typeTRKID = ( $this->type == "TRK_ID" && !empty( $this->params["tab"]["tracking_id"] ));
+        $typeGA    = ( $this->type == "GA"     && !empty( $this->params["marketplace"]["ga_event_template"] ));
+        $typeTRKID = ( $this->type == "TRK_ID" && !empty( $this->params["marketplace"]["tracking_id"] ));
 
         if( !$typeGA && !$typeTRKID ) {
 
             return '<input type="hidden" id="'.$this->name.'" name="'.$this->name.'" value="'.$this->value.'" />'; 
         }
         
-        $labels = $this->getLabels( $this->params["tab"][ $this->settings[ $this->type][ 'tab' ] ], "{", "}" );
+        $labels = $this->getLabels( $this->params[ "marketplace" ][ $this->settings[ $this->type][ 'tab' ] ], "{", "}" );
         
         $options = array_map( function( $label ) {
 

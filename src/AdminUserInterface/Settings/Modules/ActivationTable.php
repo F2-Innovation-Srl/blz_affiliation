@@ -18,8 +18,8 @@ class ActivationTable {
 	function __construct($option_name,$current) {
         $this->current = $current;
         $rows = $this->getAndSetRows($option_name);
-        $hiddenGA = (empty($this->current["tab"]["ga_event_template"]) ) ? "hidden" : "text"; 
-        $hiddenTrack = (empty($this->current["tab"]["tracking_id"]) ) ? "hidden" : "text"; 
+        $hiddenGA = (empty($this->current["marketplace"]["ga_event_template"]) ) ? "hidden" : "text"; 
+        $hiddenTrack = (empty($this->current["marketplace"]["tracking_id"]) ) ? "hidden" : "text"; 
 
         for ($i=0; $i<count($rows); $i++){
             $this->rows[] =  [
@@ -55,10 +55,10 @@ class ActivationTable {
             <table>
                 <tr valign="top" style="text-align:left">
                     <th>Attivatore</th><th>Regola</th>
-                    <?php if (!empty($this->current["tab"]["ga_event_template"])) : ?>
+                    <?php if (!empty($this->current["marketplace"]["ga_event_template"])) : ?>
                     <th>Label GA</th><th>Valore GA</th>
                     <?php endif;?>   
-                    <?php if (!empty($this->current["tab"]["tracking_id"])) : ?>
+                    <?php if (!empty($this->current["marketplace"]["tracking_id"])) : ?>
                     <th>Label TRK_ID</th><th>Label TRK_ID</th>
                     <?php endif;?>   
                     <th>&nbsp;</th>                       
