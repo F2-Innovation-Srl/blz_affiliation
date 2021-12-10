@@ -19,8 +19,8 @@ class TemplateTable {
         $this->current = $current;
 
         $row = $this->getAndSetRow($option_name);
-        $hiddenGA = (empty($this->current["tab"]["ga_event_template"]) ) ? "hidden" : "text"; 
-        $hiddenTrack = (empty($this->current["tab"]["tracking_id"]) ) ? "hidden" : "text"; 
+        $hiddenGA = (empty($this->current["marketplace"]["ga_event_template"]) ) ? "hidden" : "text"; 
+        $hiddenTrack = (empty($this->current["marketplace"]["tracking_id"]) ) ? "hidden" : "text"; 
        
         $this->row =  [
             (new Fields\Text($option_name."_active",$row["active"],"boolean")),
