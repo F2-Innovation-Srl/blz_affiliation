@@ -27,12 +27,12 @@ class SettingsData {
         $this->postData = $postData;
         $this->link_type = Config::findbySuffix($this->item["settings"]["tabs"],$this->link_type);
         $this->marketplace = Config::findbySuffix($this->link_type["marketplaces"],$request->getMarketplaceKey());
-
+        $settings = get_option( "blz-affiliation-settings" );
         $this->config = [
             "settings" => get_option(CONFIG["Items"][0]["suffix"]."-".$this->marketplace["suffix"]."-".$this->link_type["suffix"]."_settings"),
             "activation_table" => get_option(CONFIG["Items"][0]["suffix"]."-".$this->marketplace["suffix"]."-".$this->link_type["suffix"]),
-            "ga_event_template" =>  $this->marketplace["ga_event_template"],
-            "tracking_id_template" =>  $this->marketplace["tracking_id"],
+            "ga_event_template" =>  $settings["ga_event_template"],
+            "tracking_id_template" =>  $settings["tracking_id"],
             
         ];
     }
@@ -46,6 +46,7 @@ class SettingsData {
 
 
     public function getTrackingID() {
+        
         $track_id = $this->config["settings"]["trk_default"];
     
         if (isset($this->config["activation_table"][0])) {
