@@ -19,7 +19,7 @@ class AffiliateCustomLinkButton {
     private $category;
     private $is_paid;
     private $author;
-
+    private $request;
 
     public function __construct() {
 
@@ -41,23 +41,23 @@ class AffiliateCustomLinkButton {
         $postData = new PostData();
         
         /// prendo la request
-        $request = new Request($atts);
+        $this->request = new Request($atts);
 
         /// inizializzo i settingsData 
-        $SettingsData = new SettingsData($postData,"linkButton",$request);
+        $SettingsData = new SettingsData($postData,"linkButton",$this->request);
 
-        return $this->FillTemplate( $SettingsData->getGAEvent(), $SettingsData->getTrackingID(), $SettingsData->getTemplate(),$request );
+        return $this->FillTemplate( $SettingsData->getGAEvent(), $SettingsData->getTrackingID(), $SettingsData->getTemplate() );
 
     }
 
 
-    private function FillTemplate( $ga_event, $tracking, $template, $request) {
+    private function FillTemplate( $ga_event, $tracking, $template) {
 
-        $link = str_replace( '{tracking-id}', $tracking, $request->getLink());
+        $link = str_replace( '{tracking-id}', $tracking, $this->request->getLink());
         /// poi accorcia il link
         $link = ( new Shortener )->generateShortLink( $link );
 
-        $content = $request->getContent();
+        $content = $this->request->getContent();
 
         return str_replace([ '{{ url }}', '{{ ga-event }}', '{{ content }}' ], [ $link, $ga_event, $content ], $template);
     }

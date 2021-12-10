@@ -52,14 +52,15 @@ class AffiliateLinkProgramsButton {
         /// prende tutti i dati del post
         $postData = new PostData();
         /// prendo la request
-        $this->request = $atts;
+        $request = new Request($atts);
+
         $this->content = $content;
 
 
         /// inizializzo i settingsData 
         $SettingsData = new SettingsData($postData,"linkPrograms",$request);
         
-        return $this->FillTemplate( $offers[ 0 ], $SettingsData->getGAEvent(), $SettingsData->getTrackingID(), $SettingsData->getTemplate(),$request );
+        return $this->FillTemplate($SettingsData->getGAEvent(), $SettingsData->getTrackingID(), $SettingsData->getTemplate(),$request );
     
 
         $tracking = $this->getTracking();
@@ -71,16 +72,12 @@ class AffiliateLinkProgramsButton {
     private function FillTemplate( $ga_event, $tracking_id, $template ) {
 
         /// se possibile inserisce il tracking id
-        $link = str_replace( '{tracking-id}', $tracking_id, $this->request['link'] );
+        $link = str_replace( '{tracking-id}', $tracking_id, $this->request->getLink() );
 
         /// poi accorcia il link
         $link = ( new Shortener )->generateShortLink( $link ) ;
-        
-        return trim( str_replace(
-            [ '{{ url }}', '{{ ga_event }}', '{{ content }}' ],
-            [ $link, $ga_event, $this->content ], 
-            $template 
-        ) );        
+        return str_replace([ '{{ url }}', '{{ ga_event }}', '{{ content }}' ], [ $link, $ga_event, $content ], $template);
+             
     }
 
     

@@ -17,6 +17,7 @@ class AffiliateLinkButton {
     private $category;
     private $is_paid;
     private $author;
+    private $request;
 
     public function __construct() {
 
@@ -25,11 +26,11 @@ class AffiliateLinkButton {
     }
 
 
-    private function FillTemplate( Offer $offer, $ga_event, $tracking, $template, $request) {
+    private function FillTemplate( Offer $offer, $ga_event, $tracking, $template) {
 
         $link = str_replace( '{tracking-id}', $tracking, $offer->link);
 
-        $content = (!empty($request->getContent())) ? $request->getContent() : $offer->price . " euro";
+        $content = (!empty($this->request->getContent())) ? $this->request->getContent() : $offer->price . " euro";
         return str_replace([ '{{ url }}', '{{ ga_event }}', '{{ content }}' ], [ $link, $ga_event, $content ], $template);
     }
 
@@ -44,12 +45,12 @@ class AffiliateLinkButton {
         $postData = new PostData();
 
         /// prende la request
-        $request = new Request($atts);
+        $this->request = new Request($atts);
 
         /// cerca le offerte nei marketplace
         /// effettua una chiamata a querydispatcher 
         /// per ogni marketplace        
-        $offerRetriever = new OffersRetriever($request);
+        $offerRetriever = new OffersRetriever($this->request);
 
         /// riceve le offerte in ordine di marketplace
         $offers = $offerRetriever->getOffers();
@@ -58,9 +59,9 @@ class AffiliateLinkButton {
         if( !empty( $offers ) ){
             
             /// inizializzo i settingsData 
-            $SettingsData = new SettingsData($postData,"linkButton",$request);
+            $SettingsData = new SettingsData($postData,"linkButton",$this->request);
            
-            return $this->FillTemplate( $offers[ 0 ], $SettingsData->getGAEvent(), $SettingsData->getTrackingID(), $SettingsData->getTemplate(),$request );
+            return $this->FillTemplate( $offers[ 0 ], $SettingsData->getGAEvent(), $SettingsData->getTrackingID(), $SettingsData->getTemplate() );
         }
             
         return '';        
