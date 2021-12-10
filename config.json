@@ -11,54 +11,82 @@
             "suffix"     : "blz-affiliation",
             "class_name" : "GaTrakingIdSettings",
             "settings" : {
-                "marketplaces":[
-                        {
-                            "name"              : "Amazon",
-                            "suffix"            : "amazon",
-                            "description"       : "Pannello per la configurazione di Amazon",
-                            "api_slug"          : "amazon",
-                            "ga_event_template" : "{website}{marketplace}{label}{amp}{author}",
-                            "tracking_id"       : "{website}-{marketplace}-{label}-{author}-{amp}-21"
-                        },
-                        {
-                            "name"              : "eBay",
-                            "suffix"            : "ebay",
-                            "description"       : "Pannello per la configurazione di eBay",
-                            "api_slug"          : "ebay",
-                            "ga_event_template" : "{website}{marketplace}{label}{paid}{amp}{author}",
-                            "tracking_id"       : "{website}-{marketplace}-{label}-{author}-{amp}"
-                        },
-                        {
-                            "name"              : "Trovaprezzi",
-                            "suffix"            : "trovaprezzi",
-                            "description"       : "Pannello per la configurazione di Trovaprezzi",
-                            "api_slug"          : "trovaprezziVG",
-                            "ga_event_template" : "{website}{marketplace}{label}{paid}{amp}{author}",
-                            "tracking_id"       : ""
-                        },
-                        {
-                            "name"              : "Custom",
-                            "suffix"            : "custom",
-                            "description"       : "Pannello per la configurazione dei link custom",
-                            "api_slug"          : "",
-                            "ga_event_template" : "",
-                            "tracking_id"       : ""
-                        }
-                ],
                 "tabs" : [
                     {
                         "name"        : "Editorial Links",
                         "suffix"      : "linkButton",
-                        "description" : "link Editoriali da Bottone"
+                        "description" : "link Editoriali da Bottone",
+                        "marketplaces":[
+                                {
+                                    "name"              : "Amazon",
+                                    "suffix"            : "amazon",
+                                    "description"       : "Pannello per la configurazione di Amazon",
+                                    "api_slug"          : "amazon",
+                                    "ga_event_template" : "{website}{marketplace}{label}{amp}{author}",
+                                    "tracking_id"       : "{website}-{marketplace}-{label}-{author}-{amp}-21"
+                                },
+                                {
+                                    "name"              : "eBay",
+                                    "suffix"            : "ebay",
+                                    "description"       : "Pannello per la configurazione di eBay",
+                                    "api_slug"          : "ebay",
+                                    "ga_event_template" : "{website}{marketplace}{label}{paid}{amp}{author}",
+                                    "tracking_id"       : "{website}-{marketplace}-{label}-{author}-{amp}"
+                                },
+                                {
+                                    "name"              : "Trovaprezzi",
+                                    "suffix"            : "trovaprezzi",
+                                    "description"       : "Pannello per la configurazione di Trovaprezzi",
+                                    "api_slug"          : "trovaprezziVG",
+                                    "ga_event_template" : "{website}{marketplace}{label}{paid}{amp}{author}",
+                                    "tracking_id"       : ""
+                                },
+                                {
+                                    "name"              : "Custom",
+                                    "suffix"            : "custom",
+                                    "description"       : "Pannello per la configurazione dei link custom",
+                                    "api_slug"          : "",
+                                    "ga_event_template" : "",
+                                    "tracking_id"       : ""
+                                }
+                        ]
                     },
                     {
                         "name"        : "Altri Programmi",
                         "suffix"      : "linkPrograms",
-                        "description" : "link Editoriali Altri Programmi"
+                        "description" : "link Editoriali Altri Programmi",
+                        "marketplaces":[
+                                {
+                                    "name"              : "Amazon",
+                                    "suffix"            : "amazon",
+                                    "description"       : "Pannello per la configurazione di Amazon",
+                                    "api_slug"          : "amazon",
+                                    "ga_event_template" : "{website}{marketplace}{label}{amp}{author}",
+                                    "tracking_id"       : "{website}-{marketplace}-{label}-{author}-{amp}-21"
+                                }
+                        ]
                     },{
                         "name"        : "Parse and Render",
                         "suffix"      : "parseLinkAndRender",
-                        "description" : "link automatici nel content"
+                        "description" : "link automatici nel content",
+                        "marketplaces":[
+                                {
+                                    "name"              : "Amazon",
+                                    "suffix"            : "amazon",
+                                    "description"       : "Pannello per la configurazione di Amazon",
+                                    "api_slug"          : "amazon",
+                                    "ga_event_template" : "{website}{marketplace}{label}{amp}{author}",
+                                    "tracking_id"       : "{website}-{marketplace}-{label}-{author}-{amp}-21"
+                                },
+                                {
+                                    "name"              : "eBay",
+                                    "suffix"            : "ebay",
+                                    "description"       : "Pannello per la configurazione di eBay",
+                                    "api_slug"          : "ebay",
+                                    "ga_event_template" : "{website}{marketplace}{label}{paid}{amp}{author}",
+                                    "tracking_id"       : "{website}-{marketplace}-{label}-{author}-{amp}"
+                                }
+                        ]
                     }
                 ]
                 

@@ -13,7 +13,6 @@ use BLZ_AFFILIATION\Rendering\PostData;
 use BLZ_AFFILIATION\Rendering\SettingsData;
 
 
-
 class AffiliateCustomLinkButton {
 
     private $post;
@@ -55,6 +54,8 @@ class AffiliateCustomLinkButton {
     private function FillTemplate( $ga_event, $tracking, $template, $request) {
 
         $link = str_replace( '{tracking-id}', $tracking, $request->getLink());
+        /// poi accorcia il link
+        $link = ( new Shortener )->generateShortLink( $link );
 
         $content = $request->getContent();
 

@@ -21,10 +21,6 @@ class AffiliateLinkProgramsButton {
             <a href="{{ url }}" data-vars-affiliate="{{ ga_event }}" 
                class="affiliation-intext" target="_blank" rel="sponsored"
             >{{ content }}</a>
-        HTML,
-
-        'ga_event' => <<<HTML
-            mtz cta {{ domain }} {{ subject }} {{ program }} {{ amp }}
         HTML
     ];
 
@@ -53,10 +49,18 @@ class AffiliateLinkProgramsButton {
 
         /// prende tutti i dati del post
         //$this->postData = new PostData();
-
+        /// prende tutti i dati del post
+        $postData = new PostData();
         /// prendo la request
         $this->request = $atts;
         $this->content = $content;
+
+
+        /// inizializzo i settingsData 
+        $SettingsData = new SettingsData($postData,"linkPrograms",$request->getMarketplaceKey());
+        
+        return $this->FillTemplate( $offers[ 0 ], $SettingsData->getGAEvent(), $SettingsData->getTrackingID(), $SettingsData->getTemplate(),$request );
+    
 
         $tracking = $this->getTracking();
         
