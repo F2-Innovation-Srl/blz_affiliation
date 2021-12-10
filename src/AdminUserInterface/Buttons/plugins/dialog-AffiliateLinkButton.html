@@ -101,10 +101,6 @@
             
             this.submit.addEventListener('click', function(e) {
  
-                if (this.marketplace.value == "custom" ) {
-                    alert("inserire un marketplace valido"); 
-                    return;
-                }
                 if (this.marketplace.value == "custom" && this.code.value == "" ) {
                     alert("inserire una url marketplace valida"); 
                     return;

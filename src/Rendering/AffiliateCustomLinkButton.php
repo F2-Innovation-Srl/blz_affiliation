@@ -53,7 +53,7 @@ class AffiliateCustomLinkButton {
 
     private function FillTemplate( $ga_event, $tracking, $template) {
 
-        $link = str_replace( '{tracking-id}', $tracking, $this->request->getLink());
+        $link = str_replace( '{tracking-id}', $tracking, $this->request->getCode());
         /// poi accorcia il link
         $link = ( new Shortener )->generateShortLink( $link );
 

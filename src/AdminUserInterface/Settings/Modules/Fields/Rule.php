@@ -49,7 +49,7 @@ class Rule extends Field {
     private function printUsers(){    
        
         $output = "<select name=\"".$this->name."\"><option value=\"0\">Seleziona un utente</option>";
-            $blogusers = get_users(['role__in' => ['author', 'subscriber']]);
+            $blogusers = get_users(); //['role__in' => ['author', 'subscriber']]
             foreach( $blogusers as $user) 
                 $output .= "<option value=\"".$user->ID."\" ".(($this->value == $user->ID) ? "selected" : "")." >".$user->display_name."</option>";
         $output .= "</select>";
