@@ -25,7 +25,8 @@ class SettingsData {
 
     public function __construct($postData,$link_type,$request) {
         $this->postData = $postData;
-        $this->link_type = Config::findbySuffix($this->item["settings"]["tabs"],$this->link_type);
+        $this->link_type = Config::findbySuffix(CONFIG["Items"][0]["settings"]["tabs"],$link_type);
+  
         $this->marketplace = Config::findbySuffix($this->link_type["marketplaces"],$request->getMarketplaceKey());
         $settings = get_option( "blz-affiliation-settings" );
         $this->config = [
