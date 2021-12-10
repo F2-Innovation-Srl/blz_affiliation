@@ -19,12 +19,12 @@ class Label extends Field {
         </select>
     HTML;
 
-    protected $option = '<option value="{{ value }}"{{ selected }}>{{ label }}</option>';   
+    private $option = '<option value="{{ value }}"{{ selected }}>{{ label }}</option>';   
 
 
     /// viene richiamata dal costruttore
     public function Create() {
-        
+
         $typeGA    = ( $this->type == "GA"     && !empty( $this->params["marketplace"]["ga_event_template"] ));
         $typeTRKID = ( $this->type == "TRK_ID" && !empty( $this->params["marketplace"]["tracking_id"] ));
 
@@ -32,21 +32,21 @@ class Label extends Field {
 
             return '<input type="hidden" id="'.$this->name.'" name="'.$this->name.'" value="'.$this->value.'" />'; 
         }
-        
+    
         $labels = $this->getLabels( $this->params[ "marketplace" ][ $this->settings[ $this->type][ 'tab' ] ], "{", "}" );
-        
-        $options = array_map( function( $label ) {
+
+        $options = array_reduce( $labels, function( $markup, $label ) {
 
             $selected = ( $this->value == $label ) ? ' selected ' : '';
 
-            return str_replace(
-                [ '{{ value }}'.'{{ label }}','{{ selected }}' ],
+            return $markup . str_replace(
+                [ '{{ value }}','{{ label }}','{{ selected }}' ],
                 [ $label, $label, $selected ],
                 $this->option
             );
             
-        }, $labels);
-        
+        },'' );
+    
         return str_replace(
             [ '{{ name }}', '{{ type }}', '{{ options }}' ],
             [ $this->name, $this->type, $options ],
@@ -57,7 +57,8 @@ class Label extends Field {
     
     private function getLabels(string $str, string $startDelimiter, string $endDelimiter) {
     
-        $regex = '/' .$startDelimiter . '(.*?)'. $endDelimiter .'/';
+
+        $regex = '/' .$startDelimiter . '\s*(.*?)\s*'. $endDelimiter .'/';
         
         /// prende tutti i termini racchiusi nei delimitatori
         preg_match_all( $regex, $str, $matches);
@@ -67,7 +68,7 @@ class Label extends Field {
 
         /// rimuove 'website' se esiste;
         $terms = array_values( array_filter( $terms, function( $term ) { return $term != 'website'; }) );
-        
+
         return $terms;
     }
 

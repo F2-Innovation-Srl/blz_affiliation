@@ -2,9 +2,6 @@
 
 namespace BLZ_AFFILIATION\Rendering;
 
-use BLZ_AFFILIATION\Utils\Shortener;
-
-use BLZ_AFFILIATION\Utils\FileGetContents;
 use BLZ_AFFILIATION\AffiliateMarketing\Offer;
 
 use BLZ_AFFILIATION\AffiliateMarketing\OffersRetriever;
@@ -45,9 +42,11 @@ class AffiliateLinkButton {
 
         /// prende tutti i dati del post
         $postData = new PostData();
-        /// prendo la request
+
+        /// prende la request
         $request = new Request($atts);
-        /// cerca le offerte nei tre marketplace
+
+        /// cerca le offerte nei marketplace
         /// effettua una chiamata a querydispatcher 
         /// per ogni marketplace        
         $offerRetriever = new OffersRetriever($request);
@@ -55,8 +54,6 @@ class AffiliateLinkButton {
         /// riceve le offerte in ordine di marketplace
         $offers = $offerRetriever->getOffers();
 
-        
-       
           
         if( !empty( $offers ) ){
             
