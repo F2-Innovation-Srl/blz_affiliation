@@ -2,7 +2,6 @@
 
 namespace BLZ_AFFILIATION\Rendering\ParseLinkAndRender;
 
-use BLZ_AFFILIATION\AffiliateMarketing\Offer;
 use BLZ_AFFILIATION\Rendering\ParseLinkAndRender\Link;
 use BLZ_AFFILIATION\Rendering\PostData;
 use BLZ_AFFILIATION\Utils\Shortener; 
@@ -33,6 +32,22 @@ class ParseLinkAndRender {
     }
 
     /**
+     * Imposta i pattern da verificare
+     *
+     * @return array
+     */
+    private function setPatterns() {
+
+        return [
+            'Amazon',
+            'Ebay',
+            // 'AmazonShorted', // da testare
+            // 'EbayShorted', // da testare
+            // 'PrettyLink', // da testare
+        ];
+    }
+
+    /**
      * Sostituisce i link nel testo 
      *
      * @param string $content
@@ -52,7 +67,7 @@ class ParseLinkAndRender {
         /// tipologia di link da sostituire
         $this->patterns = array_map( function( $patternClass ) {
 
-            return new ('ParseLinkAndRender\\Patterns\\' . $patternClass )( $this->content );
+            return new ('BLZ_AFFILIATION\\Rendering\\ParseLinkAndRender\\Patterns\\' . $patternClass )( $this->content );
 
         },  $this->setPatterns() );
 
@@ -113,19 +128,7 @@ class ParseLinkAndRender {
     }
 
 
-    /**
-     * Imposta i pattern da verificare
-     *
-     * @return array
-     */
-    private function setPatterns() {
-
-        return [
-            'Amazon',
-            'Ebay',
-            'PrettyPink'
-        ];
-    }
+    
 
 
         
@@ -166,7 +169,7 @@ class ParseLinkAndRender {
 */
 
     
-
+/*
 
     private function ParsePrettyLink( $content ) {
         
@@ -199,7 +202,7 @@ class ParseLinkAndRender {
        
         return $content;
     }
-
+*/
     
 
 /*
