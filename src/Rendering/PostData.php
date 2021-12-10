@@ -19,7 +19,7 @@ class PostData {
         
         /// Author
         /// cerca il nome dell'autore
-        $author_nicename = get_the_author_meta( 'user_nicename', $author_id);
+        $author_nicename = get_the_author_meta( 'user_nicename', $post->post_author);
         /// se è vuoto prende un valore di default
         $author_name    = empty( $author_nicename ) ? 'author'     : $author_nicename;  // autore
 

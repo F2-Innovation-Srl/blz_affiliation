@@ -29,11 +29,12 @@ class SettingsData {
   
         $this->marketplace = Config::findbySuffix($this->link_type["marketplaces"],$request->getMarketplaceKey());
         $settings = get_option( "blz-affiliation-settings" );
+        
         $this->config = [
-            "settings" => get_option(CONFIG["Items"][0]["suffix"]."-".$this->marketplace["suffix"]."-".$this->link_type["suffix"]."_settings"),
-            "activation_table" => get_option(CONFIG["Items"][0]["suffix"]."-".$this->marketplace["suffix"]."-".$this->link_type["suffix"]),
-            "ga_event_template" =>  $settings["ga_event_template"],
-            "tracking_id_template" =>  $settings["tracking_id"],
+            "settings" => get_option(CONFIG["Items"][0]["suffix"]."-".$this->link_type["suffix"]."-".$this->marketplace["suffix"]."_settings"),
+            "activation_table" => get_option(CONFIG["Items"][0]["suffix"]."-".$this->link_type["suffix"]."-".$this->marketplace["suffix"]),
+            "ga_event_template" =>  $this->marketplace["ga_event_template"],
+            "tracking_id_template" =>  $this->marketplace["tracking_id"],
             
         ];
     }
@@ -49,7 +50,7 @@ class SettingsData {
     public function getTrackingID() {
         
         $track_id = $this->config["settings"]["trk_default"];
-    
+        
         if (isset($this->config["activation_table"][0])) {
             $track_id = $this->config["tracking_id_template"];
             // rimuovo amp da template se non sono una pagina amp
@@ -73,8 +74,9 @@ class SettingsData {
 
     public function getGAEvent() {
         $ga_event = $this->config["settings"]["ga_default"];
-
+       
         if (isset($this->config["activation_table"][0])) {
+            
             $ga_event = $this->config["ga_event_template"];
             // rimuovo amp da template se non sono una pagina amp
             if ($this->postData->is_amp == false) $ga_event = str_replace(["-{amp}","{amp}"],"",$ga_event);
@@ -91,6 +93,7 @@ class SettingsData {
             // rimuovi label non impostate
             $ga_event = $this->removeLabels($ga_event);
         }
+        
         return $ga_event;
     }
 
