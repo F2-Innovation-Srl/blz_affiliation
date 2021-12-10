@@ -23,14 +23,14 @@ class SettingsData {
 
     ];
 
-    public function __construct($postData,$link_type,$marketpalace) {
+    public function __construct($postData,$link_type,$request) {
         $this->postData = $postData;
-        $this->link_type = $link_type;
-        $this->marketplace = Config::findbySuffix(CONFIG["Items"][0]["settings"]["marketplaces"],$marketpalace);
+        $this->link_type = Config::findbySuffix($this->item["settings"]["tabs"],$this->link_type);
+        $this->marketplace = Config::findbySuffix($this->link_type["marketplaces"],$request->getMarketplaceKey());
 
         $this->config = [
-            "settings" => get_option(CONFIG["Items"][0]["suffix"]."-".$marketpalace."-".$link_type."_settings"),
-            "activation_table" => get_option(CONFIG["Items"][0]["suffix"]."-".$marketpalace."-".$link_type),
+            "settings" => get_option(CONFIG["Items"][0]["suffix"]."-".$this->marketplace["suffix"]."-".$this->link_type["suffix"]."_settings"),
+            "activation_table" => get_option(CONFIG["Items"][0]["suffix"]."-".$this->marketplace["suffix"]."-".$this->link_type["suffix"]),
             "ga_event_template" =>  $this->marketplace["ga_event_template"],
             "tracking_id_template" =>  $this->marketplace["tracking_id"],
             
@@ -40,7 +40,7 @@ class SettingsData {
 
     public function getTemplate() {
     
-        return $this->templates[$this->link_type];
+        return $this->templates[$this->link_type["suffix"]];
     }
 
 
