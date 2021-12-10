@@ -13,6 +13,7 @@ class GaTrakingIdSettings {
 
     protected $item;
     protected $tabs;
+    protected $marketplaces;
     protected $current;
     protected $option_name;
 	/**
@@ -23,6 +24,7 @@ class GaTrakingIdSettings {
         $this->tabs = $this->item["settings"]["tabs"];
         $this->current["tab"] = (isset($_GET['tab'])) ? Config::findbySuffix($this->tabs,$_GET["tab"]) : $this->tabs[0];
         $this->current["sub_tab"] = (isset($_GET['sub_tab'])) ? Config::findbySuffix($this->item["settings"]["tabs"]["marketplaces"],$_GET["sub_tab"]) : $this->item["settings"]["tabs"][$this->current["tab"]["suffix"]]["marketplaces"][0];
+        $this->marketplaces = $this->current["tab"]["marketplaces"];
         $this->option_name = $this->item["suffix"]."-".$this->current["tab"]["suffix"]."-".$this->current["sub_tab"]["suffix"];
     }
 
@@ -68,7 +70,7 @@ class GaTrakingIdSettings {
         echo '</h2>';
         echo '<div id="icon-themes" class="icon32"><br></div>';
         echo '<h2 class="nav-tab-wrapper">';
-        foreach($this->tabs["marketplaces"] as $tab) {
+        foreach($this->marketplaces as $tab) {
             $classTab = ( $tab["suffix"] == $this->current["sub_tab"]["suffix"] ) ? " nav-tab-active" : "";
             echo "<a class='nav-tab".$classTab."' href='?page=".$_GET["page"]."&tab=".$this->current["tab"]["suffix"]."&sub_tab=".$tab["suffix"]."'>".$tab["name"]."</a>";
         }

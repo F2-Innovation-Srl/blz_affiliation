@@ -83,10 +83,10 @@ class TemplateTable {
         //UPDATE
         $row = [
             'active' => isset( $_POST[$option_name. '_active' ] ) ? $_POST[$option_name. '_active' ] : (isset($row['active']) ? $row['active'] : "true"),
-            'ga_default' => isset( $_POST[ $option_name.'_ga_default' ] ) ? $_POST[ $option_name.'_ga_default' ] : $row['ga_default'],
-            'trk_default' => isset( $_POST[ $option_name.'_trk_default' ] ) ? $_POST[$option_name. '_trk_default' ] : $row['trk_default'],
-            'website_ga' => isset( $_POST[ $option_name.'_website_ga' ] ) ? $_POST[$option_name. '_website_ga' ] : $row['website_ga'],
-            'website_trk' => isset( $_POST[ $option_name.'_website_trk' ] ) ? $_POST[$option_name. '_website_trk' ] : $row['website_trk']
+            'ga_default' => isset( $_POST[ $option_name.'_ga_default' ] ) ? $_POST[ $option_name.'_ga_default' ] : ($row['ga_default'] ?? ''),
+            'trk_default' => isset( $_POST[ $option_name.'_trk_default' ] ) ? $_POST[$option_name. '_trk_default' ] : ($row['trk_default'] ?? ''),
+            'website_ga' => isset( $_POST[ $option_name.'_website_ga' ] ) ? $_POST[$option_name. '_website_ga' ] : ($row['website_ga'] ?? ''),
+            'website_trk' => isset( $_POST[ $option_name.'_website_trk' ] ) ? $_POST[$option_name. '_website_trk' ] : ($row['website_trk'] ?? '')
         ];
 
         //SET

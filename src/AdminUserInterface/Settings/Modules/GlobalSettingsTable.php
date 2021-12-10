@@ -58,8 +58,8 @@ class GlobalSettingsTable {
 
         // UPDATE
         $row = [
-            'ga_code'  => isset( $_POST[$option_name. '_ga_code'  ] ) ? $_POST[$option_name. '_ga_code' ]  : $row[ 'ga_code'  ],
-            'taxonomy' => isset( $_POST[$option_name. '_taxonomy' ] ) ? $_POST[$option_name. '_taxonomy' ] : $row[ 'taxonomy' ]
+            'ga_code'  => isset( $_POST[$option_name. '_ga_code'  ] ) ? $_POST[$option_name. '_ga_code' ]  : ($row[ 'ga_code'  ] ?? ''),
+            'taxonomy' => isset( $_POST[$option_name. '_taxonomy' ] ) ? $_POST[$option_name. '_taxonomy' ] : ($row[ 'taxonomy' ] ?? '')
         ];
 
         // SET

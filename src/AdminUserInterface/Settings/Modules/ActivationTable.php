@@ -84,12 +84,12 @@ class ActivationTable {
 
             return [
                 'id' => $idx,
-                'attivatore' => isset( $_POST[$option_name. '_attivatore'.$idx ] ) ? $_POST[$option_name. '_attivatore'.$idx ] : $activationRow['attivatore'],
-                'regola' => isset( $_POST[ $option_name.'_regola'.$idx ] ) ? $_POST[ $option_name.'_regola'.$idx ] : $activationRow['regola'],
-                'ga_label' => isset( $_POST[ $option_name.'_ga_label'.$idx ] ) ? $_POST[ $option_name.'_ga_label'.$idx ] : $activationRow['ga_label'],
-                'ga_val' => isset( $_POST[ $option_name.'_ga_val'.$idx ] ) ? $_POST[$option_name. '_ga_val'.$idx ] : $activationRow['ga_val'],
-                'trk_val' => isset( $_POST[ $option_name.'_trk_val'.$idx ] ) ? $_POST[ $option_name.'_trk_val'.$idx ] : $activationRow['trk_val'],
-                'trk_label' => isset( $_POST[ $option_name.'_trk_label'.$idx ] ) ? $_POST[$option_name. '_trk_label'.$idx ] : $activationRow['trk_label'],
+                'attivatore' => isset( $_POST[$option_name. '_attivatore'.$idx ] ) ? $_POST[$option_name. '_attivatore'.$idx ] : ($activationRow['attivatore'] ?? ''),
+                'regola' => isset( $_POST[ $option_name.'_regola'.$idx ] ) ? $_POST[ $option_name.'_regola'.$idx ] : ($activationRow['regola'] ?? ''),
+                'ga_label' => isset( $_POST[ $option_name.'_ga_label'.$idx ] ) ? $_POST[ $option_name.'_ga_label'.$idx ] : ($activationRow['ga_label'] ?? ''),
+                'ga_val' => isset( $_POST[ $option_name.'_ga_val'.$idx ] ) ? $_POST[$option_name. '_ga_val'.$idx ] : ($activationRow['ga_val'] ?? ''),
+                'trk_val' => isset( $_POST[ $option_name.'_trk_val'.$idx ] ) ? $_POST[ $option_name.'_trk_val'.$idx ] : ($activationRow['trk_val'] ?? ''),
+                'trk_label' => isset( $_POST[ $option_name.'_trk_label'.$idx ] ) ? $_POST[$option_name. '_trk_label'.$idx ] : ($activationRow['trk_label'] ?? ''),
             ];
         
         }, $activationRows, array_keys($activationRows) ) : [];
