@@ -27,6 +27,7 @@ class Amazon extends Pattern {
 
         return array_map( function( $link, $url ) {
 
+            /// elimina le querystring dall'url
             $url = ( strpos( $url, '?' ) === false ) ? $url : preg_filter('/(.*)\?.*/', '$1', $url );
 
             return new Link ([
