@@ -1,5 +1,5 @@
 <?php
-namespace BLZ_AFFILIATION\core\Taxonomies;
+namespace BLZ_AFFILIATION\PostAndTax\Taxonomies
 
 /*
  * Class TaxonomiesManager
