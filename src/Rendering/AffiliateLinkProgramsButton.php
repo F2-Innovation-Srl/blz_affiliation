@@ -3,25 +3,16 @@
 namespace BLZ_AFFILIATION\Rendering;
 
 use BLZ_AFFILIATION\Utils\Shortener;
-
+use BLZ_AFFILIATION\AffiliateMarketing\Request;
 /**
  * Sostiruisce nella pagina il link selezionato al posto 
  * dello shortcode
  */
 class AffiliateLinkProgramsButton {
 
-    protected $domain = 'vg';
+
     protected $request;
     protected $content;
-    protected $templates = [
-        
-        'affiliate_link' => <<<HTML
-
-            <a href="{{ url }}" data-vars-affiliate="{{ ga_event }}" 
-               class="affiliation-intext" target="_blank" rel="sponsored"
-            >{{ content }}</a>
-        HTML
-    ];
 
 
     public function __construct() {
@@ -60,11 +51,7 @@ class AffiliateLinkProgramsButton {
         $SettingsData = new SettingsData($postData,"linkPrograms",$this->request);
         
         return $this->FillTemplate($SettingsData->getGAEvent(), $SettingsData->getTrackingID(), $SettingsData->getTemplate() );
-    
 
-        $tracking = $this->getTracking();
-        
-        return $this->FillTemplate( $tracking->ga_event, $tracking->tracking_id, $this->templates['affiliate_link'] );
     }
 
 
@@ -79,38 +66,5 @@ class AffiliateLinkProgramsButton {
              
     }
 
-    
-    /**
-     * Genera un oggetto che ha sia il ga_event, sia il tracking id
-     * bisogna capire se serve
-     * 
-     * [ REVIEW ] riscrivere tutta la parte dei tracking ID 
-     *
-     * @return object { ga_event, tracking_id }
-     */
-    private function getTracking() {
-
-        $amp = is_amp_endpoint() ? 'amp' : '';
-    
-        /// se è stato impostato un ga_event nello shortcode        
-        $ga_event = isset( $this->request['ga_event'] ) ? 
-        
-            /// prendi quello
-            $this->request['ga_event'] : 
-
-            /// altrimenti usa il template
-            trim(str_replace(
-                [ '{{ domain }}', '{{ subject }}', '{{ program }}', '{{ amp }}' ],
-                [ $this->domain, $this->request['subject'], $this->request['program'], $amp ],
-                $this->templates["ga_event"]
-            ));
-
-
-        $tracking = $this->request['tracking_id'];
-
-        return (object) [
-            'ga_event'    => $ga_event,
-            'tracking_id' => $tracking
-        ];
-    }
+  
 }
