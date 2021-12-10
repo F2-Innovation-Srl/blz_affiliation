@@ -24,7 +24,9 @@ class GlobalSettingsTable {
 
         $this->row =  [
             (new Fields\Text( $option_name."_ga_code", $ga_code, "text" )),
-            (new Fields\Taxonomy( $option_name."_taxonomy", serialize( $taxonomies ) ))
+            (new Fields\Taxonomy( $option_name."_taxonomy", serialize( $taxonomies ) )),
+            (new Fields\Text($option_name."_website_ga",$row["website_ga"],$hiddenGA)),
+            (new Fields\Text($option_name."_website_trk",$row["website_trk"],$hiddenTrack)),
         ];
     }
 
@@ -35,7 +37,7 @@ class GlobalSettingsTable {
         ?>
         <table>
             <tr valign="top" style="text-align:left">
-                <th>Analitics Code</th><th>Tassonomie di riferimento</th>    
+                <th>Analitics Code</th><th>Tassonomie di riferimento</th> <th>{website} GA </th><th>{website}  TRK_ID</th>  
             </tr>
             <tr valign="top" style="text-align:left">     
                 <?php foreach( $this->row as $field )  echo "<td>" .$field->render() ."</td>"; ?>
@@ -58,8 +60,10 @@ class GlobalSettingsTable {
 
         // UPDATE
         $row = [
-            'ga_code'  => isset( $_POST[$option_name. '_ga_code'  ] ) ? $_POST[$option_name. '_ga_code' ]  : ($row[ 'ga_code'  ] ?? ''),
-            'taxonomy' => isset( $_POST[$option_name. '_taxonomy' ] ) ? $_POST[$option_name. '_taxonomy' ] : ($row[ 'taxonomy' ] ?? '')
+            'ga_code'     => isset( $_POST[$option_name. '_ga_code'  ] ) ? $_POST[$option_name. '_ga_code' ]  : ($row[ 'ga_code'  ] ?? ''),
+            'taxonomy'    => isset( $_POST[$option_name. '_taxonomy' ] ) ? $_POST[$option_name. '_taxonomy' ] : ($row[ 'taxonomy' ] ?? ''),
+            'website_ga'  => isset( $_POST[ $option_name.'_website_ga' ] ) ? $_POST[$option_name. '_website_ga' ] : ($row['website_ga'] ?? ''),
+            'website_trk' => isset( $_POST[ $option_name.'_website_trk' ] ) ? $_POST[$option_name. '_website_trk' ] : ($row['website_trk'] ?? '')
         ];
 
         // SET

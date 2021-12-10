@@ -22,23 +22,23 @@
                                     "suffix"            : "amazon",
                                     "description"       : "Pannello per la configurazione di Amazon",
                                     "api_slug"          : "amazon",
-                                    "ga_event_template" : "{website}{marketplace}{label}{amp}{author}",
-                                    "tracking_id"       : "{website}-{marketplace}-{label}-{author}-{amp}-21"
+                                    "ga_event_template" : "{website}{label}{author}{marketplace}{amp}",
+                                    "tracking_id"       : "{website}{label}{author}{marketplace}{amp}-21"
                                 },
                                 {
                                     "name"              : "eBay",
                                     "suffix"            : "ebay",
                                     "description"       : "Pannello per la configurazione di eBay",
                                     "api_slug"          : "ebay",
-                                    "ga_event_template" : "{website}{marketplace}{label}{paid}{amp}{author}",
-                                    "tracking_id"       : "{website}-{marketplace}-{label}-{author}-{amp}"
+                                    "ga_event_template" : "{website}{label}{author}{marketplace}{amp}",
+                                    "tracking_id"       : "{website}{label}{author}{marketplace}{amp}"
                                 },
                                 {
                                     "name"              : "Trovaprezzi",
                                     "suffix"            : "trovaprezzi",
                                     "description"       : "Pannello per la configurazione di Trovaprezzi",
                                     "api_slug"          : "trovaprezziVG",
-                                    "ga_event_template" : "{website}{marketplace}{label}{paid}{amp}{author}",
+                                    "ga_event_template" : "{website}{label}{author}{marketplace}{amp}",
                                     "tracking_id"       : ""
                                 },
                                 {
@@ -57,12 +57,12 @@
                         "description" : "link Editoriali Altri Programmi",
                         "marketplaces":[
                                 {
-                                    "name"              : "Amazon",
-                                    "suffix"            : "amazon",
-                                    "description"       : "Pannello per la configurazione di Amazon",
-                                    "api_slug"          : "amazon",
-                                    "ga_event_template" : "{website}{marketplace}{label}{amp}{author}",
-                                    "tracking_id"       : "{website}-{marketplace}-{label}-{author}-{amp}-21"
+                                    "name"              : "Generic",
+                                    "suffix"            : "generic",
+                                    "description"       : "Pannello per la configurazione del pulsante",
+                                    "api_slug"          : "",
+                                    "ga_event_template" : "",
+                                    "tracking_id"       : ""
                                 }
                         ]
                     },{
@@ -75,16 +75,16 @@
                                     "suffix"            : "amazon",
                                     "description"       : "Pannello per la configurazione di Amazon",
                                     "api_slug"          : "amazon",
-                                    "ga_event_template" : "{website}{marketplace}{label}{amp}{author}",
-                                    "tracking_id"       : "{website}-{marketplace}-{label}-{author}-{amp}-21"
+                                    "ga_event_template" : "{website}{label}{author}{marketplace}{amp}",
+                                    "tracking_id"       : "{website}{label}{author}{marketplace}{amp}-21"
                                 },
                                 {
                                     "name"              : "eBay",
                                     "suffix"            : "ebay",
                                     "description"       : "Pannello per la configurazione di eBay",
                                     "api_slug"          : "ebay",
-                                    "ga_event_template" : "{website}{marketplace}{label}{paid}{amp}{author}",
-                                    "tracking_id"       : "{website}-{marketplace}-{label}-{author}-{amp}"
+                                    "ga_event_template" : "{website}{label}{author}{marketplace}{amp}",
+                                    "tracking_id"       : "{website}{label}{author}{marketplace}{amp}"
                                 }
                         ]
                     }

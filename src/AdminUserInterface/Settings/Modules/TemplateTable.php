@@ -26,8 +26,6 @@ class TemplateTable {
             (new Fields\Text($option_name."_active",$row["active"],"boolean")),
             (new Fields\Text($option_name."_ga_default",$row["ga_default"],"text")),
             (new Fields\Text($option_name."_trk_default",$row["trk_default"],"text")),
-            (new Fields\Text($option_name."_website_ga",$row["website_ga"],$hiddenGA)),
-            (new Fields\Text($option_name."_website_trk",$row["website_trk"],$hiddenTrack)),
             (new Fields\Text('',"Aggiorna valori","button"))
         ];
     }
@@ -41,12 +39,6 @@ class TemplateTable {
         <table>
             <tr valign="top" style="text-align:left">
                 <th>Attivo</th>   <th>Valore TRK_ID Default</th>  <th>Valore GA Default</th>  
-                <?php if (!empty($this->current["marketplace"]["ga_event_template"])) : ?>
-                <th>{website} GA </th>
-                <?php endif;?>    
-                <?php if (!empty($this->current["marketplace"]["tracking_id"])) : ?>
-                <th>{website}  TRK_ID</th>  
-                <?php endif;?>   
             </tr>
             <tr valign="top" style="text-align:left">
             <?php foreach( $this->row as $field )  echo "<td>" .$field->render() ."</td>"; ?>
@@ -84,9 +76,7 @@ class TemplateTable {
         $row = [
             'active' => isset( $_POST[$option_name. '_active' ] ) ? $_POST[$option_name. '_active' ] : (isset($row['active']) ? $row['active'] : "true"),
             'ga_default' => isset( $_POST[ $option_name.'_ga_default' ] ) ? $_POST[ $option_name.'_ga_default' ] : ($row['ga_default'] ?? ''),
-            'trk_default' => isset( $_POST[ $option_name.'_trk_default' ] ) ? $_POST[$option_name. '_trk_default' ] : ($row['trk_default'] ?? ''),
-            'website_ga' => isset( $_POST[ $option_name.'_website_ga' ] ) ? $_POST[$option_name. '_website_ga' ] : ($row['website_ga'] ?? ''),
-            'website_trk' => isset( $_POST[ $option_name.'_website_trk' ] ) ? $_POST[$option_name. '_website_trk' ] : ($row['website_trk'] ?? '')
+            'trk_default' => isset( $_POST[ $option_name.'_trk_default' ] ) ? $_POST[$option_name. '_trk_default' ] : ($row['trk_default'] ?? '')
         ];
 
         //SET
