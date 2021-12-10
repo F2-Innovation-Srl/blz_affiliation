@@ -9,14 +9,14 @@ class Label extends Field {
     /// viene richiamata dal costruttore
     public function Create() {
         $labels = [];
-        if (($this->type == "GA" && !empty($this->params["tab"]["ga_event_template"])) OR ($this->type == "TRK_ID" && !empty($this->params["tab"]["tracking_id"]))){
+        if (($this->type == "GA" && !empty($this->params["marketplace"]["ga_event_template"])) OR ($this->type == "TRK_ID" && !empty($this->params["tab"]["tracking_id"]))){
             $output = '<select class="label" name="'.$this->name.'"><option value="">Seleziona una '.$this->type.' label</option>';
             switch ($this->type) {
                 case "GA":
-                    $labels = $this->getLabels($this->params["tab"]["ga_event_template"],"{","}");
+                    $labels = $this->getLabels($this->params["marketplace"]["ga_event_template"],"{","}");
                     break;
                 case "TRK_ID":
-                    $labels = $this->getLabels($this->params["tab"]["tracking_id"],"{","}");
+                    $labels = $this->getLabels($this->params["marketplace"]["tracking_id"],"{","}");
                     break;
             } 
             foreach($labels as $label)
