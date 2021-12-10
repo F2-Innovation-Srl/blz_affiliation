@@ -21,7 +21,7 @@ class Config {
      * Torna l'api name dal settings
      */
     public static function getApiSlug($marketplace){
-        $settings = Config::findbySuffix(CONFIG["Items"],CONFIG["plugin_suffix"])["settings"];
+        $settings = Config::findbySuffix(CONFIG["Items"],CONFIG["plugin_suffix"])["tabs"][0]["settings"];
         return  Config::findbySuffix($settings["marketplaces"],$marketplace)["api_slug"];
     }
    
