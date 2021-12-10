@@ -41,10 +41,10 @@ class TemplateTable {
         <table>
             <tr valign="top" style="text-align:left">
                 <th>Attivo</th>   <th>Valore TRK_ID Default</th>  <th>Valore GA Default</th>  
-                <?php if (!empty($this->current["tab"]["ga_event_template"])) : ?>
+                <?php if (!empty($this->current["marketplace"]["ga_event_template"])) : ?>
                 <th>{website} GA </th>
                 <?php endif;?>    
-                <?php if (!empty($this->current["tab"]["tracking_id"])) : ?>
+                <?php if (!empty($this->current["marketplace"]["tracking_id"])) : ?>
                 <th>{website}  TRK_ID</th>  
                 <?php endif;?>   
             </tr>
@@ -52,19 +52,19 @@ class TemplateTable {
             <?php foreach( $this->row as $field )  echo "<td>" .$field->render() ."</td>"; ?>
             </tr>
         </table>
-        <?php if (!empty($this->current["tab"]["ga_event_template"]) || !empty($this->current["tab"]["tracking_id"]) ) :?>
+        <?php if (!empty($this->current["marketplace"]["ga_event_template"]) || !empty($this->current["marketplace"]["tracking_id"]) ) :?>
        <div><h2>Template</h2></div>
         <table>
-            <?php if (!empty($this->current["tab"]["ga_event_template"])) : ?>
+            <?php if (!empty($this->current["marketplace"]["ga_event_template"])) : ?>
             <tr valign="top" style="text-align:left">
                <th>GA EVENT</th> 
-               <td><input style="width:450px" type="text" readonly value="<?php echo $this->current["tab"]["ga_event_template"];?>"></td>
+               <td><input style="width:450px" type="text" readonly value="<?php echo $this->current["marketplace"]["ga_event_template"];?>"></td>
             </tr>
             <?php endif;
-            if (!empty($this->current["tab"]["tracking_id"])) : ?>
+            if (!empty($this->current["marketplace"]["tracking_id"])) : ?>
             <tr valign="top" style="text-align:left">
                <th>TRACKING ID</th>
-               <td><input style="width:450px" type="text" readonly value="<?php echo $this->current["tab"]["tracking_id"];?>"></td>
+               <td><input style="width:450px" type="text" readonly value="<?php echo $this->current["marketplace"]["tracking_id"];?>"></td>
             </tr>
             <?php endif;?>
         </table>

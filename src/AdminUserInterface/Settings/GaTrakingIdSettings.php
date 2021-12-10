@@ -23,9 +23,9 @@ class GaTrakingIdSettings {
         $this->item = Config::findbySuffix(CONFIG["Items"],$_GET["page"]);
         $this->tabs = $this->item["settings"]["tabs"];
         $this->current["tab"] = (isset($_GET['tab'])) ? Config::findbySuffix($this->tabs,$_GET["tab"]) : $this->tabs[0];
-        $this->current["sub_tab"] = (isset($_GET['sub_tab'])) ? Config::findbySuffix($this->item["settings"]["tabs"]["marketplaces"],$_GET["sub_tab"]) : $this->item["settings"]["tabs"][$this->current["tab"]["suffix"]]["marketplaces"][0];
+        $this->current["marketplace"] = (isset($_GET['marketplace'])) ? Config::findbySuffix($this->current["tab"]["marketplaces"],$_GET["marketplace"]) : $this->current["tab"]["marketplaces"][0];
         $this->marketplaces = $this->current["tab"]["marketplaces"];
-        $this->option_name = $this->item["suffix"]."-".$this->current["tab"]["suffix"]."-".$this->current["sub_tab"]["suffix"];
+        $this->option_name = $this->item["suffix"]."-".$this->current["tab"]["suffix"]."-".$this->current["marketplace"]["suffix"];
     }
 
 	/**
@@ -37,11 +37,11 @@ class GaTrakingIdSettings {
             wp_die('Non hai i permessi per visualizzare questa pagina');
         } else{
             ?>
-            <form method="post" id="GaTrakingIdSettings" name="GaTrakingIdSettings" action="<?php echo esc_html( admin_url( 'admin.php?page='.$_GET["page"].'&tab='.$this->current["tab"]["suffix"].'&sub_tab='.$this->current["sub_tab"]["suffix"]."#tabella" ) ); ?>">
+            <form method="post" id="GaTrakingIdSettings" name="GaTrakingIdSettings" action="<?php echo esc_html( admin_url( 'admin.php?page='.$_GET["page"].'&tab='.$this->current["tab"]["suffix"].'&marketplace='.$this->current["marketplace"]["suffix"]."#tabella" ) ); ?>">
                 <input type="hidden" name="<?php echo $this->item["suffix"];?>-sendForm" value="OK" />
                 <?php $this->printTabs(); ?>
                 <div class="<?php echo $this->item["suffix"];?>-container">
-                    <h2><?php echo $this->current["sub_tab"]["description"] . " per i " .$this->current["tab"]["description"];?></h2>
+                    <h2><?php echo $this->current["marketplace"]["description"] . " per i " .$this->current["tab"]["description"];?></h2>
                     <?php 
                     (new TemplateTable($this->option_name,$this->current))->render(); 
                     if (!empty($this->current["tab"]["ga_event_template"]) || !empty($this->current["tab"]["tracking_id"]) )
@@ -65,14 +65,14 @@ class GaTrakingIdSettings {
         echo '<h2 class="nav-tab-wrapper">';
         foreach($this->tabs as $tab) {
             $classTab = ( $tab["suffix"] == $this->current["tab"]["suffix"] ) ? " nav-tab-active" : "";
-            echo "<a class='nav-tab".$classTab."' href='?page=".$_GET["page"]."&tab=".$tab["suffix"]."&sub_tab=".$this->current["sub_tab"]["suffix"]."'>".$tab["name"]."</a>";
+            echo "<a class='nav-tab".$classTab."' href='?page=".$_GET["page"]."&tab=".$tab["suffix"]."&marketplace=".$this->current["marketplace"]["suffix"]."'>".$tab["name"]."</a>";
         }
         echo '</h2>';
         echo '<div id="icon-themes" class="icon32"><br></div>';
         echo '<h2 class="nav-tab-wrapper">';
         foreach($this->marketplaces as $tab) {
-            $classTab = ( $tab["suffix"] == $this->current["sub_tab"]["suffix"] ) ? " nav-tab-active" : "";
-            echo "<a class='nav-tab".$classTab."' href='?page=".$_GET["page"]."&tab=".$this->current["tab"]["suffix"]."&sub_tab=".$tab["suffix"]."'>".$tab["name"]."</a>";
+            $classTab = ( $tab["suffix"] == $this->current["marketplace"]["suffix"] ) ? " nav-tab-active" : "";
+            echo "<a class='nav-tab".$classTab."' href='?page=".$_GET["page"]."&tab=".$this->current["tab"]["suffix"]."&marketplace=".$tab["suffix"]."'>".$tab["name"]."</a>";
         }
         echo '</h2>';
     }
