@@ -11,6 +11,8 @@ class Request {
     // FOR CUSTOM URL
     private $link;
     private $ga_event;
+    private $subject;
+    private $program;
 
     function __construct( $args ) 
     {
@@ -18,11 +20,12 @@ class Request {
         $this->keyword      = isset( $args['keyword'] ) ? $args['keyword'] : '__default__';
         $this->code         = isset( $args['code'] ) ? $args['code'] : (isset( $args['asins'] ) ? $args['asins'] : null); //CONTROLLO ASIN PER RETROCOMPATIBILITA'
         $this->min_price    = isset( $args['min_price'] ) ? $args['min_price'] : '20';
-        $this->content      = isset( $args['text'] ) ? $args['text'] : '';
+        $this->content      = isset( $args['text'] ) ? $args['text'] : (isset( $args['content'] ) ? $args['content'] : ''); //CONTROLLO content PER LINKPROGRAM BUTTON'
         $this->tracking_id  = isset( $args['tracking_id'] ) ? $args['tracking_id'] : (isset( $args['store'] ) ? $args['store'] : null); //CONTROLLO store PER RETROCOMPATIBILITA'
         $this->link         = isset( $args['url'] ) ? $args['url'] : '';
         $this->ga_event     = isset( $args['ga_event'] ) ? $args['ga_event'] : (isset( $args['data-affiliate'] ) ? $args['data-affiliate'] : null); //CONTROLLO data-affiliate PER RETROCOMPATIBILITA'
-        
+        $this->subject      = isset( $args['subject'] ) ? $args['subject'] : '';
+        $this->program      = isset( $args['program'] ) ? $args['program'] : '';
     }
 
     /**
@@ -42,6 +45,8 @@ class Request {
     public function getTrackingId()      { return $this->tracking_id; } 
     public function getLink()            { return $this->link; } 
     public function getGaEvent()         { return $this->ga_event; } 
+    public function getSubject()         { return $this->subject; } 
+    public function getProgram()         { return $this->program; } 
     public function getMarketplaceKey() { return $this->marketplace;}
     public function getMarketplace() {
 

@@ -10,7 +10,7 @@ class SettingsData {
     private $marketpalace;
     private $config;
     private $link_type;
-
+    private $request;
 
     private $templates = [
         
@@ -25,18 +25,20 @@ class SettingsData {
 
     public function __construct($postData,$link_type,$request) {
         $this->postData = $postData;
+        $this->request = $request;
         $this->link_type = Config::findbySuffix(CONFIG["Items"][0]["settings"]["tabs"],$link_type);
   
-        $this->marketplace = Config::findbySuffix($this->link_type["marketplaces"],$request->getMarketplaceKey());
-        $settings = get_option( "blz-affiliation-settings" );
-        
+        $this->marketplace = Config::findbySuffix($this->link_type["marketplaces"],$this->request->getMarketplaceKey());
+        $global_settings = get_option( "blz-affiliation-settings" );
         $this->config = [
+            "global_settings" => $global_settings,
             "settings" => get_option(CONFIG["Items"][0]["suffix"]."-".$this->link_type["suffix"]."-".$this->marketplace["suffix"]."_settings"),
             "activation_table" => get_option(CONFIG["Items"][0]["suffix"]."-".$this->link_type["suffix"]."-".$this->marketplace["suffix"]),
             "ga_event_template" =>  $this->marketplace["ga_event_template"],
             "tracking_id_template" =>  $this->marketplace["tracking_id"],
             
         ];
+
     }
 
 
@@ -48,6 +50,8 @@ class SettingsData {
 
 
     public function getTrackingID() {
+         // Se è stato settato manualmente prendo quello
+         if ($this->request->getTrackingId()) return $this->request->getTrackingId();
         
         $track_id = $this->config["settings"]["trk_default"];
         
@@ -56,9 +60,9 @@ class SettingsData {
             // rimuovo amp da template se non sono una pagina amp
             if ($this->postData->is_amp == false) $track_id = str_replace(["-{amp}","{amp}"],"",$track_id);
             // aggiungo website
-            $track_id = str_replace("{website}",$this->config["settings"]["website_trk"],$track_id);
+            $track_id = str_replace("{website}",$this->config["global_settings"]["website_trk"],$track_id);
             // sostituisco il restante in base alle regole
-            foreach($this->config["activation_table"] as $activation_table)
+            foreach(array_reverse($this->config["activation_table"]) as $activation_table)
                 if ($this->isValidRule($activation_table) && !empty($activation_table["ga_label"]))
                     $track_id = str_replace("{".$activation_table["trk_label"]."}",$activation_table["trk_val"],$track_id);
             // sostituisco Marketplace con un default se non è stato settato
@@ -73,27 +77,36 @@ class SettingsData {
     }
 
     public function getGAEvent() {
+        // Se è stato settato manualmente prendo quello
+        if ($this->request->getGAEvent()) return $this->request->getGAEvent();
+
+        // Setto il default
         $ga_event = $this->config["settings"]["ga_default"];
-       
+
         if (isset($this->config["activation_table"][0])) {
             
             $ga_event = $this->config["ga_event_template"];
             // rimuovo amp da template se non sono una pagina amp
             if ($this->postData->is_amp == false) $ga_event = str_replace(["-{amp}","{amp}"],"",$ga_event);
             // aggiungo website
-            $ga_event = str_replace("{website}",$this->config["settings"]["website_ga"],$ga_event);
+            $ga_event = str_replace("{website}",$this->config["global_settings"]["website_ga"],$ga_event);
             // sostituisco il restante in base alle regole
-            foreach($this->config["activation_table"] as $activation_table)
+            foreach(array_reverse($this->config["activation_table"]) as $activation_table)
                 if ($this->isValidRule($activation_table) && !empty($activation_table["ga_label"]))
                     $ga_event = str_replace("{".$activation_table["ga_label"]."}",$activation_table["ga_val"],$ga_event);
             // sostituisco Marketplace con un default se non è stato settato
             $ga_event = str_replace("{marketplace}",$this->marketplace["suffix"],$ga_event);
             // sostituisco Author con un default se non è stato settato
             $ga_event = str_replace("{author}",$this->postData->author["name"],$ga_event);
+
             // rimuovi label non impostate
             $ga_event = $this->removeLabels($ga_event);
         }
-        
+
+        //Sostituisco i placeholder dei link program on gli attributi da shortcode
+        if ($this->request->getSubject()) $ga_event = str_replace("{subject}",$this->request->getSubject(),$ga_event);
+        if ($this->request->getProgram()) $ga_event = str_replace("{program}",$this->request->getProgram(),$ga_event);
+
         return $ga_event;
     }
 
