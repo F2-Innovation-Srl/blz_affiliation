@@ -12,8 +12,8 @@ class Shortener {
 
         $username="techteam";
         $password="trellotrello";
-        $baseurl=parse_url($_SERVER["HTTP_HOST"], PHP_URL_HOST); //preg_replace("/^(.*?)\.(.*)$/","$2",$_SERVER[HTTP_HOST]);
-
+        $baseurl=preg_replace("/^(.*?)\.(.*)$/","$2",$_SERVER["HTTP_HOST"]);
+       
         $curl = curl_init();
 
         curl_setopt_array($curl, array(

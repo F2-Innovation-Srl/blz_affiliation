@@ -55,7 +55,7 @@ class AffiliateCustomLinkButton {
 
         $link = str_replace( '{tracking-id}', $tracking, $this->request->getLink());
         /// poi accorcia il link
-        $link = ( new Shortener )->generateShortLink( $link );
+        $link = ( new Shortener )->generateShortLink( $link ) ;
 
         $content = $this->request->getContent();
 

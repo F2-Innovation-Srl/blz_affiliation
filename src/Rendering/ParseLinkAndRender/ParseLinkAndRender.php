@@ -96,7 +96,9 @@ class ParseLinkAndRender {
     private function FillTemplate( $link, $ga_event, $tracking, $template) {
 
         $link = str_replace( '{tracking_id}', $tracking, $link);
-
+        /// poi accorcia il link
+        $link = ( new Shortener )->generateShortLink( $link ) ;
+        
         return str_replace([ '{{ url }}', '{{ ga_event }}' ], [ $link, $ga_event ], $template);
     }
 

@@ -55,7 +55,7 @@ class AffiliateLinkProgramsButton {
         /// se possibile inserisce il tracking id
         $link = str_replace( '{tracking-id}', $tracking_id, $this->request->getLink() );
         /// poi accorcia il link
-        //$link = ( new Shortener )->generateShortLink( $link ) ;
+        $link = ( new Shortener )->generateShortLink( $link ) ;
         
         return str_replace([ '{{ url }}', '{{ ga_event }}', '{{ content }}' ], [ $link, $ga_event, $this->request->getContent() ], $template);
              
