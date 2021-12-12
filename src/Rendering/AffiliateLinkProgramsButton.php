@@ -42,11 +42,8 @@ class AffiliateLinkProgramsButton {
         /// prende tutti i dati del post
         $postData = new PostData();
         /// prendo la request
-        $this->request = new Request($atts);
-
-        $this->content = $content;
-
-
+        $this->request = new Request($atts,$content);
+        
         /// inizializzo i settingsData 
         $SettingsData = new SettingsData($postData,"linkPrograms",$this->request);
         
@@ -61,6 +58,7 @@ class AffiliateLinkProgramsButton {
         $link = str_replace( '{tracking-id}', $tracking_id, $this->request->getLink() );
         /// poi accorcia il link
         //$link = ( new Shortener )->generateShortLink( $link ) ;
+        
         return str_replace([ '{{ url }}', '{{ ga_event }}', '{{ content }}' ], [ $link, $ga_event, $this->request->getContent() ], $template);
              
     }

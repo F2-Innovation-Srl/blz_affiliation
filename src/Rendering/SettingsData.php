@@ -50,9 +50,10 @@ class SettingsData {
 
 
     public function getTrackingID() {
-         // Se è stato settato manualmente prendo quello
-         if ($this->request->getTrackingId()) return $this->request->getTrackingId();
+        // Se è stato settato manualmente prendo quello
+        if ($this->request->getTrackingId()) return $this->request->getTrackingId();
         
+        // Setto il default
         $track_id = $this->config["settings"]["trk_default"];
         
         if (isset($this->config["activation_table"][0])) {
@@ -77,7 +78,7 @@ class SettingsData {
     }
 
     public function getGAEvent() {
-        // Se è stato settato manualmente prendo quello
+        // Se è stato settato manualmente prendo quello       
         if ($this->request->getGAEvent()) return $this->request->getGAEvent();
 
         // Setto il default

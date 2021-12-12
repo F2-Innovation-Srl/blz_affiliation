@@ -14,13 +14,13 @@ class Request {
     private $subject;
     private $program;
 
-    function __construct( $args ) 
+    function __construct( $args, $content = '' ) 
     {
         $this->marketplace  = isset( $args['marketplace'] ) ? $args['marketplace'] : 'amazon';
         $this->keyword      = isset( $args['keyword'] ) ? $args['keyword'] : '__default__';
         $this->code         = isset( $args['code'] ) ? $args['code'] : (isset( $args['asins'] ) ? $args['asins'] : null); //CONTROLLO ASIN PER RETROCOMPATIBILITA'
         $this->min_price    = isset( $args['min_price'] ) ? $args['min_price'] : '20';
-        $this->content      = isset( $args['text'] ) ? $args['text'] : (isset( $args['content'] ) ? $args['content'] : ''); //CONTROLLO content PER LINKPROGRAM BUTTON'
+        $this->content      = isset( $content ) ? $content : (isset( $args['text'] ) ? $args['text'] : '');
         $this->tracking_id  = isset( $args['tracking_id'] ) ? $args['tracking_id'] : (isset( $args['store'] ) ? $args['store'] : null); //CONTROLLO store PER RETROCOMPATIBILITA'
         $this->link         = isset( $args['url'] ) ? $args['url'] : '';
         $this->ga_event     = isset( $args['ga_event'] ) ? $args['ga_event'] : (isset( $args['data-affiliate'] ) ? $args['data-affiliate'] : null); //CONTROLLO data-affiliate PER RETROCOMPATIBILITA'

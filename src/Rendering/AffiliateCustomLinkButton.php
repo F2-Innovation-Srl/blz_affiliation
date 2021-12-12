@@ -59,7 +59,7 @@ class AffiliateCustomLinkButton {
 
         $content = $this->request->getContent();
 
-        return str_replace([ '{{ url }}', '{{ ga-event }}', '{{ content }}' ], [ $link, $ga_event, $content ], $template);
+        return str_replace([ '{{ url }}', '{{ ga_event }}', '{{ content }}' ], [ $link, $ga_event, $content ], $template);
     }
    
 
