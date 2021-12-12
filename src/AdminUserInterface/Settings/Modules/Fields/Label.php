@@ -67,7 +67,7 @@ class Label extends Field {
         $terms = isset( $matches[1]) ? array_map( function( $term ) {  return trim( $term );  }, $matches[1] ) : [];
 
         /// rimuove 'website' se esiste;
-        $terms = array_values( array_filter( $terms, function( $term ) { return $term != 'website'; }) );
+        $terms = array_values( array_filter( $terms, function( $term ) { return $term != 'website' ||  $term != 'subject' ||  $term != 'program' ; }) );
 
         return $terms;
     }

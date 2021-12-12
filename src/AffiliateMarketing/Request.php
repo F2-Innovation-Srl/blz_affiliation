@@ -22,7 +22,7 @@ class Request {
         $this->min_price    = isset( $args['min_price'] ) ? $args['min_price'] : '20';
         $this->content      = isset( $content ) ? $content : (isset( $args['text'] ) ? $args['text'] : '');
         $this->tracking_id  = isset( $args['tracking_id'] ) ? $args['tracking_id'] : (isset( $args['store'] ) ? $args['store'] : null); //CONTROLLO store PER RETROCOMPATIBILITA'
-        $this->link         = isset( $args['url'] ) ? $args['url'] : '';
+        $this->link         = isset( $args['url'] ) ? $args['url'] : (isset( $args['link'] ) ? $args['link'] : '');
         $this->ga_event     = isset( $args['ga_event'] ) ? $args['ga_event'] : (isset( $args['data-affiliate'] ) ? $args['data-affiliate'] : null); //CONTROLLO data-affiliate PER RETROCOMPATIBILITA'
         $this->subject      = isset( $args['subject'] ) ? $args['subject'] : '';
         $this->program      = isset( $args['program'] ) ? $args['program'] : '';
