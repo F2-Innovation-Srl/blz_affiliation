@@ -8,7 +8,7 @@ use BLZ_AFFILIATION\AffiliateMarketing\OffersRetriever;
 use BLZ_AFFILIATION\AffiliateMarketing\Request;
 use BLZ_AFFILIATION\Rendering\PostData;
 use BLZ_AFFILIATION\Rendering\SettingsData;
-
+use BLZ_AFFILIATION\Utils\Shortener;
 
 
 class AffiliateLinkButton {
@@ -29,6 +29,8 @@ class AffiliateLinkButton {
     private function FillTemplate( Offer $offer, $ga_event, $tracking, $template) {
 
         $link = str_replace( '{tracking-id}', $tracking, $offer->link);
+        /// poi accorcia il link
+        $link = ( new Shortener )->generateShortLink( $link ) ;
 
         $content = (!empty($this->request->getContent())) ? $this->request->getContent() : $offer->price . " euro";
         return str_replace([ '{{ url }}', '{{ ga_event }}', '{{ content }}' ], [ $link, $ga_event, $content ], $template);

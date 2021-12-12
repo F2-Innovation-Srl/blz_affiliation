@@ -38,8 +38,6 @@ class AffiliateLinkProgramsButton {
     public function printAffiliateLink( $atts, $content, $tag ) {
 
         /// prende tutti i dati del post
-        //$this->postData = new PostData();
-        /// prende tutti i dati del post
         $postData = new PostData();
         /// prendo la request
         $this->request = new Request($atts,$content);
