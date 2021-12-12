@@ -20,7 +20,7 @@ class Request {
         $this->keyword      = isset( $args['keyword'] ) ? $args['keyword'] : '__default__';
         $this->code         = isset( $args['code'] ) ? $args['code'] : (isset( $args['asins'] ) ? $args['asins'] : null); //CONTROLLO ASIN PER RETROCOMPATIBILITA'
         $this->min_price    = isset( $args['min_price'] ) ? $args['min_price'] : '20';
-        $this->content      = isset( $content ) ? $content : (isset( $args['text'] ) ? $args['text'] : '');
+        $this->content      = !empty( $content ) ? $content : (isset( $args['text'] ) ? $args['text'] : '');
         $this->tracking_id  = isset( $args['tracking_id'] ) ? $args['tracking_id'] : (isset( $args['store'] ) ? $args['store'] : null); //CONTROLLO store PER RETROCOMPATIBILITA'
         $this->link         = isset( $args['url'] ) ? $args['url'] : (isset( $args['link'] ) ? $args['link'] : '');
         $this->ga_event     = isset( $args['ga_event'] ) ? $args['ga_event'] : (isset( $args['data-affiliate'] ) ? $args['data-affiliate'] : null); //CONTROLLO data-affiliate PER RETROCOMPATIBILITA'

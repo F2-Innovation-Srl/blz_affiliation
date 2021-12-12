@@ -7,13 +7,13 @@ namespace BLZ_AFFILIATION\Rendering\ParseLinkAndRender;
  */
 class Link {
 
-    public $old_string;
+    public $old_link;
     public $url;
     public $marketplace;
 
     public function __construct( array $args ) 
     {
-        $this->old_string  = $args['old_string'];
+        $this->old_link    = $args['old_link'];
         $this->url         = $args['url'];
         $this->marketplace = $args['marketplace'];        
     }

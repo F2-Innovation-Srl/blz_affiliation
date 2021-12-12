@@ -20,15 +20,18 @@ class SettingsData {
                class="affiliation-intext" target="_blank" rel="sponsored"
             >{{ content }}</a>
         HTML,
-        'linkPrograms' => <<<HTML
+        'parseLinkAndRender' => <<<HTML
 
         <a href="{{ url }}" data-vars-affiliate="{{ ga_event }}" 
-           class="affiliation-intext" target="_blank" rel="sponsored"
-        >{{ content }}</a>
-    HTML,
+           class="affiliation-intext" target="_blank" rel="sponsored" >
+        HTML
     ];
 
     public function __construct($postData,$link_type,$request) {
+        
+        // COPIO IL TEMPLATE PER GLI ALTRI FORNATI UGUALI
+        $this->templates["linkPrograms"] = $this->templates["linkButton"];
+        
         $this->postData = $postData;
         $this->request = $request;
         $this->link_type = Config::findbySuffix(CONFIG["Items"][0]["settings"]["tabs"],$link_type);
@@ -52,38 +55,35 @@ class SettingsData {
         return $this->templates[$this->link_type["suffix"]];
     }
 
-
+    private function getActivationTableRules($code,$type){
+        if (isset($this->config["activation_table"][0])) {
+            
+            // rimuovo amp da template se non sono una pagina amp
+            if ($this->postData->is_amp == false) $code = str_replace("{amp}","",$code);
+            // aggiungo website
+            $code = str_replace("{website}",$this->config["global_settings"]["website_".$type],$code);
+            // sostituisco il restante in base alle regole
+            foreach(array_reverse($this->config["activation_table"]) as $activation_table)
+                if ($this->isValidRule($activation_table) && !empty($activation_table[$type."_label"]))
+                $code = str_replace("{".$activation_table[$type."_label"]."}",$activation_table[$type."_val"],$code);
+        }
+        return $code;
+    }
 
     public function getTrackingID() {
         // Se è stato settato manualmente prendo quello
         if ($this->request->getTrackingId()) return $this->request->getTrackingId();
         
-        $track_id = $this->config["tracking_id_template"];
+        // carica regole dalla tabella attivazione
+        $track_id = $this->getActivationTableRules($this->config["tracking_id_template"],"trk");
 
-        if (isset($this->config["activation_table"][0])) {
-            
-            // rimuovo amp da template se non sono una pagina amp
-            if ($this->postData->is_amp == false) $track_id = str_replace(["-{amp}","{amp}"],"",$track_id);
-            // aggiungo website
-            $track_id = str_replace("{website}",$this->config["global_settings"]["website_trk"],$track_id);
-            // sostituisco il restante in base alle regole
-            foreach(array_reverse($this->config["activation_table"]) as $activation_table)
-                if ($this->isValidRule($activation_table) && !empty($activation_table["ga_label"]))
-                    $track_id = str_replace("{".$activation_table["trk_label"]."}",$activation_table["trk_val"],$track_id);
-            
-        }
-
-        // sostituisco Marketplace con un default se non è stato settato
+        // sostituisco Marketplace e Author con un default se non è stato settato
         $track_id = str_replace("{marketplace}",$this->marketplace["suffix"],$track_id);
-        
-        // sostituisco Author con un default se non è stato settato
         $track_id = str_replace("{author}",$this->postData->author["name"],$track_id);
         
-        // rimuovi label non impostate
-        $track_id = $this->removeLabels($track_id);
+        // rimuovi placeholder non impostati e se vuoto setto default
+        $track_id = $this->checkCode($track_id,$this->config["settings"]["trk_default"]);
 
-        // Se non ho trovato nulla metto setto il default
-        if (empty($track_id)) $track_id = $this->config["settings"]["trk_default"];
         return $track_id;
         
     }
@@ -92,37 +92,20 @@ class SettingsData {
         // Se è stato settato manualmente prendo quello       
         if ($this->request->getGAEvent()) return $this->request->getGAEvent();
 
-        $ga_event = $this->config["ga_event_template"];
+        // carica regole dalla tabella attivazione
+        $ga_event = $this->getActivationTableRules($this->config["ga_event_template"],"ga");
 
-        if (isset($this->config["activation_table"][0])) {
-            
-            
-            // rimuovo amp da template se non sono una pagina amp
-            if ($this->postData->is_amp == false) $ga_event = str_replace(["-{amp}","{amp}"],"",$ga_event);
-            // aggiungo website
-            $ga_event = str_replace("{website}",$this->config["global_settings"]["website_ga"],$ga_event);
-            // sostituisco il restante in base alle regole
-            foreach(array_reverse($this->config["activation_table"]) as $activation_table)
-                if ($this->isValidRule($activation_table) && !empty($activation_table["ga_label"]))
-                    $ga_event = str_replace("{".$activation_table["ga_label"]."}",$activation_table["ga_val"],$ga_event);
-           
-        }
-        
-        // sostituisco Marketplace con un default se non è stato settato
+        // sostituisco Marketplace e Author con un default se non è stato settato
         $ga_event = str_replace("{marketplace}",$this->marketplace["suffix"],$ga_event);
-        
-        // sostituisco Author con un default se non è stato settato
         $ga_event = str_replace("{author}",$this->postData->author["name"],$ga_event);
         
         //Sostituisco i placeholder dei link program on gli attributi da shortcode
         if ($this->request->getSubject()) $ga_event = str_replace("{subject}",$this->request->getSubject(),$ga_event);
         if ($this->request->getProgram()) $ga_event = str_replace("{program}",$this->request->getProgram(),$ga_event);
         
-        // rimuovi label non impostate
-        $ga_event = $this->removeLabels($ga_event);
+        // rimuovi placeholder non impostati e se vuoto setto default
+        $ga_event = $this->checkCode($ga_event,$this->config["settings"]["ga_default"]);
 
-        // Se non ho trovato nulla metto setto il default
-        if (empty($ga_event)) $ga_event = $this->config["settings"]["ga_default"];
         return $ga_event;
     }
 
@@ -141,18 +124,14 @@ class SettingsData {
         } 
     }
 
-    private function removeLabels($str) {
-        $str_temp = $str;
-        $startFrom = $contentStart = $contentEnd = 0;
-        while (false !== ($contentStart = strpos($str, "{", $startFrom))) {
-          $contentStart += strlen("{");
-          $contentEnd = strpos($str, "}", $contentStart);
-          if (false === $contentEnd)  break;
-          $str_temp = str_replace("{".substr($str, $contentStart, $contentEnd - $contentStart). "}","",$str_temp);
-          $str_temp = str_replace("--","-",$str_temp);
-          $startFrom = $contentEnd + strlen("}");
-        }
-        return $str_temp;
+    private function checkCode($str,$default) {
+
+        $regex = '/{\s*(.*?)\s*}/';
+        $code = preg_replace( $regex, "", $str);
+        // Se non ho trovato nulla metto setto il default
+        if (empty($code)) $code = $default;
+        return $code;
+
     }
 
 
