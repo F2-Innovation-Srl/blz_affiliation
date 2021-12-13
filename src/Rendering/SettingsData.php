@@ -64,8 +64,8 @@ class SettingsData {
             // sostituisco il restante in base alle regole   
             foreach(array_reverse($this->config["activation_table"]) as $activation_table){
                 //CASO IN CUI PRENDO IL VALORE DAL TIPO ATTIVATORE
-                if ($activation_table[$type."_label"] == "this_value")
-                    $code = str_replace("{".$activation_table[$type."_label"]."}",$this->getValue($activation_table),$code);
+                if ($activation_table["regola"] == "this_value")
+                   $code = str_replace("{".$activation_table[$type."_label"]."}",$this->getValue($activation_table),$code);
                 //GLI ALTRI CASI SE L'ATTIVATORE E' VALIDO
                 if ($this->isValidRule($activation_table) && !empty($activation_table[$type."_label"]))
                     $code = str_replace("{".$activation_table[$type."_label"]."}",$activation_table[$type."_val"],$code);
