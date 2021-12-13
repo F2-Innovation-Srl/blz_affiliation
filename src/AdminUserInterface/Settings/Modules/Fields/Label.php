@@ -15,6 +15,8 @@ class Label extends Field {
     <<<HTML
         <select class="label" name="{{ name }}">
             <option value="">Seleziona una {{ type }} label</option>
+            <option value="blz_valore">Usa il valore del {{ type }}</option>
+            <option value="custom_valore">Sovrascrivi con: </option>
             {{ options }}
         </select>
     HTML;

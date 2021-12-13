@@ -40,7 +40,6 @@ class SettingsData {
         $global_settings = get_option( "blz-affiliation-settings" );
         $this->config = [
             "global_settings" => $global_settings,
-            "settings" => get_option(CONFIG["Items"][0]["suffix"]."-".$this->link_type["suffix"]."-".$this->marketplace["suffix"]."_settings"),
             "activation_table" => get_option(CONFIG["Items"][0]["suffix"]."-".$this->link_type["suffix"]."-".$this->marketplace["suffix"]),
             "ga_event_template" =>  $this->marketplace["ga_event_template"],
             "tracking_id_template" =>  $this->marketplace["tracking_id"],
@@ -81,8 +80,8 @@ class SettingsData {
         $track_id = str_replace("{marketplace}",$this->marketplace["suffix"],$track_id);
         $track_id = str_replace("{author}",$this->postData->author["name"],$track_id);
         
-        // rimuovi placeholder non impostati e se vuoto setto default
-        $track_id = $this->checkCode($track_id,$this->config["settings"]["trk_default"]);
+        // rimuovi placeholder non impostati
+        $track_id = $this->cleanCode($track_id);
 
         return $track_id;
         
@@ -103,8 +102,8 @@ class SettingsData {
         if ($this->request->getSubject()) $ga_event = str_replace("{subject}",$this->request->getSubject(),$ga_event);
         if ($this->request->getProgram()) $ga_event = str_replace("{program}",$this->request->getProgram(),$ga_event);
         
-        // rimuovi placeholder non impostati e se vuoto setto default
-        $ga_event = $this->checkCode($ga_event,$this->config["settings"]["ga_default"]);
+        // rimuovi placeholder non impostati
+        $ga_event = $this->cleanCode($ga_event);
 
         return $ga_event;
     }
@@ -124,12 +123,11 @@ class SettingsData {
         } 
     }
 
-    private function checkCode($str,$default) {
+    private function cleanCode($str) {
 
         $regex = '/{\s*(.*?)\s*}/';
         $code = preg_replace( $regex, "", $str);
-        // Se non ho trovato nulla metto setto il default
-        if (empty($code)) $code = $default;
+
         return $code;
 
     }

@@ -17,7 +17,7 @@ class TemplateTable {
 	 */
 	function __construct($option_name,$current) {
         $this->current = $current;
-
+        /*
         $row = $this->getAndSetRow($option_name);
         
         $this->row =  [
@@ -26,6 +26,7 @@ class TemplateTable {
             (new Fields\Text($option_name."_trk_default",$row["trk_default"],"text")),
             (new Fields\Text('',"Aggiorna valori","button"))
         ];
+        */
     }
 
 	/**
@@ -33,15 +34,15 @@ class TemplateTable {
     **/
     public function render(){
         ?>
-        <div><h2>Settings</h2></div>
+        <!--div><h2>Settings</h2></div>
         <table>
             <tr valign="top" style="text-align:left">
                 <th>Attivo</th>   <th>Valore TRK_ID Default</th>  <th>Valore GA Default</th>  
             </tr>
             <tr valign="top" style="text-align:left">
-            <?php foreach( $this->row as $field )  echo "<td>" .$field->render() ."</td>"; ?>
+            <?php //foreach( $this->row as $field )  echo "<td>" .$field->render() ."</td>"; ?>
             </tr>
-        </table>
+        </table -->
         <?php if (!empty($this->current["marketplace"]["ga_event_template"]) || !empty($this->current["marketplace"]["tracking_id"]) ) :?>
        <div><h2>Template</h2></div>
         <table>
@@ -65,7 +66,7 @@ class TemplateTable {
     }
 
     private function getAndSetRow($option_name){
-        
+        /*
         //GET
         $row = get_option($option_name."_settings");
         echo "<pre>";
@@ -81,6 +82,6 @@ class TemplateTable {
         update_option($option_name."_settings",$row);
         //RETURN
         return $row;
-
+        */
     }
 }
