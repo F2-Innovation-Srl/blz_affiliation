@@ -87,6 +87,20 @@
                                     "tracking_id"       : "{website}{label}{author}{marketplace}{amp}"
                                 }
                         ]
+                    },{
+                        "name"        : "Tabella",
+                        "suffix"      : "blz_table",
+                        "description" : "Tabella link",
+                        "marketplaces":[
+                                {
+                                    "name"              : "Generic",
+                                    "suffix"            : "generic",
+                                    "description"       : "Pannello per la configurazione del pulsante",
+                                    "api_slug"          : "",
+                                    "ga_event_template" : "tabella {label} {numero-posizione} {marketplace} {amp}",
+                                    "tracking_id"       : ""
+                                }
+                        ]
                     }
                 ]
                 
