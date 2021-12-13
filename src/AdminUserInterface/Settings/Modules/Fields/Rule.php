@@ -59,5 +59,6 @@ class Rule extends Field {
     private function addCommonOptions($output){    
         $output.='<option value="custom_valore">Sovrascrivi tutti con</option>';
         $output.='<option value="blz_valore">Usa il suo valore</option>';
+        return $output;
     }
 }
