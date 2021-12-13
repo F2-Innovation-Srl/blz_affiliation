@@ -61,11 +61,16 @@ class SettingsData {
             if ($this->postData->is_amp == false) $code = str_replace("{amp}","",$code);
             // aggiungo website
             $code = str_replace("{website}",$this->config["global_settings"]["website_".$type],$code);
-            // sostituisco il restante in base alle regole
-            foreach(array_reverse($this->config["activation_table"]) as $activation_table)
+            // sostituisco il restante in base alle regole   
+            foreach(array_reverse($this->config["activation_table"]) as $activation_table){
+                //CASO IN CUI PRENDO IL VALORE DAL TIPO ATTIVATORE
+                if ($activation_table[$type."_label"] == "this_value")
+                    $code = str_replace("{".$activation_table[$type."_label"]."}",$this->getValue($activation_table),$code);
+                //GLI ALTRI CASI SE L'ATTIVATORE E' VALIDO
                 if ($this->isValidRule($activation_table) && !empty($activation_table[$type."_label"]))
-                $code = str_replace("{".$activation_table[$type."_label"]."}",$activation_table[$type."_val"],$code);
-        }
+                    $code = str_replace("{".$activation_table[$type."_label"]."}",$activation_table[$type."_val"],$code);
+            }
+       }
         return $code;
     }
 
@@ -75,10 +80,6 @@ class SettingsData {
         
         // carica regole dalla tabella attivazione
         $track_id = $this->getActivationTableRules($this->config["tracking_id_template"],"trk");
-
-        // sostituisco Marketplace e Author con un default se non è stato settato
-        $track_id = str_replace("{marketplace}",$this->marketplace["suffix"],$track_id);
-        $track_id = str_replace("{author}",$this->postData->author["name"],$track_id);
         
         // rimuovi placeholder non impostati
         $track_id = $this->cleanCode($track_id);
@@ -94,10 +95,6 @@ class SettingsData {
         // carica regole dalla tabella attivazione
         $ga_event = $this->getActivationTableRules($this->config["ga_event_template"],"ga");
 
-        // sostituisco Marketplace e Author con un default se non è stato settato
-        $ga_event = str_replace("{marketplace}",$this->marketplace["suffix"],$ga_event);
-        $ga_event = str_replace("{author}",$this->postData->author["name"],$ga_event);
-        
         //Sostituisco i placeholder dei link program on gli attributi da shortcode
         if ($this->request->getSubject()) $ga_event = str_replace("{subject}",$this->request->getSubject(),$ga_event);
         if ($this->request->getProgram()) $ga_event = str_replace("{program}",$this->request->getProgram(),$ga_event);
@@ -108,17 +105,32 @@ class SettingsData {
         return $ga_event;
     }
 
+   
+
+    private function getValue($activation_table) {
+        switch ($activation_table["attivatore"]) {
+            case "POSTTYPE":
+                return $this->postData->post_type;
+                break;
+            case "USERS":
+                return $this->postData->author["name"];
+                break;
+            default:
+                return $this->postData->taxonomies[$activation_table["attivatore"]][0];
+                break;
+        } 
+    }
 
     private function isValidRule($activation_table) {
         switch ($activation_table["attivatore"]) {
             case "POSTTYPE":
-                return ($activation_table["regola"] == $this->postData->post_type) ? true : false;
+                return ($activation_table["regola"] == $this->postData->post_type || $activation_table["regola"] == "custom_value") ? true : false;
                 break;
             case "USERS":
-                return ($activation_table["regola"] == $this->postData->author["id"]) ? true : false;
+                return ($activation_table["regola"] == $this->postData->author["id"] || $activation_table["regola"] == "custom_value") ? true : false;
                 break;
             default:
-                return (in_array($activation_table["regola"],$this->postData->taxonomies[$activation_table["attivatore"]])) ? true : false;
+                return ((in_array($activation_table["regola"],$this->postData->taxonomies[$activation_table["attivatore"]])) || $activation_table["regola"] == "custom_value") ? true : false;
                 break;
         } 
     }
