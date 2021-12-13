@@ -57,8 +57,8 @@ class Rule extends Field {
         return $output;
     }
     private function addCommonOptions($output){    
-        $output.='<option value="custom_value">Sovrascrivi tutti con</option>';
-        $output.='<option value="this_value">Usa il suo valore</option>';
+        $output.='<option value="custom_value"  '.(($this->value == "custom_value") ? "selected" : "").'>Sovrascrivi tutti con</option>';
+        $output.='<option value="this_value"  '.(($this->value == "this_value") ? "selected" : "").'>Usa il suo valore</option>';
         return $output;
     }
 }
