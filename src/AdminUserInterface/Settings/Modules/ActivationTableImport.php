@@ -18,7 +18,7 @@ class ActivationTableImport {
         $this->getAndSetRows($option_name);
         $this->rows[] =  [
             (new Fields\Import($option_name."_activation_import","","",["current" => $option_name])),
-            (new Fields\Text($option_name."_new",'Aggiungi',"button"))
+            (new Fields\Text($option_name."_new",'Importa',"button"))
         ];
     }
 
@@ -42,12 +42,9 @@ class ActivationTableImport {
     private function getAndSetRows($option_name){
         
         if (isset( $_POST[$option_name. '_activation_import'])  && !empty($_POST[$option_name. '_activation_import']) ){
-                print_r($_POST[$option_name. '_activation_import']);exit;
+            $activationRows = get_option( $_POST[$option_name. '_activation_import']);    
+            update_option($option_name,$activationRows);
         }
-
-    
-        //SET
-       // update_option($option_name,$activationRows);
 
       
 

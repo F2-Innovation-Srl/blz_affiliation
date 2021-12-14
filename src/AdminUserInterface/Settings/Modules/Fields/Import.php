@@ -9,7 +9,7 @@ class Import extends Field {
       /// viene richiamata dal costruttore
     public function Create() {
         
-        $output = '<select class="attivatore" name="'.$this->name.'"><option value="">Seleziona da dove importare</option>';
+        $output = '<select class="attivatore_import" name="'.$this->name.'"><option value="">Seleziona da dove importare</option>';
         $this->items = CONFIG["Items"];
         foreach(CONFIG["Items"][0]["settings"]["tabs"] as $item)
             foreach($item["marketplaces"] as $marketplace) {
