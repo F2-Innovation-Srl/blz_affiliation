@@ -52,6 +52,7 @@ class ActivationTable {
     public function render(){
         ?>
         <div><h2 id="tabella" name="tabella">Tabella di attivazione</h2></div>
+            <?php (new ActivationTableImport($this->option_name))->render();  ?>
             <table>
                 <tr valign="top" style="text-align:left">
                     <th>Attivatore</th><th>Regola</th>
