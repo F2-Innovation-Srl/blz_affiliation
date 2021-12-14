@@ -15,7 +15,8 @@ class Import extends Field {
             foreach($item["marketplaces"] as $marketplace) {
                 $option_value = CONFIG["Items"][0]["suffix"]."-".$item["suffix"]."-".$marketplace["suffix"];
                 $option_name = $item["name"]." - ".$marketplace["name"];
-                $output.= '<option value="'.$option_value.'" >'.$option_name.'</option>';   
+                if ($this->params["current"] != $option_value)
+                    $output.= '<option value="'.$option_value.'" >'.$option_name.'</option>';   
             }
         $output.= '</select>';
         return $output;
