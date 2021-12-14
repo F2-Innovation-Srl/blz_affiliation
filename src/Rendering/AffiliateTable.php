@@ -2,6 +2,8 @@
 
 namespace BLZ_AFFILIATION\Rendering;
 
+use BLZ_AFFILIATION\AffiliateMarketing\Request;
+use BLZ_AFFILIATION\Utils\Helper;
 /**
  * 
  * Ritorna i dati della tabella di affiliazione nella pagina
@@ -9,6 +11,7 @@ namespace BLZ_AFFILIATION\Rendering;
  */
 class AffiliateTable {
 
+    protected $post_id;
     function __construct() {
 
         // Add the shortcode to print the links
@@ -18,79 +21,40 @@ class AffiliateTable {
     
     public function print ( $atts, $content, $tag ) {
 
-        $table_id = $atts['id'];
-
-        $table = $this->getTable( $table_id );
+        $this->table_id = $atts['id'];
+        
+        $table = $this->getTable();
 
         $this->render( $table );
     }
 
 
-    /**
-     * Costruisce il prefisso del tracciamento nel formato
-     *
-     * tabella <tag> <speciale slug> <page|''>
-     *
-     * @return void
-     */
-    private function getTrackingPrefix() {
-
-        $post = get_post($this->post_id);
-
-        /// costruisce il post tag con i seguenti formati
-        /// ''
-        /// guida
-        /// guida-nomespeciale
-        /// nomespeciale
-        $post_tag = [
-            $post->post_type,
-            $this->getSpecialeSlug()
-        ];
-
-        /// effettua il merge di tag e speciale
-        $tag_slug = implode('-', array_values( array_filter( $post_tag, function( $item ) { return $item != ''; } ) ));
-
-        return 'tabella '.$tag_slug ;
-    }
-
 
     /**
      * Return the table's data
      *
-     * @param integer $table_id
      * @return array the table's data
      */
-    public function getTable( int $table_id ) {
+    public function getTable() {
 
-        if( !have_rows('affiliate_table_row', $table_id) ) return [];
+        if( !have_rows('affiliate_table_row', $this->table_id) ) return [];
 
         $table = [];
         $id=1;
-
-        $tracking_prefix = $this->getTrackingPrefix();
-
-        // $amp = is_amp_endpoint() ? ' amp' : '';
-        $amp = '';
-
-        while ( have_rows('affiliate_table_row', $table_id) ) : the_row();
-
-            /// abbiamo scelto di non mettere i title
-            // $title = Strings::slugify( get_sub_field('title') );
-
-            /// aggiunge al tracking
-            /// posizione <pos> <titolo> <amp|''>
-            $tracking = $tracking_prefix . ' posizione ' . $id . /*' ' . $title .*/ $amp;
-
+        
+        while ( have_rows('affiliate_table_row', $this->table_id) ) : the_row();
+         
             $table[]= [
-                "table_id"       => $id++,
-                "table_title"    => $title,
-                "table_tracking" => $tracking,
-                "table_img"      => get_sub_field('image'),
-                "table_text"     => get_sub_field('text'),
-                "table_rating"   => get_sub_field('rating'),
-                "table_cta_text" => get_sub_field('cta'),
-                "table_link"     => get_sub_field('link'),
-                "table_link_amp" => get_sub_field('link_amp'),
+                "table_id"               => $id++,
+                "table_title"            => Helper::slugify(get_post($this->table_id)["title"]),
+                "table_marketplace"      => get_sub_field('title'),
+                "table_marketplace_slug" => Helper::slugify( get_sub_field('title') ),
+                "table_img"              => get_sub_field('image'),
+                "table_text"             => get_sub_field('text'),
+                "table_rating"           => get_sub_field('rating'),
+                "table_cta_text"         => get_sub_field('cta'),
+                "table_link"             => get_sub_field('link'),
+                "table_link_amp"         => get_sub_field('link_amp'),
             ];
 
         endwhile;
@@ -98,22 +62,6 @@ class AffiliateTable {
         return $table;
     }
 
-    private function getSpecialeSlug() {
-
-        if( !taxonomy_exists('speciale') ) {
-            return '';
-        }
-
-        $terms = wp_get_post_terms( $this->post_id, 'speciale' );
-
-        if(is_wp_error($terms)) {
-            return '';
-        }
-
-        if( empty($terms) ) return '';
-
-        return $terms[0]->slug;
-    }
 
     protected function render( $table ) {
 
@@ -146,13 +94,11 @@ class AffiliateTable {
                 $postData = new PostData();
                 
                 foreach( $table as $item ): 
-                    $SettingsData = new SettingsData($this->postData,"blz_table",(new Request(["marketplace" => $item->table_title])));
-                    $link = $this->FillTemplate( $item->table_link, $SettingsData->getGAEvent(), $SettingsData->getTrackingID(), $SettingsData->getTemplate() );
-                    
+                    $SettingsData = new SettingsData($this->postData,"blz_table",(new Request(["marketplace" => $item->table_marketplace_slug, "position" => $item->table_id])));
                 ?>
 
-                    <li data-vars-affiliate="<?=$item->table_tracking?>">
-                            <?=$link?>
+                    <li data-vars-affiliate="<?=$SettingsData->getGAEvent()?>">
+                            <?=$item->table_link?>
                             
                             <div class="col col-1 col-sm-12 col-middle">
                                 <div class="rating_index"><?=$item->table_id?></div>
@@ -160,7 +106,7 @@ class AffiliateTable {
                         
                             <div class="col col-3 col-sm-12 col-middle">
                                 <div class="rating_image">
-                                    <img src="<?=$item->table_img?>" class="img-cover" alt="<?=$item->table_title?>">
+                                    <img src="<?=$item->table_img?>" class="img-cover" alt="<?=$item->table_marketplace?>">
                                 </div>
                             </div>
                 

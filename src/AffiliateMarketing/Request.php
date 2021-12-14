@@ -13,6 +13,7 @@ class Request {
     private $ga_event;
     private $subject;
     private $program;
+    private $position;
 
     function __construct( $args, $content = '' ) 
     {
@@ -26,6 +27,7 @@ class Request {
         $this->ga_event     = isset( $args['ga_event'] ) ? $args['ga_event'] : (isset( $args['data-affiliate'] ) ? $args['data-affiliate'] : null); //CONTROLLO data-affiliate PER RETROCOMPATIBILITA'
         $this->subject      = isset( $args['subject'] ) ? $args['subject'] : '';
         $this->program      = isset( $args['program'] ) ? $args['program'] : '';
+        $this->position     = isset( $args['position'] ) ? $args['position'] : '';
     }
 
     /**
@@ -47,7 +49,8 @@ class Request {
     public function getGaEvent()         { return $this->ga_event; } 
     public function getSubject()         { return $this->subject; } 
     public function getProgram()         { return $this->program; } 
-    public function getMarketplaceKey() { return $this->marketplace;}
+    public function getPosition()        { return $this->position; } 
+    public function getMarketplaceKey()  { return $this->marketplace;}
     public function getMarketplace() {
 
         $MarketPlaceMap = [

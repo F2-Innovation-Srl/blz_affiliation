@@ -24,11 +24,6 @@ class SettingsData {
 
         <a href="{{ url }}" data-vars-affiliate="{{ ga_event }}" 
            class="affiliation-intext" target="_blank" rel="sponsored" >
-        HTML,
-        'blz_table' => <<<HTML
-        
-        <a href="{{ url }}" target="_blank" data-vars-affiliate="{{ ga_event }}"
-            class="aftable_link"  target="_blank" rel="sponsored" >
         HTML
     ];
 
@@ -101,9 +96,10 @@ class SettingsData {
         $ga_event = $this->getActivationTableRules($this->config["ga_event_template"],"ga");
 
         //Sostituisco i placeholder dei link program on gli attributi da shortcode
-        if ($this->request->getSubject()) $ga_event = str_replace("{subject}",$this->request->getSubject(),$ga_event);
-        if ($this->request->getProgram()) $ga_event = str_replace("{program}",$this->request->getProgram(),$ga_event);
-        
+        if ($this->link_type == "linkPrograms") $ga_event = str_replace("{subject}",$this->request->getSubject(),$ga_event);
+        if ($this->link_type == "linkPrograms") $ga_event = str_replace("{program}",$this->request->getProgram(),$ga_event);
+        if ($this->link_type == "blz_table") $ga_event = str_replace("{numero-posizione}","Positione " .$this->request->getPosition(),$ga_event);
+        if ($this->link_type == "blz_table") $ga_event = str_replace("{marketplace}",$this->request->getMarketplace(),$ga_event);
         // rimuovi placeholder non impostati
         $ga_event = $this->cleanCode($ga_event);
 
@@ -134,7 +130,6 @@ class SettingsData {
                 return ($activation_table["regola"] == $this->postData->post_type || $activation_table["regola"] == "custom_value") ? true : false;
                 break;
             case "USERS":
-
                 return ($activation_table["regola"] == $this->postData->author["id"] || $activation_table["regola"] == "custom_value") ? true : false;
                 break;
             default:
