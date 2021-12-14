@@ -11,12 +11,13 @@ class ActivationTable {
 
     protected $rows;
     protected $current;
-    
+    protected $option_name;
 	/**
 	 * AttivazioneRow constructor.
 	 */
 	function __construct($option_name,$current) {
         $this->current = $current;
+        $this->option_name = $current;
         $rows = $this->getAndSetRows($option_name);
         $hiddenGA = (empty($this->current["marketplace"]["ga_event_template"]) ) ? "hidden" : "text"; 
         $hiddenTrack = (empty($this->current["marketplace"]["tracking_id"]) ) ? "hidden" : "text"; 
