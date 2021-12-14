@@ -97,7 +97,7 @@
                                     "suffix"            : "generic",
                                     "description"       : "Pannello per la configurazione del pulsante",
                                     "api_slug"          : "",
-                                    "ga_event_template" : "tabella {label} {numero-posizione} {marketplace} {amp}",
+                                    "ga_event_template" : "tabella {label} {table-name} {numero-posizione} {marketplace} {amp}",
                                     "tracking_id"       : ""
                                 }
                         ]
