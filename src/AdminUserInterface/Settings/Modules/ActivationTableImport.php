@@ -17,7 +17,7 @@ class ActivationTableImport {
 	function __construct($option_name) {
         $this->getAndSetRows($option_name);
         $this->rows[] =  [
-            (new Fields\Text($option_name."_activation_import","")),
+            (new Fields\Import($option_name."_activation_import","")),
             (new Fields\Text($option_name."_new",'Aggiungi',"button"))
         ];
     }
