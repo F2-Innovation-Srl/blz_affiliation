@@ -47,7 +47,7 @@
                                     "description"       : "Pannello per la configurazione dei link custom",
                                     "api_slug"          : "",
                                     "ga_event_template" : "{website}{label}{author}{marketplace}{amp}",
-                                    "tracking_id"       : "{website}{label}{author}{marketplace}{amp}"
+                                    "tracking_id"       : ""
                                 }
                         ]
                     },
