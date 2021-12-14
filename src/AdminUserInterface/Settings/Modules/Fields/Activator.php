@@ -16,6 +16,7 @@ class Activator extends Field {
             $listActivator = array_merge($this->listActivator,$global_config["taxonomy"]);
 
         $output = '<select class="attivatore" name="'.$this->name.'"><option value="">Seleziona un attivatore</option>';
+        $output.= '<option value="tutte" '.(($this->value == "tutte") ? "selected" : "").' >Tutti gli attivatori</option>';
         foreach( $listActivator as $activator) 
             $output.= '<option value="'.$activator.'" '.(($this->value == $activator) ? "selected" : "").' >'.$activator.'</option>';
         $output.= '</select>';

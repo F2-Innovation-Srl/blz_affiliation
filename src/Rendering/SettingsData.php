@@ -67,7 +67,7 @@ class SettingsData {
                 if ($activation_table["regola"] == "this_value")
                    $code = str_replace("{".$activation_table[$type."_label"]."}",$this->getValue($activation_table),$code);
                 //GLI ALTRI CASI SE L'ATTIVATORE E' VALIDO
-                if ($this->isValidRule($activation_table) && !empty($activation_table[$type."_label"]))
+                if (($this->isValidRule($activation_table) && !empty($activation_table[$type."_label"])) || $activation_table["attivatore"] = "tutte")
                     $code = str_replace("{".$activation_table[$type."_label"]."}",$activation_table[$type."_val"],$code);
             }
        }
