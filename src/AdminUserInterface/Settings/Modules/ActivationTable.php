@@ -17,7 +17,7 @@ class ActivationTable {
 	 */
 	function __construct($option_name,$current) {
         $this->current = $current;
-        $this->option_name = $current;
+        $this->option_name = $option_name;
         $rows = $this->getAndSetRows($option_name);
         $hiddenGA = (empty($this->current["marketplace"]["ga_event_template"]) ) ? "hidden" : "text"; 
         $hiddenTrack = (empty($this->current["marketplace"]["tracking_id"]) ) ? "hidden" : "text"; 
