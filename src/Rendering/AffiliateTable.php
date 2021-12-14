@@ -43,10 +43,10 @@ class AffiliateTable {
         $id=1;
         
         while ( have_rows('affiliate_table_row', $this->table_id) ) : the_row();
-         
+            $post = get_post($this->table_id);
             $table[]= [
                 "table_id"               => $id++,
-                "table_title"            => Helper::slugify(get_post($this->table_id)["title"]),
+                "table_title"            => Helper::slugify($post->title),
                 "table_marketplace"      => get_sub_field('title'),
                 "table_marketplace_slug" => Helper::slugify( get_sub_field('title') ),
                 "table_img"              => get_sub_field('image'),
@@ -92,14 +92,13 @@ class AffiliateTable {
                 <?php 
                 /// recupera i dati della pagina
                 $postData = new PostData();
-                
                 foreach( $table as $item ): 
-                    $SettingsData = new SettingsData($this->postData,"blz_table",(new Request(["marketplace" => $item->table_marketplace_slug, "position" => $item->table_id])));
+                    $SettingsData = new SettingsData($postData,"blz_table",(new Request(["marketplace" => $item->table_marketplace_slug, "position" => $item->table_id])));
                 ?>
 
                     <li data-vars-affiliate="<?=$SettingsData->getGAEvent()?>">
-                            <?=$item->table_link?>
-                            
+                           <a href="<?=$item->table_link?>" target="_blank" class="aftable_link">
+
                             <div class="col col-1 col-sm-12 col-middle">
                                 <div class="rating_index"><?=$item->table_id?></div>
                             </div>
