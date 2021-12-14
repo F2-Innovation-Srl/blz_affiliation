@@ -44,9 +44,6 @@ class ActivationTableImport {
         if (isset( $_POST[$option_name. '_activation_import'])  && !empty($_POST[$option_name. '_activation_import']) ){
             $activationRows = get_option( $_POST[$option_name. '_activation_import']);    
             update_option($option_name,$activationRows);
-            // FIX per ricaricare la tabella attivazione
-            $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-            header("Refresh:0; url".$actual_link);
         }
 
       

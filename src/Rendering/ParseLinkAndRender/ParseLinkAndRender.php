@@ -71,10 +71,9 @@ class ParseLinkAndRender {
             // sostituiamo tutti i link che abbiamo trovato
             foreach( $pattern->data as $linkData ) {
                 //echo "<pre>";
-                //print_r($linkData);
-
+                
                 /// inizializzo i settingsData 
-                $SettingsData = new SettingsData($this->postData,"parseLinkAndRender",(new Request(["marketplace" => $this->marketplace])));
+                $SettingsData = new SettingsData($this->postData,"parseLinkAndRender",(new Request(["marketplace" => $linkData->marketplace])));
                 $new_link = $this->FillTemplate( $linkData->url, $SettingsData->getGAEvent(), $SettingsData->getTrackingID(), $SettingsData->getTemplate() );
                 
                 /// rimpiazziamo i vecchi link con i nuovi

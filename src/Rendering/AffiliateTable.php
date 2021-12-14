@@ -141,10 +141,18 @@ class AffiliateTable {
                     </div>
                 </li>
 
-                <?php foreach( $table as $item ): ?>
+                <?php 
+                /// recupera i dati della pagina
+                $postData = new PostData();
+                
+                foreach( $table as $item ): 
+                    $SettingsData = new SettingsData($this->postData,"blz_table",(new Request(["marketplace" => $item->table_title])));
+                    $link = $this->FillTemplate( $item->table_link, $SettingsData->getGAEvent(), $SettingsData->getTrackingID(), $SettingsData->getTemplate() );
+                    
+                ?>
 
                     <li data-vars-affiliate="<?=$item->table_tracking?>">
-                        <a href="<?=$item->table_link?>" target="_blank" class="aftable_link">
+                            <?=$link?>
                             
                             <div class="col col-1 col-sm-12 col-middle">
                                 <div class="rating_index"><?=$item->table_id?></div>
@@ -180,7 +188,21 @@ class AffiliateTable {
         <?php
     }
     
+    /**
+     * Crea il link a partire dai dati della pagina
+     * e da quelli di un singolo link nel testo
+     *
+     * @param Link $linkData
+     * @return string
+     */
+    private function FillTemplate( $link, $ga_event, $tracking, $template) {
 
+        $link = str_replace( '{tracking_id}', $tracking, $link);
+        /// poi accorcia il link
+        $link = ( new Shortener )->generateShortLink( $link ) ;
+
+        return str_replace([ '{{ url }}', '{{ ga_event }}' ], [ $link, $ga_event ], $template);
+    }
 
 
 }

@@ -24,6 +24,11 @@ class SettingsData {
 
         <a href="{{ url }}" data-vars-affiliate="{{ ga_event }}" 
            class="affiliation-intext" target="_blank" rel="sponsored" >
+        HTML,
+        'blz_table' => <<<HTML
+        
+        <a href="{{ url }}" target="_blank" data-vars-affiliate="{{ ga_event }}"
+            class="aftable_link"  target="_blank" rel="sponsored" >
         HTML
     ];
 
@@ -67,7 +72,7 @@ class SettingsData {
                 if ($activation_table["regola"] == "this_value")
                    $code = str_replace("{".$activation_table[$type."_label"]."}",$this->getValue($activation_table),$code);
                 //GLI ALTRI CASI SE L'ATTIVATORE E' VALIDO
-                if (($this->isValidRule($activation_table) && !empty($activation_table[$type."_label"])) || $activation_table["attivatore"] = "tutte")
+                if (($this->isValidRule($activation_table) && !empty($activation_table[$type."_label"])) || $activation_table["attivatore"] == "tutte")
                     $code = str_replace("{".$activation_table[$type."_label"]."}",$activation_table[$type."_val"],$code);
             }
        }
@@ -108,6 +113,7 @@ class SettingsData {
    
 
     private function getValue($activation_table) {
+       
         switch ($activation_table["attivatore"]) {
             case "POSTTYPE":
                 return $this->postData->post_type;
@@ -122,11 +128,13 @@ class SettingsData {
     }
 
     private function isValidRule($activation_table) {
+        //print_r($activation_table["attivatore"]);
         switch ($activation_table["attivatore"]) {
             case "POSTTYPE":
                 return ($activation_table["regola"] == $this->postData->post_type || $activation_table["regola"] == "custom_value") ? true : false;
                 break;
             case "USERS":
+
                 return ($activation_table["regola"] == $this->postData->author["id"] || $activation_table["regola"] == "custom_value") ? true : false;
                 break;
             default:
@@ -138,8 +146,10 @@ class SettingsData {
     private function cleanCode($str) {
 
         $regex = '/{\s*(.*?)\s*}/';
+        //rimuovo placeholder non rimpiazzati
         $code = preg_replace( $regex, "", $str);
-
+        //rimuovo anche eventuali doppi spazi
+        $code = trim(preg_replace('/\s{2,}/',' ',$code));
         return $code;
 
     }
