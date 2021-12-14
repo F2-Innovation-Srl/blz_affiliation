@@ -44,6 +44,7 @@ class ActivationTableImport {
         if (isset( $_POST[$option_name. '_activation_import'])  && !empty($_POST[$option_name. '_activation_import']) ){
             $activationRows = get_option( $_POST[$option_name. '_activation_import']);    
             update_option($option_name,$activationRows);
+            
         }
 
       

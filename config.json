@@ -22,7 +22,7 @@
                                     "suffix"            : "amazon",
                                     "description"       : "Pannello per la configurazione di Amazon",
                                     "api_slug"          : "amazon",
-                                    "ga_event_template" : "{website}{label}{author}{marketplace}{amp}",
+                                    "ga_event_template" : "{website} {label} {author} {marketplace} {amp}",
                                     "tracking_id"       : "{website}{label}{author}{marketplace}{amp}-21"
                                 },
                                 {
@@ -30,7 +30,7 @@
                                     "suffix"            : "ebay",
                                     "description"       : "Pannello per la configurazione di eBay",
                                     "api_slug"          : "ebay",
-                                    "ga_event_template" : "{website}{label}{author}{marketplace}{amp}",
+                                    "ga_event_template" : "{website} {label} {author} {marketplace} {amp}",
                                     "tracking_id"       : "{website}{label}{author}{marketplace}{amp}"
                                 },
                                 {
@@ -38,7 +38,7 @@
                                     "suffix"            : "trovaprezzi",
                                     "description"       : "Pannello per la configurazione di Trovaprezzi",
                                     "api_slug"          : "trovaprezziVG",
-                                    "ga_event_template" : "{website}{label}{author}{marketplace}{amp}",
+                                    "ga_event_template" : "{website} {label} {author} {marketplace} {amp}",
                                     "tracking_id"       : ""
                                 },
                                 {
@@ -46,7 +46,7 @@
                                     "suffix"            : "custom",
                                     "description"       : "Pannello per la configurazione dei link custom",
                                     "api_slug"          : "",
-                                    "ga_event_template" : "{website}{label}{author}{marketplace}{amp}",
+                                    "ga_event_template" : "{website} {label} {author} {marketplace} {amp}",
                                     "tracking_id"       : ""
                                 }
                         ]
@@ -61,7 +61,7 @@
                                     "suffix"            : "generic",
                                     "description"       : "Pannello per la configurazione del pulsante",
                                     "api_slug"          : "",
-                                    "ga_event_template" : "{website}{subject}{program}{amp}",
+                                    "ga_event_template" : "{website} {subject} {program} {amp}",
                                     "tracking_id"       : ""
                                 }
                         ]
@@ -75,7 +75,7 @@
                                     "suffix"            : "amazon",
                                     "description"       : "Pannello per la configurazione di Amazon",
                                     "api_slug"          : "amazon",
-                                    "ga_event_template" : "{website}{label}{author}{marketplace}{amp}",
+                                    "ga_event_template" : "{website} {label} {author} {marketplace} {amp}",
                                     "tracking_id"       : "{website}{label}{author}{marketplace}{amp}-21"
                                 },
                                 {
@@ -83,7 +83,7 @@
                                     "suffix"            : "ebay",
                                     "description"       : "Pannello per la configurazione di eBay",
                                     "api_slug"          : "ebay",
-                                    "ga_event_template" : "{website}{label}{author}{marketplace}{amp}",
+                                    "ga_event_template" : "{website} {label} {author} {marketplace} {amp}",
                                     "tracking_id"       : "{website}{label}{author}{marketplace}{amp}"
                                 }
                         ]
