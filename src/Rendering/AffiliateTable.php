@@ -48,19 +48,21 @@ class AffiliateTable {
         return array_map( function( $row, $id ) use ( $postData ) {
 
             $id++;
-                        
+
+            $post = get_post( $this->table_id );
+
             $request = new Request( [ 
+                "keyword" => StringHelper::slugify($post->post_title),
                 "marketplace" => StringHelper::slugify( $row['title'] ),
                 "position" => $id
             ] );
 
             $settings = new SettingsData( $postData, "blz_table", $request );
 
-            $post = get_post( $this->table_id );
+            
 
             return (object) [
                 "id"               => $id,
-                "title"            => StringHelper::slugify($post->post_title),
                 "marketplace"      => $row['title'],                
                 "img"              => $row['image'],
                 "text"             => $row['text'],
