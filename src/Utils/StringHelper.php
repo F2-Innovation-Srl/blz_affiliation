@@ -2,7 +2,7 @@
 
 namespace BLZ_AFFILIATION\Utils;
 
-class Helper {
+class StringHelper {
 
     /**
      * Replace special characters and spaces in a given string

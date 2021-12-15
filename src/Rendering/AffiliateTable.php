@@ -3,7 +3,7 @@
 namespace BLZ_AFFILIATION\Rendering;
 
 use BLZ_AFFILIATION\AffiliateMarketing\Request;
-use BLZ_AFFILIATION\Utils\Helper;
+use BLZ_AFFILIATION\Utils\StringHelper;
 /**
  * 
  * Ritorna i dati della tabella di affiliazione nella pagina
@@ -12,6 +12,7 @@ use BLZ_AFFILIATION\Utils\Helper;
 class AffiliateTable {
 
     protected $post_id;
+    
     function __construct() {
 
         // Add the shortcode to print the links
@@ -25,7 +26,7 @@ class AffiliateTable {
         
         $table = $this->getTable();
 
-        $this->render( $table );
+        return $this->render( $table );
     }
 
 
@@ -37,40 +38,56 @@ class AffiliateTable {
      */
     public function getTable() {
 
-        if( !have_rows('affiliate_table_row', $this->table_id) ) return [];
+        if( !have_rows('affiliate_table_row', $this->table_id ) ) return [];
 
-        $table = [];
-        $id=1;
-        
-        while ( have_rows('affiliate_table_row', $this->table_id) ) : the_row();
-            $post = get_post($this->table_id);
-            $table[]= [
-                "table_id"               => $id++,
-                "table_title"            => Helper::slugify($post->title),
-                "table_marketplace"      => get_sub_field('title'),
-                "table_marketplace_slug" => Helper::slugify( get_sub_field('title') ),
-                "table_img"              => get_sub_field('image'),
-                "table_text"             => get_sub_field('text'),
-                "table_rating"           => get_sub_field('rating'),
-                "table_cta_text"         => get_sub_field('cta'),
-                "table_link"             => get_sub_field('link'),
-                "table_link_amp"         => get_sub_field('link_amp'),
+        /// recupera i dati della pagina
+        $postData = new PostData();
+
+        $table= get_field( 'affiliate_table_row', $this->table_id );
+
+        return array_map( function( $row, $id ) use ( $postData ) {
+
+            $id++;
+                        
+            $request = new Request( [ 
+                "marketplace" => StringHelper::slugify( $row['title'] ),
+                "position" => $id
+            ] );
+
+            $settings = new SettingsData( $postData, "blz_table", $request );
+
+            $post = get_post( $this->table_id );
+
+            return (object) [
+                "id"               => $id,
+                "title"            => StringHelper::slugify($post->post_title),
+                "marketplace"      => $row['title'],                
+                "img"              => $row['image'],
+                "text"             => $row['text'],
+                "rating"           => $row['rating'],
+                "cta"              => $row['cta'],
+                "link"             => $postData->is_amp ?  $row['link_amp'] : $row['link'],
+                "ga_event"         => $settings->getGAEvent()
             ];
 
-        endwhile;
+        }, $table, array_keys($table)  );
 
-        return $table;
     }
 
 
     protected function render( $table ) {
 
-        /// bisogna fare l'equeing del CSS
-        /// data-css-dependency="styles/components/partials/table-rating.css"
-        ?>
-        
-        <div class="rating-table">
-            <ul class="rating-card grid">
+        /// to enqueue CSS - table-rating.css        
+        $tableTemplate = <<<HTML
+            <div class="rating-table">
+                <ul class="rating-card grid">
+                    {{ header }}
+                    {{ rows }}
+                </ul>
+            </div>
+        HTML;
+
+        $header = <<<HTML
                 <li class="table_heading">
                     <div class="col col-1 col-sm-12 col-middle">
                         <div class="rating_heading">Rank</div>
@@ -88,49 +105,44 @@ class AffiliateTable {
                         <div class="rating_heading" style="margin-left: -24px;">Offerta</div>
                     </div>
                 </li>
-
-                <?php 
-                /// recupera i dati della pagina
-                $postData = new PostData();
-                foreach( $table as $item ): 
-                    $SettingsData = new SettingsData($postData,"blz_table",(new Request(["marketplace" => $item->table_marketplace_slug, "position" => $item->table_id])));
-                ?>
-
-                    <li data-vars-affiliate="<?=$SettingsData->getGAEvent()?>">
-                           <a href="<?=$item->table_link?>" target="_blank" class="aftable_link">
-
-                            <div class="col col-1 col-sm-12 col-middle">
-                                <div class="rating_index"><?=$item->table_id?></div>
-                            </div>
-                        
-                            <div class="col col-3 col-sm-12 col-middle">
-                                <div class="rating_image">
-                                    <img src="<?=$item->table_img?>" class="img-cover" alt="<?=$item->table_marketplace?>">
-                                </div>
-                            </div>
-                
-                            <div class="col col-3 col-sm-12 col-middle">
-                                <div class="rating_description"><?=$item->table_text?></div>
-                            </div>
-                
-                            <div class="col col-3 col-sm-12 col-middle">
-                                <div class="rating_star">
-                                    <div class="stars" style="--rating: <?=$item->table_rating?>;"></div>
-                                </div>
-                            </div>
-                
-                            <div class="col col-2 col-sm-12 col-middle">
-                                <div class="rating_cta">
-                                    <span class="btn btn-primary"><?=$item->table_cta_text?></span>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
-        </div>
+        HTML;
+       
+        $rowTemplate = <<<HTML
+                <li data-vars-affiliate="{{ ga_event }}">
+                    <a href="{{ link }}" target="_blank" class="aftable_link">
+                        <div class="col col-1 col-sm-12 col-middle">
+                            <div class="rating_index">{{ id }}</div>
+                        </div>
+                        <div class="col col-3 col-sm-12 col-middle">
+                            <div class="rating_image"><img src="{{ img }}" class="img-cover" alt="{{ marketplace }}"></div>
+                        </div>                
+                        <div class="col col-3 col-sm-12 col-middle">
+                            <div class="rating_description">{{ text }}</div>
+                        </div>                
+                        <div class="col col-3 col-sm-12 col-middle">
+                            <div class="rating_star"><div class="stars" style="--rating: {{ rating }};"></div></div>
+                        </div>
+                        <div class="col col-2 col-sm-12 col-middle">
+                            <div class="rating_cta"><span class="btn btn-primary">{{ cta }}</span></div>
+                        </div>
+                    </a>
+                </li>
+        HTML;        
         
-        <?php
+        $rows = array_reduce( $table, function( $markup, $row ) use ( $rowTemplate ) {
+            
+            $markup .= str_replace (
+                ['{{ ga_event }}', '{{ marketplace }}', '{{ img }}', '{{ link }}', '{{ id }}', '{{ text }}', '{{ rating }}', '{{ cta }}'],
+                [ $row->ga_event, $row->marketplace, $row->img, $row->link, $row->id, $row->text, $row->rating, $row->cta ],
+                $rowTemplate
+            );
+
+            return $markup;
+        
+        }, '');
+        
+        return str_replace([ '{{ header }}','{{ rows }}' ], [ $header, $rows ], $tableTemplate );
+
     }
     
     /**
