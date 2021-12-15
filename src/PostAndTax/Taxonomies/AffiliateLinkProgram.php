@@ -17,13 +17,21 @@ class AffiliateLinkProgram {
         add_action('init', [ get_called_class(), 'register_tax' ] );
     }
 
+    
+
+
     public static function register_tax() {
+
+        $taxonomies = [ 
+            'blz-affiliation-programs'=> 'Programs',
+            'blz-affiliation-subject' => 'Subject'
+        ];
 
         //TODO we need this taxonomy?
         $posttypes = get_post_types(['public' => 'true']);
-        foreach (CONFIG["custom_taxonomies"] as $taxonomy_slug => $taxonomy_name){
+        foreach ( $taxonomies as $taxonomy_slug => $taxonomy_name){
             
-            register_taxonomy($taxonomy_slug, ['post'], [
+            register_taxonomy( $taxonomy_slug, ['post'], [
                 'hierarchical' => false,
                 'labels' => [
                     'name'          => $taxonomy_name,
