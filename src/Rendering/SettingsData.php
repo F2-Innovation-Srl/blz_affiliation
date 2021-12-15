@@ -5,14 +5,13 @@ namespace BLZ_AFFILIATION\Rendering;
 use BLZ_AFFILIATION\Utils\Config;
 
 /**
- * Quali sono le responsabilità di questa classe?
+ * Ha la responsabilità di ottenere le label degli eventi i tracking id 
+ * per la pagina corrente interpretando le regole della tabella
  * 
  * @method string getTemplate()
  * @method string getActivationTableRules()
  * @method string getTrackingID() 
  * @method string getGAEvent()
- 
- 
  * 
  */
 class SettingsData { 
@@ -40,21 +39,24 @@ class SettingsData {
 
     public function __construct($postData,$link_type,$request) {
         
-        // COPIO IL TEMPLATE PER GLI ALTRI FORNATI UGUALI
+        // COPIO IL TEMPLATE PER GLI ALTRI FORMATI UGUALI
         $this->templates["linkPrograms"] = $this->templates["linkButton"];
         
         $this->postData = $postData;
         $this->request = $request;
+        
         $this->link_type = Config::findbySuffix(CONFIG["Items"][0]["settings"]["tabs"],$link_type);
   
         $this->marketplace = Config::findbySuffix($this->link_type["marketplaces"],$this->request->getMarketplaceKey());
+        
         $global_settings = get_option( "blz-affiliation-settings" );
+        
         $this->config = [
-            "global_settings" => $global_settings,
-            "activation_table" => get_option(CONFIG["Items"][0]["suffix"]."-".$this->link_type["suffix"]."-".$this->marketplace["suffix"]),
-            "ga_event_template" =>  $this->marketplace["ga_event_template"],
-            "tracking_id_template" =>  $this->marketplace["tracking_id"],
-            
+
+            "global_settings"      => $global_settings,
+            "activation_table"     => get_option(CONFIG["Items"][0]["suffix"]."-".$this->link_type["suffix"]."-".$this->marketplace["suffix"]),
+            "ga_event_template"    =>  $this->marketplace["ga_event_template"],
+            "tracking_id_template" =>  $this->marketplace["tracking_id"],            
         ];
 
     }
@@ -85,15 +87,16 @@ class SettingsData {
         $code = str_replace( "{website}", $this->config["global_settings"]["website_".$type], $code);
 
         // sostituisco il restante in base alle regole   
-        foreach( array_reverse( $this->config[ "activation_table" ] ) as $activation_table ) {
+        foreach( array_reverse( $this->config[ "activation_table" ] ) as $rule ) {
             
             // CASO IN CUI PRENDO IL VALORE DAL TIPO ATTIVATORE
-            if ($activation_table["regola"] == "this_value")
-                $code = str_replace("{".$activation_table[$type."_label"]."}",$this->getValue($activation_table),$code);
+            if( $rule["regola"] == "this_value" )
+                $code = str_replace( "{".$rule[$type."_label"]."}", $this->getValue($rule), $code );
 
             // GLI ALTRI CASI SE L'ATTIVATORE È VALIDO
-            if (($this->isValidRule($activation_table) && !empty($activation_table[$type."_label"])) || $activation_table["attivatore"] == "tutte")
-                $code = str_replace("{".$activation_table[$type."_label"]."}",$activation_table[$type."_val"],$code);
+            if( !empty( $rule ) )
+                if ( ( $this->isValidRule($rule) && !empty( $rule[ $type."_label" ] )) || $rule["attivatore"] == "tutte" )
+                    $code = str_replace("{".$rule[$type."_label"]."}",$rule[$type."_val"],$code);
         }
        
         return $code;
