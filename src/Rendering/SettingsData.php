@@ -183,8 +183,15 @@ class SettingsData {
 
             default:                
                 
-                if( empty($this->postData->taxonomies[ $rule["attivatore"] ] )) return false;
-                return in_array( $rule["regola"], $this->postData->taxonomies[$rule["attivatore"]]) || $rule["regola"] == "custom_value";
+                if( empty( $this->postData->taxonomies[ $rule["attivatore"]] )) {
+                    
+                    return false;
+
+                } else {
+
+                    return in_array( $rule["regola"], $this->postData->taxonomies[$rule["attivatore"]]) || $rule["regola"] == "custom_value";
+                }
+
         } 
     }
 
