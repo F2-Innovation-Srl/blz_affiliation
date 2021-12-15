@@ -45,8 +45,6 @@ class AdminPage {
             );
         } else {
 
-            var_dump(PLUGIN_URI ."src/assets/css/table-rating.css");die();
-
             # enqueue CSS
             wp_enqueue_style(
                 'blz-affiliation-table-css',
