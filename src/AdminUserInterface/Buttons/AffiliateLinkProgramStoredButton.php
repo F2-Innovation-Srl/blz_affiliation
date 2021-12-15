@@ -39,11 +39,11 @@ class AffiliateLinkProgramStoredButton extends Button {
             'stored_links' => json_encode( $this->getStoredLinks() )
         ];    
         
-        
         // inject the variables into the html template
-        foreach($fields_to_inject as $key => $value)
+        foreach($fields_to_inject as $key => $value) {
+
             $html = str_replace ( '{{'.$key.'}}' , $value , $html );
-        
+        }
 
         // print the block
         header('Content-Type: ' . get_option('html_type') . '; charset=' . get_option('blog_charset'));
@@ -53,11 +53,11 @@ class AffiliateLinkProgramStoredButton extends Button {
 
     private function getStoredLinks() { 
 
-        return array_map( function($item) {
+        return array_map( function( $item ) {
             
             return ['id' => $item->ID, 'title' => $item->post_title ];
 
-        }, get_posts( [ 'post_type' => 'stored_link', 'post_status' => 'publish'] ));
+        }, get_posts( [ 'post_type' => 'program_stored_link', 'post_status' => 'publish' ] ));
 
     }
 }
