@@ -46,12 +46,9 @@ class AdminPage {
         } else {
 
             # enqueue CSS
-            wp_enqueue_style(
-                'blz-affiliation-table-css',
-                PLUGIN_URI ."src/assets/css/table-rating.css",
-                [], 
-                PLUGIN_VERSION, 'all'
-            );
+            wp_enqueue_style( 'blz-affiliation-grid-css', PLUGIN_URI ."src/assets/css/flex-grid-lite.css", [],  PLUGIN_VERSION, 'all' );
+            wp_enqueue_style( 'blz-affiliation-table-css', PLUGIN_URI ."src/assets/css/table-rating.css", [],  PLUGIN_VERSION, 'all' );
+            
         }
 
         
