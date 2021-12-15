@@ -15,7 +15,7 @@
         var attivatoreLists = document.querySelectorAll(".attivatore")
         for (let i = 0; i < attivatoreLists.length; i++) {
             attivatoreLists[i].addEventListener('change', function() {
-                document.getElementById('GaTrakingIdSettings').submit();
+                document.getElementById('GaTrackingIdSettings').submit();
             });
         }
         

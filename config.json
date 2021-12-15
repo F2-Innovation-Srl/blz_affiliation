@@ -9,7 +9,7 @@
         {
             "name"       : "GA e TrackingID Settings",
             "suffix"     : "blz-affiliation",
-            "class_name" : "GaTrakingIdSettings",
+            "class_name" : "GaTrackingIdSettings",
             "settings" : {
                 "tabs" : [
                     {

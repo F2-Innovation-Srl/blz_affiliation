@@ -5,11 +5,11 @@ use BLZ_AFFILIATION\Utils\Config;
 use BLZ_AFFILIATION\AdminUserInterface\Settings\Modules\ActivationTable;
 use BLZ_AFFILIATION\AdminUserInterface\Settings\Modules\TemplateTable;
 /**
- * Class GaTrakingIdSettings
+ * Class GaTrackingIdSettings
  *
  * @package BLZ_AFFILIATION
  */
-class GaTrakingIdSettings {
+class GaTrackingIdSettings {
 
     protected $item;
     protected $tabs;
