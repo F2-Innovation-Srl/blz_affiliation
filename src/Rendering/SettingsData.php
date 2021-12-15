@@ -181,7 +181,9 @@ class SettingsData {
             case "USERS":
                 return $rule["regola"] == $this->postData->author["id"] || $rule["regola"] == "custom_value";
 
-            default:
+            default:                
+                
+                if( empty($this->postData->taxonomies[ $rule["attivatore"] ] )) return false;
                 return in_array( $rule["regola"], $this->postData->taxonomies[$rule["attivatore"]]) || $rule["regola"] == "custom_value";
         } 
     }
