@@ -61,7 +61,7 @@
                                     "suffix"            : "generic",
                                     "description"       : "Pannello per la configurazione del pulsante",
                                     "api_slug"          : "",
-                                    "ga_event_template" : "{website} {subject} {program} {amp}",
+                                    "ga_event_template" : "{website} {label} {subject} {program} {amp}",
                                     "tracking_id"       : ""
                                 }
                         ]
