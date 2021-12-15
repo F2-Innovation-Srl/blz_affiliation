@@ -31,9 +31,9 @@ class Shortener {
         ));
 
         $short_data = json_decode(curl_exec($curl));
-        print_r($short_data);
+        //print_r($short_data);
         curl_close($curl);
-        return ($short_data->shorturl) ? (html_entity_decode($short_data->shorturl)) : $link;
+        return ($short_data->shorturl) ? ($short_data->shorturl) : $link;
 
     }
 
