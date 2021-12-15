@@ -39,6 +39,7 @@ class SettingsData {
 
     public function __construct($postData,$link_type,$request) {
         
+        
         // COPIO IL TEMPLATE PER GLI ALTRI FORMATI UGUALI
         $this->templates["linkPrograms"] = $this->templates["linkButton"];
         
@@ -46,7 +47,7 @@ class SettingsData {
         $this->request = $request;
         
         $this->link_type = Config::findbySuffix(CONFIG["Items"][0]["settings"]["tabs"],$link_type);
-  
+       
         $this->marketplace = Config::findbySuffix($this->link_type["marketplaces"],$this->request->getMarketplaceKey());
         
         $global_settings = get_option( "blz-affiliation-settings" );
@@ -79,10 +80,10 @@ class SettingsData {
         /// verifica che esista una riga?
         if ( ! isset ( $this->config["activation_table"][0] ) ) 
             return $code;
-        
+               
         // rimuovo amp da template se non sono una pagina amp
         if ( !$this->postData->is_amp ) $code = str_replace("{amp}","",$code);
-
+        
         // aggiungo website 
         $code = str_replace( "{website}", $this->config["global_settings"]["website_".$type], $code);
 
@@ -98,7 +99,7 @@ class SettingsData {
                 if ( ( $this->isValidRule($rule) && !empty( $rule[ $type."_label" ] )) || $rule["attivatore"] == "tutte" )
                     $code = str_replace("{".$rule[$type."_label"]."}",$rule[$type."_val"],$code);
         }
-       
+        
         return $code;
     }
 
@@ -119,15 +120,16 @@ class SettingsData {
     public function getGAEvent() {
         // Se è stato settato manualmente prendo quello       
         if ($this->request->getGAEvent()) return $this->request->getGAEvent();
-
+        
         // carica regole dalla tabella attivazione
         $ga_event = $this->getActivationTableRules($this->config["ga_event_template"],"ga");
-
+        
         //Sostituisco i placeholder dei link program on gli attributi da shortcode
-        if ($this->link_type == "linkPrograms") $ga_event = str_replace("{subject}",$this->request->getSubject(),$ga_event);
-        if ($this->link_type == "linkPrograms") $ga_event = str_replace("{program}",$this->request->getProgram(),$ga_event);
-        if ($this->link_type == "blz_table") $ga_event = str_replace("{numero-posizione}","Positione " .$this->request->getPosition(),$ga_event);
-        if ($this->link_type == "blz_table") $ga_event = str_replace("{marketplace}",$this->request->getMarketplace(),$ga_event);
+        if ($this->link_type["suffix"] == "linkPrograms") $ga_event = str_replace("{subject}",$this->request->getSubject(),$ga_event);
+        if ($this->link_type["suffix"] == "linkPrograms") $ga_event = str_replace("{program}",$this->request->getProgram(),$ga_event);
+        if ($this->link_type["suffix"] == "blz_table") $ga_event = str_replace("{table-name}",$this->request->getKeyword(),$ga_event);
+        if ($this->link_type["suffix"] == "blz_table") $ga_event = str_replace("{numero-posizione}","Posizione " .$this->request->getPosition(),$ga_event);
+        if ($this->link_type["suffix"] == "blz_table") $ga_event = str_replace("{marketplace}",$this->request->getMarketplace(),$ga_event);
         // rimuovi placeholder non impostati
         $ga_event = $this->cleanCode($ga_event);
 
