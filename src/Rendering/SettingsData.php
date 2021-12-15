@@ -4,6 +4,17 @@ namespace BLZ_AFFILIATION\Rendering;
 
 use BLZ_AFFILIATION\Utils\Config;
 
+/**
+ * Quali sono le responsabilità di questa classe?
+ * 
+ * @method string getTemplate()
+ * @method string getActivationTableRules()
+ * @method string getTrackingID() 
+ * @method string getGAEvent()
+ 
+ 
+ * 
+ */
 class SettingsData { 
 
     private $postData;
@@ -51,26 +62,40 @@ class SettingsData {
 
     public function getTemplate() {
     
-        return $this->templates[$this->link_type["suffix"]];
+        return $this->templates[ $this->link_type["suffix"] ];
     }
 
-    private function getActivationTableRules($code,$type){
-        if (isset($this->config["activation_table"][0])) {
+    /**
+     * Undocumented function
+     *
+     * @param string $code - un template con placeholder tra parentesi graffe {}
+     * @param string $type - 'GA' | 'TRK_ID'
+     * @return void
+     */
+    private function getActivationTableRules( string $code, string $type ){
+        
+        /// verifica che esista una riga?
+        if ( ! isset ( $this->config["activation_table"][0] ) ) 
+            return $code;
+        
+        // rimuovo amp da template se non sono una pagina amp
+        if ( !$this->postData->is_amp ) $code = str_replace("{amp}","",$code);
+
+        // aggiungo website 
+        $code = str_replace( "{website}", $this->config["global_settings"]["website_".$type], $code);
+
+        // sostituisco il restante in base alle regole   
+        foreach( array_reverse( $this->config[ "activation_table" ] ) as $activation_table ) {
             
-            // rimuovo amp da template se non sono una pagina amp
-            if ($this->postData->is_amp == false) $code = str_replace("{amp}","",$code);
-            // aggiungo website
-            $code = str_replace("{website}",$this->config["global_settings"]["website_".$type],$code);
-            // sostituisco il restante in base alle regole   
-            foreach(array_reverse($this->config["activation_table"]) as $activation_table){
-                //CASO IN CUI PRENDO IL VALORE DAL TIPO ATTIVATORE
-                if ($activation_table["regola"] == "this_value")
-                   $code = str_replace("{".$activation_table[$type."_label"]."}",$this->getValue($activation_table),$code);
-                //GLI ALTRI CASI SE L'ATTIVATORE E' VALIDO
-                if (($this->isValidRule($activation_table) && !empty($activation_table[$type."_label"])) || $activation_table["attivatore"] == "tutte")
-                    $code = str_replace("{".$activation_table[$type."_label"]."}",$activation_table[$type."_val"],$code);
-            }
-       }
+            // CASO IN CUI PRENDO IL VALORE DAL TIPO ATTIVATORE
+            if ($activation_table["regola"] == "this_value")
+                $code = str_replace("{".$activation_table[$type."_label"]."}",$this->getValue($activation_table),$code);
+
+            // GLI ALTRI CASI SE L'ATTIVATORE È VALIDO
+            if (($this->isValidRule($activation_table) && !empty($activation_table[$type."_label"])) || $activation_table["attivatore"] == "tutte")
+                $code = str_replace("{".$activation_table[$type."_label"]."}",$activation_table[$type."_val"],$code);
+        }
+       
         return $code;
     }
 
@@ -107,46 +132,72 @@ class SettingsData {
     }
 
    
-
-    private function getValue($activation_table) {
+    /**
+     * Ritorna il valore della colonna "attivatore" di una delle righe della tabella
+     *
+     * [ refactoring ] Meccanismo che forse potrebbe andare 
+     *                 in un oggetto che implementa una qualche interfaccia "Rule"
+     * 
+     * @param [type] $activation_table
+     * @return void
+     */
+    private function getValue( $rule ) {
        
-        switch ($activation_table["attivatore"]) {
+        switch ( $rule["attivatore"] ) {
+            
             case "POSTTYPE":
                 return $this->postData->post_type;
-                break;
+            
             case "USERS":
                 return $this->postData->author["name"];
-                break;
-            default:
-                return $this->postData->taxonomies[$activation_table["attivatore"]][0];
-                break;
+            
+            default:                
+                return $this->postData->taxonomies[ $rule[ "attivatore" ] ][0];            
         } 
     }
 
-    private function isValidRule($activation_table) {
+    /**
+     * Ritorna true se una regola ( una delle righe della tabella ) è verificata
+     *
+     * [ refactoring ]--> l'oggetto Rule dovrebbe avere il meccanismo per verificare la pagina 
+     * 
+     * @param array $rule - riga della tabella  
+     * @return boolean
+     */
+    private function isValidRule( array $rule ) {
+
         //print_r($activation_table["attivatore"]);
-        switch ($activation_table["attivatore"]) {
-            case "POSTTYPE":
-                return ($activation_table["regola"] == $this->postData->post_type || $activation_table["regola"] == "custom_value") ? true : false;
-                break;
+        
+        /// in base al tipo di attivatore sulla riga
+        switch ($rule["attivatore"]) {
+
+            /// verifica posttype, utente o tassonomia
+            case "POSTTYPE":                
+                return $rule["regola"] == $this->postData->post_type || $rule["regola"] == "custom_value";
+                
             case "USERS":
-                return ($activation_table["regola"] == $this->postData->author["id"] || $activation_table["regola"] == "custom_value") ? true : false;
-                break;
+                return $rule["regola"] == $this->postData->author["id"] || $rule["regola"] == "custom_value";
+
             default:
-                return ((in_array($activation_table["regola"],$this->postData->taxonomies[$activation_table["attivatore"]])) || $activation_table["regola"] == "custom_value") ? true : false;
-                break;
+                return in_array( $rule["regola"], $this->postData->taxonomies[$rule["attivatore"]]) || $rule["regola"] == "custom_value";
         } 
     }
 
-    private function cleanCode($str) {
+    /**
+     * Ripulisce il template da caratteri non desiderati
+     *
+     * @param string $template
+     * @return void
+     */
+    private function cleanCode( $template ) {
 
-        $regex = '/{\s*(.*?)\s*}/';
-        //rimuovo placeholder non rimpiazzati
-        $code = preg_replace( $regex, "", $str);
-        //rimuovo anche eventuali doppi spazi
-        $code = trim(preg_replace('/\s{2,}/',' ',$code));
-        return $code;
+        // rimuovo placeholder non rimpiazzati
+        $template = preg_replace( '/{\s*(.*?)\s*}/', '', $template );
 
+        // rimuovo anche eventuali doppi spazi        
+        $template = trim( preg_replace( '/\s+/', ' ', $template ) );
+        
+        return $template;
     }
 
 
