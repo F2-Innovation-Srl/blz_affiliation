@@ -50,7 +50,7 @@
                     {
                         "name"        : "Program Link",
                         "suffix"      : "linkPrograms",
-                        "description" : "Gestione Program Link e Stored program link",
+                        "description" : "Gestione Program Link e Stored Program Link",
                         "marketplaces":[
                                 {
                                     "name"              : "Generic",
