@@ -104,7 +104,7 @@ class SettingsData {
 
     public function getTrackingID() {
         // Se è stato settato manualmente prendo quello
-        $track_id = ($this->request->getGAEvent()) ? $this->request->getTrackingId()."{amp}" : $this->config["tracking_id_template"];
+        $track_id = ($this->request->getTrackingId()) ? $this->request->getTrackingId()."{amp}" : $this->config["tracking_id_template"];
         
         // carica regole dalla tabella attivazione
         $track_id = $this->getActivationTableRules($track_id,"trk");
