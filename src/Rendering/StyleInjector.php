@@ -40,7 +40,7 @@ class StyleInjector {
         
         if ( !is_admin() ) {
             
-            add_action( 'wp_enqueue_styles', [ $this, 'inject_css' ] );        
+            add_action( 'wp_head', [ $this, 'inject_css' ] );        
                         
         }
     }
@@ -50,7 +50,7 @@ class StyleInjector {
 
         $css = str_replace( ['# primary #'],[$this->primary], $this->style );
 
-        echo $css;
+        echo "<style>".$css."</style>";
     }
 
     
