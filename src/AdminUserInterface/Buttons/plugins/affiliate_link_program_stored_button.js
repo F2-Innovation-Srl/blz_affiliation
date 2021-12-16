@@ -19,7 +19,7 @@
     
                     // Register the button
                     ed.addButton(plugin_name, {
-                            title : 'Inserisci Link affiliazione',
+                            title : 'Inserisci Stored Program Link',
                             cmd : plugin_name + '_cmd',
                             icon: 'link',
                             image : url + '/assets/stardatabase.svg'
