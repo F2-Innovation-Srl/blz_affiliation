@@ -80,9 +80,8 @@ class SettingsData {
         /// verifica che esista una riga?
         if ( ! isset ( $this->config["activation_table"][0] ) ) 
             return $code;
-               
         // rimuovo amp da template se non sono una pagina amp
-        if ( !$this->postData->is_amp ) $code = str_replace("{amp}","",$code);
+        if ( $this->postData->is_amp == "false" ) $code = str_replace("{amp}","",$code);
         
         // aggiungo website 
         $code = str_replace( "{website}", $this->config["global_settings"]["website_".$type], $code);
@@ -105,10 +104,10 @@ class SettingsData {
 
     public function getTrackingID() {
         // Se è stato settato manualmente prendo quello
-        if ($this->request->getTrackingId()) return $this->request->getTrackingId();
+        $track_id = ($this->request->getGAEvent()) ? $this->request->getTrackingId()."{amp}" : $this->config["tracking_id_template"];
         
         // carica regole dalla tabella attivazione
-        $track_id = $this->getActivationTableRules($this->config["tracking_id_template"],"trk");
+        $track_id = $this->getActivationTableRules($track_id,"trk");
         
         // rimuovi placeholder non impostati
         $track_id = $this->cleanCode($track_id);
@@ -119,10 +118,10 @@ class SettingsData {
 
     public function getGAEvent() {
         // Se è stato settato manualmente prendo quello       
-        if ($this->request->getGAEvent()) return $this->request->getGAEvent();
+        $ga_event = ($this->request->getGAEvent()) ? $this->request->getGAEvent()."{amp}" : $this->config["ga_event_template"];
         
         // carica regole dalla tabella attivazione
-        $ga_event = $this->getActivationTableRules($this->config["ga_event_template"],"ga");
+        $ga_event = $this->getActivationTableRules($ga_event,"ga");
         
         //Sostituisco i placeholder dei link program on gli attributi da shortcode
         if ($this->link_type["suffix"] == "linkPrograms") $ga_event = str_replace("{subject}",$this->request->getSubject(),$ga_event);
