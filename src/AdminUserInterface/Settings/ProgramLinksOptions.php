@@ -34,7 +34,11 @@ class ProgramLinksOptions {
             ?>
             <form method="post" action="<?=$action?>">
                 <?php 
-                foreach (CONFIG["custom_taxonomies"] as $taxonomy_slug => $taxonomy_name)
+                $taxonomies = [ 
+                    'blz-affiliation-programs'=> 'Programs',
+                    'blz-affiliation-subjects' => 'Subjects'
+                ];        
+                foreach ($taxonomies as $taxonomy_slug => $taxonomy_name)
                         (new ProgramTable($taxonomy_slug,$taxonomy_name))->render(); 
                 ?>
                 <?php wp_nonce_field( 'program-links-options-save', 'blz-affiliation-custom-message' ); ?>

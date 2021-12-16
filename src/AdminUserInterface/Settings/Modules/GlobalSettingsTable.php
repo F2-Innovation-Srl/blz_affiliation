@@ -19,13 +19,11 @@ class GlobalSettingsTable {
 
         $row = $this->getAndSetRow( $option_name );
         
-        $ga_code =  ( $row[ 'ga_code' ]  != null ) ? $row[ 'ga_code' ] : '';
-        $taxonomies = ( $row[ 'taxonomy' ] != null ) ? $row[ 'taxonomy' ] : '';
-        $website_ga = ( $row[ 'website_ga' ] != null ) ? $row[ 'website_ga' ] : '';
+        $ga_code     = ( $row[ 'ga_code' ]     != null ) ? $row[ 'ga_code' ]     : '';
+        $taxonomies  = ( $row[ 'taxonomy' ]    != null ) ? $row[ 'taxonomy' ]    : '';
+        $website_ga  = ( $row[ 'website_ga' ]  != null ) ? $row[ 'website_ga' ]  : '';
         $website_trk = ( $row[ 'website_trk' ] != null ) ? $row[ 'website_trk' ] : '';
-
     
-
         $this->row =  [
             (new Fields\Text( $option_name."_ga_code", $ga_code, "text" )),
             (new Fields\Taxonomy( $option_name."_taxonomy", serialize( $taxonomies ) )),

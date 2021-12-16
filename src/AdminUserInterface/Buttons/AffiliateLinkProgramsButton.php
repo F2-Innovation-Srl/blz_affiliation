@@ -41,7 +41,7 @@ class AffiliateLinkProgramsButton extends Button {
          
          $fields_to_inject =  [ 
              //'author_tracking_ids' => get_field( 'amazon_tracking_id', 'user_'.get_current_user_id() ) ,
-             'subjects'  => json_encode( get_terms( 'blz-affiliation-subject',  ['hide_empty' => false] )),
+             'subjects'  => json_encode( get_terms( 'blz-affiliation-subjects',  ['hide_empty' => false] )),
              'programs'  => json_encode( get_terms( 'blz-affiliation-programs', ['hide_empty' => false] )),
              'is_stored' => $this->isStoredPost( $post_id ) ? 'true' : 'false'
          ];
