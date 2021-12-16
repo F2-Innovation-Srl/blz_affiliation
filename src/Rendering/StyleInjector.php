@@ -25,9 +25,12 @@ class StyleInjector {
         </style>
     HTML;
 
+    
 	function __construct() {
         
-        $settings = get_option( "blz-affiliation-settings" );
+        $settings = get_option( "blz-affiliation-settings-css" );
+
+        $this->primary = $settings['primary_color'] ? $settings['primary_color'] : 'inherit';
         
         add_action( 'init', [ $this, 'init' ] );
         
@@ -44,9 +47,8 @@ class StyleInjector {
 
     function inject_css() { 
 
-        $primary = isset($primary) ? $primary : 'inherit';
 
-        $css = str_replace( ['# primary #'],[$primary], $this->style );
+        $css = str_replace( ['# primary #'],[$this->primary], $this->style );
 
         echo $css;
     }
