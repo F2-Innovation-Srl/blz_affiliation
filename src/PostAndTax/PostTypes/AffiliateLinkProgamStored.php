@@ -32,7 +32,7 @@ class AffiliateLinkProgamStored {
             'supports'        => [ 'title', 'editor', 'custom-fields' ],
 
             'labels' => [
-                'name' => 'Link Programma Affiliazione',
+                'name' => 'Stored Program Link',
                 'singular_name' => 'link_programma_affiliazione',
                 'add_new' => 'Aggiungi nuovo',
                 'add_new_item' => 'Aggiungi nuovo link',
