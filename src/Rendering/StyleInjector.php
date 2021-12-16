@@ -28,10 +28,7 @@ class StyleInjector {
 	function __construct() {
         
         $settings = get_option( "blz-affiliation-settings" );
-
-        //print_r( $settings ) ; die();
-        if( ! isset( $settings[ 'ga_code' ] ) ) return;
-                
+        
         add_action( 'init', [ $this, 'init' ] );
         
 	}
