@@ -118,7 +118,7 @@ class SettingsData {
 
     public function getGAEvent() {
         // Se è stato settato manualmente prendo quello       
-        $ga_event = ($this->request->getGAEvent()) ? $this->request->getGAEvent()."{amp}" : $this->config["ga_event_template"];
+        $ga_event = ($this->request->getGAEvent()) ? $this->request->getGAEvent()." {amp}" : $this->config["ga_event_template"];
         
         // carica regole dalla tabella attivazione
         $ga_event = $this->getActivationTableRules($ga_event,"ga");
