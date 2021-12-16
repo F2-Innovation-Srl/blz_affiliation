@@ -70,11 +70,7 @@ class GATracking {
         if ( !is_admin() ) {
             
             //aggiunge variabile GA in header
-            add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_js' ] );
-            
-            //aggiunge dipendenze js per tracciamento
-            wp_enqueue_script('blz-affiliation-tracker',PLUGIN_URI ."src/assets/js/libs/tracker.min.js",[], PLUGIN_VERSION,true);
-            wp_enqueue_script('blz-affiliation-activator',PLUGIN_URI ."src/assets/js/affiliate-link-activator.js",["blz-affiliation-tracker"], PLUGIN_VERSION,true);
+            add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_js' ] );            
             
             //aggiunge analitics su pagine AMP
             add_filter( 'the_content',  [ $this, 'add_amp_track'], 20 );
