@@ -24,26 +24,26 @@ class ActivationTable {
 
         for ($i=0; $i<count($rows); $i++){
             $this->rows[] =  [
-                (new Fields\Activator($option_name."_attivatore".$i,$rows[$i]["attivatore"])),
-                (new Fields\Rule($option_name."_regola".$i,$rows[$i]["regola"],$rows[$i]["attivatore"])),
-                (new Fields\Label($option_name."_ga_label".$i,$rows[$i]["ga_label"],"GA",$current)),
-                (new Fields\Text($option_name."_ga_val".$i,$rows[$i]["ga_val"],$hiddenGA)),
-                (new Fields\Label($option_name."_trk_label".$i,$rows[$i]["trk_label"],"TRK_ID",$current)),
-                (new Fields\Text($option_name."_trk_val".$i,$rows[$i]["trk_val"],$hiddenTrack)),
-                (new Fields\Text($i,"Update","button")),
-                (new Fields\Text($i,"Delete","button",["hidden_field" => $option_name]))
+                new Fields\Activator($option_name."_attivatore".$i,$rows[$i]["attivatore"]),
+                new Fields\Rule($option_name."_regola".$i,$rows[$i]["regola"],$rows[$i]["attivatore"]),
+                new Fields\Label($option_name."_ga_label".$i,$rows[$i]["ga_label"],"GA",$current),
+                new Fields\Text($option_name."_ga_val".$i,$rows[$i]["ga_val"],$hiddenGA),
+                new Fields\Label($option_name."_trk_label".$i,$rows[$i]["trk_label"],"TRK_ID",$current),
+                new Fields\Text($option_name."_trk_val".$i,$rows[$i]["trk_val"],$hiddenTrack),
+                new Fields\Text($i,"Update","button"),
+                new Fields\Text($i,"Delete","button",["hidden_field" => $option_name])
             ];
         }
         // FOR NEW INSERT
         $this->rows[] =  [
-            (new Fields\Activator($option_name."_attivatore_new","")),
-            (new Fields\Rule($option_name."_regola_new","")),
-            (new Fields\Label($option_name."_ga_label_new","","GA",$current)),
-            (new Fields\Text($option_name."_ga_val_new","",$hiddenGA)),
-            (new Fields\Label($option_name."_trk_label_new","","TRK_ID",$current)),
-            (new Fields\Text($option_name."_trk_val_new","",$hiddenTrack)),
-            (new Fields\Text($option_name."_new",'Aggiungi',"button")),
-            (new Fields\Text($option_name."_hidden_for_delete",'',"hidden"))
+            new Fields\Activator($option_name."_attivatore_new",""),
+            new Fields\Rule($option_name."_regola_new",""),
+            new Fields\Label($option_name."_ga_label_new","","GA",$current),
+            new Fields\Text($option_name."_ga_val_new","",$hiddenGA),
+            new Fields\Label($option_name."_trk_label_new","","TRK_ID",$current),
+            new Fields\Text($option_name."_trk_val_new","",$hiddenTrack),
+            new Fields\Text($option_name."_new",'Aggiungi',"button"),
+            new Fields\Text($option_name."_hidden_for_delete",'',"hidden")
         ];
     }
 
