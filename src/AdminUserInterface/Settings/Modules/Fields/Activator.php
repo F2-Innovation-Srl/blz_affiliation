@@ -24,7 +24,7 @@ class Activator extends Field {
         HTML;
 
         /// crea le options
-        $options = array_reduce( $listActivator, function( $markup, $activator ) { 
+        $options = array_reduce( $this->listActivator, function( $markup, $activator ) { 
 
             $selected = ($this->value == $activator) ? "selected" : "";
 
