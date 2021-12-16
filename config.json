@@ -16,7 +16,7 @@
                                 {
                                     "name"              : "Amazon",
                                     "suffix"            : "amazon",
-                                    "description"       : "per Amazon",
+                                    "description"       : "con prezzo dinamico per Amazon",
                                     "api_slug"          : "amazon",
                                     "ga_event_template" : "{website} {label} {author} {marketplace} {amp}",
                                     "tracking_id"       : "{website}{label}{author}{marketplace}{amp}-21"
@@ -40,7 +40,7 @@
                                 {
                                     "name"              : "Custom",
                                     "suffix"            : "custom",
-                                    "description"       : "per custom",
+                                    "description"       : "per Custom",
                                     "api_slug"          : "",
                                     "ga_event_template" : "{website} {label} {author} {marketplace} {amp}",
                                     "tracking_id"       : ""

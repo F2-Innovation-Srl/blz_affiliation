@@ -41,7 +41,7 @@ class GaTrackingIdSettings {
                 <input type="hidden" name="<?php echo $this->item["suffix"];?>-sendForm" value="OK" />
                 <?php $this->printTabs(); ?>
                 <div class="<?php echo $this->item["suffix"];?>-container">
-                    <h2><?php echo $this->current["tab"]["description"] . " per i " .$this->current["marketplace"]["description"];?></h2>
+                    <h2><?php echo $this->current["tab"]["description"] . $this->current["marketplace"]["description"];?></h2>
                     <?php 
                     (new TemplateTable($this->option_name,$this->current))->render(); 
                     if (!empty($this->current["marketplace"]["ga_event_template"]) || !empty($this->current["marketplace"]["tracking_id"]) )
