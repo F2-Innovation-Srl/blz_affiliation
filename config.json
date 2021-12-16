@@ -11,12 +11,12 @@
                     {
                         "name"        : "Editorial Links",
                         "suffix"      : "linkButton",
-                        "description" : "link Editoriali da Bottone",
+                        "description" : "Gestione dei link editoriali da bottone ",
                         "marketplaces":[
                                 {
                                     "name"              : "Amazon",
                                     "suffix"            : "amazon",
-                                    "description"       : "Pannello per la configurazione di Amazon",
+                                    "description"       : "per Amazon",
                                     "api_slug"          : "amazon",
                                     "ga_event_template" : "{website} {label} {author} {marketplace} {amp}",
                                     "tracking_id"       : "{website}{label}{author}{marketplace}{amp}-21"
@@ -24,7 +24,7 @@
                                 {
                                     "name"              : "eBay",
                                     "suffix"            : "ebay",
-                                    "description"       : "Pannello per la configurazione di eBay",
+                                    "description"       : "con prezzo dinamico per eBay",
                                     "api_slug"          : "ebay",
                                     "ga_event_template" : "{website} {label} {author} {marketplace} {amp}",
                                     "tracking_id"       : "{website}{label}{author}{marketplace}{amp}"
@@ -32,7 +32,7 @@
                                 {
                                     "name"              : "Trovaprezzi",
                                     "suffix"            : "trovaprezzi",
-                                    "description"       : "Pannello per la configurazione di Trovaprezzi",
+                                    "description"       : "con prezzo dinamico per Trovaprezzi",
                                     "api_slug"          : "trovaprezziVG",
                                     "ga_event_template" : "{website} {label} {author} {marketplace} {amp}",
                                     "tracking_id"       : ""
@@ -40,7 +40,7 @@
                                 {
                                     "name"              : "Custom",
                                     "suffix"            : "custom",
-                                    "description"       : "Pannello per la configurazione dei link custom",
+                                    "description"       : "per custom",
                                     "api_slug"          : "",
                                     "ga_event_template" : "{website} {label} {author} {marketplace} {amp}",
                                     "tracking_id"       : ""
@@ -48,14 +48,14 @@
                         ]
                     },
                     {
-                        "name"        : "Altri Programmi",
+                        "name"        : "Program Link",
                         "suffix"      : "linkPrograms",
-                        "description" : "link Editoriali Altri Programmi",
+                        "description" : "Gestione Program Link e Stored program link",
                         "marketplaces":[
                                 {
                                     "name"              : "Generic",
                                     "suffix"            : "generic",
-                                    "description"       : "Pannello per la configurazione del pulsante",
+                                    "description"       : "",
                                     "api_slug"          : "",
                                     "ga_event_template" : "{website} {label} {subject} {program} {amp}",
                                     "tracking_id"       : "{website}{label}{subject}{program}{amp}"
@@ -64,12 +64,12 @@
                     },{
                         "name"        : "Parse and Render",
                         "suffix"      : "parseLinkAndRender",
-                        "description" : "link automatici nel content",
+                        "description" : "Gestione di link automatici ",
                         "marketplaces":[
                                 {
                                     "name"              : "Amazon",
                                     "suffix"            : "amazon",
-                                    "description"       : "Pannello per la configurazione di Amazon",
+                                    "description"       : "Amazon nel content",
                                     "api_slug"          : "amazon",
                                     "ga_event_template" : "{website} {label} {author} {marketplace} {amp}",
                                     "tracking_id"       : "{website}{label}{author}{marketplace}{amp}-21"
@@ -77,7 +77,7 @@
                                 {
                                     "name"              : "eBay",
                                     "suffix"            : "ebay",
-                                    "description"       : "Pannello per la configurazione di eBay",
+                                    "description"       : "eBay nel content",
                                     "api_slug"          : "ebay",
                                     "ga_event_template" : "{website} {label} {author} {marketplace} {amp}",
                                     "tracking_id"       : "{website}{label}{author}{marketplace}{amp}"
@@ -86,12 +86,12 @@
                     },{
                         "name"        : "Tabella",
                         "suffix"      : "blz_table",
-                        "description" : "Tabella link",
+                        "description" : "Gestione dei link in tabelle di affiliazione",
                         "marketplaces":[
                                 {
                                     "name"              : "Generic",
                                     "suffix"            : "generic",
-                                    "description"       : "Pannello per la configurazione del pulsante",
+                                    "description"       : "",
                                     "api_slug"          : "",
                                     "ga_event_template" : "tabella {label} {table-name} {numero-posizione} {marketplace} {amp}",
                                     "tracking_id"       : ""
