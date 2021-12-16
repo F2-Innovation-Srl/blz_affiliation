@@ -15,7 +15,7 @@ class Activator extends Field {
 
         if ( isset( $global_config[ "taxonomy" ] ) ) {
 
-            $listActivator = array_merge( $this->listActivator, $global_config[ "taxonomy" ] );
+            $this->listActivator = array_merge( $this->listActivator, $global_config[ "taxonomy" ] );
         }
                            
         /// template della select
