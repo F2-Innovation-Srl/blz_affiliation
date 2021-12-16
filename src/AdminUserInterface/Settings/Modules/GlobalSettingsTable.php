@@ -25,10 +25,10 @@ class GlobalSettingsTable {
         $website_trk = ( $row[ 'website_trk' ] != null ) ? $row[ 'website_trk' ] : '';
     
         $this->row =  [
-            (new Fields\Text( $option_name."_ga_code", $ga_code, "text" )),
-            (new Fields\Taxonomy( $option_name."_taxonomy", serialize( $taxonomies ) )),
-            (new Fields\Text($option_name."_website_ga",$website_ga,"text")),
-            (new Fields\Text($option_name."_website_trk",$website_trk,"text")),
+            new Fields\Text( $option_name."_ga_code", $ga_code, "text" ),
+            new Fields\Taxonomy( $option_name."_taxonomy", serialize( $taxonomies ) ),
+            new Fields\Text($option_name."_website_ga",$website_ga,"text"),
+            new Fields\Text($option_name."_website_trk",$website_trk,"text"),
         ];
     }
 

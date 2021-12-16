@@ -17,7 +17,7 @@ class Taxonomy extends Field {
         // sarebbe meglio prendere gli slug
         $taxonomies = array_keys( get_taxonomies() );
        
-        $selected_taxonomies = unserialize( $this->value );
+        $selected_taxonomies = (unserialize( $this->value )) ?: [];
 
         $select = '<select size="8" multiple name="'.$this->name.'[]">{{ options }}</select>';
         
