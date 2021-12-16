@@ -1,10 +1,6 @@
 {
     "plugin_name"       : "Blazemedia Affilitation",
     "plugin_suffix"     : "blz-affiliation",
-    "custom_taxonomies" : {
-            "blz-affiliation-programs" : "Programs",
-            "blz-affiliation-subject" : "Subject"
-    },
     "Items"  : [
         {
             "name"       : "GA e TrackingID Settings",

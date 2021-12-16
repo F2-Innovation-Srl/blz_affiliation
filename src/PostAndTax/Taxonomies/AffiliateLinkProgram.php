@@ -24,7 +24,7 @@ class AffiliateLinkProgram {
 
         $taxonomies = [ 
             'blz-affiliation-programs'=> 'Programs',
-            'blz-affiliation-subject' => 'Subject'
+            'blz-affiliation-subjects' => 'Subject'
         ];
 
         //TODO we need this taxonomy?
