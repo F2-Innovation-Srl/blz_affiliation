@@ -63,7 +63,7 @@ class StyleSettingsTable {
     private function getAndSetRow( $option_name ){
         
         // GET
-        $row = get_option( $option_name ."_css");
+        $row = get_option( $option_name ."-css");
 
         // UPDATE
         $row = [
@@ -71,7 +71,7 @@ class StyleSettingsTable {
         ];
 
         // SET
-        update_option( $option_name."_css", $row );
+        update_option( $option_name."-css", $row );
 
         //RETURN
         return $row;
