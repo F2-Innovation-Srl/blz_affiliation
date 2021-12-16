@@ -44,7 +44,7 @@ class GlobalSettings {
                     <hr>
                     
                     <h3>Link style</h3>
-                    <?php ( new StyleSettingsTable( $this->option_name ))->render();  ?>
+                    <?php ( new StyleSettingsTable( $this->option_name )."_css")->render();  ?>
                 </div>
 
                 <div><hr></div>
