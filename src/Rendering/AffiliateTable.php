@@ -56,8 +56,6 @@ class AffiliateTable {
 
             $settings = new SettingsData("blz_table", $request );
 
-            $postData = POST_DATA;
-
             return (object) [
                 "id"               => $id,
                 "marketplace"      => $row['title'],                
@@ -65,7 +63,7 @@ class AffiliateTable {
                 "text"             => $row['text'],
                 "rating"           => $row['rating'],
                 "cta"              => $row['cta'],
-                "link"             => ($postData->is_amp  == "false") ?  $row['link'] : $row['link_amp'],
+                "link"             => (POST_DATA["is_amp"]  == "false") ?  $row['link'] : $row['link_amp'],
                 "ga_event"         => $settings->getGAEvent()
             ];
 

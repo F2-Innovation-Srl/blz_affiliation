@@ -81,7 +81,7 @@ class SettingsData {
         if ( ! isset ( $this->config["activation_table"][0] ) ) 
             return $code;
         // rimuovo amp da template se non sono una pagina amp
-        if ( $this->postData->is_amp == "false" ) $code = str_replace("{amp}","",$code);
+        if ( $this->postData["is_amp"] == "false" ) $code = str_replace("{amp}","",$code);
         
         // aggiungo website 
         $code = str_replace( "{website}", $this->config["global_settings"]["website_".$type], $code);
@@ -150,13 +150,13 @@ class SettingsData {
         switch ( $rule["attivatore"] ) {
             
             case "POSTTYPE":
-                return $this->postData->post_type;
+                return $this->postData["post_type"];
             
             case "USERS":
-                return $this->postData->author["name"];
+                return $this->postData["author"]["name"];
             
             default:                
-                return $this->postData->taxonomies[ $rule[ "attivatore" ] ][0];            
+                return $this->postData["taxonomies"][ $rule[ "attivatore" ] ][0];            
         } 
     }
 
@@ -177,20 +177,20 @@ class SettingsData {
 
             /// verifica posttype, utente o tassonomia
             case "POSTTYPE":                
-                return $rule["regola"] == $this->postData->post_type || $rule["regola"] == "custom_value";
+                return $rule["regola"] == $this->postData["post_type"] || $rule["regola"] == "custom_value";
                 
             case "USERS":
-                return $rule["regola"] == $this->postData->author["id"] || $rule["regola"] == "custom_value";
+                return $rule["regola"] == $this->postData["author"]["id"] || $rule["regola"] == "custom_value";
 
             default:                
                 
-                if( empty( $this->postData->taxonomies[ $rule["attivatore"]] )) {
+                if( empty( $this->postData["taxonomies"][ $rule["attivatore"]] )) {
                     
                     return false;
 
                 } else {
 
-                    return in_array( $rule["regola"], $this->postData->taxonomies[$rule["attivatore"]]) || $rule["regola"] == "custom_value";
+                    return in_array( $rule["regola"], $this->postData["taxonomies"][$rule["attivatore"]]) || $rule["regola"] == "custom_value";
                 }
 
         } 

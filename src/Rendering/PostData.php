@@ -11,6 +11,10 @@ class PostData {
     public $author;
 
     public function __construct() {
+        add_action( 'init', [ $this, 'loadData' ] );
+    }
+
+    function loadData() {
 
         global $post;   
 
@@ -38,8 +42,7 @@ class PostData {
         /// aggiunge se è anmp
         $this->is_amp = (is_amp_endpoint()) ? "true" : "false";
 
-        define('POST_DATA', $this);
-
+        define('POST_DATA', (array) $this);
     }
 
 
