@@ -11,10 +11,10 @@ class Arrow extends Field {
         
         switch ($this->type) {
             case "UP":
-                return '<span class="order-higher-indicator up" data-id="'.$this->name.'" aria-hidden="true"></span>';
+                return '<input type="submit" name="btnSubmit" data-id="'.$this->name.'" data-name="'.$this->params["hidden_field"].'" class="button button-primary up" value="&uarr;">';
                 break;
             case "DOWN":
-                return '<span class="order-lower-indicator down" data-id="'.$this->name.'" aria-hidden="true"></span>';
+                return '<input type="submit" name="btnSubmit" data-id="'.$this->name.'" data-name="'.$this->params["hidden_field"].'" class="button button-primary down" value="&darr;">';
                 break;
         }
         ?>

@@ -24,8 +24,8 @@ class ActivationTable {
 
         for ($i=0; $i<count($rows); $i++){
             $this->rows[] =  [
-                new Fields\Arrow($i,"","UP"),
-                new Fields\Arrow($i,"","DOWN"),
+                new Fields\Arrow($i,"","UP",["hidden_field" => $option_name]),
+                new Fields\Arrow($i,"","DOWN",["hidden_field" => $option_name]),
                 new Fields\Activator($option_name."_attivatore".$i,$rows[$i]["attivatore"]),
                 new Fields\Rule($option_name."_regola".$i,$rows[$i]["regola"],$rows[$i]["attivatore"]),
                 new Fields\Label($option_name."_ga_label".$i,$rows[$i]["ga_label"],"GA",$current),
@@ -109,6 +109,17 @@ class ActivationTable {
             }));  
         }
 
+        //UP
+        $id_to_up = $_POST[$option_name."_hidden_for_up"];
+        if ($id_to_up != "" && $id_to_up != null)
+            $activationRows = $this->up($activationRows,$id_to_up);
+        
+        //DOWN
+        $id_to_down = $_POST[$option_name."_hidden_for_down"];
+        if ($id_to_down != "" && $id_to_down != null)
+            $activationRows = $this->down($activationRows,$id_to_down);
+
+
         //INSERT 
         if( !empty( $_POST[$option_name.'_attivatore_new'] ) ) {
 
@@ -129,5 +140,25 @@ class ActivationTable {
         //RETURN
         return $activationRows;
 
+    }
+
+    function down($a,$x) {
+        if( count($a)-1 > $x ) {
+            $b = array_slice($a,0,$x,true);
+            $b[] = $a[$x+1];
+            $b[] = $a[$x];
+            $b += array_slice($a,$x+2,count($a),true);
+            return($b);
+        } else { return $a; }
+    }
+    
+    function up($a,$x) {
+        if( $x > 0 and $x < count($a) ) {
+            $b = array_slice($a,0,($x-1),true);
+            $b[] = $a[$x];
+            $b[] = $a[$x-1];
+            $b += array_slice($a,($x+1),count($a),true);
+            return($b);
+        } else { return $a; }
     }
 }

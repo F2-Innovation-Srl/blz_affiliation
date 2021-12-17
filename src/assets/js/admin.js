@@ -19,9 +19,21 @@
             });
         }
 
-        var ups = document.querySelectorAll(".up")
-
-        var downs = document.querySelectorAll(".down")
+        var ups = document.querySelectorAll(".up");
+        ups[0].style.display = "none";
+        for (let i = 0; i < ups.length; i++) {
+            ups[i].addEventListener('click', function() {
+                document.querySelector("#"+this.dataset.name+"_hidden_for_up").value=this.dataset.id;
+            });
+        }
+        
+        var downs = document.querySelectorAll(".down");
+        downs[downs.length- 1].style.display = "none";
+        for (let i = 0; i < downs.length; i++) {
+            downs[i].addEventListener('click', function() {
+                document.querySelector("#"+this.dataset.name+"_hidden_for_down").value=this.dataset.id;
+            });
+        }
         
     });
 
