@@ -47,11 +47,7 @@ class StyleInjector {
 
     function inject_css() { 
 
-
-        $css = str_replace( ['# primary #'],[$this->primary], $this->style );
-
-        echo "<style>".$css."</style>";
+        echo str_replace( ['# primary #'],[$this->primary], $this->style );
     }
 
-    
 }
