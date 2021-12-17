@@ -24,8 +24,8 @@ class ActivationTable {
 
         for ($i=0; $i<count($rows); $i++){
             $this->rows[] =  [
-                new Fields\Text($i,"UP","button"),
-                new Fields\Text($i,"DOWN","button"),
+                new Fields\Arrow($i,"","UP"),
+                new Fields\Arrow($i,"","DOWN"),
                 new Fields\Activator($option_name."_attivatore".$i,$rows[$i]["attivatore"]),
                 new Fields\Rule($option_name."_regola".$i,$rows[$i]["regola"],$rows[$i]["attivatore"]),
                 new Fields\Label($option_name."_ga_label".$i,$rows[$i]["ga_label"],"GA",$current),
@@ -38,6 +38,8 @@ class ActivationTable {
         }
         // FOR NEW INSERT
         $this->rows[] =  [
+            new Fields\Text($option_name."_hidden_for_up","","hidden"),
+            new Fields\Text($option_name."_hidden_for_down","","hidden"),
             new Fields\Activator($option_name."_attivatore_new",""),
             new Fields\Rule($option_name."_regola_new",""),
             new Fields\Label($option_name."_ga_label_new","","GA",$current),
@@ -58,6 +60,7 @@ class ActivationTable {
             <?php (new ActivationTableImport($this->option_name))->render();  ?>
             <table>
                 <tr valign="top" style="text-align:left">
+                    <th>&nbsp;</th><th>&nbsp;</th>
                     <th>Attivatore</th><th>Regola</th>
                     <?php if (!empty($this->current["marketplace"]["ga_event_template"])) : ?>
                     <th>Label GA</th><th>Valore GA</th>

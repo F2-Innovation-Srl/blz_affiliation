@@ -18,12 +18,11 @@
                 document.getElementById('GaTrackingIdSettings').submit();
             });
         }
+
+        var ups = document.querySelectorAll(".up")
+
+        var downs = document.querySelectorAll(".down")
         
     });
-    
-    document.addEventListener("DOMContentLoaded", function() {
-      
-    });
-
 
 })(jQuery, this);

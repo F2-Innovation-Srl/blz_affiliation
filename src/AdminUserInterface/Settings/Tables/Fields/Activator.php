@@ -20,7 +20,7 @@ class Activator extends Field {
                            
         /// template della select
         $output =  <<<HTML
-            <select class="attivatore" name="{{ name }}"><option value="">Seleziona un attivatore</option>{{ options }}</select>';
+            <select class="attivatore" name="{{ name }}"><option value="">Seleziona un attivatore</option>{{ options }}</select>'
         HTML;
 
         /// crea le options
