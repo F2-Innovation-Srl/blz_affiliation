@@ -1,8 +1,8 @@
 <?php
 namespace BLZ_AFFILIATION\AdminUserInterface\Settings;
 
-use BLZ_AFFILIATION\AdminUserInterface\Settings\Modules\ProgramTable;
-use BLZ_AFFILIATION\AdminUserInterface\Settings\Modules\ProgramSubjectTable;
+use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\ProgramTable;
+use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\ProgramSubjectTable;
 /**
  * È una pagina di settings provvisoria per fare dei test
  *

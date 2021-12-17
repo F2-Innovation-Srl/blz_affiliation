@@ -1,5 +1,5 @@
 <?php
-namespace BLZ_AFFILIATION\AdminUserInterface\Settings\Modules\Fields;
+namespace BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\Fields;
 
 /**
  * E' un field di un modulo e ne gestisce tutte le sue caratteristiche

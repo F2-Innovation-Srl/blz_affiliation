@@ -1,6 +1,6 @@
 <?php
-namespace BLZ_AFFILIATION\AdminUserInterface\Settings\Modules;
-use BLZ_AFFILIATION\AdminUserInterface\Settings\Modules\Fields;
+namespace BLZ_AFFILIATION\AdminUserInterface\Settings\Tables;
+use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\Fields;
  
 /**
  * Class GlobalSettingsTable

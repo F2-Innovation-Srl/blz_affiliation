@@ -11,7 +11,7 @@ class PostData {
     public $author;
 
     public function __construct() {
-        add_action( 'init', [ $this, 'loadData' ] );
+        add_action( 'wp', [ $this, 'loadData' ] );
     }
 
     function loadData() {
@@ -41,7 +41,7 @@ class PostData {
         
         /// aggiunge se è anmp
         $this->is_amp = (is_amp_endpoint()) ? "true" : "false";
-
+        
         define('POST_DATA', (array) $this);
     }
 

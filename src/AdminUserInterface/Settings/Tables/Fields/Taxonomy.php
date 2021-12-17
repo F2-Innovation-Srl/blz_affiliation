@@ -1,5 +1,5 @@
 <?php
-namespace BLZ_AFFILIATION\AdminUserInterface\Settings\Modules\Fields;
+namespace BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\Fields;
 
 /**
  * Campo della tabella di tipo "taxonomy"

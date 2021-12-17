@@ -1,6 +1,6 @@
 <?php
-namespace BLZ_AFFILIATION\AdminUserInterface\Settings\Modules;
-use BLZ_AFFILIATION\AdminUserInterface\Settings\Modules\Fields;
+namespace BLZ_AFFILIATION\AdminUserInterface\Settings\Tables;
+use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\Fields;
  
 /**
  * Class Row
@@ -24,6 +24,8 @@ class ActivationTable {
 
         for ($i=0; $i<count($rows); $i++){
             $this->rows[] =  [
+                new Fields\Text($i,"UP","button"),
+                new Fields\Text($i,"DOWN","button"),
                 new Fields\Activator($option_name."_attivatore".$i,$rows[$i]["attivatore"]),
                 new Fields\Rule($option_name."_regola".$i,$rows[$i]["regola"],$rows[$i]["attivatore"]),
                 new Fields\Label($option_name."_ga_label".$i,$rows[$i]["ga_label"],"GA",$current),

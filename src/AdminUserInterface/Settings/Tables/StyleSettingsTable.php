@@ -1,6 +1,6 @@
 <?php
-namespace BLZ_AFFILIATION\AdminUserInterface\Settings\Modules;
-use BLZ_AFFILIATION\AdminUserInterface\Settings\Modules\Fields\Text;
+namespace BLZ_AFFILIATION\AdminUserInterface\Settings\Tables;
+use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\Fields\Text;
  
 /** 
  * Campi per impostare gli stili

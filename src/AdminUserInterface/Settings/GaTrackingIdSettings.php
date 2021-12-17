@@ -2,8 +2,8 @@
 namespace BLZ_AFFILIATION\AdminUserInterface\Settings;
 
 use BLZ_AFFILIATION\Utils\Config;
-use BLZ_AFFILIATION\AdminUserInterface\Settings\Modules\ActivationTable;
-use BLZ_AFFILIATION\AdminUserInterface\Settings\Modules\TemplateTable;
+use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\ActivationTable;
+use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\TemplateTable;
 /**
  * Class GaTrackingIdSettings
  *

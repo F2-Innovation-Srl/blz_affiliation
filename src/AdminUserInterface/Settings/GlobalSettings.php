@@ -2,8 +2,8 @@
 namespace BLZ_AFFILIATION\AdminUserInterface\Settings;
 
 use BLZ_AFFILIATION\Utils\Config;
-use BLZ_AFFILIATION\AdminUserInterface\Settings\Modules\StyleSettingsTable;
-use BLZ_AFFILIATION\AdminUserInterface\Settings\Modules\GlobalSettingsTable;
+use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\StyleSettingsTable;
+use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\GlobalSettingsTable;
 /**
  * Class GlobalSettings
  *
