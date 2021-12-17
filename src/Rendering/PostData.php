@@ -38,6 +38,8 @@ class PostData {
         /// aggiunge se è anmp
         $this->is_amp = (is_amp_endpoint()) ? "true" : "false";
 
+        define('POST_DATA', $this);
+
     }
 
 

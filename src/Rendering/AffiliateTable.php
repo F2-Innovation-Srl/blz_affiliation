@@ -40,12 +40,9 @@ class AffiliateTable {
 
         if( !have_rows('affiliate_table_row', $this->table_id ) ) return [];
 
-        /// recupera i dati della pagina
-        $postData = new PostData();
-
         $table= get_field( 'affiliate_table_row', $this->table_id );
 
-        return array_map( function( $row, $id ) use ( $postData ) {
+        return array_map( function( $row, $id ) {
 
             $id++;
 
@@ -57,9 +54,9 @@ class AffiliateTable {
                 "position" => $id
             ] );
 
-            $settings = new SettingsData( $postData, "blz_table", $request );
+            $settings = new SettingsData("blz_table", $request );
 
-            
+            $postData = POST_DATA;
 
             return (object) [
                 "id"               => $id,

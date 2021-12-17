@@ -37,13 +37,11 @@ class AffiliateLinkProgramsButton {
      */
     public function printAffiliateLink( $atts, $content, $tag ) {
 
-        /// prende tutti i dati del post
-        $postData = new PostData();
         /// prendo la request
         $this->request = new Request($atts,$content);
         
         /// inizializzo i settingsData 
-        $SettingsData = new SettingsData($postData,"linkPrograms",$this->request);
+        $SettingsData = new SettingsData("linkPrograms",$this->request);
         
         return $this->FillTemplate($SettingsData->getGAEvent(), $SettingsData->getTrackingID(), $SettingsData->getTemplate() );
 

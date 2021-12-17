@@ -4,13 +4,10 @@ namespace BLZ_AFFILIATION\Rendering\ParseLinkAndRender;
 
 use BLZ_AFFILIATION\Rendering\ParseLinkAndRender\Link;
 use BLZ_AFFILIATION\AffiliateMarketing\Request;
-use BLZ_AFFILIATION\Rendering\PostData;
 use BLZ_AFFILIATION\Rendering\SettingsData;
 use BLZ_AFFILIATION\Utils\Shortener; 
 
 class ParseLinkAndRender {
-
-    private PostData $postData;
 
     private string $content;
 
@@ -49,9 +46,6 @@ class ParseLinkAndRender {
         if ( !is_singular() ) return $content;
 
         $this->content = $content;
-
-        /// recupera i dati della pagina
-        $this->postData = new PostData();
         
         /// recupera i pattern per ogni 
         /// tipologia di link da sostituire
@@ -73,7 +67,7 @@ class ParseLinkAndRender {
                 //echo "<pre>";
                 
                 /// inizializzo i settingsData 
-                $SettingsData = new SettingsData($this->postData,"parseLinkAndRender",(new Request(["marketplace" => $linkData->marketplace])));
+                $SettingsData = new SettingsData("parseLinkAndRender",(new Request(["marketplace" => $linkData->marketplace])));
                 $new_link = $this->FillTemplate( $linkData->url, $SettingsData->getGAEvent(), $SettingsData->getTrackingID(), $SettingsData->getTemplate() );
                 
                 /// rimpiazziamo i vecchi link con i nuovi

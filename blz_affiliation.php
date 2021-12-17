@@ -46,6 +46,9 @@ class BlzAffiliate {
 		//load Configurations
 		Config::loadSettings();
 
+		/// recupera i dati della pagina
+        new Rendering\PostData();
+
 		/// crea i custom post type (tabelle e link "centralizzati")
 		PostTypes\AffiliateTables::init();
 		PostTypes\AffiliateLinkProgamStored::init();

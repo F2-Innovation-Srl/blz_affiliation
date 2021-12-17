@@ -37,13 +37,13 @@ class SettingsData {
         HTML
     ];
 
-    public function __construct($postData,$link_type,$request) {
+    public function __construct($link_type,$request) {
         
         
         // COPIO IL TEMPLATE PER GLI ALTRI FORMATI UGUALI
         $this->templates["linkPrograms"] = $this->templates["linkButton"];
         
-        $this->postData = $postData;
+        $this->postData = POST_DATA;
         $this->request = $request;
         
         $this->link_type = Config::findbySuffix(CONFIG["Items"][0]["settings"]["tabs"],$link_type);

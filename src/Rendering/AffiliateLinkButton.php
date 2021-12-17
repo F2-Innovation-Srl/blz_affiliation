@@ -6,7 +6,6 @@ use BLZ_AFFILIATION\AffiliateMarketing\Offer;
 
 use BLZ_AFFILIATION\AffiliateMarketing\OffersRetriever;
 use BLZ_AFFILIATION\AffiliateMarketing\Request;
-use BLZ_AFFILIATION\Rendering\PostData;
 use BLZ_AFFILIATION\Rendering\SettingsData;
 use BLZ_AFFILIATION\Utils\Shortener;
 
@@ -43,9 +42,6 @@ class AffiliateLinkButton {
      */
     public function printAffiliateLink( $atts, $content, $tag ) {
 
-        /// prende tutti i dati del post
-        $postData = new PostData();
-
         /// prende la request
         $this->request = new Request($atts);
 
@@ -61,7 +57,7 @@ class AffiliateLinkButton {
         if( !empty( $offers ) ){
             
             /// inizializzo i settingsData 
-            $SettingsData = new SettingsData($postData,"linkButton",$this->request);
+            $SettingsData = new SettingsData("linkButton",$this->request);
            
             return $this->FillTemplate( $offers[ 0 ], $SettingsData->getGAEvent(), $SettingsData->getTrackingID(), $SettingsData->getTemplate() );
         }
