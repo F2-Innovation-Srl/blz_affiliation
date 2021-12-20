@@ -17,6 +17,7 @@ class PostData {
     public static $tags;
     public static $is_amp;
     public static $author;
+    public static $taxonomies;
 
     public function __construct() {
         add_action( 'wp', [ get_called_class(), 'loadData' ] );
