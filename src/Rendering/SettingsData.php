@@ -55,7 +55,7 @@ class SettingsData {
         $this->config = [
 
             "global_settings"      => $global_settings,
-            "activation_table"     => get_option($config->Pages[0]["slug"]."-".$this->link_type["slug"]."-".$this->marketplace["slug"]),
+            "activation_table"     => get_option($config->Pages[0]->slug."-".$this->link_type["slug"]."-".$this->marketplace["slug"]),
             "ga_event_template"    =>  $this->marketplace["ga_event_template"],
             "tracking_id_template" =>  $this->marketplace["tracking_id"],            
         ];
