@@ -5,29 +5,48 @@ namespace BLZ_AFFILIATION\Rendering;
 
 class PostData {
 
+
+    /**
+     * Istanza unica del singleton
+     * @var object
+     */
+    private static object $instance;
+ 
+
     public $post_type;
     public $tags;
     public $is_amp;
     public $author;
 
     public function __construct() {
-        add_action( 'wp', [ $this, 'loadData' ] );
+        add_action( 'wp', [ get_called_class(), 'loadData' ] );
     }
 
-    function loadData() {
+    /**
+     * Metodo pubblico per l'accesso all'istanza unica di classe.
+     * @return object|PostData
+     */
+    public static function getInstance() {
+        if ( !isset(self::$instance) ) {
+            self::$instance = new PostData();
+        }
+        return self::$instance;
+    }
+
+    protected static function loadData() {
 
         global $post;   
 
         /// post type
-        $this->post_type = $post->post_type;
+        self::$post_type = $post->post_type;
         
         /// Author
         /// cerca il nome dell'autore
         $author_nicename = get_the_author_meta( 'user_nicename', $post->post_author);
         /// se è vuoto prende un valore di default
-        $author_name    = empty( $author_nicename ) ? 'author'     : $author_nicename;  // autore
+        $author_name    = empty( $author_nicename ) ? 'author' : $author_nicename;  // autore
 
-        $this->author = [
+        self::$author = [
             'name'      => $author_name,
             'id'        => $post->post_author
         ];
@@ -36,13 +55,12 @@ class PostData {
         $taxonomies = get_taxonomies();
         foreach( $taxonomies as $taxonomy) 
             foreach( get_the_terms( $post->ID, $taxonomy ) as $tax)
-                $this->taxonomies[$taxonomy][] = $tax->slug;
+                self::$taxonomies[$taxonomy][] = $tax->slug;
         
         
         /// aggiunge se è anmp
-        $this->is_amp = (is_amp_endpoint()) ? "true" : "false";
-        
-        define('POST_DATA', (array) $this);
+        self::$is_amp = (is_amp_endpoint()) ? "true" : "false";
+     
     }
 
 

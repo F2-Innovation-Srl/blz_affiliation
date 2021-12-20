@@ -43,7 +43,7 @@ class SettingsData {
         // COPIO IL TEMPLATE PER GLI ALTRI FORMATI UGUALI
         $this->templates["linkPrograms"] = $this->templates["linkButton"];
         
-        $this->postData = POST_DATA;
+        $this->postData = PostData::getInstance();
         $this->request = $request;
         
         $this->link_type = Config::findbySuffix(CONFIG["Items"][0]["settings"]["tabs"],$link_type);
