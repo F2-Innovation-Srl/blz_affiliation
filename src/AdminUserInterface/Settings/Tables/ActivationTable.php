@@ -30,7 +30,7 @@ class ActivationTable {
                 new Fields\Rule($option_name."_regola".$i,$rows[$i]["regola"],$rows[$i]["attivatore"]),
                 new Fields\Label($option_name."_ga_label".$i,$rows[$i]["ga_label"],"GA",$current),
                 new Fields\Text($option_name."_ga_val".$i,$rows[$i]["ga_val"],$hiddenGA),
-                new Fields\Label($option_name."_trk_label".$i,$rows[$i]["trk_label"],"TRK_ID",$current),
+                //new Fields\Label($option_name."_trk_label".$i,$rows[$i]["trk_label"],"TRK_ID",$current),
                 new Fields\Text($option_name."_trk_val".$i,$rows[$i]["trk_val"],$hiddenTrack),
                 new Fields\Text($i,"Update","button"),
                 new Fields\Text($i,"Delete","button",["hidden_field" => $option_name])
