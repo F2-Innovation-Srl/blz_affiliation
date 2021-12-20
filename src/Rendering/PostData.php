@@ -13,10 +13,10 @@ class PostData {
     private static object $instance;
  
 
-    public $post_type;
-    public $tags;
-    public $is_amp;
-    public $author;
+    public static $post_type;
+    public static $tags;
+    public static $is_amp;
+    public static $author;
 
     public function __construct() {
         add_action( 'wp', [ get_called_class(), 'loadData' ] );
