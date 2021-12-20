@@ -13,14 +13,14 @@ class PostData {
     private static object $instance;
  
 
-    public static $post_type;
-    public static $tags;
-    public static $is_amp;
-    public static $author;
-    public static $taxonomies;
+    public  $post_type;
+    public  $tags;
+    public  $is_amp;
+    public  $author;
+    public  $taxonomies;
 
-    public function __construct() {
-        add_action( 'wp', [ get_called_class(), 'loadData' ] );
+    private final function __construct() {
+        $this->loadData();
     }
 
     /**
@@ -34,12 +34,12 @@ class PostData {
         return self::$instance;
     }
 
-    public static function loadData() {
+    private function loadData() {
 
         global $post;   
 
         /// post type
-        self::$post_type = $post->post_type;
+        $this->$post_type = $post->post_type;
         
         /// Author
         /// cerca il nome dell'autore
@@ -47,7 +47,7 @@ class PostData {
         /// se è vuoto prende un valore di default
         $author_name    = empty( $author_nicename ) ? 'author' : $author_nicename;  // autore
 
-        self::$author = [
+        $this->$author = [
             'name'      => $author_name,
             'id'        => $post->post_author
         ];
@@ -56,11 +56,11 @@ class PostData {
         $taxonomies = get_taxonomies();
         foreach( $taxonomies as $taxonomy) 
             foreach( get_the_terms( $post->ID, $taxonomy ) as $tax)
-                self::$taxonomies[$taxonomy][] = $tax->slug;
+            $this->$taxonomies[$taxonomy][] = $tax->slug;
         
         
         /// aggiunge se è anmp
-        self::$is_amp = (is_amp_endpoint()) ? "true" : "false";
+        $this->$is_amp = (is_amp_endpoint()) ? "true" : "false";
      
     }
 

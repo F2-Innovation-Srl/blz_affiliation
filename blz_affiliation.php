@@ -48,6 +48,7 @@ class BlzAffiliate {
 
 		/// recupera i dati della pagina
         new Rendering\PostData();
+		add_action( 'wp', function() { PostData::getInstance(); } );
 
 		/// crea i custom post type (tabelle e link "centralizzati")
 		PostTypes\AffiliateTables::init();
