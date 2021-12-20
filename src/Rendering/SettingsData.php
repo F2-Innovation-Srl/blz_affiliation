@@ -2,6 +2,7 @@
 
 namespace BLZ_AFFILIATION\Rendering;
 
+use BLZ_AFFILIATION\Utils\Helper;
 use BLZ_AFFILIATION\AdminUserInterface\Settings\Config;
 
 /**
@@ -46,7 +47,7 @@ class SettingsData {
         $this->postData = PostData::getInstance();
         $this->request = $request;
         
-        $this->link_type = Helper::findbySug($config->pages[0]->controller->settings["tabs"],$link_type);
+        $this->link_type = Helper::findbySlug($config->pages[0]->controller->settings["tabs"],$link_type);
        
         $this->marketplace = Helper::findbySlug($this->link_type["marketplaces"],$this->request->getMarketplaceKey());
         
