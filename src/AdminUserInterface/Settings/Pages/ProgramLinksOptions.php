@@ -10,7 +10,7 @@ use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\ProgramSubjectTable;
  */
 class ProgramLinksOptions {
      
-    protected $settings;
+    public $settings;
     protected $slug;
     protected $programs;
     protected $subjects;

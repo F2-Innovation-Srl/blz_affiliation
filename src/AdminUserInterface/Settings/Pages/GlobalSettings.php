@@ -11,7 +11,7 @@ use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\GlobalSettingsTable;
  */
 class GlobalSettings {
 
-    protected $settings;
+    public $settings;
     protected $option_name;
     
 	function __construct($slug, $settings) {

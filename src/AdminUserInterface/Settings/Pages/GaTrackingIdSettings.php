@@ -13,7 +13,7 @@ class GaTrackingIdSettings {
 
     protected $name;
     protected $slug;
-    protected $settings;
+    public $settings;
     protected $tabs;
     protected $marketplaces;
     protected $current;

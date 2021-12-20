@@ -12,7 +12,7 @@ class Import extends Field {
         $config = Config::loadSettings();
         $output = '<select class="attivatore_import" name="'.$this->name.'"><option value="">Seleziona da dove importare</option>';
         
-        foreach($config->pages[0]["settings"]["tabs"] as $item)
+        foreach($config->pages[0]->controller->settings["tabs"] as $item)
             foreach($item["marketplaces"] as $marketplace) {
                 $option_value = $config->pages[0]["slug"]."-".$item["slug"]."-".$marketplace["slug"];
                 $option_name = $item["name"]." - ".$marketplace["name"];

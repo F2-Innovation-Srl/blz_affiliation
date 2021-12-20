@@ -46,7 +46,7 @@ class SettingsData {
         $this->postData = PostData::getInstance();
         $this->request = $request;
         
-        $this->link_type = Helper::findbySug($config->Pages[0]["settings"]["tabs"],$link_type);
+        $this->link_type = Helper::findbySug($config->pages[0]->controller->settings["tabs"],$link_type);
        
         $this->marketplace = Helper::findbySlug($this->link_type["marketplaces"],$this->request->getMarketplaceKey());
         
