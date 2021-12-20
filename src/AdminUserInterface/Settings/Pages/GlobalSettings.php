@@ -1,5 +1,5 @@
 <?php
-namespace BLZ_AFFILIATION\AdminUserInterface\Settings;
+namespace BLZ_AFFILIATION\AdminUserInterface\Pages\Settings;
 
 use BLZ_AFFILIATION\Utils\Config;
 use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\StyleSettingsTable;
@@ -11,13 +11,13 @@ use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\GlobalSettingsTable;
  */
 class GlobalSettings {
 
-    protected $item;
+    protected $settings;
     protected $option_name;
     
-	function __construct() {
+	function __construct($slug, $settings) {
 
-        $this->item        = Config::findbySuffix( CONFIG["Items"], $_GET["page"] ); 
-        $this->option_name = $this->item["suffix"];
+        $this->settings  = $settings; 
+        $this->option_name = $slug;
     }
 
     
@@ -50,7 +50,7 @@ class GlobalSettings {
                 <div><hr></div>
 
                 <?php 
-                    wp_nonce_field( $this->item["suffix"].'-settings-save', $this->item["suffix"].'-custom-message' );
+                    wp_nonce_field( $this->option_name.'-settings-save', $this->option_name.'-custom-message' );
                     submit_button();
                 ?>
             </form><!-- .wrap -->

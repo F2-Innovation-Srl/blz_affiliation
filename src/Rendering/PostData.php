@@ -10,7 +10,7 @@ class PostData {
      * Istanza unica del singleton
      * @var object
      */
-    private static object $instance;
+    private static $instance;
  
 
     public  $post_type;
@@ -19,7 +19,7 @@ class PostData {
     public  $author;
     public  $taxonomies;
 
-    private final function __construct() {
+    private function __construct() {
         $this->loadData();
     }
 
@@ -39,15 +39,15 @@ class PostData {
         global $post;   
 
         /// post type
-        $this->$post_type = $post->post_type;
-        
+        $this->post_type = $post->post_type;
+        //print_r($post);exit;
         /// Author
         /// cerca il nome dell'autore
         $author_nicename = get_the_author_meta( 'user_nicename', $post->post_author);
         /// se è vuoto prende un valore di default
         $author_name    = empty( $author_nicename ) ? 'author' : $author_nicename;  // autore
 
-        $this->$author = [
+        $this->author = [
             'name'      => $author_name,
             'id'        => $post->post_author
         ];
@@ -56,13 +56,14 @@ class PostData {
         $taxonomies = get_taxonomies();
         foreach( $taxonomies as $taxonomy) 
             foreach( get_the_terms( $post->ID, $taxonomy ) as $tax)
-            $this->$taxonomies[$taxonomy][] = $tax->slug;
+            $this->taxonomies[$taxonomy][] = $tax->slug;
         
         
         /// aggiunge se è anmp
-        $this->$is_amp = (is_amp_endpoint()) ? "true" : "false";
+        $this->is_amp = (is_amp_endpoint()) ? "true" : "false";
      
     }
 
 
 }
+

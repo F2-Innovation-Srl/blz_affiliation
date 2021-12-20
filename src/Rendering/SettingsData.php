@@ -2,7 +2,7 @@
 
 namespace BLZ_AFFILIATION\Rendering;
 
-use BLZ_AFFILIATION\Utils\Config;
+use BLZ_AFFILIATION\AdminUserInterface\Settings\Config;
 
 /**
  * Ha la responsabilità di ottenere le label degli eventi i tracking id 
@@ -39,23 +39,23 @@ class SettingsData {
 
     public function __construct($link_type,$request) {
         
-        
+        $config = Config::loadSettings();
         // COPIO IL TEMPLATE PER GLI ALTRI FORMATI UGUALI
         $this->templates["linkPrograms"] = $this->templates["linkButton"];
         
         $this->postData = PostData::getInstance();
         $this->request = $request;
         
-        $this->link_type = Config::findbySuffix(CONFIG["Items"][0]["settings"]["tabs"],$link_type);
+        $this->link_type = Helper::findbySug($config->Pages[0]["settings"]["tabs"],$link_type);
        
-        $this->marketplace = Config::findbySuffix($this->link_type["marketplaces"],$this->request->getMarketplaceKey());
+        $this->marketplace = Helper::findbySlug($this->link_type["marketplaces"],$this->request->getMarketplaceKey());
         
         $global_settings = get_option( "blz-affiliation-settings" );
         
         $this->config = [
 
             "global_settings"      => $global_settings,
-            "activation_table"     => get_option(CONFIG["Items"][0]["suffix"]."-".$this->link_type["suffix"]."-".$this->marketplace["suffix"]),
+            "activation_table"     => get_option($config->Pages[0]["slug"]."-".$this->link_type["slug"]."-".$this->marketplace["slug"]),
             "ga_event_template"    =>  $this->marketplace["ga_event_template"],
             "tracking_id_template" =>  $this->marketplace["tracking_id"],            
         ];
@@ -65,7 +65,7 @@ class SettingsData {
 
     public function getTemplate() {
     
-        return $this->templates[ $this->link_type["suffix"] ];
+        return $this->templates[ $this->link_type["slug"] ];
     }
 
     /**
@@ -124,11 +124,11 @@ class SettingsData {
         $ga_event = $this->getActivationTableRules($ga_event,"ga");
         
         //Sostituisco i placeholder dei link program on gli attributi da shortcode
-        if ($this->link_type["suffix"] == "linkPrograms")  {
+        if ($this->link_type["slug"] == "linkPrograms")  {
             $ga_event = str_replace("{subject}",$this->request->getSubject(),$ga_event);
             $ga_event = str_replace("{program}",$this->request->getProgram(),$ga_event);
         } 
-        if ($this->link_type["suffix"] == "blz_table") {
+        if ($this->link_type["slug"] == "blz_table") {
             $ga_event = str_replace("{table-name}",$this->request->getKeyword(),$ga_event);
             $ga_event = str_replace("{numero-posizione}","Posizione " .$this->request->getPosition(),$ga_event);
             $ga_event = str_replace("{marketplace}",$this->request->getMarketplace(),$ga_event);

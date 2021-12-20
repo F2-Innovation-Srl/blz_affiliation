@@ -22,14 +22,13 @@ class AdminPage {
      * Create admin menu 
     **/
 	public function adminMenu() {
+        $config = Config::loadSettings();
+
+        add_menu_page($config->plugin_name, $config->plugin_name, 'manage_options', $config->plugin_slug);
+        // aggiunge le pagine di menu admin richiamando il render del controller passato dalla configurazione
+        foreach($config->pages as $page)
+            add_submenu_page( $config->plugin_slug, $page->name, $page->name, 'manage_options', $page->slug, [ $page->controller, 'render'] ); 
         
-        add_menu_page(CONFIG["plugin_name"], CONFIG["plugin_name"], 'manage_options', CONFIG["plugin_suffix"]);
-        
-        foreach(CONFIG["Items"] as $item){
-            $className = "BLZ_AFFILIATION\\AdminUserInterface\\Settings\\". $item["class_name"];
-            $class = new $className;
-            add_submenu_page( CONFIG["plugin_suffix"], $item["name"], $item["name"], 'manage_options', $item["suffix"], [ $class, 'render'] );
-        }
 	}
 
     public static function custom_enqueue()

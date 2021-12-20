@@ -1,5 +1,5 @@
 <?php
-namespace BLZ_AFFILIATION\AdminUserInterface\Settings;
+namespace BLZ_AFFILIATION\AdminUserInterface\Pages\Settings;
 
 use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\ProgramTable;
 use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\ProgramSubjectTable;
@@ -10,6 +10,8 @@ use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\ProgramSubjectTable;
  */
 class ProgramLinksOptions {
      
+    protected $settings;
+    protected $slug;
     protected $programs;
     protected $subjects;
     protected $default_tracking_id = 'tn-news';
@@ -17,7 +19,11 @@ class ProgramLinksOptions {
 	/**
 	 * 
 	 */
-	function __construct( ) {}
+	function __construct($slug, $settings) {
+
+        $this->settings  = $settings; 
+        $this->slug = $slug;
+    }
 
 	/**
      * Print page if have correct permission

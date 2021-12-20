@@ -3,7 +3,7 @@
 namespace BLZ_AFFILIATION\Rendering;
 
 use BLZ_AFFILIATION\AffiliateMarketing\Request;
-use BLZ_AFFILIATION\Utils\StringHelper;
+use BLZ_AFFILIATION\Utils\Helper;
 /**
  * 
  * Ritorna i dati della tabella di affiliazione nella pagina
@@ -49,8 +49,8 @@ class AffiliateTable {
             $post = get_post( $this->table_id );
 
             $request = new Request( [ 
-                "keyword" => StringHelper::slugify($post->post_title),
-                "marketplace" => StringHelper::slugify( $row['title'] ),
+                "keyword" => Helper::slugify($post->post_title),
+                "marketplace" => Helper::slugify( $row['title'] ),
                 "position" => $id
             ] );
 

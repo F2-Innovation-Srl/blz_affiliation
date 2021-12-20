@@ -1,47 +1,43 @@
 {
     "plugin_name"       : "Blazemedia Affilitation",
-    "plugin_suffix"     : "blz-affiliation",
-    "Items"  : [
+    "plugin_slug"     : "blz-affiliation",
+    "Pages"  : [
         {
             "name"       : "GA e TrackingID Settings",
-            "suffix"     : "blz-affiliation",
-            "class_name" : "GaTrackingIdSettings",
+            "slug"       : "blz-affiliation",
+            "controller" : "GaTrackingIdSettings",
             "settings" : {
                 "tabs" : [
                     {
                         "name"        : "Editorial Links",
-                        "suffix"      : "linkButton",
+                        "slug"        : "linkButton",
                         "description" : "Gestione dei link editoriali da bottone ",
                         "marketplaces":[
                                 {
                                     "name"              : "Amazon",
-                                    "suffix"            : "amazon",
+                                    "slug"              : "amazon",
                                     "description"       : "con prezzo dinamico per Amazon",
-                                    "api_slug"          : "amazon",
                                     "ga_event_template" : "{website} {label} {author} {marketplace} {amp}",
                                     "tracking_id"       : "{website}{label}{author}{marketplace}{amp}-21"
                                 },
                                 {
                                     "name"              : "eBay",
-                                    "suffix"            : "ebay",
+                                    "slug"              : "ebay",
                                     "description"       : "con prezzo dinamico per eBay",
-                                    "api_slug"          : "ebay",
                                     "ga_event_template" : "{website} {label} {author} {marketplace} {amp}",
                                     "tracking_id"       : "{website}{label}{author}{marketplace}{amp}"
                                 },
                                 {
                                     "name"              : "Trovaprezzi",
-                                    "suffix"            : "trovaprezzi",
+                                    "slug"              : "trovaprezzi",
                                     "description"       : "con prezzo dinamico per Trovaprezzi",
-                                    "api_slug"          : "trovaprezziVG",
                                     "ga_event_template" : "{website} {label} {author} {marketplace} {amp}",
                                     "tracking_id"       : ""
                                 },
                                 {
                                     "name"              : "Custom",
-                                    "suffix"            : "custom",
+                                    "slug"              : "custom",
                                     "description"       : "per Custom",
-                                    "api_slug"          : "",
                                     "ga_event_template" : "{website} {label} {author} {marketplace} {amp}",
                                     "tracking_id"       : ""
                                 }
@@ -49,50 +45,46 @@
                     },
                     {
                         "name"        : "Program Link",
-                        "suffix"      : "linkPrograms",
+                        "slug"        : "linkPrograms",
                         "description" : "Gestione Program Link e Stored Program Link",
                         "marketplaces":[
                                 {
                                     "name"              : "Generic",
-                                    "suffix"            : "generic",
+                                    "slug"              : "generic",
                                     "description"       : "",
-                                    "api_slug"          : "",
                                     "ga_event_template" : "{website} {label} {subject} {program} {amp}",
                                     "tracking_id"       : "{website}{label}{subject}{program}{amp}"
                                 }
                         ]
                     },{
                         "name"        : "Parse and Render",
-                        "suffix"      : "parseLinkAndRender",
+                        "slug"      : "parseLinkAndRender",
                         "description" : "Gestione di link automatici ",
                         "marketplaces":[
                                 {
                                     "name"              : "Amazon",
-                                    "suffix"            : "amazon",
+                                    "slug"              : "amazon",
                                     "description"       : "Amazon nel content",
-                                    "api_slug"          : "amazon",
                                     "ga_event_template" : "{website} {label} {author} {marketplace} {amp}",
                                     "tracking_id"       : "{website}{label}{author}{marketplace}{amp}-21"
                                 },
                                 {
                                     "name"              : "eBay",
-                                    "suffix"            : "ebay",
+                                    "slug"              : "ebay",
                                     "description"       : "eBay nel content",
-                                    "api_slug"          : "ebay",
                                     "ga_event_template" : "{website} {label} {author} {marketplace} {amp}",
                                     "tracking_id"       : "{website}{label}{author}{marketplace}{amp}"
                                 }
                         ]
                     },{
                         "name"        : "Tabella",
-                        "suffix"      : "blz_table",
+                        "slug"      : "blz_table",
                         "description" : "Gestione dei link in tabelle di affiliazione",
                         "marketplaces":[
                                 {
                                     "name"              : "Generic",
-                                    "suffix"            : "generic",
+                                    "slug"              : "generic",
                                     "description"       : "",
-                                    "api_slug"          : "",
                                     "ga_event_template" : "tabella {label} {table-name} {numero-posizione} {marketplace} {amp}",
                                     "tracking_id"       : ""
                                 }
@@ -104,13 +96,13 @@
         },
         {
             "name"       : "Program Links Options",
-            "suffix"     : "blz-affiliation-program",
-            "class_name" : "ProgramLinksOptions"
+            "slug"       : "blz-affiliation-program",
+            "controller" : "ProgramLinksOptions"
         },
         {
             "name"       : "Global Settings",
-            "suffix"     : "blz-affiliation-settings",
-            "class_name" : "GlobalSettings"
+            "slug"       : "blz-affiliation-settings",
+            "controller" : "GlobalSettings"
         }
     ]
 }

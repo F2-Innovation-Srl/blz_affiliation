@@ -1,6 +1,7 @@
 <?php
-namespace BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\Fields;
+namespace BLZ_AFFILIATION\AdminUserInterface\Settings\Modules\Fields;
 
+use BLZ_AFFILIATION\AdminUserInterface\Settings\Config;
 /**
  * Una Row è un field di un modulo e ne gestisce tutte le sue caratteristiche
  */
@@ -8,12 +9,12 @@ class Import extends Field {
 
       /// viene richiamata dal costruttore
     public function Create() {
-        
+        $config = Config::loadSettings();
         $output = '<select class="attivatore_import" name="'.$this->name.'"><option value="">Seleziona da dove importare</option>';
-        $this->items = CONFIG["Items"];
-        foreach(CONFIG["Items"][0]["settings"]["tabs"] as $item)
+        
+        foreach($config->pages[0]["settings"]["tabs"] as $item)
             foreach($item["marketplaces"] as $marketplace) {
-                $option_value = CONFIG["Items"][0]["suffix"]."-".$item["suffix"]."-".$marketplace["suffix"];
+                $option_value = $config->pages[0]["slug"]."-".$item["slug"]."-".$marketplace["slug"];
                 $option_name = $item["name"]." - ".$marketplace["name"];
                 if ($this->params["current"] != $option_value)
                     $output.= '<option value="'.$option_value.'" >'.$option_name.'</option>';   

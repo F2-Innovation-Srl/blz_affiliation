@@ -2,7 +2,7 @@
 
 namespace BLZ_AFFILIATION\Utils;
 
-class StringHelper {
+class Helper {
 
     /**
      * Replace special characters and spaces in a given string
@@ -42,6 +42,14 @@ class StringHelper {
         if ($die) exit;
 
     }
+
+    /**
+     * Cerca nel config tramite chiave
+     */
+    public function findbySlug($obj,$val){
+        return $obj[array_search($val, array_column($obj, 'slug'))];
+    } 
+
 
 
 }
