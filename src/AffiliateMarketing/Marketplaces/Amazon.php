@@ -1,13 +1,10 @@
 <?php
 
 namespace BLZ_AFFILIATION\AffiliateMarketing\Marketplaces;
-
+use BLZ_AFFILIATION\Utils\Helper;
 class Amazon extends Marketplace {
 
-
     public function getQueryURL() {
-
-        $this->name = "amazon";
 
         /// per default prende una keyword
         $query = $this->request->getKeyword();
@@ -24,7 +21,7 @@ class Amazon extends Marketplace {
         }
 
         /// sostituisce i valori nella query
-        $apiQuery = str_replace(['{{ query }}', '{{ marketplace }}'], [ urldecode( $query ), $this->name], $this->apiQuery );
+        $apiQuery = str_replace(['{{ query }}', '{{ marketplace }}'], [ urldecode( $query ), Helper::getApiSlug("amazon")], $this->apiQuery );
         $apiParams = str_replace('{{ min_price }}', $this->request->getMinPrice() , $this->apiParams );
         
         /// ritorna la query

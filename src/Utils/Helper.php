@@ -1,7 +1,7 @@
 <?php
 
 namespace BLZ_AFFILIATION\Utils;
-
+use BLZ_AFFILIATION\AdminUserInterface\Settings\Config;
 class Helper {
 
     /**
@@ -50,6 +50,12 @@ class Helper {
         return $obj[array_search($val, array_column($obj, 'slug'))];
     } 
 
-
+    /**
+     * Torna l'api name dal settings
+     */
+    public static function getApiSlug($marketplace){
+        $config = Config::loadSettings();
+        return  Helper::findbySlug($config->pages[0]->controller->settings["tabs"][0]["marketplaces"],$marketplace)["api_slug"];
+    }
 
 }

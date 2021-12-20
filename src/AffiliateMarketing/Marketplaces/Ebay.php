@@ -1,12 +1,11 @@
 <?php
 
 namespace BLZ_AFFILIATION\AffiliateMarketing\Marketplaces;
-use BLZ_AFFILIATION\Utils\Config;
+use BLZ_AFFILIATION\Utils\Helper;
 class Ebay extends Marketplace {
 
     public function getQueryURL() {
 
-        $this->name = "ebay";
         /// per default prende una keyword
         $query = $this->request->getKeyword();
     
@@ -22,7 +21,7 @@ class Ebay extends Marketplace {
         }
 
         /// sostituisce i valori nella query
-        $apiQuery = str_replace(['{{ query }}', '{{ marketplace }}'], [ urldecode( $query ), $this->name], $this->apiQuery );
+        $apiQuery = str_replace(['{{ query }}', '{{ marketplace }}'], [ urldecode( $query ), Helper::getApiSlug("ebay")], $this->apiQuery );
         $apiParams = str_replace('{{ min_price }}',  $this->request->getMinPrice() , $this->apiParams );
         /// ritorna la query
         return $this->apiBase . $apiQuery . $apiParams;
