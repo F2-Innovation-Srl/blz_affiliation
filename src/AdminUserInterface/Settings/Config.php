@@ -17,7 +17,7 @@ class Config {
         $this->plugin_name = $config["plugin_name"];
         $this->plugin_slug = $config["plugin_slug"];
         $this->pages = array_map(function($page){ 
-                $controller = "BLZ_AFFILIATION\\AdminUserInterface\\Settings\\". $page["controller"];
+                $controller = "BLZ_AFFILIATION\\AdminUserInterface\\Settings\\Pages\\". $page["controller"];
                 $settings = isset($page["settings"]) ? $page["settings"] : null;
                 return new Page([
                     "name"       => $page["name"],
