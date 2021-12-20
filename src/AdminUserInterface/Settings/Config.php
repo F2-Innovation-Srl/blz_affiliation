@@ -1,7 +1,7 @@
 <?php
 namespace BLZ_AFFILIATION\AdminUserInterface\Settings;
 
-use BLZ_AFFILIATION\AdminUserInterface\Settings\Page;
+use BLZ_AFFILIATION\AdminUserInterface\Settings\Pages\Page;
 
 class Config {
 
