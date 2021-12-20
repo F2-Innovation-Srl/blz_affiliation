@@ -63,7 +63,7 @@ class AffiliateTable {
                 "text"             => $row['text'],
                 "rating"           => $row['rating'],
                 "cta"              => $row['cta'],
-                "link"             => ($post_data["is_amp"]  == "false") ?  $row['link'] : $row['link_amp'],
+                "link"             => ($post_data->is_amp  == "false") ?  $row['link'] : $row['link_amp'],
                 "ga_event"         => $settings->getGAEvent()
             ];
 
