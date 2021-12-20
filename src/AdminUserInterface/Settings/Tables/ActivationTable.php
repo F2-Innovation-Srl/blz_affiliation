@@ -42,7 +42,7 @@ class ActivationTable {
             new Fields\Text($option_name."_hidden_for_down","","hidden"),
             new Fields\Activator($option_name."_attivatore_new",""),
             new Fields\Rule($option_name."_regola_new",""),
-            new Fields\Label($option_name."_ga_label_new","","",$current),
+            new Fields\Label($option_name."_ga_label_new","","GA",$current),
             new Fields\Text($option_name."_ga_val_new","",$hiddenGA),
             //new Fields\Label($option_name."_trk_label_new","","TRK_ID",$current),
             new Fields\Text($option_name."_trk_val_new","",$hiddenTrack),
