@@ -33,7 +33,7 @@ class PostData {
         return self::$instance;
     }
 
-    protected static function loadData() {
+    public static function loadData() {
 
         global $post;   
 
