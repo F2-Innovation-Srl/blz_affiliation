@@ -1,6 +1,8 @@
 <?php
 namespace BLZ_AFFILIATION\AdminUserInterface\Settings;
 
+use BLZ_AFFILIATION\AdminUserInterface\Settings\Page;
+
 class Config {
 
     /**
