@@ -16,6 +16,7 @@
                                 {
                                     "name"              : "Amazon",
                                     "slug"              : "amazon",
+                                    "api_slug"          : "amazon",
                                     "description"       : "con prezzo dinamico per Amazon",
                                     "ga_event_template" : "{website} {label} {author} {marketplace} {amp}",
                                     "tracking_id"       : "{website}{label}{author}{marketplace}{amp}-21"
@@ -23,6 +24,7 @@
                                 {
                                     "name"              : "eBay",
                                     "slug"              : "ebay",
+                                    "api_slug"          : "ebay",
                                     "description"       : "con prezzo dinamico per eBay",
                                     "ga_event_template" : "{website} {label} {author} {marketplace} {amp}",
                                     "tracking_id"       : "{website}{label}{author}{marketplace}{amp}"
@@ -30,6 +32,7 @@
                                 {
                                     "name"              : "Trovaprezzi",
                                     "slug"              : "trovaprezzi",
+                                    "api_slug"          : "trovaprezziVG",
                                     "description"       : "con prezzo dinamico per Trovaprezzi",
                                     "ga_event_template" : "{website} {label} {author} {marketplace} {amp}",
                                     "tracking_id"       : ""
@@ -64,6 +67,7 @@
                                 {
                                     "name"              : "Amazon",
                                     "slug"              : "amazon",
+                                    "api_slug"          : "amazon",
                                     "description"       : "Amazon nel content",
                                     "ga_event_template" : "{website} {label} {author} {marketplace} {amp}",
                                     "tracking_id"       : "{website}{label}{author}{marketplace}{amp}-21"
@@ -71,6 +75,7 @@
                                 {
                                     "name"              : "eBay",
                                     "slug"              : "ebay",
+                                    "api_slug"          : "ebay",
                                     "description"       : "eBay nel content",
                                     "ga_event_template" : "{website} {label} {author} {marketplace} {amp}",
                                     "tracking_id"       : "{website}{label}{author}{marketplace}{amp}"
