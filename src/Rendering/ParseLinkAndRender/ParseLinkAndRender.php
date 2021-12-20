@@ -28,9 +28,9 @@ class ParseLinkAndRender {
         return [
             'Amazon',
             'Ebay',
-            'AmazonShorted', // da testare
-            'EbayShorted', // da testare
-            'PrettyLink', // da testare
+            'AmazonShorted', 
+            'EbayShorted', 
+            'PrettyLink', 
         ];
     }
 
