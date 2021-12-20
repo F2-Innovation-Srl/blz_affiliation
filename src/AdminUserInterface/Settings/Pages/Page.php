@@ -1,5 +1,5 @@
 <?php
-namespace BLZ_AFFILIATION\AdminUserInterface\Pages\Settings;
+namespace BLZ_AFFILIATION\AdminUserInterface\Settings\Pages;
 
 class Page {
 
