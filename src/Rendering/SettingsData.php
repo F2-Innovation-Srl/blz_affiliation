@@ -97,7 +97,7 @@ class SettingsData {
             // GLI ALTRI CASI SE L'ATTIVATORE È VALIDO
             if( !empty( $rule ) )
                 if ( ( $this->isValidRule($rule) && !empty( $rule[ $type."_label" ] )) || $rule["attivatore"] == "tutte" )
-                    $code = str_replace("{".$rule[$type."_label"]."}",$rule[$type."_val"],$code);
+                    $code = str_replace("{".$rule["ga_label"]."}",$rule[$type."_val"],$code);
         }
         
         return $code;

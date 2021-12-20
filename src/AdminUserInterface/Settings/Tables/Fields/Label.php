@@ -32,10 +32,12 @@ class Label extends Field {
 
             return '<input type="hidden" id="'.$this->name.'" name="'.$this->name.'" value="'.$this->value.'" />'; 
         }
-    
-        $labels = $this->getLabels( $this->params[ "marketplace" ][ $this->settings[ $this->type][ 'tab' ] ], "{", "}" );
+        
+        $labels = [];
+        foreach($this->settings as $setting)
+            $labels = array_merge($labels,$this->getLabels( $this->params[ "marketplace" ][ $setting[ 'tab' ] ], "{", "}" ));
 
-        $options = array_reduce( $labels, function( $markup, $label ) {
+        $options = array_reduce( array_unique($labels), function( $markup, $label ) {
 
             $selected = ( $this->value == $label ) ? ' selected ' : '';
 
