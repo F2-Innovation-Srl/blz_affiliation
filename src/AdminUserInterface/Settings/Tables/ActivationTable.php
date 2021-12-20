@@ -63,7 +63,7 @@ class ActivationTable {
                     <th>&nbsp;</th><th>&nbsp;</th>
                     <th>Attivatore</th><th>Regola</th>
                     <?php if (!empty($this->current["marketplace"]["ga_event_template"])) : ?>
-                    <th>Label GA</th><th>Valore GA</th>
+                    <th>Label</th><th>Valore GA</th>
                     <?php endif;?>   
                     <?php if (!empty($this->current["marketplace"]["tracking_id"])) : ?>
                     <!--th>Label TRK_ID</th--><th>Valore TRK_ID</th>
