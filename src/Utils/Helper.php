@@ -46,7 +46,7 @@ class Helper {
     /**
      * Cerca nel config tramite chiave
      */
-    public function findbySlug($obj,$val){
+    public static function findbySlug($obj,$val){
         return $obj[array_search($val, array_column($obj, 'slug'))];
     } 
 
