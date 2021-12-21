@@ -19,11 +19,11 @@ class ActivationTable {
             <div><h2 id="tabella" name="tabella">Tabella di attivazione</h2></div>
             {{ ActivationTableImport }}
             <table>
-                <tr valign="top" style="text-align:left">{{ ths }}</tr>
+                <tr valign="top" style="text-align:left">{{ headings }}</tr>
                 {{ trs }}  
             </table>
             HTML,
-        "ths" => 
+        "headings" => 
             <<<HTML
             <th>{{ th }}</th>
             HTML,
@@ -84,7 +84,7 @@ class ActivationTable {
         if (!empty($this->current["marketplace"]["tracking_id"])) $labels[] = "Valore TRK_ID";
 
         foreach( $labels as $label ) 
-                    $ths[] = str_replace("{{ th }}",$label, $this->output["ths"]);
+                    $headings[] = str_replace("{{ th }}",$label, $this->output["headings"]);
 
         foreach( $this->rows as $row ) {
             foreach( $row as $field ) 
@@ -98,12 +98,12 @@ class ActivationTable {
         return str_replace( 
             [
                 '{{ ActivationTableImport }}',
-                '{{ ths }}',
+                '{{ headings }}',
                 '{{ trs }}'
             ], 
             [ 
                 (new ActivationTableImport($this->option_name))->render(), 
-                implode("",$ths),
+                implode("",$headings),
                 implode("",$trs),
             ],  
             $this->output["table"] 

@@ -19,7 +19,7 @@ class ProgramTable {
                 {{ trs }}  
             </table>
             HTML,
-        "ths" => 
+        "headings" => 
             <<<HTML
             <th>{{ th }}</th>
             HTML,
@@ -65,24 +65,24 @@ class ProgramTable {
     public function render(){
 
         foreach( ["Slug","Name"] as $label ) 
-                    $ths[] = str_replace("{{ th }}",$label, $this->output["ths"]);
+                    $headings[] = str_replace("{{ th }}",$label, $this->output["headings"]);
 
         foreach( $this->rows as $row ) {
             foreach( $row as $field ) 
                 $tds[] = str_replace("{{ td }}",$field->render(), $this->output["tds"]);
 
             $trs[] = str_replace("{{ tds }}",implode("",$tds), $this->output["trs"]);
+            $tds = [];
         }
-
         return str_replace( [
                 '{{ title }}',
-                '{{ ths }}',
+                '{{ headings }}',
                 '{{ trs }}'
 
             ], 
             [ 
                 $this->name,
-                implode("",$ths),
+                implode("",$headings),
                 implode("",$trs)
             ], 
             $this->output["table"] 

@@ -18,10 +18,6 @@ class ActivationTableImport {
                 {{ trs }}  
             </table>
             HTML,
-        "ths" => 
-            <<<HTML
-            <th>{{ th }}</th>
-            HTML,
         "trs" => 
             <<<HTML
             <tr valign="top" >{{ tds }}</tr>
@@ -52,6 +48,7 @@ class ActivationTableImport {
                 $tds[] = str_replace("{{ td }}",$field->render(), $this->output["tds"]);
 
             $trs[] = str_replace("{{ tds }}",implode("",$tds), $this->output["trs"]);
+            $tds = [];
         }
 
         return str_replace( ['{{ trs }}'], [ implode("",$trs)], $this->output["table"] );

@@ -14,6 +14,22 @@ class GlobalSettings {
     public $settings;
     protected $option_name;
     
+    private $output =
+    <<<HTML
+    <form method="post" action="{{ link }}">
+        <input type="hidden" name="{{ option_name }}-sendForm" value="OK" />
+        <div class="{{ option_name }}-container">
+            <h2>Global Settings</h2>
+            {{ GlobalSettingsTable }}
+            <hr>
+            <h3>Link style</h3>
+            {{ StyleSettingsTable }}
+        </div>
+        {{ wp_nonce }}
+        {{ submit_button }}
+    </form>
+    HTML;
+
 	function __construct($slug, $settings) {
 
         $this->settings  = $settings; 
@@ -31,30 +47,27 @@ class GlobalSettings {
             wp_die('Non hai i permessi per visualizzare questa pagina');
 
         } else{
-            ?>
-            <form method="post" action="<?= esc_html( admin_url( 'admin.php?page='.$_GET["page"])) ?>">
 
-                <input type="hidden" name="<?= $this->option_name ?>-sendForm" value="OK" />
-
-                <div class="<?= $this->option_name ?>-container">
-                    <h2>Global Settings</h2>
-                    
-                    <?php ( new GlobalSettingsTable( $this->option_name ))->render();  ?>                    
-                    
-                    <hr>
-                    
-                    <h3>Link style</h3>
-                    <?php ( new StyleSettingsTable( $this->option_name ))->render();  ?>
-                </div>
-
-                <div><hr></div>
-
-                <?php 
-                    wp_nonce_field( $this->option_name.'-settings-save', $this->option_name.'-custom-message' );
-                    submit_button();
-                ?>
-            </form><!-- .wrap -->
-            <?php
+            echo str_replace(
+                [ 
+                    '{{ link }}',
+                    '{{ option_name }}',
+                    '{{ GlobalSettingsTable }}',
+                    '{{ StyleSettingsTable }}',
+                    '{{ wp_nonce }}',
+                    '{{ submit_button }}'
+                ],
+                [ 
+                    esc_html( admin_url( 'admin.php?page='.$_GET["page"] ) ),
+                    $this->option_name,
+                    ( new GlobalSettingsTable( $this->option_name ))->render(),
+                    ( new StyleSettingsTable( $this->option_name ))->render(),
+                    wp_nonce_field( 'program-links-options-save', 'blz-affiliation-custom-message' ),
+                    submit_button()
+                ],
+                $this->output
+            );
+            
         }
 
     }
