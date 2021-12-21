@@ -63,7 +63,7 @@ class GlobalSettings {
                     ( new GlobalSettingsTable( $this->option_name ))->render(),
                     ( new StyleSettingsTable( $this->option_name ))->render(),
                     wp_nonce_field( 'program-links-options-save', 'blz-affiliation-custom-message' ),
-                    submit_button()
+                    get_submit_button()
                 ],
                 $this->output
             );
