@@ -5,7 +5,7 @@ use BLZ_AFFILIATION\Utils\Helper;
 use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\ActivationTable;
 use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\TemplateTable;
 
-use BLZ_AFFILIATION\AdminUserInterface\Settings\Pages\Partial\Tab;
+use BLZ_AFFILIATION\AdminUserInterface\Settings\Pages\Partials\Tab;
 /**
  * Class GaTrackingIdSettings
  *
