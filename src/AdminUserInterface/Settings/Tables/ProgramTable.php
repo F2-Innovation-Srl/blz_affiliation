@@ -10,6 +10,28 @@ use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\Fields;
 class ProgramTable {
 
     protected $name;
+
+    private $output = [
+        "table" => 
+            <<<HTML
+            <div><h2>{{ title }}</h2></div>
+            <table>
+                {{ trs }}  
+            </table>
+            HTML,
+        "ths" => 
+            <<<HTML
+            <th>{{ th }}</th>
+            HTML,
+        "trs" => 
+            <<<HTML
+            <tr valign="top" >{{ tds }}</tr>
+            HTML,
+        "tds" => 
+            <<<HTML
+            <td>{{ td }}</td>
+            HTML
+    ];
     
 	/**
 	 * AttivazioneRow constructor.
@@ -41,21 +63,31 @@ class ProgramTable {
      * Print page if have correct permission
     **/
     public function render(){
-        ?>
-        <div><h2><?php echo $this->name?></h2></div>
-            <table>
-                <tr valign="top" style="text-align:left">
-                    <th>Slug</th><th>Name</th>                    
-                </tr>
-                <?php 
-                foreach( $this->rows as $row ) {
-                    echo '<tr valign="top">';
-                    foreach( $row as $field )  echo "<td>" .$field->render() ."</td>";
-                    echo "</tr>";
-                }
-                ?>
-            </table>
-    <?php
+
+        foreach( ["Slug","Name"] as $label ) 
+                    $ths[] = str_replace("{{ th }}",$label, $this->output["ths"]);
+
+        foreach( $this->rows as $row ) {
+            foreach( $row as $field ) 
+                $tds[] = str_replace("{{ td }}",$field->render(), $this->output["tds"]);
+
+            $trs[] = str_replace("{{ tds }}",implode("",$tds), $this->output["trs"]);
+        }
+
+        return str_replace( [
+                '{{ title }}',
+                '{{ ths }}',
+                '{{ trs }}'
+
+            ], 
+            [ 
+                $this->name,
+                implode("",$ths),
+                implode("",$trs)
+            ], 
+            $this->output["table"] 
+        );
+
     }
 
     private function getAndSetRows($option_name){
