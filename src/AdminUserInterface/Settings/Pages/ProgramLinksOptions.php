@@ -58,7 +58,7 @@ class ProgramLinksOptions {
                 ],
                 [ 
                     esc_html( admin_url( 'admin.php?page='.$_GET["page"] ) ),
-                    implode("",$programTables[]),
+                    implode("",$programTables),
                     wp_nonce_field( 'program-links-options-save', 'blz-affiliation-custom-message' )
                 ],
                 $this->output
