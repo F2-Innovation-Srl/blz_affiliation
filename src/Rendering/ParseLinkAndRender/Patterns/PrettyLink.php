@@ -18,7 +18,7 @@ class PrettyLink extends Pattern {
     protected $tracking_code = '';
     
     /// il nome del marketplace di cui parsare i link
-    protected $name = '';
+    public $name = '';
        
     /// viene richiamata dal costruttore
     public function Parse() {

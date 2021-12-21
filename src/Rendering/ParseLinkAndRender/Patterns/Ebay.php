@@ -18,7 +18,7 @@ class Ebay extends Pattern {
     protected $tracking_code = 'ebay';
     
     /// il nome del marketplace di cui parsare i link
-    protected $name = 'ebay';
+    public $name = 'ebay';
     
     /// viene richiamata dal costruttore
     public function Parse() {

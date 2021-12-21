@@ -21,7 +21,7 @@ abstract class Pattern {
     protected $pattern = '';
     
     /// il nome del marketplace di cui parsare i link
-    protected $name = '';
+    public $name = '';
     
     /// prende in ingresso un pattern
     public function __construct( string $content ) {
@@ -30,6 +30,5 @@ abstract class Pattern {
         
         $this->data = $this->Parse();
     }
-    public function getName() { return self::$name; }
     public abstract function Parse();
 }
