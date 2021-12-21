@@ -15,6 +15,14 @@ class ProgramLinksOptions {
     protected $programs;
     protected $subjects;
     protected $default_tracking_id = 'tn-news';
+
+    private $output =
+    <<<HTML
+    <form method="post" action="{{ link }}">
+        {{ ProgramTable }}
+        {{ wp_nonce }}
+    </form>
+    HTML;
     
 	/**
 	 * 
@@ -31,27 +39,30 @@ class ProgramLinksOptions {
     public function render()
     {
         if ( !current_user_can('manage_options') ) {
-            
             wp_die('Non hai i permessi per visualizzare questa pagina');
-
         } else {
+            
+            $taxonomies = [ 
+                'blz-affiliation-programs'=> 'Programs',
+                'blz-affiliation-subjects' => 'Subjects'
+            ]; 
 
-            $action = esc_html( admin_url( 'admin.php?page='.$_GET["page"] ) );
-            ?>
-            <form method="post" action="<?=$action?>">
-                <?php 
-                $taxonomies = [ 
-                    'blz-affiliation-programs'=> 'Programs',
-                    'blz-affiliation-subjects' => 'Subjects'
-                ];        
-                foreach ($taxonomies as $taxonomy_slug => $taxonomy_name)
-                        (new ProgramTable($taxonomy_slug,$taxonomy_name))->render(); 
-                ?>
-                <?php wp_nonce_field( 'program-links-options-save', 'blz-affiliation-custom-message' ); ?>
-                
-            </form>
-            <!-- .wrap -->
-            <?php 
+            foreach ($taxonomies as $taxonomy_slug => $taxonomy_name)
+                       $programTables[] = (new ProgramTable($taxonomy_slug,$taxonomy_name))->render(); 
+            
+             echo str_replace(
+                [ 
+                    '{{ link }}',
+                    '{{ ProgramTable }}',
+                    '{{ wp_nonce }}'
+                ],
+                [ 
+                    esc_html( admin_url( 'admin.php?page='.$_GET["page"] ) ),
+                    implode("",$programTables[]),
+                    wp_nonce_field( 'program-links-options-save', 'blz-affiliation-custom-message' )
+                ],
+                $this->output
+            );
         }
     }
 
