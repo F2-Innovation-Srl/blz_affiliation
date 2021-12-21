@@ -57,10 +57,10 @@ class GATracking {
 	function __construct() {
         
         $settings = get_option( "blz-affiliation-settings" );
+       
+        if( isset( $settings['ga_code'] ) ){
 
-        if( isset( $settings[ 'ga_code' ] ) ){
-
-            $this->ga_code = [ 'ga_code' ];
+            $this->ga_code = $settings['ga_code'];
         
             add_action( 'init', [ $this, 'onInit' ] );
         }
