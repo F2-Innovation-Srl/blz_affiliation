@@ -57,7 +57,7 @@ class GaTrackingIdSettings {
             wp_die('Non hai i permessi per visualizzare questa pagina');
         } else{
 
-            return $markup . str_replace(
+            return str_replace(
                 [ 
                     '{{ link }}',
                     '{{ slug }}',
