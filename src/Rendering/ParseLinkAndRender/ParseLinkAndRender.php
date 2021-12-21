@@ -68,7 +68,7 @@ class ParseLinkAndRender {
                 
                 /// inizializzo i settingsData 
                 $SettingsData = new SettingsData("parseLinkAndRender",(new Request(["marketplace" => $linkData->marketplace])));
-                $new_link = $this->FillTemplate( $pattern->getName(), $linkData->url, $SettingsData->getGAEvent(), $SettingsData->getTrackingID(), $SettingsData->getTemplate() );
+                $new_link = $this->FillTemplate( $pattern::getName(), $linkData->url, $SettingsData->getGAEvent(), $SettingsData->getTrackingID(), $SettingsData->getTemplate() );
                 
                 /// rimpiazziamo i vecchi link con i nuovi
                 $this->content = str_replace( $linkData->old_link, $new_link, $this->content );
