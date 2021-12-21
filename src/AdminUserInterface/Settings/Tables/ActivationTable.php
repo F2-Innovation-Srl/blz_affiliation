@@ -9,9 +9,31 @@ use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\Fields;
  */
 class ActivationTable {
 
-    protected $rows;
-    protected $current;
-    protected $option_name;
+    private $rows;
+    private $current;
+    private $option_name;
+
+    private $output = [
+        "table" => 
+            <<<HTML
+            <div><h2 id="tabella" name="tabella">Tabella di attivazione</h2></div>
+            {{ ActivationTableImport }}
+            <table>
+                <tr valign="top" style="text-align:left">{{ ths }}</tr>
+                <tr valign="top">{{ tds }}</tr>   
+            </table>
+            HTML,
+        "ths" => 
+            <<<HTML
+            <th>{{ th }}</th>
+            HTML,
+        "tds" => 
+            <<<HTML
+            <th>{{ td }}</th>
+            HTML
+    ];
+   
+
 	/**
 	 * AttivazioneRow constructor.
 	 */
@@ -30,7 +52,6 @@ class ActivationTable {
                 new Fields\Rule($option_name."_regola".$i,$rows[$i]["regola"],$rows[$i]["attivatore"]),
                 new Fields\Label($option_name."_ga_label".$i,$rows[$i]["ga_label"],"GA",$current),
                 new Fields\Text($option_name."_ga_val".$i,$rows[$i]["ga_val"],$hiddenGA),
-                //new Fields\Label($option_name."_trk_label".$i,$rows[$i]["trk_label"],"TRK_ID",$current),
                 new Fields\Text($option_name."_trk_val".$i,$rows[$i]["trk_val"],$hiddenTrack),
                 new Fields\Text($i,"Update","button"),
                 new Fields\Text($i,"Delete","button",["hidden_field" => $option_name])
@@ -44,7 +65,6 @@ class ActivationTable {
             new Fields\Rule($option_name."_regola_new",""),
             new Fields\Label($option_name."_ga_label_new","","GA",$current),
             new Fields\Text($option_name."_ga_val_new","",$hiddenGA),
-            //new Fields\Label($option_name."_trk_label_new","","TRK_ID",$current),
             new Fields\Text($option_name."_trk_val_new","",$hiddenTrack),
             new Fields\Text($option_name."_new",'Aggiungi',"button"),
             new Fields\Text($option_name."_hidden_for_delete",'',"hidden")
@@ -55,30 +75,35 @@ class ActivationTable {
      * Print page if have correct permission
     **/
     public function render(){
-        ?>
-        <div><h2 id="tabella" name="tabella">Tabella di attivazione</h2></div>
-            <?php (new ActivationTableImport($this->option_name))->render();  ?>
-            <table>
-                <tr valign="top" style="text-align:left">
-                    <th>&nbsp;</th><th>&nbsp;</th>
-                    <th>Attivatore</th><th>Regola</th>
-                    <?php if (!empty($this->current["marketplace"]["ga_event_template"])) : ?>
-                    <th>Label</th><th>Valore GA</th>
-                    <?php endif;?>   
-                    <?php if (!empty($this->current["marketplace"]["tracking_id"])) : ?>
-                    <!--th>Label TRK_ID</th--><th>Valore TRK_ID</th>
-                    <?php endif;?>   
-                    <th>&nbsp;</th>                       
-                </tr>
-                <?php 
-                foreach( $this->rows as $row ) {
-                    echo '<tr valign="top">';
-                    foreach( $row as $field )  echo "<td>" .$field->render() ."</td>";
-                    echo "</tr>";
-                }
-                ?>
-            </table>
-    <?php
+        $labels = ["&nbsp;","&nbsp;","Attivatore","Regola","Label"];
+        if (!empty($this->current["marketplace"]["ga_event_template"]))  $labels[] = "Valore GA";
+        if (!empty($this->current["marketplace"]["tracking_id"])) $labels[] = "Valore TRK_ID";
+
+        $ths = [];
+        $tds = [];
+
+        foreach( $labels as $label ) 
+                    $ths[] = str_replace("{{ th }}",$label->render(), $this->option["ths"]);
+
+        foreach( $this->rows as $row ) 
+                foreach( $row as $field ) 
+                    $tds[] = str_replace("{{ td }}",$field->render(), $this->option["tds"]);
+
+        return str_replace( 
+            [
+                '{{ ActivationTableImport }}',
+                '{{ ths }}',
+                '{{ tds }}'
+            ], 
+            [ 
+                (new ActivationTableImport($this->option_name))->render(), 
+                implode("",$ths),
+                implode("",$tds)
+            ],  
+            $this->output["table"] 
+        );
+
+              
     }
 
     private function getAndSetRows($option_name){
@@ -96,7 +121,6 @@ class ActivationTable {
                 'ga_label' => isset( $_POST[ $option_name.'_ga_label'.$idx ] ) ? $_POST[ $option_name.'_ga_label'.$idx ] : ($activationRow['ga_label'] ?? ''),
                 'ga_val' => isset( $_POST[ $option_name.'_ga_val'.$idx ] ) ? $_POST[$option_name. '_ga_val'.$idx ] : ($activationRow['ga_val'] ?? ''),
                 'trk_val' => isset( $_POST[ $option_name.'_trk_val'.$idx ] ) ? $_POST[ $option_name.'_trk_val'.$idx ] : ($activationRow['trk_val'] ?? ''),
-                'trk_label' => isset( $_POST[ $option_name.'_trk_label'.$idx ] ) ? $_POST[$option_name. '_trk_label'.$idx ] : ($activationRow['trk_label'] ?? ''),
             ];
         
         }, $activationRows, array_keys($activationRows) ) : [];
@@ -128,9 +152,7 @@ class ActivationTable {
                 'regola' => $_POST[$option_name.'_regola_new'],
                 'ga_label' => $_POST[$option_name.'_ga_label_new'],
                 'ga_val' => $_POST[$option_name.'_ga_val_new'],
-                'trk_label' => $_POST[$option_name.'_trk_label_new'],
                 'trk_val' => $_POST[$option_name.'_trk_val_new']
-                
             ];
         }
 
