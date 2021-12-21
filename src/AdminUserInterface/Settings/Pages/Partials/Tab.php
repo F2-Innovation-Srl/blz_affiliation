@@ -34,7 +34,7 @@ class Tab {
     }
 
 
-    private function render() {
+    public function render() {
         $tabs = [];
         
         foreach($this->tabs as $tab) 
