@@ -15,13 +15,13 @@ class GaTrackingIdSettings {
 
     public $settings;
 
-    protected $name;
-    protected $slug;
+    private $name;
+    private $slug;
     
-    protected $current;
-    protected $option_name;
+    private $current;
+    private $option_name;
 
-    protected $output =
+    private $output =
      <<<HTML
     <form method="post" id="GaTrakingIdSettings" name="GaTrakingIdSettings" action="{{ link }}">
         <input type="hidden" name="{{ slug }}-sendForm" value="OK" />
@@ -56,24 +56,26 @@ class GaTrackingIdSettings {
         if (!current_user_can('manage_options')) {
             wp_die('Non hai i permessi per visualizzare questa pagina');
         } else{
+            $tabs =  (new Tab($this->settings,$this->current))->render();
 
-            return str_replace(
+            echo str_replace(
                 [ 
                     '{{ link }}',
                     '{{ slug }}',
                     '{{ tabs }}',
                     '{{ title }}',
                     '{{ TemplateTable }}',
-                    '{{ ActivationTable }}'
+                    '{{ ActivationTable }}',
+                    '{{ wp_nonce }}'
                 ],
                 [ 
                     esc_html( admin_url( 'admin.php?page='.$_GET["page"].'&tab='.$this->current["tab"]["slug"].'&marketplace='.$this->current["marketplace"]["slug"]."#tabella" ) ),
                     $this->slug, 
-                    (new Tab($this->settings,$this->current))->render(),
-                    wp_nonce_field( $this->slug.'-settings-save', $this->slug.'-custom-message', true, false ),
+                    $tabs,
                     $this->current["tab"]["description"] . $this->current["marketplace"]["description"],
                     (new TemplateTable($this->option_name,$this->current))->render(),
-                    (new ActivationTable($this->option_name,$this->current))->render()
+                    (new ActivationTable($this->option_name,$this->current))->render(),
+                    wp_nonce_field( $this->slug.'-settings-save', $this->slug.'-custom-message')
                 ],
                 $this->output
             );
@@ -86,10 +88,8 @@ class GaTrackingIdSettings {
     **/
     public function setCurrentObjects()
     {
-        $this->current = [
-            "tab"         => (isset($_GET['tab'])) ? Helper::findbySlug($this->settings["tabs"],$_GET["tab"]) : $this->settings["tabs"][0],
-            "marketplace" => (isset($_GET['marketplace'])) ? Helper::findbySlug($this->current["tab"]["marketplaces"],$_GET["marketplace"]) : $this->current["tab"]["marketplaces"][0]
-        ];
+        $this->current["tab"] = (isset($_GET['tab'])) ? Helper::findbySlug($this->settings["tabs"],$_GET["tab"]) : $this->settings["tabs"][0];
+        $this->current["marketplace"] = (isset($_GET['marketplace'])) ? Helper::findbySlug($this->current["tab"]["marketplaces"],$_GET["marketplace"]) : $this->current["tab"]["marketplaces"][0];
         $this->option_name = $this->slug."-".$this->current["tab"]["slug"]."-".$this->current["marketplace"]["slug"];
 
     }
