@@ -83,7 +83,7 @@ class ActivationTable {
         $tds = [];
 
         foreach( $labels as $label ) 
-                    $ths[] = str_replace("{{ th }}",$label->render(), $this->option["ths"]);
+                    $ths[] = str_replace("{{ th }}",$label, $this->option["ths"]);
 
         foreach( $this->rows as $row ) 
                 foreach( $row as $field ) 
