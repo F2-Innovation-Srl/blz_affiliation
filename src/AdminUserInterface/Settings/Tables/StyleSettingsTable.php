@@ -51,7 +51,7 @@ class StyleSettingsTable {
             return $cols;
         } );
 
-        echo str_replace([ '{{ headings }}', '{{ rows }}' ], [ $headings, $rows ], $table );       
+        return str_replace([ '{{ headings }}', '{{ rows }}' ], [ $headings, $rows ], $table );       
     }
 
     /**
