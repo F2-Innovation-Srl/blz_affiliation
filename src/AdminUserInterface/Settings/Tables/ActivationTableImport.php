@@ -9,8 +9,28 @@ use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\Fields;
  */
 class ActivationTableImport {
 
-    protected $rows;
-    
+    private $rows;
+
+    private $output = [
+        "table" => 
+            <<<HTML
+            <table>
+                {{ trs }}  
+            </table>
+            HTML,
+        "ths" => 
+            <<<HTML
+            <th>{{ th }}</th>
+            HTML,
+        "trs" => 
+            <<<HTML
+            <tr valign="top" >{{ tds }}</tr>
+            HTML,
+        "tds" => 
+            <<<HTML
+            <td>{{ td }}</td>
+            HTML
+    ];
 	/**
 	 * AttivazioneRow constructor.
 	 */
@@ -26,17 +46,15 @@ class ActivationTableImport {
      * Print page if have correct permission
     **/
     public function render(){
-        ?>
-            <table>
-                <?php 
-                foreach( $this->rows as $row ) {
-                    echo '<tr valign="top">';
-                    foreach( $row as $field )  echo "<td>" .$field->render() ."</td>";
-                    echo "</tr>";
-                }
-                ?>
-            </table>
-    <?php
+
+        foreach( $this->rows as $row ) {
+            foreach( $row as $field ) 
+                $tds[] = str_replace("{{ td }}",$field->render(), $this->output["tds"]);
+
+            $trs[] = str_replace("{{ tds }}",implode("",$tds), $this->output["trs"]);
+        }
+
+        return str_replace( ['{{ trs }}'], [ implode("",$trs)], $this->output["table"] );
     }
 
     private function getAndSetRows($option_name){
@@ -45,8 +63,5 @@ class ActivationTableImport {
             $activationRows = get_option( $_POST[$option_name. '_activation_import']);    
             update_option($option_name,$activationRows);
         }
-
-      
-
     }
 }

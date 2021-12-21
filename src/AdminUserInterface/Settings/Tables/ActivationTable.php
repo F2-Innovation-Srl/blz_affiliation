@@ -20,16 +20,20 @@ class ActivationTable {
             {{ ActivationTableImport }}
             <table>
                 <tr valign="top" style="text-align:left">{{ ths }}</tr>
-                <tr valign="top">{{ tds }}</tr>   
+                {{ trs }}  
             </table>
             HTML,
         "ths" => 
             <<<HTML
             <th>{{ th }}</th>
             HTML,
+        "trs" => 
+            <<<HTML
+            <tr valign="top" >{{ tds }}</tr>
+            HTML,
         "tds" => 
             <<<HTML
-            <th>{{ td }}</th>
+            <td>{{ td }}</td>
             HTML
     ];
    
@@ -79,26 +83,28 @@ class ActivationTable {
         if (!empty($this->current["marketplace"]["ga_event_template"]))  $labels[] = "Valore GA";
         if (!empty($this->current["marketplace"]["tracking_id"])) $labels[] = "Valore TRK_ID";
 
-        $ths = [];
-        $tds = [];
-
         foreach( $labels as $label ) 
-                    $ths[] = str_replace("{{ th }}",$label, $this->option["ths"]);
+                    $ths[] = str_replace("{{ th }}",$label, $this->output["ths"]);
 
-        foreach( $this->rows as $row ) 
-                foreach( $row as $field ) 
-                    $tds[] = str_replace("{{ td }}",$field->render(), $this->option["tds"]);
+        foreach( $this->rows as $row ) {
+            foreach( $row as $field ) 
+                $tds[] = str_replace("{{ td }}",$field->render(), $this->output["tds"]);
 
+            $trs[] = str_replace("{{ tds }}",implode("",$tds), $this->output["trs"]);
+        }
+                
+
+        //print_r($tds);exit;
         return str_replace( 
             [
                 '{{ ActivationTableImport }}',
                 '{{ ths }}',
-                '{{ tds }}'
+                '{{ trs }}'
             ], 
             [ 
                 (new ActivationTableImport($this->option_name))->render(), 
                 implode("",$ths),
-                implode("",$tds)
+                implode("",$trs),
             ],  
             $this->output["table"] 
         );
