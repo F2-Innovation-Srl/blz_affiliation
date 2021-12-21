@@ -1,5 +1,5 @@
 <?php
-namespace BLZ_AFFILIATION\AdminUserInterface\Settings\Pages\Tab;
+namespace BLZ_AFFILIATION\AdminUserInterface\Settings\Pages\Partial;
 
 /**
  * Class GaTrackingIdSettings
