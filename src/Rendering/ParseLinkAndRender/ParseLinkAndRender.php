@@ -68,7 +68,7 @@ class ParseLinkAndRender {
                 
                 /// inizializzo i settingsData 
                 $SettingsData = new SettingsData("parseLinkAndRender",(new Request(["marketplace" => $linkData->marketplace])));
-                $new_link = $this->FillTemplate( $linkData->url, $SettingsData->getGAEvent(), $SettingsData->getTrackingID(), $SettingsData->getTemplate() );
+                $new_link = $this->FillTemplate( $pattern->name, $linkData->url, $SettingsData->getGAEvent(), $SettingsData->getTrackingID(), $SettingsData->getTemplate() );
                 
                 /// rimpiazziamo i vecchi link con i nuovi
                 $this->content = str_replace( $linkData->old_link, $new_link, $this->content );
@@ -86,11 +86,12 @@ class ParseLinkAndRender {
      * @param Link $linkData
      * @return string
      */
-    private function FillTemplate( $link, $ga_event, $tracking, $template) {
+    private function FillTemplate( $marketplace, $link, $ga_event, $tracking, $template) {
 
         $link = str_replace( '{tracking_id}', $tracking, $link);
         /// poi accorcia il link
-        $link = ( new Shortener )->generateShortLink( $link ) ;
+        if ($marketplace != "ebay")
+            $link = ( new Shortener )->generateShortLink( $link ) ;
 
         return str_replace([ '{{ url }}', '{{ ga_event }}' ], [ $link, $ga_event ], $template);
     }

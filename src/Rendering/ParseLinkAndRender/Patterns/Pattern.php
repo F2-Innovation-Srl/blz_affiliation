@@ -30,6 +30,6 @@ abstract class Pattern {
         
         $this->data = $this->Parse();
     }
-
+    public function getName() { return self::$name; }
     public abstract function Parse();
 }

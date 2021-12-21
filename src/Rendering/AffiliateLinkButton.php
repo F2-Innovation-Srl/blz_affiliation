@@ -28,8 +28,9 @@ class AffiliateLinkButton {
     private function FillTemplate( Offer $offer, $ga_event, $tracking, $template) {
 
         $link = str_replace( '{tracking-id}', $tracking, $offer->link);
-        /// poi accorcia il link
-        $link = ( new Shortener )->generateShortLink( $link ) ;
+        /// poi accorcia il link se è diverso da ebay
+        if ($offer->marketplace != "ebay")
+            $link = ( new Shortener )->generateShortLink( $link ) ;
 
         $content = (!empty($this->request->getContent())) ? $this->request->getContent() : $offer->price . " euro";
         return str_replace([ '{{ url }}', '{{ ga_event }}', '{{ content }}' ], [ $link, $ga_event, $content ], $template);
