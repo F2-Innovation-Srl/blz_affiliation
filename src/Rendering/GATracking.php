@@ -22,7 +22,7 @@ class GATracking {
                         "account": "{GA_TRACKING_ID}",
                         "gtag_id": "{GA_TRACKING_ID}",
                         "config" : {
-                            "{GA_TRACKING_ID}": { "groups": "default" }
+                            "{GA_TRACKING_ID}": { "groups": "default", "send_page_view" : false }
                         }
                     },
                     "triggers": {
