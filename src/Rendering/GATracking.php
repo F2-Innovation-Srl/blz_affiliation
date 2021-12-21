@@ -20,10 +20,7 @@ class GATracking {
                 {
                     "vars" : {
                         "account": "{GA_TRACKING_ID}",
-                        "gtag_id": "{GA_TRACKING_ID}",
-                        "config" : {
-                            "{GA_TRACKING_ID}": { "groups": "default" }
-                        }
+                        "gtag_id": "{GA_TRACKING_ID}"
                     },
                     "triggers": {
                         "affiliateLinkView": {
