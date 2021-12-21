@@ -25,14 +25,14 @@ class SettingsData {
 
     private $templates = [
         
-        'linkButton' => <<<HTML
-
+        'linkButton' => 
+        <<<HTML
             <a href="{{ url }}" data-vars-affiliate="{{ ga_event }}" 
                class="affiliation-intext" target="_blank" rel="sponsored"
             >{{ content }}</a>
         HTML,
-        'parseLinkAndRender' => <<<HTML
-
+        'parseLinkAndRender' => 
+        <<<HTML
         <a href="{{ url }}" data-vars-affiliate="{{ ga_event }}" 
            class="affiliation-intext" target="_blank" rel="sponsored" >
         HTML
