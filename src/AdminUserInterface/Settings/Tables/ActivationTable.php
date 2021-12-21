@@ -91,6 +91,7 @@ class ActivationTable {
                 $tds[] = str_replace("{{ td }}",$field->render(), $this->output["tds"]);
 
             $trs[] = str_replace("{{ tds }}",implode("",$tds), $this->output["trs"]);
+            $tds = [];
         }
                 
 
