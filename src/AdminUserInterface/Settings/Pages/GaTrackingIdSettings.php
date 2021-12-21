@@ -73,7 +73,7 @@ class GaTrackingIdSettings {
                     wp_nonce_field( $this->slug.'-settings-save', $this->slug.'-custom-message', true, false ),
                     $this->current["tab"]["description"] . $this->current["marketplace"]["description"],
                     (new TemplateTable($this->option_name,$this->current))->render(),
-                    ((!empty($this->current["marketplace"]["ga_event_template"]) || !empty($this->current["marketplace"]["tracking_id"]) )) ? (new ActivationTable($this->option_name,$this->current))->render() : "",
+                    (new ActivationTable($this->option_name,$this->current))->render()
                 ],
                 $this->output
             );
