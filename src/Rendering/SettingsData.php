@@ -92,11 +92,11 @@ class SettingsData {
             
             // CASO IN CUI PRENDO IL VALORE DAL TIPO ATTIVATORE
             if( $rule["regola"] == "this_value" )
-                $code = str_replace( "{".$rule[$type."_label"]."}", $this->getValue($rule), $code );
+                $code = str_replace( "{".$rule["ga_label"]."}", $this->getValue($rule), $code );
 
             // GLI ALTRI CASI SE L'ATTIVATORE È VALIDO
             if( !empty( $rule ) )
-                if ( ( $this->isValidRule($rule) && !empty( $rule[ $type."_label" ] )) || $rule["attivatore"] == "tutte" )
+                if ( ( $this->isValidRule($rule) && !empty( $rule[ "ga_label" ] )) || $rule["attivatore"] == "tutte" )
                     $code = str_replace("{".$rule["ga_label"]."}",$rule[$type."_val"],$code);
         }
         
