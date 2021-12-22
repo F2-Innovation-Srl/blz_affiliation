@@ -51,7 +51,7 @@ class ActivationTableImport {
             return $cols;
         } ).'</tr>';
         
-        return str_replace([ '', '{{ headings }}', '{{ rows }}' ], [$this->title, $headings, $rows ], $this->output["table"] );       
+        return str_replace([ '{{ title }}', '{{ headings }}', '{{ rows }}' ], [$this->title, $headings, $rows ], $this->output["table"] );       
 
     }
 
