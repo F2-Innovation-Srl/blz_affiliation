@@ -24,7 +24,7 @@ class GaTrackingIdSettings {
 
     private $output =
      <<<HTML
-    <form method="post" id="GaTrakingIdSettings" name="GaTrakingIdSettings" action="{{ link }}">
+    <form method="post" id="GaTrackingIdSettings" name="GaTrackingIdSettings" action="{{ link }}">
         <input type="hidden" name="{{ slug }}-sendForm" value="OK" />
         {{ tabs }}
         <div class="{{ slug }}-container">
