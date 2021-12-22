@@ -30,8 +30,8 @@ class GaTrackingIdSettings {
         <div class="{{ slug }}-container">
             <h2>{{ title }}</h2>
             {{ TemplateTable }}
-            {{ ActivationTableImport }}
             {{ ActivationTable }}
+            {{ ActivationTableImport }}
         </div>
         <div><hr></div>
         {{ wp_nonce }}
