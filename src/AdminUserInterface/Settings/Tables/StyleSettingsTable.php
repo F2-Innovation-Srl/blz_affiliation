@@ -11,7 +11,7 @@ class StyleSettingsTable extends Table{
 	/**
 	 * 
 	 */
-	function getTableFields($row) {
+	protected function getTableFields($row) {
 
         $this->title = "Link style"; 
     
@@ -29,7 +29,7 @@ class StyleSettingsTable extends Table{
      *
      * @return array
      */
-    private function getAndSetRows( ){
+    protected function getAndSetRows( ){
         
         // GET
         $row = get_option( $this->option_name);
