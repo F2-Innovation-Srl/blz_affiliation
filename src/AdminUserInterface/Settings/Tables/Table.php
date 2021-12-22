@@ -84,9 +84,9 @@ abstract class Table {
 
     protected function removeHiddenLabel($label){
         if (str_contains($label, 'hidden') 
-            || str_contains($label, 'update') 
+            || str_contains($label, 'Update') 
             || str_contains($label, 'Azioni') 
-            || str_contains($label, 'delete')){
+            || str_contains($label, 'Delete')){
                 return "&nbsp;";
         }else{
             return $label;
