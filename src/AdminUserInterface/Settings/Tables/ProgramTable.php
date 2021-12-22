@@ -53,7 +53,7 @@ class ProgramTable {
     **/
     public function render(){
 
-        $headings = array_reduce( array_keys( $this->row ), function( $cols, $key ) { 
+        $headings = array_reduce( array_keys( $this->rows[0] ), function( $cols, $key ) { 
 
             $cols .= "<th>$key</th>";
             return $cols;
