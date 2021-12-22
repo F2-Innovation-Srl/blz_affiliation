@@ -66,6 +66,7 @@ class GaTrackingIdSettings {
                     '{{ slug }}',
                     '{{ tabs }}',
                     '{{ title }}',
+                    '{{ ActivationTableImport }}',
                     '{{ TemplateTable }}',
                     '{{ ActivationTable }}',
                     '{{ wp_nonce }}'
