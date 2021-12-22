@@ -48,7 +48,7 @@ class ProgramLinksOptions {
             ]; 
 
             foreach ($taxonomies as $taxonomy_slug => $taxonomy_name)
-                       $programTables[] = (new ProgramTable($taxonomy_slug,$taxonomy_name))->render(); 
+                       $programTables[] = (new ProgramTable($taxonomy_slug,null,$taxonomy_name))->render(); 
             
              echo str_replace(
                 [ 

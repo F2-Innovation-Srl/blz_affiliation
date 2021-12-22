@@ -23,7 +23,7 @@ class ActivationTableImport extends Table {
        
         if (isset( $_POST[$this->option_name])  && !empty($_POST[$this->option_name]) ){
             $activationRows = get_option( $_POST[$this->option_name]);    
-            //update_option($this->option_name,$activationRows);
+            update_option($this->option_name,$activationRows);
         }
     }
 }

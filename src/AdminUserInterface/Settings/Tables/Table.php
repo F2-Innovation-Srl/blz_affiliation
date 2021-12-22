@@ -10,6 +10,7 @@ use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\Fields;
 abstract class Table {
 
     protected $option_name;
+    protected $current;
     protected $title;
     protected $rows;
     protected $output = [
@@ -26,10 +27,11 @@ abstract class Table {
 	/**
 	 * AttivazioneRow constructor.
 	 */
-	public function __construct($option_name, $title = null) {
+	public function __construct($option_name, $current = null, $title = '') {
 
         $this->option_name = $option_name;
-        $this->title = ($title) ?? '';
+        $this->current = $current;
+        $this->title = $title;
         $this->getTableFields($this->getAndSetRows());
 
     }
@@ -58,6 +60,26 @@ abstract class Table {
         
         return str_replace([ '{{ title }}', '{{ headings }}', '{{ rows }}' ], [ $this->title, $headings, $rows ], $this->output["table"] );       
 
+    }
+
+    protected function down($a,$x) {
+        if( count($a)-1 > $x ) {
+            $b = array_slice($a,0,$x,true);
+            $b[] = $a[$x+1];
+            $b[] = $a[$x];
+            $b += array_slice($a,$x+2,count($a),true);
+            return($b);
+        } else { return $a; }
+    }
+    
+    protected function up($a,$x) {
+        if( $x > 0 and $x < count($a) ) {
+            $b = array_slice($a,0,($x-1),true);
+            $b[] = $a[$x];
+            $b[] = $a[$x-1];
+            $b += array_slice($a,($x+1),count($a),true);
+            return($b);
+        } else { return $a; }
     }
 
 }
