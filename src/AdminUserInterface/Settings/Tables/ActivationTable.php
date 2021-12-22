@@ -33,7 +33,7 @@ class ActivationTable {
         $rows = $this->getAndSetRows($option_name);
         $hiddenGA = (empty($this->current["marketplace"]["ga_event_template"]) ) ? "hidden" : "text"; 
         $hiddenTrack = (empty($this->current["marketplace"]["tracking_id"]) ) ? "hidden" : "text"; 
-
+        
         for ($i=0; $i<count($rows); $i++){
             $this->rows[] =  [
                 "hidden_up" => new Fields\Arrow($i,"","UP",["hidden_field" => $option_name]),
@@ -88,8 +88,7 @@ class ActivationTable {
         $rows = get_option($option_name);
 
         //UPDATE
-        $rows = ($rows) ? array_map( function ( $rows, $idx  )  use ($option_name)  {
-
+        $rows = ($rows) ? array_map( function ( $row, $idx  )  use ($option_name)  {
             return [
                 'id' => $idx,
                 'attivatore' => isset( $_POST[$option_name. '_attivatore'.$idx ] ) ? $_POST[$option_name. '_attivatore'.$idx ] : ($row['attivatore'] ?? ''),
@@ -132,6 +131,7 @@ class ActivationTable {
             ];
         }
 
+        //print_r($_POST);
         //SET
         update_option($option_name,$rows);
 
