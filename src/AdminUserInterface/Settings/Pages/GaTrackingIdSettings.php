@@ -3,6 +3,7 @@ namespace BLZ_AFFILIATION\AdminUserInterface\Settings\Pages;
 
 use BLZ_AFFILIATION\Utils\Helper;
 use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\ActivationTable;
+use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\ActivationTableImport;
 use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\TemplateTable;
 
 use BLZ_AFFILIATION\AdminUserInterface\Settings\Pages\Partials\Tab;
