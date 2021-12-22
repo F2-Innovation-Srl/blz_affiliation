@@ -6,74 +6,41 @@ use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\Fields\Text;
  * Campi per impostare gli stili
  *
  */
-class StyleSettingsTable {
-
-    private $rows;
-    private $title = "Link style"; 
-    private $output = [
-        "table" => 
-            <<<HTML
-            <div><h2>{{ title }}</h2></div>
-            <table>
-               <thead><tr valign="top" style="text-align:left">{{ headings }}</tr></thead>
-                <tbody>{{ rows }}</thead>
-            </table>
-            HTML
-    ];
+class StyleSettingsTable extends Table{
 
 	/**
 	 * 
 	 */
-	function __construct( $option_name ) {
-        $row = $this->getAndSetRow( $option_name );
+	function getTableFields($row) {
 
+        $this->title = "Link style"; 
+    
         $primary_color = ( $row[ 'primary_color' ] != null ) ? $row[ 'primary_color' ] : '';
         /// compone una riga ( insieme di campi )
         $this->rows[] =  [
             /// inserisce un campo "casella di testo"
-            'Colore Primario' => new Text( $option_name."_primary_color", $primary_color, "text" ),
+            'Colore Primario' => new Text( $this->option_name."_primary_color", $primary_color, "text" ),
         ];
     }
 
-	/**
-     * Print page if have correct permission
-     */
-    public function render() {
-
-        $headings = array_reduce( array_keys( $this->rows[0] ), function( $cols, $key ) { 
-
-            $cols .= "<th>$key</th>";
-            return $cols;
-        } );
-
-        foreach ($this->rows as $row)
-        $rows.= '<tr valign="top">'.array_reduce( $row, function( $cols, $field ) { 
-
-            $cols .= '<td >' . $field->render() . '</td>';
-            return $cols;
-        } ).'</tr>';
-        
-        return str_replace([ '{{ title }}', '{{ headings }}', '{{ rows }}' ], [ $this->title, $headings, $rows ], $this->output["table"] );       
-    }
 
     /**
      * Ritorna una riga
      *
-     * @param [type] $option_name
      * @return array
      */
-    private function getAndSetRow( $option_name ){
+    private function getAndSetRows( ){
         
         // GET
-        $row = get_option( $option_name);
+        $row = get_option( $this->option_name);
 
         // UPDATE
         $row = [
-            'primary_color' => isset( $_POST[$option_name. '_primary_color'  ] ) ? $_POST[$option_name. '_primary_color' ]  : ( $row[ 'primary_color'  ] ?? '' ),            
+            'primary_color' => isset( $_POST[$this->option_name. '_primary_color'  ] ) ? $_POST[$this->option_name. '_primary_color' ]  : ( $row[ 'primary_color'  ] ?? '' ),            
         ];
 
         // SET
-        update_option( $option_name, $row );
+        update_option( $this->option_name, $row );
 
         //RETURN
         return $row;

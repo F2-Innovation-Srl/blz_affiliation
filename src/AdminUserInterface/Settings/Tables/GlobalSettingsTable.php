@@ -12,7 +12,7 @@ class GlobalSettingsTable extends Table{
 	/**
 	 * GlobalSettingsTable constructor.
 	 */
-	function getTableFields($row) {
+	public function getTableFields($row) {
 
         $this->title = "Global Settings";
 
@@ -36,7 +36,7 @@ class GlobalSettingsTable extends Table{
      * @param [type] $this->option_name
      * @return array
      */
-    private function getAndSetRow(){
+    public function getAndSetRows(){
         
         // GET
         $row = get_option( $this->option_name );

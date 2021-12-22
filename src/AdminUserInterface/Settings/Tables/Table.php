@@ -26,14 +26,14 @@ abstract class Table {
 	/**
 	 * AttivazioneRow constructor.
 	 */
-	public function __construct($option_name,$name) {
+	public function __construct($option_name) {
 
-        $this->$option_name = $option_name;
+        $this->option_name = $option_name;
         $this->getTableFields($this->getAndSetRows());
 
     }
 
-    abstract protected function getTableFields();
+    abstract protected function getTableFields($rows);
 
     abstract protected function getAndSetRows();
 
@@ -41,7 +41,7 @@ abstract class Table {
      * Print page if have correct permission
     **/
     public function render(){
-
+        
         $headings = array_reduce( array_keys( $this->rows[0] ), function( $cols, $key ) { 
 
             $cols .= "<th>$key</th>";
