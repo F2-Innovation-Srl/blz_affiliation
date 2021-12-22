@@ -47,7 +47,7 @@ abstract class Table {
         
         $headings = array_reduce( array_keys( $this->rows[0] ), function( $cols, $key ) { 
 
-            $cols .= "<th>$key</th>";
+            $cols .= "<th>". $this->removeHiddenLabel($key) ."</th>";
             return $cols;
         } );
 
@@ -82,4 +82,14 @@ abstract class Table {
         } else { return $a; }
     }
 
+    protected function removeHiddenLabel($label){
+        if (str_contains($label, 'hidden') 
+            || str_contains($label, 'update') 
+            || str_contains($label, 'Azioni') 
+            || str_contains($label, 'delete')){
+                return "&nbsp;";
+        }else{
+            return $label;
+        }
+    }
 }
