@@ -55,8 +55,8 @@
                                     "name"              : "Generic",
                                     "slug"              : "generic",
                                     "description"       : "",
-                                    "ga_event_template" : "{website} {label} {subject} {program} {amp}",
-                                    "tracking_id"       : "{website}{label}{subject}{program}{amp}"
+                                    "ga_event_template" : "{website} {label} {author} {subject} {program} {amp}",
+                                    "tracking_id"       : "{website}{label}{author}{subject}{program}{amp}"
                                 }
                         ]
                     },{
