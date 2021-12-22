@@ -8,7 +8,7 @@ use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\Fields\Text;
  */
 class StyleSettingsTable {
 
-    private $row;
+    private $rows;
     private $title = "Link style"; 
     private $output = [
         "table" => 
@@ -29,7 +29,7 @@ class StyleSettingsTable {
 
         $primary_color = ( $row[ 'primary_color' ] != null ) ? $row[ 'primary_color' ] : '';
         /// compone una riga ( insieme di campi )
-        $this->row =  [
+        $this->rows[] =  [
             /// inserisce un campo "casella di testo"
             'Colore Primario' => new Text( $option_name."_primary_color", $primary_color, "text" ),
         ];
@@ -46,7 +46,7 @@ class StyleSettingsTable {
             return $cols;
         } );
 
-        $rows = array_reduce( $this->row, function( $cols, $field ) { 
+        $rows = array_reduce( $this->rows, function( $cols, $field ) { 
 
             $cols .= '<td>' . $field->render() . '</td>';
             return $cols;

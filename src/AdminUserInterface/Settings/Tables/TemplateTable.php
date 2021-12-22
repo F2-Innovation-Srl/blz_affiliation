@@ -11,16 +11,16 @@ class TemplateTable {
 
     protected $fields;
     private $current;
-    private $row;
+    private $rows;
     private $output = [
         "table" =>
         <<<HTML
             <div><h2>Template</h2></div>
             <table>
-                {{ fields }}
+                {{ rows }}
             </table>
         HTML,
-        "field" =>
+        "rows" =>
         <<<HTML
             <tr valign="top" style="text-align:left">
                 <th>{{ title }}</th> 
@@ -42,14 +42,14 @@ class TemplateTable {
      * Print page if have correct permission
     **/
     public function render(){
-        $fields = [];
+        $rows = [];
         if (!empty($this->current["marketplace"]["ga_event_template"]) || !empty($this->current["marketplace"]["tracking_id"]) ) {
             if (!empty($this->current["marketplace"]["ga_event_template"])) 
-                $fields[] =  str_replace(['{{ title }}','{{ field }}'],['GA EVENT',$this->current["marketplace"]["ga_event_template"]],$this->output["field"]);
+                $rows[] =  str_replace(['{{ title }}','{{ field }}'],['GA EVENT',$this->current["marketplace"]["ga_event_template"]],$this->output["field"]);
             if (!empty($this->current["marketplace"]["tracking_id"])) 
-                $fields[] =  str_replace(['{{ title }}','{{ field }}'],['TRACKING ID',$this->current["marketplace"]["tracking_id"]], $this->output["field"]);
+                $rows[] =  str_replace(['{{ title }}','{{ field }}'],['TRACKING ID',$this->current["marketplace"]["tracking_id"]], $this->output["field"]);
         
-            return str_replace('{{ fields }}', implode("",$fields), $this->output["table"]);
+            return str_replace('{{ rows }}', implode("",$rows), $this->output["table"]);
         }
        
     }

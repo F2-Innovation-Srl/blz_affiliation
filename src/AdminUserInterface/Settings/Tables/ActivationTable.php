@@ -87,7 +87,7 @@ class ActivationTable {
         $rows = get_option($option_name);
 
         //UPDATE
-        $rows = ($rows) ? array_map( function ( $row, $idx  )  use ($option_name)  {
+        $rows = ($rows) ? array_map( function ( $rows, $idx  )  use ($option_name)  {
 
             return [
                 'id' => $idx,

@@ -59,7 +59,7 @@ class ProgramTable {
             return $cols;
         } );
 
-        $rows = array_reduce( $this->row, function( $cols, $field ) { 
+        $rows = array_reduce( $this->rows, function( $cols, $field ) { 
 
             $cols .= '<td>' . $field->render() . '</td>';
             return $cols;
