@@ -56,7 +56,7 @@ class ActivationTable {
             "Label" => new Fields\Label($option_name."_ga_label_new","","GA",$current),
             "Valore GA" => new Fields\Text($option_name."_ga_val_new","",$hiddenGA),
             "Valore TRK_ID" => new Fields\Text($option_name."_trk_val_new","",$hiddenTrack),
-            "Update" => new Fields\Text($option_name."_new",'Aggiungi',"button"),
+            "New" => new Fields\Text($option_name."_new",'Aggiungi',"button"),
             "hidden" => new Fields\Text($option_name."_hidden_for_delete",'',"hidden")
         ];
     }
@@ -72,11 +72,11 @@ class ActivationTable {
         } );
 
         foreach ($this->rows as $row)
-        $rows = array_reduce( $row, function( $cols, $field ) {  
+        $rows.= '<tr valign="top">'.array_reduce( $row, function( $cols, $field ) { 
 
-            $cols .= '<td>' . $field->render() . '</td>';
+            $cols .= '<td >' . $field->render() . '</td>';
             return $cols;
-        } );
+        } ).'</tr>';
         
         return str_replace([ '{{ title }}', '{{ headings }}', '{{ rows }}' ], [$this->title, $headings, $rows ], $this->output["table"] );       
        

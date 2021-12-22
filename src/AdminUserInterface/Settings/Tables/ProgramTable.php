@@ -60,11 +60,11 @@ class ProgramTable {
         } );
 
         foreach ($this->rows as $row)
-        $rows = array_reduce( $row, function( $cols, $field ) { 
+        $rows.= '<tr valign="top">'.array_reduce( $row, function( $cols, $field ) { 
 
-            $cols .= '<td>' . $field->render() . '</td>';
+            $cols .= '<td >' . $field->render() . '</td>';
             return $cols;
-        } );
+        } ).'</tr>';
         
         return str_replace([ '{{ title }}', '{{ headings }}', '{{ rows }}' ], [ $this->title, $headings, $rows ], $this->output["table"] );       
 
