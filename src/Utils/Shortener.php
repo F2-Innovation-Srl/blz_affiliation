@@ -12,10 +12,10 @@ class Shortener {
 
         $username="techteam";
         $password="trellotrello";
-        $baseurl=parse_url($_SERVER[HTTP_HOST], PHP_URL_HOST); //preg_replace("/^(.*?)\.(.*)$/","$2",$_SERVER[HTTP_HOST]);
-
+        $baseurl=preg_replace("/^(.*?)\.(.*)$/","$2",$_SERVER["HTTP_HOST"]);
+       
         $curl = curl_init();
-
+//die("https://shortener.".$baseurl."/yourls-api.php?baseurl=".$baseurl."&username=".$username."&action=shorturl&format=json&password=".$password."&url=".urlencode($link));
         curl_setopt_array($curl, array(
             CURLOPT_URL => "https://shortener.".$baseurl."/yourls-api.php?baseurl=".$baseurl."&username=".$username."&action=shorturl&format=json&password=".$password."&url=".urlencode($link),
             CURLOPT_RETURNTRANSFER => true,
@@ -31,7 +31,6 @@ class Shortener {
         ));
 
         $short_data = json_decode(curl_exec($curl));
-        //print_r($short_data);
         curl_close($curl);
         return ($short_data->shorturl) ? ($short_data->shorturl) : $link;
 

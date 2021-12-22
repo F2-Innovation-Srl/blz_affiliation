@@ -36,7 +36,7 @@ class ComposerStaticInit79056022b9bcd1ff210ab6842fc0030d
         'BLZ_AFFILIATION\\AdminUserInterface\\Buttons\\PluginSettings' => __DIR__ . '/../..' . '/src/AdminUserInterface/PluginSettings.php',
         'BLZ_AFFILIATION\\Rendering\\AffiliateLinkButton' => __DIR__ . '/../..' . '/src/Rendering/AffiliateLinkButton.php',
         'BLZ_AFFILIATION\\Rendering\\ParseLinkAndRender' => __DIR__ . '/../..' . '/src/Rendering/ParseLinkAndRender.php',
-        'BLZ_AFFILIATION\\Utils\\FileGetContents' => __DIR__ . '/../..' . '/src/Utils/FileGetContents.php',
+        'BLZ_AFFILIATION\\Utils\\HttpRequest' => __DIR__ . '/../..' . '/src/Utils/HttpRequest.php',
         'BLZ_AFFILIATION\\Utils\\Shortener' => __DIR__ . '/../..' . '/src/Utils/Shortener.php',
         'Composer\\Installers\\AglInstaller' => __DIR__ . '/..' . '/composer/installers/src/Composer/Installers/AglInstaller.php',
         'Composer\\Installers\\AimeosInstaller' => __DIR__ . '/..' . '/composer/installers/src/Composer/Installers/AimeosInstaller.php',

@@ -2,7 +2,7 @@
 
 namespace BLZ_AFFILIATION\Utils;
 
-class FileGetContents {
+class HttpRequest {
 
     static function getContent($url){
 

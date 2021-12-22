@@ -13,7 +13,7 @@
         function FieldsManager() { 
 
             this.default_ga_event = "mtz cta tn guide editorial amazon";
-            this.stores = {
+            this.tracking_ids = {
                 amazon      : '{{amazon-tracking-id}}',
                 ebay        : '{{ebay-tracking-id}}',
                 ebay_used   : '{{ebay-tracking-id}}',
@@ -26,28 +26,27 @@
             this.asin_legend             = document.getElementById('asin_legend');
 
             this.marketplace             = document.getElementById('marketplace');
-            this.marketplace_custom      = document.getElementById('marketplace_custom');
-            this.store                   = document.getElementById('store');     
+            this.tracking_id             = document.getElementById('tracking_id');     
             this.min_price               = document.getElementById('min_price');       
             this.keyword                 = document.getElementById('keyword');
             this.text                    = document.getElementById('text');
-            this.asins                   = document.getElementById('asins');
+            this.code                    = document.getElementById('code');
             this.ga_event                = document.getElementById('ga_event');
             this.submit                  = document.getElementById('submit');
             
             this.writeShortCode = function () {
                 
                 var marketplace         = this.marketplace.value;
-                var marketplace_custom  = this.marketplace_custom.value;
                 var keyword             = this.keyword.value;
-                var asins               = this.asins.value;
-                var store               = this.store.value;
+                var code                = this.code.value;
+                var tracking_id         = this.tracking_id.value;
                 var min_price           = this.min_price.value;
                 var text                = this.text.value;
                 var ga_event            = (this.ga_event.value == "") ? this.default_ga_event : this.ga_event.value;
 
                 if (marketplace == "custom") {
-                    this.shortcode = '[affiliate_track url="' + asins +'" data-affiliate="'+ga_event+'"';
+                    
+                    this.shortcode = '[affiliate_track url="' + code +'" ga_event="'+ga_event+'"';
                     
                     if (tinymce.activeEditor.selection.getContent() != "") {
                         this.shortcode += ' text="' + tinymce.activeEditor.selection.getContent() + '"';
@@ -59,11 +58,13 @@
                         this.shortcode += '] ';
                         tinyMCE.activeEditor.execCommand('mceInsertContent', 0, this.shortcode);
                     }
-                }else{
+
+                } else {
+
                     this.shortcode = '[affiliate_link marketplace=' + marketplace;
                     this.shortcode += (keyword)     ? ' keyword=' + encodeURIComponent(keyword) : '';
-                    this.shortcode += (asins)       ? ' asins=' + asins : '';
-                    this.shortcode += (store)       ? ' store=' + store : '';
+                    this.shortcode += (code)        ? ' code=' + code : '';
+                    this.shortcode += (tracking_id) ? ' tracking_id=' + tracking_id : '';
                     this.shortcode += (min_price)   ? ' min_price=' + min_price : '';
 
                     if (tinymce.activeEditor.selection.getContent() != "") {
@@ -81,14 +82,14 @@
             }
 
             // take the initial value of marketplace
-            this.store.value = this.stores[this.marketplace.value];
+            this.tracking_id.value = this.tracking_ids[this.marketplace.value];
             
             // take visibility of container_text if user had selected text from editor
             this.container_text.style.display = (tinymce.activeEditor.selection.getContent() != "")  ? "none"  : "block";   
 
             // take the new value of marketplace
             this.marketplace.addEventListener('change', function(e) {
-                this.store.value = this.stores[this.marketplace.value];
+                this.tracking_id.value = this.tracking_ids[this.marketplace.value];
                 console.log(this.marketplace.value);
                 console.log(this.marketplace.value == "custom");
                 this.container_marketplace.style.display = (this.marketplace.value == "custom") ? "block" : "none"; 
@@ -100,44 +101,40 @@
             
             this.submit.addEventListener('click', function(e) {
  
-                if (this.marketplace.value == "custom" && this.marketplace_custom.value == "" ) {
-                    alert("inserire un marketplace valido"); 
-                    return;
-                }
-                if (this.marketplace.value == "custom" && this.asins.value == "" ) {
+                if (this.marketplace.value == "custom" && this.code.value == "" ) {
                     alert("inserire una url marketplace valida"); 
                     return;
                 }
-                if (this.marketplace.value == "amazon" && this.keyword.value == "" && this.asins.value == "") {
+                if (this.marketplace.value == "amazon" && this.keyword.value == "" && this.code.value == "") {
                     alert("inserire una chiave di ricerca o un asin"); 
                     return;
                 }
-                if (this.marketplace.value != "amazon" &&  this.marketplace.value != "custom" && this.keyword.value == "" && this.asins.value == "") {
+                if (this.marketplace.value != "amazon" &&  this.marketplace.value != "custom" && this.keyword.value == "" && this.code.value == "") {
                     alert("inserire una chiave di ricerca o un ean"); 
                     return;
                 }
-                if (asins != "" && this.marketplace.value == "amazon" ){
+                if (code != "" && this.marketplace.value == "amazon" ){
                     //TROVA CODICE DA LINK AMAZON
-                    if (this.asins.value.indexOf("www.amazon") !== -1) {
-                        temp = this.asins.value.split("/");
-                        this.asins.value = temp[temp.length-2]; 
+                    if (this.code.value.indexOf("www.amazon") !== -1) {
+                        temp = this.code.value.split("/");
+                        this.code.value = temp[temp.length-2]; 
                     } 
                 }
-                if (asins != "" && this.marketplace.value == "ebay" ){
+                if (code != "" && this.marketplace.value == "ebay" ){
                     let xhr = new XMLHttpRequest();
                     //TROVA CODICE DA LINK EBAY
-                    if (this.asins.value.indexOf("www.ebay") !== -1) {
-                        temp = this.asins.value.substring(this.asins.value.lastIndexOf("/") + 1, this.asins.value.length);
+                    if (this.code.value.indexOf("www.ebay") !== -1) {
+                        temp = this.code.value.substring(this.code.value.lastIndexOf("/") + 1, this.code.value.length);
                         if (temp.indexOf("?") !== -1) temp = temp.split("?")[0];
-                        this.asins.value = temp; 
+                        this.code.value = temp; 
                     } 
                    
-                    xhr.open("GET", 'https://ean2epid.blazemedia.it/api/v1/converter/'+this.asins.value, true);
+                    xhr.open("GET", 'https://ean2epid.blazemedia.it/api/v1/converter/'+this.code.value, true);
                     xhr.send();
                     xhr.onload = function() {
                         if (xhr.status == 200) { 
                             $response = JSON.parse(xhr.responseText);
-                            if ($response.epid != null) this.asins.value = this.asins.value+"EPID"+$response.epid;
+                            if ($response.epid != null) this.code.value = this.code.value+"EPID"+$response.epid;
                             this.writeShortCode();
                         } else { // show the result
                             this.writeShortCode();
@@ -197,14 +194,13 @@
         <option value="custom">Custom</option>
     </select>
     <span id="container_marketplace" style="display: none;">
-        <input type="text" id="marketplace_custom">
         <legend>Evento GA</legend>
         <input type="text" id="ga_event">
     </span>
    
 
     <legend id="asin_legend">Asin/Ean/Url</legend>
-    <input type="text" id="asins">
+    <input type="text" id="code">
 
     <span id="container_text">
         <legend>Testo del link (se omesso viene riportato il prezzo del prodotto)</legend>
@@ -216,7 +212,7 @@
         <input type="text" id="keyword">
 
         <legend>Tracking id (se omesso viene preso il tracking id sulla pagina autore)</legend>
-        <input type="text" id="store">
+        <input type="text" id="tracking_id">
 
 
         <legend>Min Price (Inserire un valore intero senza valuta, se omesso il default è 20 euro)</legend>
