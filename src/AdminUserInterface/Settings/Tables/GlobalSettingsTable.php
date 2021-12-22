@@ -53,7 +53,8 @@ class GlobalSettingsTable {
             return $cols;
         } );
 
-        $rows = array_reduce( $this->rows, function( $cols, $field ) { 
+        foreach ($this->rows as $row)
+        $rows = array_reduce( $row, function( $cols, $field ) {  
 
             $cols .= '<td>' . $field->render() . '</td>';
             return $cols;

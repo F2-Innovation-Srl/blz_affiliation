@@ -71,7 +71,8 @@ class ActivationTable {
             return $cols;
         } );
 
-        $rows = array_reduce( $this->row, function( $cols, $field ) { 
+        foreach ($this->rows as $row)
+        $rows = array_reduce( $row, function( $cols, $field ) {  
 
             $cols .= '<td>' . $field->render() . '</td>';
             return $cols;
