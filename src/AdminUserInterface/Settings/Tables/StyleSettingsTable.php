@@ -8,18 +8,26 @@ use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\Fields\Text;
  */
 class StyleSettingsTable {
 
-    protected $fields;
-    private   $row;
+    private $row;
+    private $title = "Link style"; 
+    private $output = [
+        "table" => 
+            <<<HTML
+            <div><h2>{{ title }}</h2></div>
+            <table>
+               <thead><tr valign="top" style="text-align:left">{{ headings }}</tr></thead>
+                <tbody>{{ rows }}</thead>
+            </table>
+            HTML
+    ];
 
 	/**
 	 * 
 	 */
 	function __construct( $option_name ) {
-
         $row = $this->getAndSetRow( $option_name );
 
         $primary_color = ( $row[ 'primary_color' ] != null ) ? $row[ 'primary_color' ] : '';
-    
         /// compone una riga ( insieme di campi )
         $this->row =  [
             /// inserisce un campo "casella di testo"
@@ -32,13 +40,6 @@ class StyleSettingsTable {
      */
     public function render() {
 
-        $table = <<<HTML
-            <table>
-                <thead><tr valign="top" style="text-align:left">{{ headings }}</tr></thead>
-                <tbody>{{ rows }}</thead>
-            </table>
-        HTML;
-        
         $headings = array_reduce( array_keys( $this->row ), function( $cols, $key ) { 
 
             $cols .= "<th>$key</th>";
@@ -50,8 +51,8 @@ class StyleSettingsTable {
             $cols .= '<td>' . $field->render() . '</td>';
             return $cols;
         } );
-
-        return str_replace([ '{{ headings }}', '{{ rows }}' ], [ $headings, $rows ], $table );       
+        
+        return str_replace([ '{{ title }}', '{{ headings }}', '{{ rows }}' ], [ $this->title, $headings, $rows ], $this->output["table"] );       
     }
 
     /**
@@ -63,7 +64,7 @@ class StyleSettingsTable {
     private function getAndSetRow( $option_name ){
         
         // GET
-        $row = get_option( $option_name ."-css");
+        $row = get_option( $option_name);
 
         // UPDATE
         $row = [
@@ -71,7 +72,7 @@ class StyleSettingsTable {
         ];
 
         // SET
-        update_option( $option_name."-css", $row );
+        update_option( $option_name, $row );
 
         //RETURN
         return $row;

@@ -29,6 +29,7 @@ class GaTrackingIdSettings {
         <div class="{{ slug }}-container">
             <h2>{{ title }}</h2>
             {{ TemplateTable }}
+            {{ ActivationTableImport }}
             {{ ActivationTable }}
         </div>
         <div><hr></div>
@@ -74,6 +75,7 @@ class GaTrackingIdSettings {
                     $tabs,
                     $this->current["tab"]["description"] . $this->current["marketplace"]["description"],
                     (new TemplateTable($this->option_name,$this->current))->render(),
+                    (new ActivationTableImport($this->option_name."_activation_import"))->render(),
                     (new ActivationTable($this->option_name,$this->current))->render(),
                     wp_nonce_field( $this->slug.'-settings-save', $this->slug.'-custom-message')
                 ],

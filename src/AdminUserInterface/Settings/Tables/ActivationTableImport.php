@@ -10,31 +10,26 @@ use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\Fields;
 class ActivationTableImport {
 
     private $rows;
-
+    private $title = "Importa da altra tabella di attivazione";
     private $output = [
         "table" => 
             <<<HTML
+            <div><h2>{{ title }}</h2></div>
             <table>
-                {{ trs }}  
+               <thead><tr valign="top" style="text-align:left">{{ headings }}</tr></thead>
+                <tbody>{{ rows }}</thead>
             </table>
-            HTML,
-        "trs" => 
-            <<<HTML
-            <tr valign="top" >{{ tds }}</tr>
-            HTML,
-        "tds" => 
-            <<<HTML
-            <td>{{ td }}</td>
             HTML
     ];
+    
 	/**
 	 * AttivazioneRow constructor.
 	 */
 	function __construct($option_name) {
         $this->getAndSetRows($option_name);
         $this->rows[] =  [
-            (new Fields\Import($option_name."_activation_import","","",["current" => $option_name])),
-            (new Fields\Text($option_name."_new",'Importa',"button"))
+            "Attivatori" => (new Fields\Import($option_name."_activation_import","","",["current" => $option_name])),
+            "Azioni" => (new Fields\Text($option_name."_new",'Importa',"button"))
         ];
     }
 
@@ -43,21 +38,26 @@ class ActivationTableImport {
     **/
     public function render(){
 
-        foreach( $this->rows as $row ) {
-            foreach( $row as $field ) 
-                $tds[] = str_replace("{{ td }}",$field->render(), $this->output["tds"]);
+        $headings = array_reduce( array_keys( $this->row ), function( $cols, $key ) { 
 
-            $trs[] = str_replace("{{ tds }}",implode("",$tds), $this->output["trs"]);
-            $tds = [];
-        }
+            $cols .= "<th>$key</th>";
+            return $cols;
+        } );
 
-        return str_replace( ['{{ trs }}'], [ implode("",$trs)], $this->output["table"] );
+        $rows = array_reduce( $this->row, function( $cols, $field ) { 
+
+            $cols .= '<td>' . $field->render() . '</td>';
+            return $cols;
+        } );
+        
+        return str_replace([ '', '{{ headings }}', '{{ rows }}' ], [$this->title, $headings, $rows ], $this->output["table"] );       
+
     }
 
     private function getAndSetRows($option_name){
         
-        if (isset( $_POST[$option_name. '_activation_import'])  && !empty($_POST[$option_name. '_activation_import']) ){
-            $activationRows = get_option( $_POST[$option_name. '_activation_import']);    
+        if (isset( $_POST[$option_name])  && !empty($_POST[$option_name]) ){
+            $activationRows = get_option( $_POST[$option_name]);    
             update_option($option_name,$activationRows);
         }
     }

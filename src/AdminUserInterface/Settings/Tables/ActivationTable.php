@@ -12,31 +12,17 @@ class ActivationTable {
     private $rows;
     private $current;
     private $option_name;
-
+    private $title = "Tabella di attivazione";
     private $output = [
         "table" => 
             <<<HTML
-            <div><h2 id="tabella" name="tabella">Tabella di attivazione</h2></div>
-            {{ ActivationTableImport }}
+            <div><h2 id="tabella" name="tabella">{{ title }}</h2></div>
             <table>
-                <tr valign="top" style="text-align:left">{{ headings }}</tr>
-                {{ trs }}  
+               <thead><tr valign="top" style="text-align:left">{{ headings }}</tr></thead>
+                <tbody>{{ rows }}</thead>
             </table>
-            HTML,
-        "headings" => 
-            <<<HTML
-            <th>{{ th }}</th>
-            HTML,
-        "trs" => 
-            <<<HTML
-            <tr valign="top" >{{ tds }}</tr>
-            HTML,
-        "tds" => 
-            <<<HTML
-            <td>{{ td }}</td>
             HTML
     ];
-   
 
 	/**
 	 * AttivazioneRow constructor.
@@ -50,28 +36,28 @@ class ActivationTable {
 
         for ($i=0; $i<count($rows); $i++){
             $this->rows[] =  [
-                new Fields\Arrow($i,"","UP",["hidden_field" => $option_name]),
-                new Fields\Arrow($i,"","DOWN",["hidden_field" => $option_name]),
-                new Fields\Activator($option_name."_attivatore".$i,$rows[$i]["attivatore"]),
-                new Fields\Rule($option_name."_regola".$i,$rows[$i]["regola"],$rows[$i]["attivatore"]),
-                new Fields\Label($option_name."_ga_label".$i,$rows[$i]["ga_label"],"GA",$current),
-                new Fields\Text($option_name."_ga_val".$i,$rows[$i]["ga_val"],$hiddenGA),
-                new Fields\Text($option_name."_trk_val".$i,$rows[$i]["trk_val"],$hiddenTrack),
-                new Fields\Text($i,"Update","button"),
-                new Fields\Text($i,"Delete","button",["hidden_field" => $option_name])
+                "hidden_up" => new Fields\Arrow($i,"","UP",["hidden_field" => $option_name]),
+                "hidden_down" => new Fields\Arrow($i,"","DOWN",["hidden_field" => $option_name]),
+                "Attivatore" => new Fields\Activator($option_name."_attivatore".$i,$rows[$i]["attivatore"]),
+                "Regola" => new Fields\Rule($option_name."_regola".$i,$rows[$i]["regola"],$rows[$i]["attivatore"]),
+                "Label" => new Fields\Label($option_name."_ga_label".$i,$rows[$i]["ga_label"],"GA",$current),
+                "Valore GA" => new Fields\Text($option_name."_ga_val".$i,$rows[$i]["ga_val"],$hiddenGA),
+                "Valore TRK_ID" => new Fields\Text($option_name."_trk_val".$i,$rows[$i]["trk_val"],$hiddenTrack),
+                "Update" => new Fields\Text($i,"Update","button"),
+                "Delete" => new Fields\Text($i,"Delete","button",["hidden_field" => $option_name])
             ];
         }
         // FOR NEW INSERT
         $this->rows[] =  [
-            new Fields\Text($option_name."_hidden_for_up","","hidden"),
-            new Fields\Text($option_name."_hidden_for_down","","hidden"),
-            new Fields\Activator($option_name."_attivatore_new",""),
-            new Fields\Rule($option_name."_regola_new",""),
-            new Fields\Label($option_name."_ga_label_new","","GA",$current),
-            new Fields\Text($option_name."_ga_val_new","",$hiddenGA),
-            new Fields\Text($option_name."_trk_val_new","",$hiddenTrack),
-            new Fields\Text($option_name."_new",'Aggiungi',"button"),
-            new Fields\Text($option_name."_hidden_for_delete",'',"hidden")
+            "hidden_up" => new Fields\Text($option_name."_hidden_for_up","","hidden"),
+            "hidden_down" => new Fields\Text($option_name."_hidden_for_down","","hidden"),
+            "Attivatore" => new Fields\Activator($option_name."_attivatore_new",""),
+            "Regola" => new Fields\Rule($option_name."_regola_new",""),
+            "Label" => new Fields\Label($option_name."_ga_label_new","","GA",$current),
+            "Valore GA" => new Fields\Text($option_name."_ga_val_new","",$hiddenGA),
+            "Valore TRK_ID" => new Fields\Text($option_name."_trk_val_new","",$hiddenTrack),
+            "Update" => new Fields\Text($option_name."_new",'Aggiungi',"button"),
+            "hidden" => new Fields\Text($option_name."_hidden_for_delete",'',"hidden")
         ];
     }
 
@@ -79,63 +65,45 @@ class ActivationTable {
      * Print page if have correct permission
     **/
     public function render(){
-        $labels = ["&nbsp;","&nbsp;","Attivatore","Regola","Label"];
-        if (!empty($this->current["marketplace"]["ga_event_template"]))  $labels[] = "Valore GA";
-        if (!empty($this->current["marketplace"]["tracking_id"])) $labels[] = "Valore TRK_ID";
+        $headings = array_reduce( array_keys( $this->row ), function( $cols, $key ) { 
 
-        foreach( $labels as $label ) 
-                    $headings[] = str_replace("{{ th }}",$label, $this->output["headings"]);
+            $cols .= "<th>$key</th>";
+            return $cols;
+        } );
 
-        foreach( $this->rows as $row ) {
-            foreach( $row as $field ) 
-                $tds[] = str_replace("{{ td }}",$field->render(), $this->output["tds"]);
+        $rows = array_reduce( $this->row, function( $cols, $field ) { 
 
-            $trs[] = str_replace("{{ tds }}",implode("",$tds), $this->output["trs"]);
-            $tds = [];
-        }
-                
-
-        //print_r($tds);exit;
-        return str_replace( 
-            [
-                '{{ ActivationTableImport }}',
-                '{{ headings }}',
-                '{{ trs }}'
-            ], 
-            [ 
-                (new ActivationTableImport($this->option_name))->render(), 
-                implode("",$headings),
-                implode("",$trs),
-            ],  
-            $this->output["table"] 
-        );
-
-              
+            $cols .= '<td>' . $field->render() . '</td>';
+            return $cols;
+        } );
+        
+        return str_replace([ '{{ title }}', '{{ headings }}', '{{ rows }}' ], [$this->title, $headings, $rows ], $this->output["table"] );       
+       
     }
 
     private function getAndSetRows($option_name){
         
         //GET
-        $activationRows = get_option($option_name);
+        $rows = get_option($option_name);
 
         //UPDATE
-        $activationRows = ($activationRows) ? array_map( function ( $activationRow, $idx  )  use ($option_name)  {
+        $rows = ($rows) ? array_map( function ( $row, $idx  )  use ($option_name)  {
 
             return [
                 'id' => $idx,
-                'attivatore' => isset( $_POST[$option_name. '_attivatore'.$idx ] ) ? $_POST[$option_name. '_attivatore'.$idx ] : ($activationRow['attivatore'] ?? ''),
-                'regola' => isset( $_POST[ $option_name.'_regola'.$idx ] ) ? $_POST[ $option_name.'_regola'.$idx ] : ($activationRow['regola'] ?? ''),
-                'ga_label' => isset( $_POST[ $option_name.'_ga_label'.$idx ] ) ? $_POST[ $option_name.'_ga_label'.$idx ] : ($activationRow['ga_label'] ?? ''),
-                'ga_val' => isset( $_POST[ $option_name.'_ga_val'.$idx ] ) ? $_POST[$option_name. '_ga_val'.$idx ] : ($activationRow['ga_val'] ?? ''),
-                'trk_val' => isset( $_POST[ $option_name.'_trk_val'.$idx ] ) ? $_POST[ $option_name.'_trk_val'.$idx ] : ($activationRow['trk_val'] ?? ''),
+                'attivatore' => isset( $_POST[$option_name. '_attivatore'.$idx ] ) ? $_POST[$option_name. '_attivatore'.$idx ] : ($row['attivatore'] ?? ''),
+                'regola' => isset( $_POST[ $option_name.'_regola'.$idx ] ) ? $_POST[ $option_name.'_regola'.$idx ] : ($row['regola'] ?? ''),
+                'ga_label' => isset( $_POST[ $option_name.'_ga_label'.$idx ] ) ? $_POST[ $option_name.'_ga_label'.$idx ] : ($row['ga_label'] ?? ''),
+                'ga_val' => isset( $_POST[ $option_name.'_ga_val'.$idx ] ) ? $_POST[$option_name. '_ga_val'.$idx ] : ($row['ga_val'] ?? ''),
+                'trk_val' => isset( $_POST[ $option_name.'_trk_val'.$idx ] ) ? $_POST[ $option_name.'_trk_val'.$idx ] : ($row['trk_val'] ?? ''),
             ];
         
-        }, $activationRows, array_keys($activationRows) ) : [];
+        }, $rows, array_keys($rows) ) : [];
 
         //DELETE
         $id_to_delete = $_POST[$option_name."_hidden_for_delete"];
         if ($id_to_delete != "" && $id_to_delete != null){
-            $activationRows = array_values(array_filter($activationRows,function($row) use($id_to_delete) {
+            $rows = array_values(array_filter($rows,function($row) use($id_to_delete) {
                     return $row["id"] != $id_to_delete;
             }));  
         }
@@ -143,18 +111,18 @@ class ActivationTable {
         //UP
         $id_to_up = $_POST[$option_name."_hidden_for_up"];
         if ($id_to_up != "" && $id_to_up != null)
-            $activationRows = $this->up($activationRows,$id_to_up);
+            $rows = $this->up($rows,$id_to_up);
         
         //DOWN
         $id_to_down = $_POST[$option_name."_hidden_for_down"];
         if ($id_to_down != "" && $id_to_down != null)
-            $activationRows = $this->down($activationRows,$id_to_down);
+            $rows = $this->down($rows,$id_to_down);
 
 
         //INSERT 
         if( !empty( $_POST[$option_name.'_attivatore_new'] ) ) {
 
-            $activationRows[] = [
+            $rows[] = [
                 'attivatore' => $_POST[$option_name.'_attivatore_new'],
                 'regola' => $_POST[$option_name.'_regola_new'],
                 'ga_label' => $_POST[$option_name.'_ga_label_new'],
@@ -164,10 +132,10 @@ class ActivationTable {
         }
 
         //SET
-        update_option($option_name,$activationRows);
+        update_option($option_name,$rows);
 
         //RETURN
-        return $activationRows;
+        return $rows;
 
     }
 

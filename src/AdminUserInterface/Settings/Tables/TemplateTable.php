@@ -45,17 +45,9 @@ class TemplateTable {
         $fields = [];
         if (!empty($this->current["marketplace"]["ga_event_template"]) || !empty($this->current["marketplace"]["tracking_id"]) ) {
             if (!empty($this->current["marketplace"]["ga_event_template"])) 
-                $fields[] =  str_replace(
-                    ['{{ title }}','{{ field }}'],
-                    ['GA EVENT',$this->current["marketplace"]["ga_event_template"]],
-                    $this->output["field"]
-                );
+                $fields[] =  str_replace(['{{ title }}','{{ field }}'],['GA EVENT',$this->current["marketplace"]["ga_event_template"]],$this->output["field"]);
             if (!empty($this->current["marketplace"]["tracking_id"])) 
-                $fields[] =  str_replace(
-                    ['{{ title }}','{{ field }}'], 
-                    ['TRACKING ID',$this->current["marketplace"]["tracking_id"]], 
-                    $this->output["field"]
-                );
+                $fields[] =  str_replace(['{{ title }}','{{ field }}'],['TRACKING ID',$this->current["marketplace"]["tracking_id"]], $this->output["field"]);
         
             return str_replace('{{ fields }}', implode("",$fields), $this->output["table"]);
         }

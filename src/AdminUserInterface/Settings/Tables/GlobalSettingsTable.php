@@ -9,30 +9,19 @@ use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\Fields;
  */
 class GlobalSettingsTable {
 
-    protected $fields;
     private $rows;
-
+    private $title = "Global Settings";
     private $output = [
         "table" => 
             <<<HTML
+            <div><h2>{{ title }}</h2></div>
             <table>
-                {{ trs }}  
+               <thead><tr valign="top" style="text-align:left">{{ headings }}</tr></thead>
+                <tbody>{{ rows }}</thead>
             </table>
-            HTML,
-        "headings" => 
-            <<<HTML
-            <th>{{ th }}</th>
-            HTML,
-        "trs" => 
-            <<<HTML
-            <tr valign="top" >{{ tds }}</tr>
-            HTML,
-        "tds" => 
-            <<<HTML
-            <td>{{ td }}</td>
             HTML
     ];
-
+    
 	/**
 	 * GlobalSettingsTable constructor.
 	 */
@@ -44,12 +33,12 @@ class GlobalSettingsTable {
         $taxonomies  = ( $row[ 'taxonomy' ]    != null ) ? $row[ 'taxonomy' ]    : '';
         $website_ga  = ( $row[ 'website_ga' ]  != null ) ? $row[ 'website_ga' ]  : '';
         $website_trk = ( $row[ 'website_trk' ] != null ) ? $row[ 'website_trk' ] : '';
-    
+
         $this->rows[] =  [
-            new Fields\Text( $option_name."_ga_code", $ga_code, "text" ),
-            new Fields\Taxonomy( $option_name."_taxonomy", serialize( $taxonomies ) ),
-            new Fields\Text($option_name."_website_ga",$website_ga,"text"),
-            new Fields\Text($option_name."_website_trk",$website_trk,"text"),
+            "Analitics Code" => new Fields\Text( $option_name."_ga_code", $ga_code, "text" ),
+            "Tassonomie di riferimento" => new Fields\Taxonomy( $option_name."_taxonomy", serialize( $taxonomies ) ),
+            "{website} GA" => new Fields\Text($option_name."_website_ga",$website_ga,"text"),
+            "{website} TRK_ID" => new Fields\Text($option_name."_website_trk",$website_trk,"text"),
         ];
     }
 
@@ -58,20 +47,20 @@ class GlobalSettingsTable {
      */
     public function render() {
 
-        foreach( ["Analitics Code","Tassonomie di riferimento","{website} GA","{website}  TRK_ID"] as $label ) 
-                    $headings[] = str_replace("{{ th }}",$label, $this->output["headings"]);
+        $headings = array_reduce( array_keys( $this->row ), function( $cols, $key ) { 
 
-        foreach( $this->rows as $row ) {
-            foreach( $row as $field ) 
-                $tds[] = str_replace("{{ td }}",$field->render(), $this->output["tds"]);
+            $cols .= "<th>$key</th>";
+            return $cols;
+        } );
 
-            $trs[] = str_replace("{{ tds }}",implode("",$tds), $this->output["trs"]);
-            $tds = [];
-        }
+        $rows = array_reduce( $this->row, function( $cols, $field ) { 
 
-        return str_replace( ['{{ trs }}'], [ implode("",$trs)], $this->output["table"] );
+            $cols .= '<td>' . $field->render() . '</td>';
+            return $cols;
+        } );
+        
+        return str_replace([ '{{ title }}', '{{ headings }}', '{{ rows }}' ], [$this->title, $headings, $rows ], $this->output["table"] );       
 
-       
     }
 
     /**

@@ -43,7 +43,7 @@ class ProgramLinksOptions {
         } else {
             
             $taxonomies = [ 
-                'blz-affiliation-programs'=> 'Programs',
+                'blz-affiliation-programs' => 'Programs',
                 'blz-affiliation-subjects' => 'Subjects'
             ]; 
 

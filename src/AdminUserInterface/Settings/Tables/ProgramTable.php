@@ -10,26 +10,15 @@ use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\Fields;
 class ProgramTable {
 
     protected $name;
-
+    private $title = "";
     private $output = [
         "table" => 
             <<<HTML
             <div><h2>{{ title }}</h2></div>
             <table>
-                {{ trs }}  
+               <thead><tr valign="top" style="text-align:left">{{ headings }}</tr></thead>
+                <tbody>{{ rows }}</thead>
             </table>
-            HTML,
-        "headings" => 
-            <<<HTML
-            <th>{{ th }}</th>
-            HTML,
-        "trs" => 
-            <<<HTML
-            <tr valign="top" >{{ tds }}</tr>
-            HTML,
-        "tds" => 
-            <<<HTML
-            <td>{{ td }}</td>
             HTML
     ];
     
@@ -42,19 +31,19 @@ class ProgramTable {
         $this->name = $name;
         for ($i=0; $i<count($rows); $i++){
             $this->rows[] =  [
-                (new Fields\Text($option_name."slug".$i,$rows[$i]["slug"],"text")),
-                (new Fields\Text($option_name."name".$i,$rows[$i]["name"],"text")),
-                (new Fields\Text($rows[$i]["term_id"],"Update","button")),
-                (new Fields\Text($rows[$i]["term_id"],"Delete","button",["hidden_field" => $option_name])),
-                (new Fields\Text($option_name."term_id".$i,$rows[$i]["term_id"],"hidden")),
+                "Slug" => (new Fields\Text($option_name."slug".$i,$rows[$i]["slug"],"text")),
+                "Name" => (new Fields\Text($option_name."name".$i,$rows[$i]["name"],"text")),
+                "Update" => (new Fields\Text($rows[$i]["term_id"],"Update","button")),
+                "Delete" => (new Fields\Text($rows[$i]["term_id"],"Delete","button",["hidden_field" => $option_name])),
+                "Hidden" => (new Fields\Text($option_name."term_id".$i,$rows[$i]["term_id"],"hidden")),
             ];
         }
         // FOR NEW INSERT
         $this->rows[] =  [
-            (new Fields\Text($option_name."slug_new","","text")),
-            (new Fields\Text($option_name."name_new","","text")),
-            (new Fields\Text($option_name."_new",'Aggiungi',"button")),
-            (new Fields\Text($option_name."_hidden_for_delete",'',"hidden"))
+            "Slug" => (new Fields\Text($option_name."slug_new","","text")),
+            "Name" => (new Fields\Text($option_name."name_new","","text")),
+            "Aggiungi" => (new Fields\Text($option_name."_new",'Aggiungi',"button")),
+            "Hidden" => (new Fields\Text($option_name."_hidden_for_delete",'',"hidden"))
         ];
         
     }
@@ -64,29 +53,19 @@ class ProgramTable {
     **/
     public function render(){
 
-        foreach( ["Slug","Name"] as $label ) 
-                    $headings[] = str_replace("{{ th }}",$label, $this->output["headings"]);
+        $headings = array_reduce( array_keys( $this->row ), function( $cols, $key ) { 
 
-        foreach( $this->rows as $row ) {
-            foreach( $row as $field ) 
-                $tds[] = str_replace("{{ td }}",$field->render(), $this->output["tds"]);
+            $cols .= "<th>$key</th>";
+            return $cols;
+        } );
 
-            $trs[] = str_replace("{{ tds }}",implode("",$tds), $this->output["trs"]);
-            $tds = [];
-        }
-        return str_replace( [
-                '{{ title }}',
-                '{{ headings }}',
-                '{{ trs }}'
+        $rows = array_reduce( $this->row, function( $cols, $field ) { 
 
-            ], 
-            [ 
-                $this->name,
-                implode("",$headings),
-                implode("",$trs)
-            ], 
-            $this->output["table"] 
-        );
+            $cols .= '<td>' . $field->render() . '</td>';
+            return $cols;
+        } );
+        
+        return str_replace([ '{{ title }}', '{{ headings }}', '{{ rows }}' ], [ $this->title, $headings, $rows ], $this->output["table"] );       
 
     }
 

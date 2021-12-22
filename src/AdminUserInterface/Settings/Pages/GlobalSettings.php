@@ -19,10 +19,8 @@ class GlobalSettings {
     <form method="post" action="{{ link }}">
         <input type="hidden" name="{{ option_name }}-sendForm" value="OK" />
         <div class="{{ option_name }}-container">
-            <h2>Global Settings</h2>
             {{ GlobalSettingsTable }}
             <hr>
-            <h3>Link style</h3>
             {{ StyleSettingsTable }}
         </div>
         {{ wp_nonce }}
@@ -61,7 +59,7 @@ class GlobalSettings {
                     esc_html( admin_url( 'admin.php?page='.$_GET["page"] ) ),
                     $this->option_name,
                     ( new GlobalSettingsTable( $this->option_name ))->render(),
-                    ( new StyleSettingsTable( $this->option_name ))->render(),
+                    ( new StyleSettingsTable( $this->option_name."-css"))->render(),
                     wp_nonce_field( 'program-links-options-save', 'blz-affiliation-custom-message' ),
                     get_submit_button()
                 ],
