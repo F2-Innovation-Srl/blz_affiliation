@@ -9,7 +9,7 @@ use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\Fields;
  */
 class ActivationTable extends table{
 
-    protected function getTableFields($row) {
+    protected function getTableFields($rows) {
 
         $this->title = "Tabella di attivazione";
 
