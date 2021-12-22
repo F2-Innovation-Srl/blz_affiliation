@@ -14,7 +14,7 @@ class ActivationTableImport extends Table {
         $this->title = "Importa da altra tabella di attivazione";
 
         $this->rows[] =  [
-            "hidden" => (new Fields\Import($this->option_name,"","",["current" => $this->option_name])),
+            "Attivatori" => (new Fields\Import($this->option_name,"","",["current" => $this->option_name])),
             "Azioni" => (new Fields\Text($this->option_name."_new",'Importa',"button"))
         ];
     }
