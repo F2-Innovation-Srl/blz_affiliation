@@ -48,7 +48,7 @@ class BlzAffiliate {
 		PostTypes\AffiliateLinkProgamStored::init();
 		/// crea i custom taxnomonies per i link program 
 		Taxonomies\AffiliateLinkProgram::init();
-		
+		/*
 		/// effettua il rendering degli shortcode dei bottoni 
 		/// di affiliazione
 		new Rendering\AffiliateLinkButton();
@@ -72,16 +72,16 @@ class BlzAffiliate {
 		/// aggiunge il bottone per selezionare le tabelle di affiliazione
 		/// a aggiungere il relativo shortcode in pagina
 		new Buttons\AffiliateTableButton();
-
+		*/
 	
 		/// aggiunge la pagina dei settings del plugin backend
 		new Settings\AdminPage();
 
 		/// aggiunge le dipendenze js per il tracciamento
-		new Rendering\GATracking();
+		//new Rendering\GATracking();
 
 		/// aggiunge css con parametri presi dai settings
-		new Rendering\StyleInjector();
+		//new Rendering\StyleInjector();
 		
 	}
 }
