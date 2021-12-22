@@ -9,10 +9,8 @@ use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\Fields;
  */
 class GlobalSettingsTable extends Table{
     
-	/**
-	 * GlobalSettingsTable constructor.
-	 */
-	public function getTableFields($row) {
+
+	protected function getTableFields($row) {
 
         $this->title = "Global Settings";
 
@@ -36,7 +34,7 @@ class GlobalSettingsTable extends Table{
      * @param [type] $this->option_name
      * @return array
      */
-    public function getAndSetRows(){
+    protected function getAndSetRows(){
         
         // GET
         $row = get_option( $this->option_name );

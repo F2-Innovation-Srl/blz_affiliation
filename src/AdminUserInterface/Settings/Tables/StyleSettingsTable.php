@@ -8,9 +8,7 @@ use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\Fields\Text;
  */
 class StyleSettingsTable extends Table{
 
-	/**
-	 * 
-	 */
+
 	protected function getTableFields($row) {
 
         $this->title = "Link style"; 

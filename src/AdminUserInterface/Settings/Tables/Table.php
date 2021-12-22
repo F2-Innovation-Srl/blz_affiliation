@@ -26,9 +26,10 @@ abstract class Table {
 	/**
 	 * AttivazioneRow constructor.
 	 */
-	public function __construct($option_name) {
+	public function __construct($option_name, $title = null) {
 
         $this->option_name = $option_name;
+        $this->title = ($title) ?? '';
         $this->getTableFields($this->getAndSetRows());
 
     }
