@@ -21,7 +21,7 @@ class ActivationTableImport extends Table {
 
     protected function getAndSetRows(){
         
-        if (isset( $_POST[$this->option_name])  && !empty($_POST[$this->option_name]) ){
+        if (isset( $_POST[$this->option_name."_activation_import"])  && !empty($_POST[$this->option_name."_activation_import"]) ){
             $activationRows = get_option( $_POST[$this->option_name."_activation_import"]);    
             update_option($this->option_name,$activationRows);
         }
