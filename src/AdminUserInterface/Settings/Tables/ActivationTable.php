@@ -48,9 +48,9 @@ class ActivationTable extends table{
         
         //GET
         $rows = get_option($this->option_name);
-
         //UPDATE
-        $rows = ($rows) ? array_map( function ( $row, $idx  ) {
+        if(empty($_POST[$this->option_name. "_activation_import"]) )
+            $rows = ($rows) ? array_map( function ( $row, $idx  ) {
             return [
                 'id' => $idx,
                 'attivatore' => isset( $_POST[$this->option_name. '_attivatore'.$idx ] ) ? $_POST[$this->option_name. '_attivatore'.$idx ] : ($row['attivatore'] ?? ''),

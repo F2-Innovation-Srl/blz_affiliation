@@ -83,10 +83,16 @@ abstract class Table {
     }
 
     protected function removeHiddenLabel($label){
+
+        $hiddenGA = (empty($this->current["marketplace"]["ga_event_template"]) ) ? "hidden" : "text"; 
+        $hiddenTrack = (empty($this->current["marketplace"]["tracking_id"]) ) ? "hidden" : "text"; 
+     
         if (str_contains(strtolower($label), 'hidden') 
             || str_contains(strtolower($label), 'update') 
             || str_contains(strtolower($label), 'azioni') 
             || str_contains(strtolower($label), 'delete')
+            || ($hiddenGA && str_contains(strtolower($label), 'Valore GA'))
+            || ($hiddenTrack && str_contains(strtolower($label), 'Valore TRK_ID'))
         ){
                 return "&nbsp;";
         }else{
