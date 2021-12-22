@@ -12,18 +12,18 @@ class ActivationTableImport extends Table {
 	protected function getTableFields($rows) {
 
         $this->title = "Importa da altra tabella di attivazione";
-        
+
         $this->rows[] =  [
-            "Attivatori" => (new Fields\Import($option_name."_activation_import","","",["current" => $option_name])),
-            "Azioni" => (new Fields\Text($option_name."_new",'Importa',"button"))
+            "Attivatori" => (new Fields\Import($this->option_name."_activation_import","","",["current" => $this->option_name])),
+            "Azioni" => (new Fields\Text($this->option_name."_new",'Importa',"button"))
         ];
     }
 
-    protected function getAndSetRows($option_name){
+    protected function getAndSetRows(){
         
-        if (isset( $_POST[$option_name])  && !empty($_POST[$option_name]) ){
-            $activationRows = get_option( $_POST[$option_name."_activation_import"]);    
-            update_option($option_name,$activationRows);
+        if (isset( $_POST[$this->option_name])  && !empty($_POST[$this->option_name]) ){
+            $activationRows = get_option( $_POST[$this->option_name."_activation_import"]);    
+            update_option($this->option_name,$activationRows);
         }
     }
 }
