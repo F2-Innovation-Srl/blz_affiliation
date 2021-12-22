@@ -10,7 +10,7 @@ use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\Fields;
 class ProgramTable extends Table {
 
  
-	protected function getTableFields($row) {
+	protected function getTableFields($rows) {
 
         for ($i=0; $i<count($rows); $i++){
             $this->rows[] =  [
