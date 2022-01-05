@@ -11,7 +11,7 @@ use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\ProgramSubjectTable;
 class ProgramLinksOptions {
      
     public $settings;
-    protected $slug;
+    protected $option_name;
     protected $programs;
     protected $subjects;
     protected $default_tracking_id = 'tn-news';
@@ -30,7 +30,7 @@ class ProgramLinksOptions {
 	function __construct($slug, $settings) {
 
         $this->settings  = $settings; 
-        $this->slug = $slug;
+        $this->option_name = $slug;
     }
 
 	/**
@@ -41,15 +41,15 @@ class ProgramLinksOptions {
         if ( !current_user_can('manage_options') ) {
             wp_die('Non hai i permessi per visualizzare questa pagina');
         } else {
-            
+            /*
             $taxonomies = [ 
                 'blz-affiliation-programs' => 'Programs',
                 'blz-affiliation-subjects' => 'Subjects'
             ]; 
 
             foreach ($taxonomies as $taxonomy_slug => $taxonomy_name)
-                       $programTables[] = (new ProgramTable($taxonomy_slug,null,$taxonomy_name))->render(); 
-            
+                      $programTables[] = (new ProgramTable($taxonomy_slug,null,$taxonomy_name))->render(); 
+            */
              echo str_replace(
                 [ 
                     '{{ link }}',
@@ -58,7 +58,7 @@ class ProgramLinksOptions {
                 ],
                 [ 
                     esc_html( admin_url( 'admin.php?page='.$_GET["page"] ) ),
-                    implode("",$programTables),
+                    (new ProgramTable($this->option_name))->render(),
                     wp_nonce_field( 'program-links-options-save', 'blz-affiliation-custom-message' )
                 ],
                 $this->output
