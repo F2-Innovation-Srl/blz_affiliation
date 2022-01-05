@@ -11,6 +11,7 @@ class ProgramTable extends Table {
 
  
 	protected function getTableFields($rows) {
+        $this->title = "Program links"; 
 
         for ($i=0; $i<count($rows); $i++){
             $this->rows[] =  [
