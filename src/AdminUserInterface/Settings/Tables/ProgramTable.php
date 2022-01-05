@@ -42,15 +42,16 @@ class ProgramTable extends Table {
 
          // UPDATE
          $rows = ($rows) ? array_map( function ( $row, $idx  ) {
-            return [
-            'id' => $idx,
-             'subject_slug'     => isset( $_POST[$this->option_name. 'subject_slug'  ] ) ? $_POST[$this->option_name. 'subject_slug' ]  : ($row[ 'subject_slug'  ] ?? ''),
-             'subject_name'    => isset( $_POST[$this->option_name. 'subject_name' ] ) ? $_POST[$this->option_name. 'subject_name' ] : ($row[ 'subject_name' ] ?? ''),
-             'program_slug'  => isset( $_POST[ $this->option_name.'program_slug' ] ) ? $_POST[$this->option_name. 'program_slug' ] : ($row['program_slug'] ?? ''),
-             'program_name' => isset( $_POST[ $this->option_name.'program_name' ] ) ? $_POST[$this->option_name. 'program_name' ] : ($row['program_name'] ?? '')
-             ];
+
+             return [
+                'id' => $idx,
+                'subject_slug' => isset( $_POST[$this->option_name. 'subject_slug'.$idx ] ) ? $_POST[$this->option_name. 'subject_slug'.$idx ] : ($row['subject_slug'] ?? ''),
+                'subject_name' => isset( $_POST[ $this->option_name.'subject_name'.$idx ] ) ? $_POST[ $this->option_name.'subject_name'.$idx ] : ($row['subject_name'] ?? ''),
+                'program_slug' => isset( $_POST[ $this->option_name.'program_slug'.$idx ] ) ? $_POST[ $this->option_name.'program_slug'.$idx ] : ($row['program_slug'] ?? ''),
+                'program_name' => isset( $_POST[ $this->option_name.'program_name'.$idx ] ) ? $_POST[$this->option_name. 'program_name'.$idx ] : ($row['program_name'] ?? '')
+            ];
         }, $rows, array_keys($rows) ) : [];
-        
+
          //DELETE
         $id_to_delete = $_POST[$this->option_name."_hidden_for_delete"];
         if ($id_to_delete != "" && $id_to_delete != null){
