@@ -38,11 +38,28 @@ class AffiliateLinkProgramsButton extends Button {
          // get the template 
          $html = file_get_contents( $this->base_dir .'plugins/dialog-AffiliateLinkProgramsButton.html');
  
+
+        $rows = get_option("blz-affiliation-program");
+        
+        $subjects = ($rows) ? array_map( function ( $row, $idx  ) {
+             return [
+                'slug' => $row['subject_slug'],
+                'name' => $row['subject_name'],
+            ];
+        }, $rows, array_keys($rows) ) : [];
+
+        $programs = ($rows) ? array_map( function ( $row, $idx  ) {
+            return [
+               'slug' => $row['program_slug'],
+               'name' => $row['program_name'],
+               'parent_slug' => $row['subject_slug']
+           ];
+       }, $rows, array_keys($rows) ) : [];
          
          $fields_to_inject =  [ 
              //'author_tracking_ids' => get_field( 'amazon_tracking_id', 'user_'.get_current_user_id() ) ,
-             'subjects'  => json_encode( get_terms( 'blz-affiliation-subjects',  ['hide_empty' => false] )),
-             'programs'  => json_encode( get_terms( 'blz-affiliation-programs', ['hide_empty' => false] )),
+             'subjects'  => json_encode($subjects),
+             'programs'  => json_encode($programs),
              'is_stored' => $this->isStoredPost( $post_id ) ? 'true' : 'false'
          ];
          
