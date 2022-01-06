@@ -108,11 +108,8 @@
         subject_select.addEventListener('change', function() {
             var program_select = document.getElementById('program');
             //remove previus elements
-            for (var i=0; i<program_select.length; i++) {
-                if (program_select.options[i].value != '') {
-                    program_select.remove(i);
-                }
-            }
+            program_select.remove(0);
+            program_select.insertAdjacentHTML('beforeend', `<option value="">-- scegli --</option>`);
                 
             //put new elements
             programs.forEach( function(item) { 
