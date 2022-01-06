@@ -107,6 +107,10 @@
         });   
         subject_select.addEventListener('change', function() {
             var program_select = document.getElementById('program');
+            //remove previus elements
+            for (var i=0; i<program_select.length; i++) 
+                if (program_select.options[i].value != '') program_select.remove(i);
+            //put new elements
             programs.forEach( function(item) { 
                 if (item.parent_slug == subject_select.value){
                     program_select.insertAdjacentHTML('beforeend', `<option value="${item.slug}">${item.name}</option>`); 
