@@ -108,7 +108,9 @@
         subject_select.addEventListener('change', function() {
             var program_select = document.getElementById('program');
             //remove previus elements
-            program_select.remove();
+            while (program_select.options.length > 0) {
+                program_select.remove(0);
+            }
             program_select.insertAdjacentHTML('beforeend', `<option value="">-- scegli --</option>`);
                 
             //put new elements
