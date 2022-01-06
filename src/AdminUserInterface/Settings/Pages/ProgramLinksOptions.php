@@ -11,6 +11,7 @@ use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\ProgramSubjectTable;
 class ProgramLinksOptions {
      
     public $settings;
+    protected $title;
     protected $option_name;
     protected $programs;
     protected $subjects;
@@ -18,6 +19,7 @@ class ProgramLinksOptions {
 
     private $output =
     <<<HTML
+    <div><h2>{{ title }}</h2></div>
     <form method="post" action="{{ link }}">
         {{ ProgramTable }}
         {{ wp_nonce }}
@@ -27,8 +29,8 @@ class ProgramLinksOptions {
 	/**
 	 * 
 	 */
-	function __construct($slug, $settings) {
-
+	function __construct($title, $slug, $settings) {
+        $this->title  = $title;
         $this->settings  = $settings; 
         $this->option_name = $slug;
     }
@@ -52,11 +54,13 @@ class ProgramLinksOptions {
             */
              echo str_replace(
                 [ 
+                    '{{ title }}',
                     '{{ link }}',
                     '{{ ProgramTable }}',
                     '{{ wp_nonce }}'
                 ],
                 [ 
+                    $this->title,
                     esc_html( admin_url( 'admin.php?page='.$_GET["page"] ) ),
                     (new ProgramTable($this->option_name))->render(),
                     wp_nonce_field( 'program-links-options-save', 'blz-affiliation-custom-message' )

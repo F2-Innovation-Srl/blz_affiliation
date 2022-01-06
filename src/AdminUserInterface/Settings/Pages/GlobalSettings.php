@@ -10,7 +10,7 @@ use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\GlobalSettingsTable;
  * @package BLZ_AFFILIATION
  */
 class GlobalSettings {
-
+    protected $title;
     public $settings;
     protected $option_name;
     
@@ -28,8 +28,8 @@ class GlobalSettings {
     </form>
     HTML;
 
-	function __construct($slug, $settings) {
-
+	function __construct($title, $slug, $settings) {
+        $this->title = $title;
         $this->settings  = $settings; 
         $this->option_name = $slug;
     }

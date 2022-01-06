@@ -15,7 +15,7 @@ use BLZ_AFFILIATION\AdminUserInterface\Settings\Pages\Partials\Tab;
 class GaTrackingIdSettings {
 
     public $settings;
-
+    protected $title;
     private $name;
     private $slug;
     
@@ -43,8 +43,8 @@ class GaTrackingIdSettings {
 	 * AdminPage constructor.
 	 */
     
-	function __construct($slug, $settings) {
-        
+	function __construct($title, $slug, $settings) {
+        $this->title     = $title;
         $this->slug      = $slug;
         $this->settings  = $settings;
 
