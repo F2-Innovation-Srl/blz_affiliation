@@ -58,7 +58,7 @@ class AffiliateLinkProgramsButton extends Button {
          
          $fields_to_inject =  [ 
              //'author_tracking_ids' => get_field( 'amazon_tracking_id', 'user_'.get_current_user_id() ) ,
-             'subjects'  => json_encode($subjects),
+             'subjects'  => json_encode(array_unique($subjects)),
              'programs'  => json_encode($programs),
              'is_stored' => $this->isStoredPost( $post_id ) ? 'true' : 'false'
          ];
