@@ -24,7 +24,7 @@ class Config {
                 return new Page([
                     "name"       => $page["name"],
                     "slug"       => $page["slug"],
-                    "controller" => new $controller($page["slug"],$settings)
+                    "controller" => new $controller($page["name"],$page["slug"],$settings)
                 ]);
         }, $config["Pages"]);
     }
