@@ -12,9 +12,7 @@ class GlobalSettingsTable extends Table{
 
 	protected function getTableFields($row) {
 
-        $this->title = "Global Settings";
-
-   
+        
         $ga_code     = ( $row[ 'ga_code' ]     != null ) ? $row[ 'ga_code' ]     : '';
         $taxonomies  = ( $row[ 'taxonomy' ]    != null ) ? $row[ 'taxonomy' ]    : '';
         $website_ga  = ( $row[ 'website_ga' ]  != null ) ? $row[ 'website_ga' ]  : '';
