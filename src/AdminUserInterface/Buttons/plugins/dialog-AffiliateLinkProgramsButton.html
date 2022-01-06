@@ -115,7 +115,7 @@
     <script>
         var program_select = document.getElementById('program');
         programs.forEach( function(item) { 
-            if (item.slug == subjects[0].parent_slug){
+            if (item.parent_slug == subjects[0].slug){
                 program_select.insertAdjacentHTML('beforeend', `<option value="${item.slug}">${item.name}</option>`); 
             }
             
