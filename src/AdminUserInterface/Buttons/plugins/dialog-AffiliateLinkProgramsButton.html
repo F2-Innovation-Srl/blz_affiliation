@@ -114,8 +114,12 @@
     </select>
     <script>
         var program_select = document.getElementById('program');
+        var first_subject = document.querySelector("#subject option:first");
         programs.forEach( function(item) { 
-            program_select.insertAdjacentHTML('beforeend', `<option value="${item.slug}">${item.name}</option>`); 
+            if (item.slug == first_subject.value){
+                program_select.insertAdjacentHTML('beforeend', `<option value="${item.slug}">${item.name}</option>`); 
+            }
+            
         });      
     </script>
 
