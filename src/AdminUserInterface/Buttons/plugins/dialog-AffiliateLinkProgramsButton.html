@@ -111,9 +111,9 @@
             while (program_select.options.length > 0) {
                 program_select.remove(0);
             }
-            program_select.insertAdjacentHTML('beforeend', `<option value="">-- scegli --</option>`);
-                
+            
             //put new elements
+            program_select.insertAdjacentHTML('beforeend', `<option value="">-- scegli --</option>`);
             programs.forEach( function(item) { 
                 if (item.parent_slug == subject_select.value){
                     program_select.insertAdjacentHTML('beforeend', `<option value="${item.slug}">${item.name}</option>`); 
