@@ -19,7 +19,7 @@ class ProgramLinksOptions {
 
     private $output =
     <<<HTML
-    <div><h2>{{ title }}</h2></div>
+    <div><h1>{{ title }}</h1></div>
     <form method="post" action="{{ link }}">
         {{ ProgramTable }}
         {{ wp_nonce }}

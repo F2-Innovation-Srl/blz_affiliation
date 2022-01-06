@@ -24,6 +24,7 @@ class GaTrackingIdSettings {
 
     private $output =
      <<<HTML
+     <div><h1>{{ title }}</h1></div>
     <form method="post" id="GaTrackingIdSettings" name="GaTrackingIdSettings" action="{{ link }}">
         <input type="hidden" name="{{ slug }}-sendForm" value="OK" />
         {{ tabs }}
@@ -63,6 +64,7 @@ class GaTrackingIdSettings {
 
             echo str_replace(
                 [ 
+                    '{{ title }}',
                     '{{ link }}',
                     '{{ slug }}',
                     '{{ tabs }}',
@@ -73,6 +75,7 @@ class GaTrackingIdSettings {
                     '{{ wp_nonce }}'
                 ],
                 [ 
+                    $this->title,
                     esc_html( admin_url( 'admin.php?page='.$_GET["page"].'&tab='.$this->current["tab"]["slug"].'&marketplace='.$this->current["marketplace"]["slug"]."#tabella" ) ),
                     $this->slug, 
                     $tabs,

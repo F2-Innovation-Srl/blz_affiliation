@@ -16,6 +16,7 @@ class GlobalSettings {
     
     private $output =
     <<<HTML
+    <div><h1>{{ title }}</h1></div>
     <form method="post" action="{{ link }}">
         <input type="hidden" name="{{ option_name }}-sendForm" value="OK" />
         <div class="{{ option_name }}-container">
@@ -48,6 +49,7 @@ class GlobalSettings {
 
             echo str_replace(
                 [ 
+                    '{{ title }}',
                     '{{ link }}',
                     '{{ option_name }}',
                     '{{ GlobalSettingsTable }}',
@@ -56,6 +58,7 @@ class GlobalSettings {
                     '{{ submit_button }}'
                 ],
                 [ 
+                    $this->title,
                     esc_html( admin_url( 'admin.php?page='.$_GET["page"] ) ),
                     $this->option_name,
                     ( new GlobalSettingsTable( $this->option_name ))->render(),
