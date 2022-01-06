@@ -104,7 +104,16 @@
         var subject_select = document.getElementById('subject');
         subjects.forEach( function(item) { 
             subject_select.insertAdjacentHTML('beforeend', `<option value="${item.slug}">${item.name}</option>`); 
-        });      
+        });   
+        subject_select.addEventListener('change', function() {
+            var program_select = document.getElementById('program');
+            programs.forEach( function(item) { 
+                if (item.parent_slug == subject_select.value){
+                    program_select.insertAdjacentHTML('beforeend', `<option value="${item.slug}">${item.name}</option>`); 
+                }
+                
+            }); 
+        });   
     </script>
 
     <legend>Seleziona il programma</legend>
@@ -112,15 +121,6 @@
     <select name="program" id="program">
         <option value="">-- scegli --</option>        
     </select>
-    <script>
-        var program_select = document.getElementById('program');
-        programs.forEach( function(item) { 
-            if (item.parent_slug == subjects[0].slug){
-                program_select.insertAdjacentHTML('beforeend', `<option value="${item.slug}">${item.name}</option>`); 
-            }
-            
-        });      
-    </script>
 
     <legend>Inserisci il tracking_id</legend>
     <input type="text" id="tracking_id" name="tracking_id" value=""/>
