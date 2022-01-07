@@ -22,8 +22,7 @@ define( 'PLUGIN_VERSION'  , "1.0");
 require_once PLUGIN_PATH . '/vendor/autoload.php';
 
 use BLZ_AFFILIATION\Utils\Config;
-use BLZ_AFFILIATION\PostAndTax\PostTypes;
-use BLZ_AFFILIATION\PostAndTax\Taxonomies;
+use BLZ_AFFILIATION\Core\PostTypes;
 use BLZ_AFFILIATION\AdminUserInterface\Settings;
 use BLZ_AFFILIATION\AdminUserInterface\Buttons;
 use BLZ_AFFILIATION\Rendering;
