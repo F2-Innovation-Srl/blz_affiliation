@@ -45,8 +45,6 @@ class BlzAffiliate {
 		/// crea i custom post type (tabelle e link "centralizzati")
 		PostTypes\AffiliateTables::init();
 		PostTypes\AffiliateLinkProgamStored::init();
-		/// crea i custom taxnomonies per i link program 
-		Taxonomies\AffiliateLinkProgram::init();
 		
 		/// effettua il rendering degli shortcode dei bottoni 
 		/// di affiliazione
