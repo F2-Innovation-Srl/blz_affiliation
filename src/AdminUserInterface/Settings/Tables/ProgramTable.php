@@ -53,7 +53,7 @@ class ProgramTable extends Table {
         }, $rows, array_keys($rows) ) : [];
 
          //DELETE
-        $id_to_delete = $_POST[$this->option_name."_hidden_for_delete"];
+        $id_to_delete = isset($_POST[$this->option_name."_hidden_for_delete"]) ? $_POST[$this->option_name."_hidden_for_delete"] : null;
         if ($id_to_delete != "" && $id_to_delete != null){
             $rows = array_values(array_filter($rows,function($row) use($id_to_delete) {
                     return $row["id"] != $id_to_delete;

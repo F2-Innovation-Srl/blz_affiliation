@@ -44,7 +44,7 @@ abstract class Table {
      * Print page if have correct permission
     **/
     public function render(){
-        
+        $rows = "";
         $headings = array_reduce( array_keys( $this->rows[0] ), function( $cols, $key ) { 
 
             $cols .= "<th>". $this->removeHiddenLabel($key) ."</th>";

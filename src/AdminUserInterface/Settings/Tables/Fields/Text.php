@@ -8,7 +8,7 @@ class Text extends Field {
 
     /// viene richiamata dal costruttore
     public function Create() {
-        
+        $hidden_field = isset($this->params["hidden_field"]) ? $this->params["hidden_field"] : "";
         switch ($this->type) {
             case "number":
                 return '<input type="number" name="'.$this->name.'" value="'.$this->value.'" />';
@@ -25,7 +25,7 @@ class Text extends Field {
                 return '<input type="hidden" id="'.$this->name.'" name="'.$this->name.'" value="'.$this->value.'" />';
                 break;
             case "button":
-                return '<input type="submit" name="btnSubmit" data-id="'.$this->name.'" data-name="'.$this->params["hidden_field"].'" class="button button-primary '.strtolower($this->value).'" value="'.$this->value.'" />';
+                return '<input type="submit" name="btnSubmit" data-id="'.$this->name.'" data-name="'.$hidden_field.'" class="button button-primary '.strtolower($this->value).'" value="'.$this->value.'" />';
                 break;
         }
         ?>

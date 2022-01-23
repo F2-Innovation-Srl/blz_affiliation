@@ -63,7 +63,7 @@ class ActivationTable extends table{
         }, $rows, array_keys($rows) ) : [];
 
         //DELETE
-        $id_to_delete = $_POST[$this->option_name."_hidden_for_delete"];
+        $id_to_delete = isset($_POST[$this->option_name."_hidden_for_delete"]) ? $_POST[$this->option_name."_hidden_for_delete"] : null;
         if ($id_to_delete != "" && $id_to_delete != null){
             $rows = array_values(array_filter($rows,function($row) use($id_to_delete) {
                     return $row["id"] != $id_to_delete;
@@ -71,12 +71,12 @@ class ActivationTable extends table{
         }
 
         //UP
-        $id_to_up = $_POST[$this->option_name."_hidden_for_up"];
+        $id_to_up = isset($_POST[$this->option_name."_hidden_for_up"]) ? $_POST[$this->option_name."_hidden_for_up"] : null;
         if ($id_to_up != "" && $id_to_up != null)
             $rows = $this->up($rows,$id_to_up);
         
         //DOWN
-        $id_to_down = $_POST[$this->option_name."_hidden_for_down"];
+        $id_to_down = isset($_POST[$this->option_name."_hidden_for_down"]) ? $_POST[$this->option_name."_hidden_for_down"] : null;
         if ($id_to_down != "" && $id_to_down != null)
             $rows = $this->down($rows,$id_to_down);
 
