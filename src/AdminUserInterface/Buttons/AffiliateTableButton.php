@@ -54,7 +54,7 @@ class AffiliateTableButton extends Button {
             
             return ['id' => $item->ID, 'title' => $item->post_title ];
 
-        }, get_posts( [ 'post_type' => 'affiliate_table', 'post_status' => 'publish'] ));
+        }, get_posts( [ 'post_type' => 'affiliate_table', 'post_status' => 'publish', 'posts_per_page' => -1] ));
 
     }
 }
