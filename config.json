@@ -90,7 +90,7 @@
                                     "name"              : "Generic",
                                     "slug"              : "generic",
                                     "description"       : "",
-                                    "ga_event_template" : "tabella {label} {table-name} {numero-posizione} {marketplace} {amp}",
+                                    "ga_event_template" : "{table-name} {label} {numero-posizione} {marketplace} {amp}",
                                     "tracking_id"       : ""
                                 }
                         ]
