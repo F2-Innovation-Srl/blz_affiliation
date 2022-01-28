@@ -28,6 +28,7 @@ class GaTrackingIdSettings {
     <form method="post" id="GaTrackingIdSettings" name="GaTrackingIdSettings" action="{{ link }}">
         <input type="hidden" name="{{ slug }}-sendForm" value="OK" />
         {{ tabs }}
+        <h3>{{ description }}</h3>
         <div class="{{ slug }}-container">
             {{ TemplateTable }}
             {{ ActivationTableImport }}
@@ -67,6 +68,7 @@ class GaTrackingIdSettings {
                     '{{ link }}',
                     '{{ slug }}',
                     '{{ tabs }}',
+                    '{{ description }}',
                     '{{ TemplateTable }}',
                     '{{ ActivationTableImport }}',
                     '{{ ActivationTable }}',
@@ -77,6 +79,7 @@ class GaTrackingIdSettings {
                     esc_html( admin_url( 'admin.php?page='.$_GET["page"].'&tab='.$this->current["tab"]["slug"].'&marketplace='.$this->current["marketplace"]["slug"]."#tabella" ) ),
                     $this->slug, 
                     $tabs,
+                    $this->current["tab"]["description"] . " " . $this->current["marketplace"]["description"],
                     (new TemplateTable($this->option_name,$this->current))->render(),
                     (new ActivationTableImport($this->option_name))->render(),
                     (new ActivationTable($this->option_name,$this->current))->render(),
