@@ -29,7 +29,7 @@ class GlobalSettings {
     </form>
     HTML;
 
-	function __construct($title, $slug, $settings) {
+	function __construct($valid_config,$title, $slug, $settings) {
         $this->title = $title;
         $this->settings  = $settings; 
         $this->option_name = $slug;
@@ -41,6 +41,7 @@ class GlobalSettings {
      */
     public function render()
     {
+        if (!$valid_config)  wp_die('Per utilizzare il plugin occorre prima caricare le configurazioni');
         if (!current_user_can('manage_options')) {
             
             wp_die('Non hai i permessi per visualizzare questa pagina');

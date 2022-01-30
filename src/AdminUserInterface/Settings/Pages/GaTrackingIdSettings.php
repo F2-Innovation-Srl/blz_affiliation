@@ -44,7 +44,7 @@ class GaTrackingIdSettings {
 	 * AdminPage constructor.
 	 */
     
-	function __construct($title, $slug, $settings) {
+	function __construct($valid_config,$title, $slug, $settings) {
         $this->title     = $title;
         $this->slug      = $slug;
         $this->settings  = $settings;
@@ -57,6 +57,7 @@ class GaTrackingIdSettings {
     **/
     public function render()
     {
+        if (!$valid_config)  wp_die('Per utilizzare il plugin occorre prima caricare le configurazioni');
         if (!current_user_can('manage_options')) {
             wp_die('Non hai i permessi per visualizzare questa pagina');
         } else{
