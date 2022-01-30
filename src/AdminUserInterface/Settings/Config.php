@@ -10,17 +10,19 @@ class Config {
      * @var object
      */
     private static $instance;
+    private $is_valid;
     public  $pages;
     public  $plugin_name;
     public  $plugin_slug;
     
     private function __construct() {
-        $is_valid = true;
+        $this->is_valid = true;
         $config  = json_decode(get_option("blz-affiliation"), true);
         if (empty($config)) {
             $config = json_decode(file_get_contents(PLUGIN_PATH.'config.json'), true);
-            $is_valid = false;
+            $this->is_valid = false;
         }
+        
         $this->plugin_name = $config["plugin_name"];
         $this->plugin_slug = $config["plugin_slug"];
         $this->pages = array_map(function($page){ 
@@ -29,7 +31,7 @@ class Config {
                 return new Page([
                     "name"       => $page["name"],
                     "slug"       => $page["slug"],
-                    "controller" => new $controller($is_valid,$page["name"],$page["slug"],$settings)
+                    "controller" => new $controller($this->is_valid,$page["name"],$page["slug"],$settings)
                 ]);
         }, $config["Pages"]);
     }

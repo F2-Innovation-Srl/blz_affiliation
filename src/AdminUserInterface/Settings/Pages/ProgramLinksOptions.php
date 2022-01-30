@@ -9,7 +9,7 @@ use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\ProgramSubjectTable;
  * @package BLZ_AFFILIATION
  */
 class ProgramLinksOptions {
-     
+    private $is_valid_config;
     public $settings;
     protected $title;
     protected $option_name;
@@ -29,10 +29,11 @@ class ProgramLinksOptions {
 	/**
 	 * 
 	 */
-	function __construct($valid_config,$title, $slug, $settings) {
-        $this->title  = $title;
-        $this->settings  = $settings; 
-        $this->option_name = $slug;
+	function __construct($is_valid_config,$title, $slug, $settings) {
+        $this->is_valid_config     = $is_valid_config;
+        $this->title               = $title;
+        $this->settings            = $settings; 
+        $this->option_name         = $slug;
     }
 
 	/**
@@ -40,7 +41,7 @@ class ProgramLinksOptions {
     **/
     public function render()
     {
-        if (!$valid_config)  wp_die('Per utilizzare il plugin occorre prima caricare le configurazioni');
+        if (!$this->is_valid_config)  wp_die('Per utilizzare il plugin occorre prima caricare le configurazioni');
         if ( !current_user_can('manage_options') ) {
             wp_die('Non hai i permessi per visualizzare questa pagina');
         } else {

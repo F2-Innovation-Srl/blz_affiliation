@@ -16,6 +16,7 @@ class GaTrackingIdSettings {
 
     public $settings;
     protected $title;
+    private $is_valid_config;
     private $name;
     private $slug;
     
@@ -44,10 +45,12 @@ class GaTrackingIdSettings {
 	 * AdminPage constructor.
 	 */
     
-	function __construct($valid_config,$title, $slug, $settings) {
-        $this->title     = $title;
-        $this->slug      = $slug;
-        $this->settings  = $settings;
+	function __construct($is_valid_config,$title, $slug, $settings) {
+        $this->is_valid_config     = $is_valid_config;
+        $this->title               = $title;
+        $this->slug                = $slug;
+        $this->settings            = $settings;
+
 
         $this->setCurrentObjects();
     }
@@ -57,7 +60,8 @@ class GaTrackingIdSettings {
     **/
     public function render()
     {
-        if (!$valid_config)  wp_die('Per utilizzare il plugin occorre prima caricare le configurazioni');
+        
+        if (!$this->is_valid_config)  wp_die('Per utilizzare il plugin occorre prima caricare le configurazioni');
         if (!current_user_can('manage_options')) {
             wp_die('Non hai i permessi per visualizzare questa pagina');
         } else{
