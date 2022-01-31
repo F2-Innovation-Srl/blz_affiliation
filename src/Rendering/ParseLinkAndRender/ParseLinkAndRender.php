@@ -9,7 +9,7 @@ use BLZ_AFFILIATION\Utils\Shortener;
 
 class ParseLinkAndRender {
 
-    private string $content;
+    private $content;
 
 
     public function __construct() {
@@ -50,11 +50,11 @@ class ParseLinkAndRender {
         /// recupera i pattern per ogni 
         /// tipologia di link da sostituire
         $this->patterns = array_map( function( $patternClass ) {
-
-            return new ('BLZ_AFFILIATION\\Rendering\\ParseLinkAndRender\\Patterns\\' . $patternClass )( $this->content );
+            $patternClass = 'BLZ_AFFILIATION\\Rendering\\ParseLinkAndRender\\Patterns\\' . $patternClass;
+            $content = $this->content;
+            return new $patternClass($content);
 
         },  $this->setPatterns() );
-
         /// a questo punto dovremmo avere tutti
         /// gli elementi per costruire i link
    

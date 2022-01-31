@@ -30,13 +30,14 @@ abstract class Marketplace {
     public function getOffers() {
 
         $offers_json = HttpRequest::getContent( $this->getQueryURL() );
+        if (is_array($offers_json))
+            return array_map( function( $offer ) {
 
-        return array_map( function( $offer ) {
+                return new Offer( $offer );
 
-            return new Offer( $offer );
-
-        }, json_decode( $offers_json, true ) );
-
+            }, json_decode( $offers_json, true ) );
+        else
+            return [];
     }
 
     /**
