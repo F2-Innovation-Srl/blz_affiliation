@@ -75,10 +75,10 @@ class BlzAffiliate {
 		new Settings\AdminPage();
 
 		/// aggiunge le dipendenze js per il tracciamento
-		//new Rendering\GATracking();
+		new Rendering\GATracking();
 
 		/// aggiunge css con parametri presi dai settings
-		//new Rendering\StyleInjector();
+		new Rendering\StyleInjector();
 		
 	}
 }
