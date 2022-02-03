@@ -5,7 +5,6 @@ namespace BLZ_AFFILIATION\Rendering;
 
 class PostData {
 
-
     /**
      * Istanza unica del singleton
      * @var object
@@ -40,10 +39,11 @@ class PostData {
 
         /// post type
         $this->post_type = $post->post_type;
-        //print_r($post);exit;
+        
         /// Author
         /// cerca il nome dell'autore
         $author_nicename = get_the_author_meta( 'user_nicename', $post->post_author);
+
         /// se è vuoto prende un valore di default
         $author_name    = empty( $author_nicename ) ? 'author' : $author_nicename;  // autore
 
@@ -52,18 +52,24 @@ class PostData {
             'id'        => $post->post_author
         ];
 
+
         /// tassonomie 
         $taxonomies = get_taxonomies();
-        foreach( $taxonomies as $taxonomy) 
-            foreach( get_the_terms( $post->ID, $taxonomy ) as $tax)
-            $this->taxonomies[$taxonomy][] = $tax->slug;
-        
-        
-        /// aggiunge se è anmp
+
+        foreach( array_values($taxonomies) as $taxonomy ) {
+
+            $terms = get_the_terms( $post->ID, $taxonomy );
+
+            if( !empty( $terms ) ){
+                $this->taxonomies[ $taxonomy ] = array_map( function( $tax ) {
+
+                    return $tax->slug;    
+                }, $terms);    
+            }            
+        }
+
+        /// aggiunge se è amp
         $this->is_amp = (is_amp_endpoint()) ? "true" : "false";
      
     }
-
-
 }
-
