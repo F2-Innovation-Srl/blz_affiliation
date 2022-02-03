@@ -92,7 +92,7 @@ abstract class Button {
     public function ajax_action() {
 
         // check for rights
-        if (! current_user_can('publish_posts'))  { die( __("Vietato") ); } 
+        //if (! current_user_can('publish_posts'))  { die( __("Vietato") ); } 
 
 
         // get the template HTML
