@@ -38,7 +38,7 @@
                 var subject     = `subject="${this.subject.value}"`;
                 var program     = `program="${this.program.value}"`;
                 var tracking_id = `tracking_id="${this.tracking_id.value}"`;
-                var link        = `link="${this.link.value}"`;
+                var link        = `link="${decodeURIComponent(this.link.value)}"`;
                 var content     = this.content.value;
                 var ga_event    = (is_stored) ? `ga_event="${this.ga_event.value}"` : '';
 

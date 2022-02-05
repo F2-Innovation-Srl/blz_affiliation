@@ -11,13 +11,13 @@ class StyleSettingsTable extends Table{
 
 	protected function getTableFields($row) {
 
-        $this->title = "Link style"; 
+        $this->title = "Custom style"; 
     
-        $primary_color = ( $row[ 'primary_color' ] != null ) ? $row[ 'primary_color' ] : '';
+        $css_custom_style = ( $row[ 'css_custom_style' ] != null ) ? $row[ 'css_custom_style' ] : '';
         /// compone una riga ( insieme di campi )
         $this->rows[] =  [
             /// inserisce un campo "casella di testo"
-            'Colore Primario' => new Text( $this->option_name."_primary_color", $primary_color, "text" ),
+            'CSS' => new Text( $this->option_name."_css_custom_style", $css_custom_style, "textarea" ),
         ];
     }
 
@@ -34,7 +34,7 @@ class StyleSettingsTable extends Table{
 
         // UPDATE
         $row = [
-            'primary_color' => isset( $_POST[$this->option_name. '_primary_color'  ] ) ? $_POST[$this->option_name. '_primary_color' ]  : ( $row[ 'primary_color'  ] ?? '' ),            
+            'css_custom_style' => isset( $_POST[$this->option_name. '_css_custom_style'  ] ) ? $_POST[$this->option_name. '_css_custom_style' ]  : ( $row[ 'css_custom_style'  ] ?? '' ),            
         ];
 
         // SET

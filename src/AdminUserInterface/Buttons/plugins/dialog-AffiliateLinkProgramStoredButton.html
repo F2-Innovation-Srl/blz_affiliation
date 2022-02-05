@@ -19,7 +19,8 @@
         
             this.submit   = document.getElementById('submit');
     
-            
+            this.content = tinymce.activeEditor.selection.getContent();
+
             this.submit.addEventListener('click', function(e) {
 
                 var link = this.link.value;
@@ -28,7 +29,7 @@
                 if (link  == '') { alert("Selezionare un link");  return; }
 
                 
-                this.shortcode = `[affiliate_program_stored_link id=${link}]`;
+                this.shortcode = `[affiliate_program_stored_link id=${link}]${this.content}[/affiliate_program_stored_link]`;
                 
                 tinyMCE.activeEditor.execCommand( 'mceInsertContent', 0, this.shortcode );
                 

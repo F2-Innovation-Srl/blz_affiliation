@@ -7,30 +7,13 @@ namespace BLZ_AFFILIATION\Rendering;
  */
 class StyleInjector {
 
-    private $primary;
-    
-    private $style = <<<HTML
-        <style>
-            a.affiliation-intext {
-                font-family: inherit !important;
-                font-size: inherit !important;
-                color: inherit !important;
-                text-decoration: underline !important;
-                text-decoration-color: # primary # !important;
-            }
+    private $custom_style;
 
-            a.affiliation-intext:hover {
-                color: # primary # !important;
-            }
-        </style>
-    HTML;
-
-    
 	function __construct() {
         
         $settings = get_option( "blz-affiliation-settings-css" );
 
-        $this->primary = $settings['primary_color'] ? $settings['primary_color'] : 'inherit';
+        $this->custom_style = $settings['css_custom_style'] ? $settings['css_custom_style'] : 'inherit';
         
         add_action( 'init', [ $this, 'init' ] );
         
@@ -47,7 +30,7 @@ class StyleInjector {
 
     function inject_css() { 
 
-        echo str_replace( ['# primary #'],[$this->primary], $this->style );
+        echo "<style>".$this->custom_style."</style>";
     }
 
 }

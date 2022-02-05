@@ -16,6 +16,9 @@ class Text extends Field {
             case "text":
                 return '<input type="text" name="'.$this->name.'" value="'.$this->value.'" />';
                 break;
+            case "textarea":
+                return '<textarea rows="15" cols="110" name="'.$this->name.'" >'.$this->value.'</textarea>';
+                break;
             case "boolean":
                 foreach (["NO" => "false","SI" => "true"] as $key => $options)
                     $output .= $key.' <input type="radio" name="'.$this->name.'" '.( ($this->value == $options) ? "checked" : "").' value="'.$options.'" />';
