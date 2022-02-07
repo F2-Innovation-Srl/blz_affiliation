@@ -55,9 +55,9 @@ class AffiliateLinkProgramStoredButton extends Button {
 
         return array_map( function( $item ) {
             
-            return ['id' => $item->ID, 'title' => $item->post_title, 'posts_per_page' => -1 ];
+            return ['id' => $item->ID, 'title' => $item->post_title ];
 
-        }, get_posts( [ 'post_type' => 'program_stored_link', 'post_status' => 'publish' ] ));
+        }, get_posts( [ 'post_type' => 'program_stored_link', 'post_status' => 'publish' , 'posts_per_page' => -1] ));
 
     }
 }
