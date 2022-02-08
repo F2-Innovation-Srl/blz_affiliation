@@ -105,7 +105,7 @@ class AffiliateTable {
         HTML;
        
         $rowTemplate = <<<HTML
-                <li data-vars-affiliate="{{ ga_event }}">
+                <li data-vars-blz-affiliate="{{ ga_event }}">
                     <a href="{{ link }}" target="_blank" class="aftable_link">
                         <div class="col col-1 col-sm-12 col-middle">
                             <div class="rating_index">{{ id }}</div>

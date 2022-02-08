@@ -2,7 +2,7 @@
  * Traccia link di affiliazione 
  * 
  * che espongono  il seguente output:
- * <a href="{{URL}}" data-vars-affiliate="{{eventLabel}}" target="_blank" rel="nofollow">{{text}}</a>
+ * <a href="{{URL}}" data-vars-blz-affiliate="{{eventLabel}}" target="_blank" rel="nofollow">{{text}}</a>
  * 
  */
  function AffiliateLinkActivator(container, number, GAID) {
@@ -13,7 +13,7 @@
 
     this.init = function() {
 
-        this.selectors = [].map.call(this.container.querySelectorAll('[data-vars-affiliate]'), function(a, i){
+        this.selectors = [].map.call(this.container.querySelectorAll('[data-vars-blz-affiliate]'), function(a, i){
             
             /// bisogna dare a ciascun elemento 
             /// un id
@@ -62,7 +62,7 @@ function AffiliateLinksManager( GAID ) {
     this.add = function(index, container) {
 
         if(typeof container != 'undefined')
-            if(container.querySelector('[data-vars-affiliate]') != null)
+            if(container.querySelector('[data-vars-blz-affiliate]') != null)
                 this.affiliateLinks[index] = new AffiliateLinkActivator(container, index, this.GAID);
     };
 
@@ -71,7 +71,7 @@ function AffiliateLinksManager( GAID ) {
 // prende il GA ID dalla pagina. il default è TEST OMNIA
 var blz_GAID = (typeof blz_affiliation_ga == 'undefined') ? 'UA-118680447-7' : blz_affiliation_ga;
 
-if( document.querySelector('[data-vars-affiliate]') ) {
+if( document.querySelector('[data-vars-blz-affiliate]') ) {
 
     if(UI.infinite) {
 

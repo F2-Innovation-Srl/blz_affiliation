@@ -27,13 +27,13 @@ class SettingsData {
         
         'linkButton' => 
         <<<HTML
-            <a href="{{ url }}" data-vars-affiliate="{{ ga_event }}" 
+            <a href="{{ url }}" data-vars-blz-affiliate="{{ ga_event }}" 
                class="affiliation-intext" target="_blank" rel="sponsored"
             >{{ content }}</a>
         HTML,
         'parseLinkAndRender' => 
         <<<HTML
-        <a href="{{ url }}" data-vars-affiliate="{{ ga_event }}" 
+        <a href="{{ url }}" data-vars-blz-affiliate="{{ ga_event }}" 
            class="affiliation-intext" target="_blank" rel="sponsored" >
         HTML
     ];

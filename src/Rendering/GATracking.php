@@ -29,7 +29,7 @@ class GATracking {
                         "affiliateLinkView": {
                             "on": "visible",
                             "request": "affiliateelementsview",
-                            "selector": [ "[data-vars-affiliate]" ],
+                            "selector": [ "[data-vars-blz-affiliate]" ],
                             "vars": {
                                 "event_name": "{dollaro}{affiliate}",
                                 "event_action": "{dollaro}{affiliate} view",
@@ -38,7 +38,7 @@ class GATracking {
                             }
                         },
                         "affiliateLinkClick": {
-                            "selector": "[data-vars-affiliate]",
+                            "selector": "[data-vars-blz-affiliate]",
                             "on": "click",
                             "vars": {	
                                 "event_name": "{dollaro}{affiliate}",
