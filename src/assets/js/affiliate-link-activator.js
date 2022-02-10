@@ -22,7 +22,7 @@
             return { 
                 selector : '#'+a.id,
                 type: "event", 
-                name : a.dataset.varsAffiliate,
+                name : a.dataset.varsBlzAffiliate,
                 args : {event_category : 'affiliate-tracking', event_label : location.pathname } 
             }
         }.bind(this));
