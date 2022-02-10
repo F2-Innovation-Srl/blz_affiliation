@@ -73,7 +73,7 @@ var blz_GAID = (typeof blz_affiliation_ga == 'undefined') ? 'UA-118680447-7' : b
 
 if( document.querySelector('[data-vars-blz-affiliate]') ) {
 
-    if(UI.infinite) {
+    if( UI.infinite ) {
 
         var affLinks = new AffiliateLinksManager( blz_GAID );
 
@@ -101,7 +101,9 @@ if( document.querySelector('[data-vars-blz-affiliate]') ) {
 
         }.bind(this));
 
-    } else {
+    } 
+    
+    if ( typeof affLinks != 'undefined' && !affLinks.exists(0) ) {
 
         var affiliateLinks = new AffiliateLinkActivator( document.body, 0, blz_GAID );
     }
