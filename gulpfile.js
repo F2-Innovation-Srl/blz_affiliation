@@ -28,7 +28,7 @@ gulp.task('clean', () => del([ jsLibBuildFolder ]));
  gulp.task('scripts:lib', function() {
 
     const libs_src = [
-        'node_modules/tracker/dist/tracker.min.js'
+        'node_modules/tracker/src/Tracker.js'
     ];
 
     return gulp.src( libs_src )
