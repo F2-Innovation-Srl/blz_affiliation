@@ -46,7 +46,7 @@ class AdminPage {
         } else {
 
             /// dipendenze js per tracciamento
-            wp_enqueue_script('blz-affiliation-tracker',   PLUGIN_URI ."src/assets/js/libs/tracker.js",[], PLUGIN_VERSION,true);
+            wp_enqueue_script('blz-affiliation-tracker',   PLUGIN_URI ."src/assets/js/libs/Tracker.js",[], PLUGIN_VERSION,true);
             wp_enqueue_script('blz-affiliation-activator', PLUGIN_URI ."src/assets/js/affiliate-link-activator.js",["blz-affiliation-tracker"], PLUGIN_VERSION,true);
 
             # enqueue CSS
