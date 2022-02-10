@@ -1,0 +1,24 @@
+{
+  "name": "blz_affiliation",
+  "version": "1.0.0",
+  "description": "= Blazemedia Affiliation =\r Contributors: Blazemedia\r Tags: affiliation, amazon, trovaprezzi, ebay, link, link automation\r Requires at least: 4.7\r Tested up to: 5.2\r Stable tag: 4.8.1\r Requires PHP: 7.1",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/F2-Innovation-Srl/blz_affiliation.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/F2-Innovation-Srl/blz_affiliation/issues"
+  },
+  "homepage": "https://github.com/F2-Innovation-Srl/blz_affiliation#readme",
+  "dependencies": {
+    "del": "^6.0.0",
+    "gulp": "^4.0.2",
+    "tracker": "git@github.com:F2-Innovation-Srl/tracker"
+  }
+}
