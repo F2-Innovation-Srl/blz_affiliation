@@ -103,7 +103,7 @@ if( document.querySelector('[data-vars-blz-affiliate]') ) {
 
     } 
     
-    if ( typeof affLinks != 'undefined' && !affLinks.exists(0) ) {
+    if ( typeof affLinks == 'undefined' || (typeof affLinks != 'undefined' && !affLinks.exists(0) )) {
 
         var affiliateLinks = new AffiliateLinkActivator( document.body, 0, blz_GAID );
     }
