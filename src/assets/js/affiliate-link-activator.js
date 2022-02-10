@@ -67,44 +67,47 @@ function AffiliateLinksManager( GAID ) {
     };
 
 }
+document.addEventListener("DOMContentLoaded", function() {
 
-// prende il GA ID dalla pagina. il default è TEST OMNIA
-var blz_GAID = (typeof blz_affiliation_ga == 'undefined') ? 'UA-118680447-7' : blz_affiliation_ga;
+    // prende il GA ID dalla pagina. il default è TEST OMNIA
+    var blz_GAID = (typeof blz_affiliation_ga == 'undefined') ? 'UA-118680447-7' : blz_affiliation_ga;
 
-if( document.querySelector('[data-vars-blz-affiliate]') ) {
+    if( document.querySelector('[data-vars-blz-affiliate]') ) {
 
-    if( UI.infinite ) {
+        if( UI.infinite ) {
 
-        var affLinks = new AffiliateLinksManager( blz_GAID );
+            var affLinks = new AffiliateLinksManager( blz_GAID );
 
-        var ui_container = document.querySelector(UI.infinite.container);
-        var ui_contents = ui_container.querySelectorAll('article');
+            var ui_container = document.querySelector(UI.infinite.container);
+            var ui_contents = ui_container.querySelectorAll('article');
 
-        var index   = UI.infinite.current_content;
-        var container = ui_contents[index];
+            var index   = UI.infinite.current_content;
+            var container = ui_contents[index];
 
-        console.log('__ ui_contents',ui_contents);
+            console.log('__ ui_contents',ui_contents);
 
-        if(!affLinks.exists(index))
-            affLinks.add(index, container);
+            if(!affLinks.exists(index))
+                affLinks.add(index, container);
 
-        UI.infinite.loader.loadCallbackStack.push(function(){
+            UI.infinite.loader.loadCallbackStack.push(function(){
 
-            ui_contents = ui_container.querySelectorAll('article');
+                ui_contents = ui_container.querySelectorAll('article');
+            
+                for(var i=0; i< ui_contents.length; i++){
+
+                    container = ui_contents[i];
+                    if(!affLinks.exists(i))
+                        affLinks.add(i, container);
+                }
+
+            }.bind(this));
+
+        } 
         
-            for(var i=0; i< ui_contents.length; i++){
+        if ( typeof affLinks != 'undefined' && !affLinks.exists(0) ) {
 
-                container = ui_contents[i];
-                if(!affLinks.exists(i))
-                    affLinks.add(i, container);
-            }
-
-        }.bind(this));
-
-    } 
-    
-    if ( typeof affLinks != 'undefined' && !affLinks.exists(0) ) {
-
-        var affiliateLinks = new AffiliateLinkActivator( document.body, 0, blz_GAID );
+            var affiliateLinks = new AffiliateLinkActivator( document.body, 0, blz_GAID );
+        }
     }
-}
+    
+}.bind(this));
