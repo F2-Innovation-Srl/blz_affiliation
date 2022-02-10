@@ -19,6 +19,6 @@
   "dependencies": {
     "del": "^6.0.0",
     "gulp": "^4.0.2",
-    "tracker": "git@github.com:F2-Innovation-Srl/tracker"
+    "tracker": "git+ssh://git@github.com/F2-Innovation-Srl/Tracker.git"
   }
 }
