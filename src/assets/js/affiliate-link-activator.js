@@ -30,7 +30,7 @@
         console.log('_activators ', this.selectors);
 
         if(this.selectors.length)
-            this.tracker = new TrackerBlzAffiliate({ 
+            this.tracker = new Tracker({ 
                 selectors : this.selectors,                
                 gaid : this.GAID
             });
