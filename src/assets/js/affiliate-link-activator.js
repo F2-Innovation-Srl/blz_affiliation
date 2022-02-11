@@ -30,7 +30,7 @@
         console.log('_activators ', this.selectors);
 
         if(this.selectors.length)
-            this.tracker = new Tracker({ 
+            this.tracker = new TrackerBlzAffiliate({ 
                 selectors : this.selectors,                
                 gaid : this.GAID
             });
@@ -109,5 +109,5 @@ document.addEventListener("DOMContentLoaded", function() {
             var affiliateLinks = new AffiliateLinkActivator( document.body, 0, blz_GAID );
         }
     }
-    
+
 }.bind(this));

@@ -1,5 +1,5 @@
 /**
- * @class Tracker
+ * @class TrackerBlzAffiliate
  * 
  * @responsibility
  * track Google Analytics events of the given element list
@@ -18,7 +18,7 @@
  *  FANTASTICO IL MODO DI CREARE GRUPPI SU ANALYTICS
  *  FANTASTICO IL FATTO CHE SI POSSONO FARE DELLE EVENT_CALLBACK
  */
-class Tracker {
+class TrackerBlzAffiliate {
     
     constructor (args) {
 
