@@ -31,8 +31,8 @@ class GATracking {
                             "request": "affiliateelementsview",
                             "selector": [ "[data-vars-blz-affiliate]" ],
                             "vars": {
-                                "event_name": "{dollaro}{blz-affiliate}",
-                                "event_action": "{dollaro}{blz-affiliate} view",
+                                "event_name": "{dollaro}{blzAffiliate}",
+                                "event_action": "{dollaro}{blzAffiliate} view",
                                 "event_category": "affiliate-tracking",
                                 "method": "Google"
                             }
@@ -41,8 +41,8 @@ class GATracking {
                             "selector": "[data-vars-blz-affiliate]",
                             "on": "click",
                             "vars": {	
-                                "event_name": "{dollaro}{blz-affiliate}",
-                                "event_action": "{dollaro}{blz-affiliate} click",
+                                "event_name": "{dollaro}{blzAffiliate}",
+                                "event_action": "{dollaro}{blzAffiliate} click",
                                 "event_category": "affiliate-tracking",
                                 "method": "Google"
                             }
