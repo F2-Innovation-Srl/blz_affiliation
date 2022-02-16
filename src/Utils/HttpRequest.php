@@ -5,7 +5,7 @@ namespace BLZ_AFFILIATION\Utils;
 class HttpRequest {
 
     static function getContent($url){
-
+        $url = str_replace(" ", '%20', $url);
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => $url,
