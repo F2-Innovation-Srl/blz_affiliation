@@ -13,7 +13,7 @@ class StyleInjector {
         
         $settings = get_option( "blz-affiliation-settings-css" );
 
-        $this->custom_style = (isset($settings)) ? "<style>".$settings['css_custom_style']."</style>" : "";
+        $this->custom_style = (isset($settings['css_custom_style'])) ? "<style>".$settings['css_custom_style']."</style>" : "";
         
         add_action( 'init', [ $this, 'init' ] );
         
