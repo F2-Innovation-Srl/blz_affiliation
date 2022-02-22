@@ -75,9 +75,13 @@ class AffiliateTable {
 
     protected function render( $table ) {
 
+        $captionTemplate = <<<HTML
+        <p class="blz_affiliation_table_caption">{{ caption }}</p>
+        HTML;
+
         /// to enqueue CSS - table-rating.css        
         $tableTemplate = <<<HTML
-            <p class="blz_affiliation_table_caption">{{ caption }}</p>
+            {{ caption }}
             <div class="rating-table">
                 <ul class="rating-card grid">
                     {{ header }}
@@ -139,8 +143,9 @@ class AffiliateTable {
             return $markup;
         
         }, '');
-        
-        return str_replace(['{{ caption }}','{{ header }}','{{ rows }}' ], [ $this->caption, $header, $rows ], $tableTemplate );
+        $caption = (!empty($this->caption)) ? str_replace('{{ caption }}',$this->caption,$captionTemplate) : "";
+
+        return str_replace(['{{ caption }}','{{ header }}','{{ rows }}' ], [ $caption, $header, $rows ], $tableTemplate );
 
     }
     
