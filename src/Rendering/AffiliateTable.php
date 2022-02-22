@@ -23,6 +23,7 @@ class AffiliateTable {
     public function print ( $atts, $content, $tag ) {
 
         $this->table_id = $atts['id'];
+        $this->caption = $atts['caption'];
         
         $table = $this->getTable();
 
@@ -85,6 +86,7 @@ class AffiliateTable {
         HTML;
 
         $header = <<<HTML
+                <p class="blz_affiliation_table_caption">{{ caption }}</p>
                 <li class="table_heading">
                     <div class="col col-1 col-sm-12 col-middle">
                         <div class="rating_heading">Rank</div>
@@ -138,7 +140,7 @@ class AffiliateTable {
         
         }, '');
         
-        return str_replace([ '{{ header }}','{{ rows }}' ], [ $header, $rows ], $tableTemplate );
+        return str_replace(['{{ caption }}','{{ header }}','{{ rows }}' ], [ $this->caption, $header, $rows ], $tableTemplate );
 
     }
     
