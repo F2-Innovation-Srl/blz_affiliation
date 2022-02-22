@@ -23,7 +23,7 @@ class AffiliateTable {
     public function print ( $atts, $content, $tag ) {
 
         $this->table_id = $atts['id'];
-        $this->caption = $atts['caption'];
+        $this->caption = (isset($atts['caption'])) ? $atts['caption'] : "";
         
         $table = $this->getTable();
 
