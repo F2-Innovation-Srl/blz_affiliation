@@ -77,6 +77,7 @@ class AffiliateTable {
 
         /// to enqueue CSS - table-rating.css        
         $tableTemplate = <<<HTML
+            <p class="blz_affiliation_table_caption">{{ caption }}</p>
             <div class="rating-table">
                 <ul class="rating-card grid">
                     {{ header }}
@@ -86,7 +87,6 @@ class AffiliateTable {
         HTML;
 
         $header = <<<HTML
-                <p class="blz_affiliation_table_caption">{{ caption }}</p>
                 <li class="table_heading">
                     <div class="col col-1 col-sm-12 col-middle">
                         <div class="rating_heading">Rank</div>

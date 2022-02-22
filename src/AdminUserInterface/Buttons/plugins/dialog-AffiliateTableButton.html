@@ -30,7 +30,7 @@
                     return;
                 }
                 
-                this.shortcode = '[affiliate_table id=' + table_id +' caption='+caption+']';
+                this.shortcode = '[affiliate_table id=' + table_id +' caption="'+caption+'"]';
                 
                 tinyMCE.activeEditor.execCommand( 'mceInsertContent', 0, this.shortcode );
                 
