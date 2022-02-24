@@ -81,8 +81,8 @@ class AffiliateTable {
 
         /// to enqueue CSS - table-rating.css        
         $tableTemplate = <<<HTML
-            {{ caption }}
             <div class="rating-table">
+                {{ caption }}
                 <ul class="rating-card grid">
                     {{ header }}
                     {{ rows }}
