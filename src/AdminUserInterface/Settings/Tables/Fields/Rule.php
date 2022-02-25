@@ -40,6 +40,7 @@ class Rule extends Field {
         $output = "<select name=\"".$this->name."\"><option value=\"0\">Seleziona un termine</option>";
         $output = $this->addCommonOptions($output);
         $terms = get_terms( $this->type, ['hide_empty' => true] );
+        if (!$terms->errors)
             foreach( $terms as $term) 
                 $output .= "<option value=\"".$term->slug."\" ".(($this->value == $term->slug) ? "selected" : "")." >".$term->name."</option>";
         $output .= "</select>";
