@@ -1,39 +1,30 @@
 <?php
 
-
 namespace BLZ_AFFILIATION\Utils;
 
-class Shortener {
+class HttpRequest {
 
-    /**
-     * Effettua una chiamata al servizio per la creazione degli shortlink
-     */
-    static function generateShortLink($link){
-
-        $username="techteam";
-        $password="trellotrello";
-        $baseurl=preg_replace("/^(.*?)\.(.*)$/","$2",$_SERVER["HTTP_HOST"]);
-       
+    static function getContent($url){
+        $url = str_replace(" ", '%20', $url);
         $curl = curl_init();
-//die("https://shortener.".$baseurl."/yourls-api.php?baseurl=".$baseurl."&username=".$username."&action=shorturl&format=json&password=".$password."&url=".urlencode($link));
         curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://shortener.".$baseurl."/yourls-api.php?baseurl=".$baseurl."&username=".$username."&action=shorturl&format=json&password=".$password."&url=".urlencode($link),
+            CURLOPT_URL => $url,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 3,
-            CURLOPT_CONNECTTIMEOUT => 3,
+            CURLOPT_TIMEOUT => 5,
+            CURLOPT_CONNECTTIMEOUT => 5,
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_SSL_VERIFYHOST => 0,
             CURLOPT_SSL_VERIFYPEER => 0,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "GET",
         ));
-
-        $short_data = json_decode(curl_exec($curl));
+        $short_data = curl_exec($curl);
         curl_close($curl);
-        return (isset($short_data->shorturl)) ? ($short_data->shorturl) : $link;
-
+        return $short_data;
+        //$ctx = stream_context_create(['https'=>[ 'timeout' => 3]]);
+        //return @file_get_contents($url, false, $ctx);
     }
 
 }
