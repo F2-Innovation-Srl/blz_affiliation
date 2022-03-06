@@ -13,7 +13,7 @@ use BLZ_AFFILIATION\Rendering\ParseLinkAndRender\Link;
 class Ebay extends Pattern {
 
     /// il pattern da riconoscere nel testo da ridefinire
-    protected $pattern = '/<a[^>]*href="(https:\/\/www.ebay.it[^"]*?)".*?>/';
+    protected $pattern = '/<a[^>]*href="(https?:\/\/www.ebay.it[^"]*?)".*?>/';
 
     protected $tracking_code = 'ebay';
     

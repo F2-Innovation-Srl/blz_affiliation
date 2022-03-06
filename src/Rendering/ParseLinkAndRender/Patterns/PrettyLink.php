@@ -13,7 +13,7 @@ use BLZ_AFFILIATION\Rendering\ParseLinkAndRender\Link;
 class PrettyLink extends Pattern {
 
     /// il pattern da riconoscere nel testo da ridefinire
-    protected $pattern = '/<a.*?href="(https:\/\/.*?mtz-editorial.*?)".*?>/';
+    protected $pattern = '/<a.*?href="(https?:\/\/.*?mtz-editorial.*?)".*?>/';
 
     protected $tracking_code = '';
     
