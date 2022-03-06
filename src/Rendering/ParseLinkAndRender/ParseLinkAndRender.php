@@ -29,6 +29,7 @@ class ParseLinkAndRender {
             'Amazon',
             'Ebay',
             'AmazonShorted', 
+            'AmazonPrimeVideo',
             'EbayShorted', 
             'PrettyLink', 
         ];
