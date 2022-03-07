@@ -18,10 +18,10 @@
  *  FANTASTICO IL MODO DI CREARE GRUPPI SU ANALYTICS
  *  FANTASTICO IL FATTO CHE SI POSSONO FARE DELLE EVENT_CALLBACK
  */
-class Tracker {
+ class Tracker {
     
     constructor (args) {
-
+        
         // google analytics measurament id
         this.gaid      = ( typeof args.gaid     === 'undefined') ? null : args.gaid;
         
@@ -35,12 +35,13 @@ class Tracker {
         /// and disable automatic pageview tracking
         if( typeof gtag == 'undefined' ) {
             
-            this.insertGTAG( this.gaid, () => { 
-                gtag( 'config', this.gaid, { 'send_page_view': false, 'groups' : 'blz_ga_tracker' } ); 
-            } );
+            this.insertGTAG( this.gaid, function() { 
+                window.gtag( 'config', this.gaid, { 'send_page_view': false, 'groups' : 'blztrkpgn' } ); 
+            }.bind(this) );
         
-        } else {                    
-            gtag( 'config', this.gaid, { 'send_page_view': false, 'groups' : 'blz_ga_tracker'  } );
+        } else {   
+                           
+            window.gtag( 'config', this.gaid, { 'send_page_view': false, 'groups' : 'blztrkpgn'  } );
         }
     
 
@@ -217,22 +218,23 @@ class Tracker {
      */
     trackEvt( name, args, GAID ) {
 
+
         let gaid = (typeof GAID != 'undefined') ? GAID : this.gaid;
 
-        // console.log('_t| now tracking... ', name, args, gaid);
+        let evt_args = ( typeof args === 'undefined' ) ? {} : args;
+        // evt_args.send_to = 'blztrkpgn';  //  { 'send_to' : 'blztrkpgn' };
+        evt_args.send_to = gaid;  //  { 'send_to' : GAID' };
+
+        evt_args.event_callback = function() {
+            
+            console.log('_t| now tracking... ', name, evt_args, gaid);
+        }.bind(this);
         
         if(gaid == null) return;
         if(typeof name == 'undefined' || name == null || name == '') return;
+        
+        window.gtag('event', name, evt_args );
 
-        let send_to = { 'send_to' : 'blz_ga_tracker'};
-
-        if(typeof args != 'undefined')
-
-            gtag('event', name, { ...send_to, ...args } );
-
-        else
-
-            gtag('event', name, send_to );
     }   
 
 
@@ -264,6 +266,8 @@ class Tracker {
         document.head.appendChild(init);
     }
 }
+
+
 
 
 
