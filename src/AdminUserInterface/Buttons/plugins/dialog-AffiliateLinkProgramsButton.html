@@ -102,7 +102,10 @@
     </select>
     <script>
         var subject_select = document.getElementById('subject');
-        subjects.forEach( function(item) { 
+        var result = [];
+        for(var i in subjects)
+            result.push([i, subjects [i]][1]);
+        result.forEach( function(item) { 
             subject_select.insertAdjacentHTML('beforeend', `<option value="${item.slug}">${item.name}</option>`); 
         });   
         subject_select.addEventListener('change', function() {
