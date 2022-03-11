@@ -33,7 +33,7 @@ class AffiliateLinkProgramsButton extends Button {
          if (! current_user_can('publish_posts'))  { die( __("Vietato") ); } 
         
          /// prende il valore del post
-         $post_id = intval($_GET['post'] );
+         $post_id = isset($_GET['post']) ? intval($_GET['post'] ) : 0;
          
          // get the template 
          $html = file_get_contents( $this->base_dir .'plugins/dialog-AffiliateLinkProgramsButton.html');
@@ -77,7 +77,7 @@ class AffiliateLinkProgramsButton extends Button {
     }
 
     private function isStoredPost( $post_id ) {
-        
+        if ($post_id == 0) return false;
         $post = get_post($post_id);
         return ( $post->post_type == 'program_stored_link' );        
     }
