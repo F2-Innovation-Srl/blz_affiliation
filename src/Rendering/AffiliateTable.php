@@ -83,7 +83,7 @@ class AffiliateTable {
         $tableTemplate = <<<HTML
             {{ caption }}
             <div class="rating-table">
-                <ul class="rating-card grid">
+                <ul class="rating-card blz_grid">
                     {{ header }}
                     {{ rows }}
                 </ul>
@@ -92,19 +92,19 @@ class AffiliateTable {
 
         $header = <<<HTML
                 <li class="table_heading">
-                    <div class="col col-1 col-sm-12 col-middle">
+                    <div class="blz_col blz_col-1 blz_col-sm-12 blz_col-middle">
                         <div class="rating_heading">Rank</div>
                     </div>
-                    <div class="col col-3 col-sm-12 col-middle">
+                    <div class="blz_col blz_col-3 blz_col-sm-12 blz_col-middle">
                         <div class="rating_heading">Prodotto</div>
                     </div>
-                    <div class="col col-3 col-sm-12 col-middle">
+                    <div class="blz_col blz_col-3 blz_col-sm-12 blz_col-middle">
                         <div class="rating_heading">Caratteristiche</div> 
                     </div>
-                    <div class="col col-3 col-sm-12 col-middle">
+                    <div class="blz_col blz_col-3 blz_col-sm-12 blz_col-middle">
                         <div class="rating_heading" style="margin-left: -12px;">Rating</div>
                     </div>
-                    <div class="col col-2 col-sm-12 col-middle">
+                    <div class="blz_col blz_col-2 blz_col-sm-12 blz_col-middle">
                         <div class="rating_heading" style="margin-left: -24px;">Offerta</div>
                     </div>
                 </li>
@@ -113,19 +113,19 @@ class AffiliateTable {
         $rowTemplate = <<<HTML
                 <li data-vars-blz-affiliate="{{ ga_event }}">
                     <a href="{{ link }}" target="_blank" class="aftable_link">
-                        <div class="col col-1 col-sm-12 col-middle">
+                        <div class="blz_col blz_col-1 blz_col-sm-12 blz_col-middle">
                             <div class="rating_index">{{ id }}</div>
                         </div>
-                        <div class="col col-3 col-sm-12 col-middle">
+                        <div class="blz_col blz_col-3 blz_col-sm-12 blz_col-middle">
                             <div class="rating_image"><img src="{{ img }}" class="img-cover" alt="{{ marketplace }}"></div>
                         </div>                
-                        <div class="col col-3 col-sm-12 col-middle">
+                        <div class="blz_col blz_col-3 blz_col-sm-12 blz_col-middle">
                             <div class="rating_description">{{ text }}</div>
                         </div>                
-                        <div class="col col-3 col-sm-12 col-middle">
+                        <div class="blz_col blz_col-3 blz_col-sm-12 blz_col-middle">
                             <div class="rating_star"><div class="stars" style="--rating: {{ rating }};"></div></div>
                         </div>
-                        <div class="col col-2 col-sm-12 col-middle">
+                        <div class="blz_col blz_col-2 blz_col-sm-12 blz_col-middle">
                             <div class="rating_cta"><span class="btn btn-primary">{{ cta }}</span></div>
                         </div>
                     </a>
