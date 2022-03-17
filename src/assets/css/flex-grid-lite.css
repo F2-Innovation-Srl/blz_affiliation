@@ -227,6 +227,6 @@
 @media only screen and (max-width: 744px) {
   .blz_col-lg {
     flex: 100%;
-    max-width: 100%;
+    max-width: 100%; 
   }
 }
