@@ -32,7 +32,7 @@ class Shortener {
 
         $short_data = json_decode(curl_exec($curl));
         curl_close($curl);
-        return ($short_data->shorturl) ? ($short_data->shorturl) : $link;
+        return (isset($short_data->shorturl)) ? ($short_data->shorturl) : $link;
 
     }
 
