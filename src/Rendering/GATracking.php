@@ -92,7 +92,7 @@ class GATracking {
      */
     function add_amp_track( $content ) {
 
-        $is_amp = (function_exists('is_amp_endpoint')) is_amp_endpoint() : false;
+        $is_amp = (function_exists('is_amp_endpoint')) ? is_amp_endpoint() : false;
     
         if ( is_single() && $is_amp)
             // Add image to the beginning of each page
