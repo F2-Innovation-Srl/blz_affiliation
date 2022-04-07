@@ -67,7 +67,7 @@ class PostData {
                 }, $terms);    
             }            
         }
-        $is_amp = (function_exists('is_amp_endpoint')) is_amp_endpoint() : false;
+        $is_amp = (function_exists('is_amp_endpoint')) ? is_amp_endpoint() : false;
         /// aggiunge se è amp
         $this->is_amp = ($is_amp) ? "true" : "false";
      
