@@ -4,6 +4,7 @@ namespace BLZ_AFFILIATION\Rendering;
 
 use BLZ_AFFILIATION\AffiliateMarketing\Request;
 use BLZ_AFFILIATION\Utils\Helper;
+use BLZ_AFFILIATION\Utils\Shortener;
 /**
  * 
  * Ritorna i dati della tabella di affiliazione nella pagina
@@ -81,6 +82,7 @@ class AffiliateTable {
 
         /// to enqueue CSS - table-rating.css        
         $tableTemplate = <<<HTML
+            {{ caption }}
             <div class="rating-table">
                 <ul class="rating-card blz_grid">
                     {{ header }}
@@ -132,10 +134,10 @@ class AffiliateTable {
         HTML;        
         
         $rows = array_reduce( $table, function( $markup, $row ) use ( $rowTemplate ) {
-            
+            $link = ( new Shortener )->generateShortLink( $row->link ) ;
             $markup .= str_replace (
                 ['{{ ga_event }}', '{{ marketplace }}', '{{ img }}', '{{ link }}', '{{ id }}', '{{ text }}', '{{ rating }}', '{{ cta }}'],
-                [ $row->ga_event, $row->marketplace, $row->img, $row->link, $row->id, $row->text, $row->rating, $row->cta ],
+                [ $row->ga_event, $row->marketplace, $row->img, $link, $row->id, $row->text, $row->rating, $row->cta ],
                 $rowTemplate
             );
 
@@ -146,22 +148,6 @@ class AffiliateTable {
 
         return str_replace(['{{ caption }}','{{ header }}','{{ rows }}' ], [ $caption, $header, $rows ], $tableTemplate );
 
-    }
-    
-    /**
-     * Crea il link a partire dai dati della pagina
-     * e da quelli di un singolo link nel testo
-     *
-     * @param Link $linkData
-     * @return string
-     */
-    private function FillTemplate( $link, $ga_event, $tracking, $template) {
-
-        $link = str_replace( '{tracking_id}', $tracking, $link);
-        /// poi accorcia il link
-        $link = ( new Shortener )->generateShortLink( $link ) ;
-
-        return str_replace([ '{{ url }}', '{{ ga_event }}' ], [ $link, $ga_event ], $template);
     }
 
 

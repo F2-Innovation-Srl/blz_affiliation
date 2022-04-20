@@ -17,7 +17,7 @@
  */
 define( 'PLUGIN_PATH' , plugin_dir_path( __FILE__ ) );
 define( 'PLUGIN_URI'  , plugin_dir_url( __FILE__ ));
-define( 'PLUGIN_VERSION'  , "1.4.3");
+define( 'PLUGIN_VERSION'  , "1.6");
 
 require_once PLUGIN_PATH . '/vendor/autoload.php';
 
