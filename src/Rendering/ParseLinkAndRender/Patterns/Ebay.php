@@ -27,9 +27,12 @@ class Ebay extends Pattern {
 
         return array_map( function( $link , $url ) {
 
+            $url = ( strpos( $url, 'tag=' ) === false ) ? $url : preg_filter('/(.*)\?.*/', '$1', $url );
+            $url = ( strpos( $url, '?' ) === false ) ? $url .'?mkcid=1&mkrid=724-53478-19255-0&siteid=101&campid=5338741871&customid={tracking_id}' :  $url .'&mkcid=1&mkrid=724-53478-19255-0&siteid=101&campid=5338741871&customid={tracking_id}';
+
             return new Link ([
                 'old_link'    => $link,
-                'url'         => $url . '?mkcid=1&mkrid=724-53478-19255-0&siteid=101&campid=5338741871&customid={tracking_id}',
+                'url'         => $url,
                 'marketplace' => $this->name
             ]);
 
