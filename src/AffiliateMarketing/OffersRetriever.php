@@ -26,6 +26,9 @@ class OffersRetriever {
 
         return array_reduce( $this->marketplaces, function( $result, $marketplace ) {
 
+            //FIX FOR RETROCOMPATIBILIY
+            if ($marketplace == "IT" ) $marketplace = "Amazon";
+
             $base = 'BLZ_AFFILIATION\\AffiliateMarketing\\Marketplaces\\';
             $className = $base. $marketplace;
             $class = new $className($this->request);
