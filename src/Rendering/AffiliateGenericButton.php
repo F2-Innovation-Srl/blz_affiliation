@@ -25,9 +25,8 @@ class AffiliateGenericButton {
     HTML;
 
     function __construct() {
-
         // Add the shortcode to print the links
-        add_shortcode( 'affiliate_generic', [ $this, 'print'] );
+        add_shortcode( 'affiliate_generic', [ $this, 'printAffiliateLink'] );
     }
 
 
@@ -49,9 +48,8 @@ class AffiliateGenericButton {
 
 
     private function FillTemplate( $ga_event, $tracking, $template) {
-
         /// accorcia il link
-        $link = ( new Shortener )->generateShortLink( $link ) ;
+        $link = ( new Shortener )->generateShortLink( $this->request->getLink() ) ;
 
         $content = $this->request->getContent();
 

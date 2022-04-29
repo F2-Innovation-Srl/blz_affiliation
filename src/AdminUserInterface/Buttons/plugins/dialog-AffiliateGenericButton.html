@@ -12,14 +12,26 @@
          */
         function FieldsManager() { 
 
-            this.link                    = document.getElementById('link');
+            this.link                    = document.getElementById('code');
             this.text                    = document.getElementById('text');
-            
+            this.submit                  = document.getElementById('submit');
+
+            console.log(tinymce.activeEditor.selection.getContent());
+            if (tinymce.activeEditor.selection.getContent() != "") {
+                document.getElementById('container_text').style.visibility="hidden";
+            }
             this.writeShortCode = function () {
                 var link                = this.link.value;
                 var text                = this.text.value;
-                    
-                this.shortcode = '[affiliate_generic url="' + code +'" ';
+
+                var expression = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi;
+                var regex = new RegExp(expression);
+
+                if (!link.match(regex)) {
+                    alert("Inserire un link valido");
+                    return false;
+                }
+                this.shortcode = '[affiliate_generic url="' + link +'" ';
                 
                 if (tinymce.activeEditor.selection.getContent() != "") {
                     this.shortcode += ' text="' + tinymce.activeEditor.selection.getContent() + '"';
@@ -35,8 +47,13 @@
                 tinyMCEPopup.close();
             }
 
-        
-            
+      
+
+            this.submit.addEventListener('click', function(e) {
+                
+                this.writeShortCode();
+                
+            }.bind(this));
         }
 
         window.addEventListener('DOMContentLoaded', function() {
@@ -44,6 +61,8 @@
             new FieldsManager();
 
         }.bind(this));
+
+
 
     </script>
 
@@ -77,7 +96,7 @@
     <input type="text" id="code">
 
     <span id="container_text">
-        <legend>Testo del link (se omesso viene riportato il testo evidenziato)</legend>
+        <legend>Testo del link</legend>
         <input type="text" id="text">
     </span>
 
