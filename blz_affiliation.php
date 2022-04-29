@@ -49,6 +49,7 @@ class BlzAffiliate {
 		/// effettua il rendering degli shortcode dei bottoni 
 		/// di affiliazione
 		new Rendering\AffiliateLinkButton();
+		new Rendering\AffiliateGenericButton();
 		new Rendering\AffiliateCustomLinkButton();
 		new Rendering\AffiliateLinkProgramsButton();
 		new Rendering\AffiliateLinkProgramStoredButton();
@@ -63,6 +64,7 @@ class BlzAffiliate {
 		
 		/// aggiunge i bottoni per i link di affiliazione		
 		new Buttons\AffiliateLinkButton();
+		new Buttons\AffiliateGenericButton();
 		new Buttons\AffiliateLinkProgramsButton();		
 		new Buttons\AffiliateLinkProgramStoredButton();
 		
