@@ -13,12 +13,12 @@ class AffiliateGenericButton extends Button {
         
         /** 
          * Set the name of the plugin 
-         * >> editor_tracked_button.js
+         * >> editor_generic_button.js
          * 
          * and the name of the ajax endpoint to call into plugin
-         * >> editor_tracked_action
+         * >> editor_generic_action
          */
-        parent::__construct('editor_generic_button', 'editor_tracked_action');
+        parent::__construct('editor_generic_button', 'editor_generic_action');
         
     }
 
