@@ -48,6 +48,10 @@ class TemplateTable {
                 $rows[] =  str_replace(['{{ title }}','{{ field }}'],['GA EVENT',$this->current["marketplace"]["ga_event_template"]],$this->output["rows"]);
             if (!empty($this->current["marketplace"]["tracking_id"])) 
                 $rows[] =  str_replace(['{{ title }}','{{ field }}'],['TRACKING ID',$this->current["marketplace"]["tracking_id"]], $this->output["rows"]);
+            if (!empty($this->current["marketplace"]["ga_event_template_button"])) 
+                $rows[] =  str_replace(['{{ title }}','{{ field }}'],['GA EVENT BUTTON',$this->current["marketplace"]["ga_event_template_button"]],$this->output["rows"]);
+            if (!empty($this->current["marketplace"]["tracking_id_button"])) 
+                $rows[] =  str_replace(['{{ title }}','{{ field }}'],['TRACKING ID BUTTON',$this->current["marketplace"]["tracking_id_button"]], $this->output["rows"]);
         
             return str_replace('{{ rows }}', implode("",$rows), $this->output["table"]);
         }

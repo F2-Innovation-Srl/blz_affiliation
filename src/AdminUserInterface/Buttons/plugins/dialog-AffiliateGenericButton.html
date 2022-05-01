@@ -31,7 +31,7 @@
                     alert("Inserire un link valido");
                     return false;
                 }
-                this.shortcode = '[affiliate_generic url="' + link +'" ';
+                this.shortcode = '[affiliate_generic type="button" url="' + link +'" ';
                 
                 if (tinymce.activeEditor.selection.getContent() != "") {
                     this.shortcode += ' text="' + tinymce.activeEditor.selection.getContent() + '"';

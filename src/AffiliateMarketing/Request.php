@@ -14,6 +14,7 @@ class Request {
     private $subject;
     private $program;
     private $position;
+    private $type
 
     function __construct( $args, $content = '' ) 
     {
@@ -28,6 +29,7 @@ class Request {
         $this->subject      = isset( $args['subject'] ) ? $args['subject'] : '';
         $this->program      = isset( $args['program'] ) ? $args['program'] : '';
         $this->position     = isset( $args['position'] ) ? $args['position'] : '';
+        $this->type         = isset( $args['type'] ) ? $args['type'] : 'text';
     }
 
     /**
@@ -51,6 +53,7 @@ class Request {
     public function getProgram()         { return $this->program; } 
     public function getPosition()        { return $this->position; } 
     public function getMarketplaceKey()  { return $this->marketplace;}
+    public function getType()            { return $this->type; } 
     public function getMarketplace() {
 
         $MarketPlaceMap = [

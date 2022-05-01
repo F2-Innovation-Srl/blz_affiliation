@@ -13,7 +13,7 @@ class AffiliateLinkProgramsButton {
 
     protected $request;
     protected $content;
-
+    
 
     public function __construct() {
 

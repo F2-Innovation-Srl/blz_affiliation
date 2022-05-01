@@ -14,16 +14,6 @@ class AffiliateGenericButton {
 
     protected $post_id;
 
-    private $template = <<<HTML
-    <div class="blz_aff_gen_button">
-        <a data-blz-affiliation-vars="{{ ga_event }}" 
-        class="btn custom_btn" 
-        href="{{ url }}"
-        >{{ content }}</a>
-    </div>
-    <style>.blz_aff_gen_button { text-align:"center" }</style>
-    HTML;
-
     function __construct() {
         // Add the shortcode to print the links
         add_shortcode( 'affiliate_generic', [ $this, 'printAffiliateLink'] );
@@ -40,9 +30,9 @@ class AffiliateGenericButton {
         $this->request = new Request($atts);
 
         /// inizializzo i settingsData 
-        $SettingsData = new SettingsData("genericButton",$this->request);
+        $SettingsData = new SettingsData("parseLinkAndRender",$this->request);
 
-        return $this->FillTemplate( $SettingsData->getGAEvent(), $SettingsData->getTrackingID(), $this->template );
+        return $this->FillTemplate( $SettingsData->getGAEvent(), $SettingsData->getTrackingID(), $SettingsData->getTemplate() );
 
     }
 
