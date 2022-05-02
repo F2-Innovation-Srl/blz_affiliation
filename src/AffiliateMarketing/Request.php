@@ -14,7 +14,7 @@ class Request {
     private $subject;
     private $program;
     private $position;
-    private $type
+    private $type;
 
     function __construct( $args, $content = '' ) 
     {
