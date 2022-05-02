@@ -45,7 +45,7 @@ class SettingsData {
             >{{ content }}</a>
         </div>
         <style>.blz_aff_gen_button { text-align:"center" }</style>
-        HTML;
+        HTML,
         
     ];
 
