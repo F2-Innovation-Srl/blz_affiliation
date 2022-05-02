@@ -41,7 +41,7 @@ class SettingsData {
         <div class="blz_aff_gen_button">
             <a data-blz-affiliation-vars="{{ ga_event }}" 
             class="btn custom_btn" 
-            href="{{ url }}"
+            href="{{ url }}" target="_blank" rel="sponsored"
             >{{ content }}</a>
         </div>
         <style>.blz_aff_gen_button { text-align:"center" }</style>
