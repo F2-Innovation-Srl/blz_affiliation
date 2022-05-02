@@ -14,7 +14,10 @@ use BLZ_AFFILIATION\Rendering\ParseLinkAndRender\Link;
 class AmazonShorted extends Pattern {
 
     /// il pattern da riconoscere nel testo da ridefinire
-    protected $pattern = '/<a.*?href="(https?:\/\/.*?amz.*?)".*?>/';
+    protected $pattern = '/<a[^>]*href="(https?:\/\/[^>]*?amz.*?)"[^>]*?>/';
+
+
+
     
     protected $tracking_code = '';
     
