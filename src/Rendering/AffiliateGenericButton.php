@@ -14,6 +14,23 @@ class AffiliateGenericButton {
 
     protected $post_id;
 
+    /**
+     * Imposta i pattern da verificare
+     *
+     * @return array
+     */
+    private function setPatterns() {
+
+        return [
+            'Amazon',
+            'Ebay',
+            'AmazonShorted', 
+            'AmazonPrimeVideo',
+            'EbayShorted', 
+            'PrettyLink', 
+        ];
+    }
+
     function __construct() {
         // Add the shortcode to print the links
         add_shortcode( 'affiliate_generic', [ $this, 'printAffiliateLink'] );
@@ -39,8 +56,26 @@ class AffiliateGenericButton {
 
     private function FillTemplate( $ga_event, $tracking, $template) {
         /// accorcia il link
-        $link = ( new Shortener )->generateShortLink( $this->request->getLink() ) ;
 
+        // recupera i pattern per ogni 
+        /// tipologia di link da sostituire
+        $patterns = array_map( function( $patternClass ) {
+            $patternClass = 'BLZ_AFFILIATION\\Rendering\\ParseLinkAndRender\\Patterns\\' . $patternClass;
+            return new $patternClass("<a href=\"".$this->request->getLink()."\">");
+
+        },  $this->setPatterns() );
+        /// a questo punto dovremmo avere tutti
+        /// gli elementi per costruire i link
+   
+        /// per ogni pattern
+        foreach( $patterns as $pattern ) 
+            // cerchiamo il link
+            foreach( $pattern->data as $linkData ) 
+                //echo "<pre>";
+                if ($linkData->url) 
+                    $link = ( new Shortener )->generateShortLink( str_replace( '{tracking_id}', $tracking, $linkData->url));
+
+       
         $content = $this->request->getContent();
 
         return str_replace([ '{{ url }}', '{{ ga_event }}', '{{ content }}' ], [ $link, $ga_event, $content ], $template);
