@@ -39,9 +39,8 @@ class SettingsData {
         'genericButton' => 
         <<<HTML
         <div class="blz_aff_gen_button">
-            <a data-vars-blz-affiliate="{{ ga_event }}" 
-            class="btn custom_btn" 
-            href="{{ url }}" target="_blank" rel="sponsored"
+            <a href="{{ url }}" data-vars-blz-affiliate="{{ ga_event }}" 
+               class="btn custom_btn" target="_blank" rel="sponsored"
             >{{ content }}</a>
         </div>
         <style>.blz_aff_gen_button { text-align:"center" }</style>
@@ -84,7 +83,7 @@ class SettingsData {
      *
      * @param string $code - un template con placeholder tra parentesi graffe {}
      * @param string $type - 'GA' | 'TRK_ID'
-     * @return void
+     * @return string
      */
     private function getActivationTableRules( string $code, string $type ){
         
@@ -128,24 +127,43 @@ class SettingsData {
     }
 
     public function getGAEvent() {
-        // Se è stato settato manualmente prendo quello       
-        $ga_event = ($this->request->getGAEvent()) ? $this->request->getGAEvent()." {amp}" : $this->config["ga_event_template"];
+        // Prende l'impostazione manuale, se presente
+        $ga_event = ( $this->request->getGAEvent() ) ? $this->request->getGAEvent()." {amp}" : $this->config["ga_event_template"];
         
         // carica regole dalla tabella attivazione
-        $ga_event = $this->getActivationTableRules($ga_event,"ga");
-        
-        //Sostituisco i placeholder dei link program on gli attributi da shortcode
-        if ($this->link_type["slug"] == "linkPrograms")  {
-            $ga_event = str_replace("{subject}",$this->request->getSubject(),$ga_event);
-            $ga_event = str_replace("{program}",$this->request->getProgram(),$ga_event);
-        } 
-        if ($this->link_type["slug"] == "blz_table") {
-            $ga_event = str_replace("{table-name}",$this->request->getKeyword(),$ga_event);
-            $ga_event = str_replace("{numero-posizione}","Posizione " .$this->request->getPosition(),$ga_event);
-            $ga_event = str_replace("{marketplace}",$this->request->getMarketplace(),$ga_event);
+        $ga_event = $this->getActivationTableRules( $ga_event, "ga" );
+                
+        // sostituisce i placeholder dei link program con gli attributi presi da shortcode
+        switch( $this->link_type["slug"] ) {
+
+            case 'linkPrograms':
+
+                $ga_event = str_replace(
+                    ['{subject}', '{program}'],
+                    [
+                        $this->request->getSubject(),
+                        $this->request->getProgram(),
+                    ], 
+                    $ga_event
+                );
+                break; 
+
+            case 'blz_table': 
+                
+                $ga_event = str_replace( 
+                    [ '{table-name}', '{numero-posizione}', '{marketplace}' ],
+                    [
+                        $this->request->getKeyword(),
+                        "posizione " . $this->request->getPosition(),
+                        $this->request->getMarketplace()
+                    ],
+                    $ga_event
+                );
+                break; 
         }
-        // rimuovi placeholder non impostati
-        $ga_event = $this->cleanCode($ga_event);
+       
+        // rimuove i placeholder non impostati
+        $ga_event = $this->cleanCode( $ga_event );
 
         return $ga_event;
     }
