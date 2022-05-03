@@ -39,7 +39,7 @@ class SettingsData {
         'genericButton' => 
         <<<HTML
         <div class="blz_aff_gen_button">
-            <a data-blz-affiliation-vars="{{ ga_event }}" 
+            <a data-vars-blz-affiliate="{{ ga_event }}" 
             class="btn custom_btn" 
             href="{{ url }}" target="_blank" rel="sponsored"
             >{{ content }}</a>
