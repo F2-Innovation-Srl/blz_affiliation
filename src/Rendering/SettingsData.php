@@ -35,7 +35,18 @@ class SettingsData {
         <<<HTML
         <a href="{{ url }}" data-vars-blz-affiliate="{{ ga_event }}" 
            class="affiliation-intext" target="_blank" rel="sponsored" >
-        HTML
+        HTML,
+        'genericButton' => 
+        <<<HTML
+        <div class="blz_aff_gen_button">
+            <a data-blz-affiliation-vars="{{ ga_event }}" 
+            class="btn custom_btn" 
+            href="{{ url }}" target="_blank" rel="sponsored"
+            >{{ content }}</a>
+        </div>
+        <style>.blz_aff_gen_button { text-align:"center" }</style>
+        HTML,
+        
     ];
 
     public function __construct($link_type,$request) {
@@ -57,16 +68,15 @@ class SettingsData {
 
             "global_settings"      => $global_settings,
             "activation_table"     => get_option($config->pages[0]->slug."-".$this->link_type["slug"]."-".$this->marketplace["slug"]),
-            "ga_event_template"    =>  $this->marketplace["ga_event_template"],
-            "tracking_id_template" =>  $this->marketplace["tracking_id"],            
+            "ga_event_template"    =>  ($this->request->getType() == "button" && isset($this->marketplace["ga_event_template_button"])) ? $this->marketplace["ga_event_template_button"] : $this->marketplace["ga_event_template"],
+            "tracking_id_template" =>  ($this->request->getType() == "button" && isset($this->marketplace["tracking_id_template_button"])) ? $this->marketplace["tracking_id_template_button"] : $this->marketplace["tracking_id"]
         ];
-
     }
 
 
     public function getTemplate() {
-    
-        return $this->templates[ $this->link_type["slug"] ];
+        $linkType = ($this->request->getType() == "button") ? "genericButton" : $this->link_type["slug"];
+        return $this->templates[ $linkType ];
     }
 
     /**

@@ -16,20 +16,21 @@
         function FieldsManager() { 
             
             this.table_id = document.getElementById('table_id');
-            
+            this.caption = document.getElementById('caption');
             this.submit   = document.getElementById('submit');
     
             
             this.submit.addEventListener('click', function(e) {
 
                 var table_id = this.table_id.value;
+                var caption = this.caption.value;
                 
                 if (table_id  == '') {
                     alert("Selezionare una tabella"); 
                     return;
                 }
                 
-                this.shortcode = '[affiliate_table id=' + table_id +']';
+                this.shortcode = '[affiliate_table id=' + table_id +' caption="'+caption+'"]';
                 
                 tinyMCE.activeEditor.execCommand( 'mceInsertContent', 0, this.shortcode );
                 
@@ -70,7 +71,9 @@
     
 </head>
 <body onload="tinyMCEPopup.executeOnLoad('init();')">
-    
+    <legend>Caption</legend>
+    <input type="text" id="caption" name="caption" value=""/>
+
     <legend>Seleziona la tabella</legend>
                         
     <select name="table_id" id="table_id">

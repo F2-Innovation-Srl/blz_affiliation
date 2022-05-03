@@ -26,10 +26,14 @@ class OffersRetriever {
 
         return array_reduce( $this->marketplaces, function( $result, $marketplace ) {
 
-            $base = 'BLZ_AFFILIATION\\AffiliateMarketing\\Marketplaces\\';
-            
-            $result = array_merge( $result, ( new ($base.$marketplace)( $this->request ) )->getOffers() );
+            //FIX FOR RETROCOMPATIBILIY
+            if ($marketplace == "IT" ) $marketplace = "Amazon";
 
+            $base = 'BLZ_AFFILIATION\\AffiliateMarketing\\Marketplaces\\';
+            $className = $base. $marketplace;
+            $class = new $className($this->request);
+            $result = array_merge( $result, $class->getOffers() );
+       
             return $result;
 
         }, []);

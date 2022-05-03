@@ -13,7 +13,7 @@ use BLZ_AFFILIATION\Rendering\ParseLinkAndRender\Link;
 class Amazon extends Pattern {
 
     /// il pattern da riconoscere nel testo da ridefinire
-    protected $pattern = '/<a[^>]*href="(https:\/\/www.amazon.it[^"]*?)".*?>/';
+    protected $pattern = '/<a[^>]*href="(https?:\/\/www.amazon.it[^"]*?)".*?>/';
 
     protected $tracking_code = 'amazon';
     
@@ -26,13 +26,13 @@ class Amazon extends Pattern {
         preg_match_all( $this->pattern, $this->content, $matches );
 
         return array_map( function( $link, $url ) {
-
-            /// elimina le querystring dall'url
-            $url = ( strpos( $url, '?' ) === false ) ? $url : preg_filter('/(.*)\?.*/', '$1', $url );
+            
+            $url = ( strpos( $url, 'tag=' ) === false ) ? $url : preg_filter('/(.*)\?.*/', '$1', $url );
+            $url = ( strpos( $url, '?' ) === false ) ? $url .'?tag={tracking_id}' :  $url .'&tag={tracking_id}';
 
             return new Link ([
                 'old_link'    => $link,
-                'url'         => $url . '?tag={tracking_id}',
+                'url'         => $url,
                 'marketplace' => $this->name
             ]);
 

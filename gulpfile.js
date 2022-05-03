@@ -4,7 +4,7 @@ var gulp = require('gulp'),                     // base
     //file     = require('gulp-file'),            // creates a new file
 
     del = require('del');                  // deletes old dist files
-
+    rename = require('gulp-rename');
     
 
 var buildFolder = 'src/assets/',    
@@ -28,10 +28,11 @@ gulp.task('clean', () => del([ jsLibBuildFolder ]));
  gulp.task('scripts:lib', function() {
 
     const libs_src = [
-        'node_modules/tracker/src/Tracker.js'
+        'node_modules/tracker/dist/tracker.min.js'
     ];
 
     return gulp.src( libs_src )
+        .pipe(rename('blz_tr.js'))
         .pipe( gulp.dest( jsLibBuildFolder ) );
 });
 

@@ -36,13 +36,17 @@ class Rule extends Field {
     }
 
     private function printTaxonomy(){    
-       
+      
         $output = "<select name=\"".$this->name."\"><option value=\"0\">Seleziona un termine</option>";
         $output = $this->addCommonOptions($output);
         $terms = get_terms( $this->type, ['hide_empty' => true] );
-            foreach( $terms as $term) 
-                $output .= "<option value=\"".$term->slug."\" ".(($this->value == $term->slug) ? "selected" : "")." >".$term->name."</option>";
+        
+        if (isset($terms->errors)) return $output;
+
+        foreach( $terms as $term) 
+            $output .= "<option value=\"".$term->slug."\" ".(($this->value == $term->slug) ? "selected" : "")." >".$term->name."</option>";
         $output .= "</select>";
+        
         return $output;
     }
 

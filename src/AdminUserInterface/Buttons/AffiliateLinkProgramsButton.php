@@ -33,7 +33,9 @@ class AffiliateLinkProgramsButton extends Button {
          if (! current_user_can('publish_posts'))  { die( __("Vietato") ); } 
         
          /// prende il valore del post
-         $post_id = intval($_GET['post'] );
+         $post_id = 0;
+         if (isset($_GET['post']))
+            $post_id = intval($_GET['post'] );
          
          // get the template 
          $html = file_get_contents( $this->base_dir .'plugins/dialog-AffiliateLinkProgramsButton.html');
@@ -42,13 +44,14 @@ class AffiliateLinkProgramsButton extends Button {
         $rows = get_option("blz-affiliation-program");
         
         $subjects = ($rows) ? array_map( function ( $row, $idx  ) {
+            
              return [
                 'slug' => $row['subject_slug'],
                 'name' => $row['subject_name'],
             ];
         }, $rows, array_keys($rows) ) : [];
-        $subjects = array_map("unserialize", array_unique(array_map("serialize", $subjects)));
-        $subjects = $this->unique_multidim_array($subjects,'slug');
+        //print_r($subjects);exit;
+        $subjects = $this->unique_multidim_array($subjects, 'slug');
         $programs = ($rows) ? array_map( function ( $row, $idx  ) {
             return [
                'slug' => $row['program_slug'],
@@ -56,7 +59,6 @@ class AffiliateLinkProgramsButton extends Button {
                'parent_slug' => $row['subject_slug']
            ];
        }, $rows, array_keys($rows) ) : [];
-         
          $fields_to_inject =  [ 
              //'author_tracking_ids' => get_field( 'amazon_tracking_id', 'user_'.get_current_user_id() ) ,
              'subjects'  => json_encode($subjects),
@@ -77,23 +79,21 @@ class AffiliateLinkProgramsButton extends Button {
     }
 
     private function isStoredPost( $post_id ) {
-        
-        $post = get_post($post_id);
-        return ( $post->post_type == 'program_stored_link' );        
+        if (isset($_GET['post'])){
+            $post = get_post($post_id);
+            return ( $post->post_type == 'program_stored_link' );  
+        }else{
+            return false;   
+        }
+              
     }
 
-    private function unique_multidim_array($array, $key) {
-        $temp_array = array();
-        $i = 0;
-        $key_array = array();
-       
-        foreach($array as $val) {
-            if (!in_array($val[$key], $key_array)) {
-                $key_array[$i] = $val[$key];
-                $temp_array[$i] = $val;
-            }
-            $i++;
-        }
-        return $temp_array;
+    private function unique_multidim_array($array,$property) {
+        $tempArray = array_unique(array_column($array, $property));
+        $moreUniqueArray = array_values(array_intersect_key($array, $tempArray));
+        return $moreUniqueArray;
     }
+      
+      
+
 }

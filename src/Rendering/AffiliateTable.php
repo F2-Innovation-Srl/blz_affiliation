@@ -4,6 +4,7 @@ namespace BLZ_AFFILIATION\Rendering;
 
 use BLZ_AFFILIATION\AffiliateMarketing\Request;
 use BLZ_AFFILIATION\Utils\Helper;
+use BLZ_AFFILIATION\Utils\Shortener;
 /**
  * 
  * Ritorna i dati della tabella di affiliazione nella pagina
@@ -23,6 +24,7 @@ class AffiliateTable {
     public function print ( $atts, $content, $tag ) {
 
         $this->table_id = $atts['id'];
+        $this->caption = (isset($atts['caption'])) ? $atts['caption'] : "";
         
         $table = $this->getTable();
 
@@ -74,10 +76,15 @@ class AffiliateTable {
 
     protected function render( $table ) {
 
+        $captionTemplate = <<<HTML
+        <p class="blz_affiliation_table_caption">{{ caption }}</p>
+        HTML;
+
         /// to enqueue CSS - table-rating.css        
         $tableTemplate = <<<HTML
+            {{ caption }}
             <div class="rating-table">
-                <ul class="rating-card grid">
+                <ul class="rating-card blz_grid">
                     {{ header }}
                     {{ rows }}
                 </ul>
@@ -86,19 +93,19 @@ class AffiliateTable {
 
         $header = <<<HTML
                 <li class="table_heading">
-                    <div class="col col-1 col-sm-12 col-middle">
+                    <div class="blz_col blz_col-1 blz_col-sm-12 blz_col-middle">
                         <div class="rating_heading">Rank</div>
                     </div>
-                    <div class="col col-3 col-sm-12 col-middle">
+                    <div class="blz_col blz_col-3 blz_col-sm-12 blz_col-middle">
                         <div class="rating_heading">Prodotto</div>
                     </div>
-                    <div class="col col-3 col-sm-12 col-middle">
+                    <div class="blz_col blz_col-3 blz_col-sm-12 blz_col-middle">
                         <div class="rating_heading">Caratteristiche</div> 
                     </div>
-                    <div class="col col-3 col-sm-12 col-middle">
+                    <div class="blz_col blz_col-3 blz_col-sm-12 blz_col-middle">
                         <div class="rating_heading" style="margin-left: -12px;">Rating</div>
                     </div>
-                    <div class="col col-2 col-sm-12 col-middle">
+                    <div class="blz_col blz_col-2 blz_col-sm-12 blz_col-middle">
                         <div class="rating_heading" style="margin-left: -24px;">Offerta</div>
                     </div>
                 </li>
@@ -107,19 +114,19 @@ class AffiliateTable {
         $rowTemplate = <<<HTML
                 <li data-vars-blz-affiliate="{{ ga_event }}">
                     <a href="{{ link }}" target="_blank" class="aftable_link">
-                        <div class="col col-1 col-sm-12 col-middle">
+                        <div class="blz_col blz_col-1 blz_col-sm-12 blz_col-middle">
                             <div class="rating_index">{{ id }}</div>
                         </div>
-                        <div class="col col-3 col-sm-12 col-middle">
+                        <div class="blz_col blz_col-3 blz_col-sm-12 blz_col-middle">
                             <div class="rating_image"><img src="{{ img }}" class="img-cover" alt="{{ marketplace }}"></div>
                         </div>                
-                        <div class="col col-3 col-sm-12 col-middle">
+                        <div class="blz_col blz_col-3 blz_col-sm-12 blz_col-middle">
                             <div class="rating_description">{{ text }}</div>
                         </div>                
-                        <div class="col col-3 col-sm-12 col-middle">
+                        <div class="blz_col blz_col-3 blz_col-sm-12 blz_col-middle">
                             <div class="rating_star"><div class="stars" style="--rating: {{ rating }};"></div></div>
                         </div>
-                        <div class="col col-2 col-sm-12 col-middle">
+                        <div class="blz_col blz_col-2 blz_col-sm-12 blz_col-middle">
                             <div class="rating_cta"><span class="btn btn-primary">{{ cta }}</span></div>
                         </div>
                     </a>
@@ -127,35 +134,20 @@ class AffiliateTable {
         HTML;        
         
         $rows = array_reduce( $table, function( $markup, $row ) use ( $rowTemplate ) {
-            
+            $link = ( new Shortener )->generateShortLink( $row->link ) ;
             $markup .= str_replace (
                 ['{{ ga_event }}', '{{ marketplace }}', '{{ img }}', '{{ link }}', '{{ id }}', '{{ text }}', '{{ rating }}', '{{ cta }}'],
-                [ $row->ga_event, $row->marketplace, $row->img, $row->link, $row->id, $row->text, $row->rating, $row->cta ],
+                [ $row->ga_event, $row->marketplace, $row->img, $link, $row->id, $row->text, $row->rating, $row->cta ],
                 $rowTemplate
             );
 
             return $markup;
         
         }, '');
-        
-        return str_replace([ '{{ header }}','{{ rows }}' ], [ $header, $rows ], $tableTemplate );
+        $caption = (!empty($this->caption)) ? str_replace('{{ caption }}',$this->caption,$captionTemplate) : "";
 
-    }
-    
-    /**
-     * Crea il link a partire dai dati della pagina
-     * e da quelli di un singolo link nel testo
-     *
-     * @param Link $linkData
-     * @return string
-     */
-    private function FillTemplate( $link, $ga_event, $tracking, $template) {
+        return str_replace(['{{ caption }}','{{ header }}','{{ rows }}' ], [ $caption, $header, $rows ], $tableTemplate );
 
-        $link = str_replace( '{tracking_id}', $tracking, $link);
-        /// poi accorcia il link
-        $link = ( new Shortener )->generateShortLink( $link ) ;
-
-        return str_replace([ '{{ url }}', '{{ ga_event }}' ], [ $link, $ga_event ], $template);
     }
 
 

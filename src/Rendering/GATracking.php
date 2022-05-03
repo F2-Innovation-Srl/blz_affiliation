@@ -91,8 +91,10 @@ class GATracking {
      * @uses is_single()
      */
     function add_amp_track( $content ) {
+
+        $is_amp = (function_exists('is_amp_endpoint')) ? is_amp_endpoint() : false;
     
-        if ( is_single() && is_amp_endpoint())
+        if ( is_single() && $is_amp)
             // Add image to the beginning of each page
             $content .= str_replace(['{dollaro}','{GA_TRACKING_ID}'],['$',$this->ga_code],$this->analitics_track);
     
