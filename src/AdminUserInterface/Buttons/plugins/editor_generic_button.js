@@ -19,10 +19,10 @@
 
                 // Register the button
                 ed.addButton(plugin_name, {
-                        title : 'Inserisci Link Generico di affiliazione',
+                        title : 'Inserisci Bottone cta amazon o ebay',
                         cmd : plugin_name + '_cmd',
                         icon: 'link',
-                        image : url + '/assets/money.svg'
+                        image : url + '/assets/dollars.svg'
                 });
 
                 
