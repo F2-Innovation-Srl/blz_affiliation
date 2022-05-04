@@ -58,4 +58,21 @@ class Helper {
         return  Helper::findbySlug($config->pages[0]->controller->settings["tabs"][0]["marketplaces"],$marketplace)["api_slug"];
     }
 
+     /**
+     * Torna la lista dei pattern da verificare
+     *
+     * @return array
+     */
+    public static  function getMarketplacePatterns() {
+
+        return [
+            'Amazon',
+            'Ebay',
+            'AmazonShorted', 
+            'AmazonPrimeVideo',
+            'EbayShorted', 
+            'PrettyLink', 
+        ];
+    }
+
 }

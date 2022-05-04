@@ -6,6 +6,7 @@ use BLZ_AFFILIATION\Rendering\ParseLinkAndRender\Link;
 use BLZ_AFFILIATION\AffiliateMarketing\Request;
 use BLZ_AFFILIATION\Rendering\SettingsData;
 use BLZ_AFFILIATION\Utils\Shortener; 
+use BLZ_AFFILIATION\Utils\Helper;
 
 class ParseLinkAndRender {
 
@@ -16,23 +17,6 @@ class ParseLinkAndRender {
 
         // Add the custom columns to the posts post type:
         add_filter( 'the_content', [ $this, 'ParseAndRender'] );        
-    }
-
-    /**
-     * Imposta i pattern da verificare
-     *
-     * @return array
-     */
-    private function setPatterns() {
-
-        return [
-            'Amazon',
-            'Ebay',
-            'AmazonShorted', 
-            'AmazonPrimeVideo',
-            'EbayShorted', 
-            'PrettyLink', 
-        ];
     }
 
     /**
@@ -55,7 +39,7 @@ class ParseLinkAndRender {
             $content = $this->content;
             return new $patternClass($content);
 
-        },  $this->setPatterns() );
+        },  Helper::getMarketplacePatterns()  );
         /// a questo punto dovremmo avere tutti
         /// gli elementi per costruire i link
    
