@@ -53,7 +53,7 @@ class BlzAffiliate {
 		new Rendering\AffiliateCustomLinkButton();
 		new Rendering\AffiliateLinkProgramsButton();
 		new Rendering\AffiliateLinkProgramStoredButton();
-
+		
 		/// abilita il parsing e il rendering dei link
 		/// di affiliazione nel testo
 		new ParseLinkAndRender();
@@ -81,6 +81,9 @@ class BlzAffiliate {
 
 		/// aggiunge css con parametri presi dai settings
 		new Rendering\Settings\StyleInjector();
+
+		/// aggiunge il disclamer
+		new Rendering\Disclamer();
 		
 	}
 }

@@ -63,7 +63,7 @@ class Helper {
      */
     public static function isAffiliationPage(){
         $config = Config::loadSettings();
-        $config->is_affiliation_page = true; 
+        $config->is_affiliation_page = "true"; 
     }
 
      /**
