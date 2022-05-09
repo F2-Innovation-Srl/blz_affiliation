@@ -14,7 +14,7 @@ class Text extends Field {
                 return '<input type="number" name="'.$this->name.'" value="'.$this->value.'" />';
                 break;
             case "text":
-                return '<input type="text" name="'.$this->name.'" value="'.$this->value.'" />';
+                return '<input type="text" style="width:100%" name="'.$this->name.'" value="'.$this->value.'" />';
                 break;
             case "textarea":
                 return '<textarea rows="15" cols="110" name="'.$this->name.'" >'.$this->value.'</textarea>';
