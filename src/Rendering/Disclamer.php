@@ -24,7 +24,8 @@ class Disclamer {
         $config = Config::loadSettings();
         if ($config->is_affiliation_page == "true")
             return $content . $this->text;
-        
+        else    
+            return $content;
     }
 
 
