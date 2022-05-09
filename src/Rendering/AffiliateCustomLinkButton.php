@@ -10,7 +10,7 @@ use BLZ_AFFILIATION\AffiliateMarketing\Offer;
 use BLZ_AFFILIATION\AffiliateMarketing\OffersRetriever;
 use BLZ_AFFILIATION\AffiliateMarketing\Request;
 use BLZ_AFFILIATION\Rendering\Settings\SettingsData;
-
+use BLZ_AFFILIATION\Utils\Helper;
 
 class AffiliateCustomLinkButton {
 

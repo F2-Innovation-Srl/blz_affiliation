@@ -2,6 +2,7 @@
 
 namespace BLZ_AFFILIATION\Rendering;
 
+use BLZ_AFFILIATION\Utils\Helper;
 /**
  * 
  * Sostiruisce nella pagina il link selezionato al posto 
