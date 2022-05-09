@@ -3,6 +3,7 @@ namespace BLZ_AFFILIATION\AdminUserInterface\Settings\Pages;
 
 use BLZ_AFFILIATION\Utils\Config;
 use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\StyleSettingsTable;
+use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\DisclamerTable;
 use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\GlobalSettingsTable;
 /**
  * Class GlobalSettings
@@ -22,6 +23,8 @@ class GlobalSettings {
         <input type="hidden" name="{{ option_name }}-sendForm" value="OK" />
         <div class="{{ option_name }}-container">
             {{ GlobalSettingsTable }}
+            <hr>
+            {{ DisclamerTable }}
             <hr>
             {{ StyleSettingsTable }}
         </div>
@@ -56,6 +59,7 @@ class GlobalSettings {
                     '{{ link }}',
                     '{{ option_name }}',
                     '{{ GlobalSettingsTable }}',
+                    '{{ DisclamerTable }}',
                     '{{ StyleSettingsTable }}',
                     '{{ wp_nonce }}',
                     '{{ submit_button }}'
@@ -65,6 +69,7 @@ class GlobalSettings {
                     esc_html( admin_url( 'admin.php?page='.$_GET["page"] ) ),
                     $this->option_name,
                     ( new GlobalSettingsTable( $this->option_name ))->render(),
+                    ( new DisclamerTable( $this->option_name."-disclamer"))->render(),
                     ( new StyleSettingsTable( $this->option_name."-css"))->render(),
                     wp_nonce_field( 'program-links-options-save', 'blz-affiliation-custom-message' ),
                     get_submit_button()

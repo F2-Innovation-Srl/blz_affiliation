@@ -1,5 +1,5 @@
 <?php
-namespace BLZ_AFFILIATION\Rendering;
+namespace BLZ_AFFILIATION\Rendering\Settings;
 
 /**
  * Aggiunge CSS che usa parametri presi dai settings

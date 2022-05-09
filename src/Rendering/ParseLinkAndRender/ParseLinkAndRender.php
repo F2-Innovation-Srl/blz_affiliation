@@ -1,10 +1,10 @@
 <?php
 
 namespace BLZ_AFFILIATION\Rendering\ParseLinkAndRender;
-
+use BLZ_AFFILIATION\AdminUserInterface\Settings\Config;
 use BLZ_AFFILIATION\Rendering\ParseLinkAndRender\Link;
 use BLZ_AFFILIATION\AffiliateMarketing\Request;
-use BLZ_AFFILIATION\Rendering\SettingsData;
+use BLZ_AFFILIATION\Rendering\Settings\SettingsData;
 use BLZ_AFFILIATION\Utils\Shortener; 
 use BLZ_AFFILIATION\Utils\Helper;
 
@@ -72,7 +72,8 @@ class ParseLinkAndRender {
      * @return string
      */
     private function FillTemplate( $marketplace, $link, $ga_event, $tracking, $template) {
-
+            
+        Helper::isAffiliationPage();
         $link = str_replace( '{tracking_id}', $tracking, $link);
         /// poi accorcia il link
         if ($marketplace != "ebay")

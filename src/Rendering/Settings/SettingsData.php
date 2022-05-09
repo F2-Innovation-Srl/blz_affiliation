@@ -1,6 +1,6 @@
 <?php
 
-namespace BLZ_AFFILIATION\Rendering;
+namespace BLZ_AFFILIATION\Rendering\Settings;
 
 use BLZ_AFFILIATION\Utils\Helper;
 use BLZ_AFFILIATION\AdminUserInterface\Settings\Config;

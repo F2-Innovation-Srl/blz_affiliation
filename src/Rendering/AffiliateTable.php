@@ -3,6 +3,8 @@
 namespace BLZ_AFFILIATION\Rendering;
 
 use BLZ_AFFILIATION\AffiliateMarketing\Request;
+use BLZ_AFFILIATION\Rendering\Settings\SettingsData;
+use BLZ_AFFILIATION\Rendering\Settings\PostData;
 use BLZ_AFFILIATION\Utils\Helper;
 use BLZ_AFFILIATION\Utils\Shortener;
 /**
@@ -145,6 +147,8 @@ class AffiliateTable {
         
         }, '');
         $caption = (!empty($this->caption)) ? str_replace('{{ caption }}',$this->caption,$captionTemplate) : "";
+        
+        Helper::isAffiliationPage();
 
         return str_replace(['{{ caption }}','{{ header }}','{{ rows }}' ], [ $caption, $header, $rows ], $tableTemplate );
 

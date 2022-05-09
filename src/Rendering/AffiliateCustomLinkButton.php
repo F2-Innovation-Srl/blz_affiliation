@@ -9,7 +9,7 @@ use BLZ_AFFILIATION\AffiliateMarketing\Offer;
 
 use BLZ_AFFILIATION\AffiliateMarketing\OffersRetriever;
 use BLZ_AFFILIATION\AffiliateMarketing\Request;
-use BLZ_AFFILIATION\Rendering\SettingsData;
+use BLZ_AFFILIATION\Rendering\Settings\SettingsData;
 
 
 class AffiliateCustomLinkButton {
@@ -49,6 +49,7 @@ class AffiliateCustomLinkButton {
 
     private function FillTemplate( $ga_event, $tracking, $template) {
 
+        Helper::isAffiliationPage();
         $link = str_replace( '{tracking-id}', $tracking, $this->request->getLink());
         /// poi accorcia il link
         $link = ( new Shortener )->generateShortLink( $link ) ;

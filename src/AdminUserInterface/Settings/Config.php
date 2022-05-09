@@ -14,9 +14,11 @@ class Config {
     public  $pages;
     public  $plugin_name;
     public  $plugin_slug;
+    public  $is_affiliation_page;
     
     private function __construct() {
         $this->is_valid = true;
+        $this->is_affiliation_page = false;
         $config  = json_decode(get_option("blz-affiliation"), true);
         if (empty($config)) {
             $config = json_decode(file_get_contents(PLUGIN_PATH.'config.json'), true);
@@ -46,7 +48,7 @@ class Config {
         }
         return self::$instance;
     }
-    
+
 
 
 }

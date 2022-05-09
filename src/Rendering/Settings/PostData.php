@@ -1,6 +1,6 @@
 <?php
 
-namespace BLZ_AFFILIATION\Rendering;
+namespace BLZ_AFFILIATION\Rendering\Settings;
 
 
 class PostData {

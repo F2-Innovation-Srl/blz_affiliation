@@ -6,7 +6,7 @@ use BLZ_AFFILIATION\AffiliateMarketing\Offer;
 
 use BLZ_AFFILIATION\AffiliateMarketing\OffersRetriever;
 use BLZ_AFFILIATION\AffiliateMarketing\Request;
-use BLZ_AFFILIATION\Rendering\SettingsData;
+use BLZ_AFFILIATION\Rendering\Settings\SettingsData;
 use BLZ_AFFILIATION\Utils\Shortener;
 
 
@@ -26,6 +26,8 @@ class AffiliateLinkButton {
 
 
     private function FillTemplate( Offer $offer, $ga_event, $tracking, $template) {
+
+        Helper::isAffiliationPage();
 
         $link = str_replace( '{tracking-id}', $tracking, $offer->link);
         /// poi accorcia il link se è diverso da ebay

@@ -3,6 +3,7 @@
 namespace BLZ_AFFILIATION\Rendering;
 
 use BLZ_AFFILIATION\AffiliateMarketing\Request;
+use BLZ_AFFILIATION\Rendering\Settings\SettingsData;
 use BLZ_AFFILIATION\Utils\Helper;
 use BLZ_AFFILIATION\Utils\Shortener;
 /**
@@ -56,6 +57,8 @@ class AffiliateGenericButton {
 
     private function FillTemplate( $ga_event, $tracking, $template) {
       
+        Helper::isAffiliationPage();
+        
         $link = ( new Shortener )->generateShortLink( str_replace( '{tracking_id}', $tracking, $this->linkData->url));
 
         $content = $this->request->getContent();

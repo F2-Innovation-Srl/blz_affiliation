@@ -4,6 +4,7 @@ namespace BLZ_AFFILIATION\Rendering;
 
 use BLZ_AFFILIATION\Utils\Shortener;
 use BLZ_AFFILIATION\AffiliateMarketing\Request;
+use BLZ_AFFILIATION\Rendering\Settings\SettingsData;
 /**
  * Sostiruisce nella pagina il link selezionato al posto 
  * dello shortcode
@@ -50,6 +51,7 @@ class AffiliateLinkProgramsButton {
 
     private function FillTemplate( $ga_event, $tracking_id, $template ) {
 
+        Helper::isAffiliationPage();
         /// se possibile inserisce il tracking id
         $link = str_replace( '{tracking-id}', $tracking_id, $this->request->getLink() );
         /// poi accorcia il link

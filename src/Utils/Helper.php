@@ -58,6 +58,14 @@ class Helper {
         return  Helper::findbySlug($config->pages[0]->controller->settings["tabs"][0]["marketplaces"],$marketplace)["api_slug"];
     }
 
+    /**
+     * Setta il valore in config che dice se la pagina ha un link affiliato
+     */
+    public static function isAffiliationPage(){
+        $config = Config::loadSettings();
+        $config->is_affiliation_page = true; 
+    }
+
      /**
      * Torna la lista dei pattern da verificare
      *
@@ -74,5 +82,4 @@ class Helper {
             'PrettyLink', 
         ];
     }
-
 }
