@@ -14,7 +14,7 @@ class Disclamer {
 
         $text = get_option( "blz-affiliation-settings-disclamer" );
         
-        $this->text = (!empty($text["disclamer"])) ? $text["disclamer"] : "<p class='blz_affiliation_disclamer'>Disclamer</p>";
+        $this->text = (!empty($text["disclamer"])) ? $text["disclamer"] : "";
         // Add the custom columns to the posts post type:
         add_filter( 'the_content', [ $this, 'add'], 99 );        
     }
