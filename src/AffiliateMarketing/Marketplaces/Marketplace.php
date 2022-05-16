@@ -30,14 +30,19 @@ abstract class Marketplace {
     public function getOffers() {
 
         $offers_json = HttpRequest::getContent( $this->getQueryURL() );
-        if (!empty($offers_json) && is_array(json_decode( $offers_json, true )))
-            return array_map( function( $offer ) {
 
-                return new Offer( $offer );
+        /// se non ci sono offerte ritorna l'insieme vuoto
+        if ( empty( $offers_json ) ) return [];
 
-            }, json_decode( $offers_json, true ) );
-        else
-            return [];
+        $offers = json_decode( $offers_json, true );
+
+        /// se non è corretto il risultato ritorna l'insieme vuoto
+        /// altrimenti le offerte secondo template Offer
+        return ( !is_array( $offers ) ) ? [] :  array_map( function( $offer ) {
+
+            return new Offer( $offer );
+
+        }, $offers );        
     }
 
     /**

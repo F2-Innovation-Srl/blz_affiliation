@@ -12,7 +12,7 @@
  *
  * @package blz-affiliation
  *
- * Copyright 2021 Blazemedia (email: techteam@f2innovation.com)
+ * Copyright 2021 Blazemedia (email: techteam@blazemedia.it)
  *
  */
 define( 'PLUGIN_PATH' , plugin_dir_path( __FILE__ ) );
@@ -22,7 +22,7 @@ define( 'PLUGIN_VERSION'  , "1.7.6");
 require_once PLUGIN_PATH . '/vendor/autoload.php';
 
 use BLZ_AFFILIATION\Utils\Config;
-use BLZ_AFFILIATION\Core\PostTypes;
+use BLZ_AFFILIATION\PostTypes;
 use BLZ_AFFILIATION\AdminUserInterface\Settings;
 use BLZ_AFFILIATION\AdminUserInterface\Buttons;
 use BLZ_AFFILIATION\Rendering;
