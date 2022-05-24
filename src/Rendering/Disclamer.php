@@ -13,10 +13,15 @@ class Disclamer {
 
 	public function __construct() {
 
-        
+        // Add the custom columns to the posts post type:
+        add_filter( 'the_content', [ $this, 'add'], 99 );        
+    }
+
+	function add($content) { 
+
         $config = Config::loadSettings();
         
-        if ($config->is_affiliation_page == "true")){
+        if ($config->is_affiliation_page == "true"){
             $text = get_option( "blz-affiliation-settings-disclamer" );
             $this->text = (!empty($text["disclamer"])) ? "<p class='blz_affiliation_disclamer'>" . $text["disclamer"] . "</p>" : "";
         }else{
@@ -27,12 +32,7 @@ class Disclamer {
             $this->text = $SettingsData->getGAEvent();
         }
         
-        // Add the custom columns to the posts post type:
-        add_filter( 'the_content', [ $this, 'add'], 99 );        
-    }
-
-	function add($content) { 
-            return $content. "<p class='blz_affiliation_disclamer'>" .$this->text."</p>";
+        return $content. "<p class='blz_affiliation_disclamer'>" .$this->text."</p>";
     }
 
 
