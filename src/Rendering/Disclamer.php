@@ -20,17 +20,19 @@ class Disclamer {
 	function add($content) { 
 
         $config = Config::loadSettings();
-        
+        $this->text = "";
+
+        //1) se esiste un link affialito in pagina mi prendo il disclamer generale
         if ($config->is_affiliation_page == "true"){
             $text = get_option( "blz-affiliation-settings-disclamer" );
             $this->text = (!empty($text["disclamer"])) ? "<p class='blz_affiliation_disclamer'>" . $text["disclamer"] . "</p>" : "";
-        }else{
-            /// prende la request
-            $request = new Request([]);
-            /// inizializzo i settingsData 
-            $SettingsData = new SettingsData("blz_disclamer",$request);
-            $this->text = $SettingsData->getGAEvent();
         }
+
+        ///2) Verifico se c'è una regola impostata da attivatore e in caso mi prendo il disclamer impostato ad-hoc
+        $request = new Request([]);
+        /// inizializzo i settingsData 
+        $SettingsData = new SettingsData("blz_disclamer",$request);
+        if (!empty($SettingsData->getGAEvent())) $this->text = $SettingsData->getGAEvent();
         
         return $content. "<p class='blz_affiliation_disclamer'>" .$this->text."</p>";
     }

@@ -83,20 +83,24 @@ abstract class Table {
     }
 
     protected function removeHiddenLabel($label){
-
+        $return = "&nbsp;";
         $hiddenGA = (empty($this->current["marketplace"]["ga_event_template"]) ) ? "hidden" : "text"; 
         $hiddenTrack = (empty($this->current["marketplace"]["tracking_id"]) ) ? "hidden" : "text"; 
      
-        if (str_contains(strtolower($label), 'hidden') 
+        if (! (str_contains(strtolower($label), 'hidden') 
             || str_contains(strtolower($label), 'update') 
             || str_contains(strtolower($label), 'azioni') 
             || str_contains(strtolower($label), 'delete')
             || ($hiddenGA && str_contains(strtolower($label), 'Valore GA'))
-            || ($hiddenTrack && str_contains(strtolower($label), 'Valore TRK_ID'))
+            || ($hiddenTrack && str_contains(strtolower($label), 'Valore TRK_ID')))
         ){
-                return "&nbsp;";
-        }else{
-            return $label;
+            $return = $label;
         }
+
+        //eccezioni per gestione Disclamer
+        if($this->current["marketplace"]["ga_event_template"] == "{disclamer}" && $label == "Valore GA") $return = "Disclamer";
+        if($this->current["marketplace"]["ga_event_template"] == "{disclamer}" && $label == "Valore TRK_ID") $return = "&nbsp;";
+        	
+        return $return;
     }
 }
