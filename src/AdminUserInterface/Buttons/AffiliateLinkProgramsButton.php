@@ -83,6 +83,7 @@ class AffiliateLinkProgramsButton extends Button {
             $post = get_post($post_id);
             return ( $post->post_type == 'program_stored_link' );  
         }else{
+            if ($_GET["?post_type"] == 'program_stored_link' || $_GET["post_type"] == 'program_stored_link') return true;
             return false;   
         }
               
