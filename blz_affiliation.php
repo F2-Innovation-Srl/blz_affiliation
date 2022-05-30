@@ -45,23 +45,24 @@ class BlzAffiliate {
 		/// crea i custom post type (tabelle e link "centralizzati")
 		PostTypes\AffiliateTables::init();
 		PostTypes\AffiliateLinkProgamStored::init();
-		
-		/// effettua il rendering degli shortcode dei bottoni 
-		/// di affiliazione
-		new Rendering\AffiliateLinkButton();
-		new Rendering\AffiliateGenericButton();
-		new Rendering\AffiliateCustomLinkButton();
-		new Rendering\AffiliateLinkProgramsButton();
-		new Rendering\AffiliateLinkProgramStoredButton();
-		
-		/// abilita il parsing e il rendering dei link
-		/// di affiliazione nel testo
-		new ParseLinkAndRender();
 
-		/// effettua il rendering degli shortcode delle 
-		/// tabelle di affiliazione
-		new Rendering\AffiliateTable();
-		
+		if (!is_admin()){
+			/// effettua il rendering degli shortcode dei bottoni 
+			/// di affiliazione
+			new Rendering\AffiliateLinkButton();
+			new Rendering\AffiliateGenericButton();
+			new Rendering\AffiliateCustomLinkButton();
+			new Rendering\AffiliateLinkProgramsButton();
+			new Rendering\AffiliateLinkProgramStoredButton();
+			
+			/// abilita il parsing e il rendering dei link
+			/// di affiliazione nel testo
+			new ParseLinkAndRender();
+
+			/// effettua il rendering degli shortcode delle 
+			/// tabelle di affiliazione
+			new Rendering\AffiliateTable();
+		}
 		/// aggiunge i bottoni per i link di affiliazione		
 		new Buttons\AffiliateLinkButton();
 		new Buttons\AffiliateGenericButton();
