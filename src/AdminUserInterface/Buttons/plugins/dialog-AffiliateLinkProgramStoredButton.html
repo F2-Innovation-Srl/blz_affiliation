@@ -8,34 +8,70 @@
     <script>
 
         /// dati iniettati dal controller
-        var storedLinks = {{stored_links}};
+        var obj = {
+            storedLinks : {{stored_links}},
+            pageType  : {{pageType}},
+            subjects  : {{subjects}},
+            platform  : {{platform}},
+            type      : {{type}}
+        }
+        /// variabile popolata dalle selezioni effettuate
+        var attrs = {
+            subjects : "", 
+            pageType : "", 
+            platform : "", 
+            type : ""
+        };
 
         /** 
          * Per gestire i campi
          */
          function FieldsManager() { 
             
-            this.link = document.getElementById('link');
-        
-            this.submit   = document.getElementById('submit');
-    
-            this.content = tinymce.activeEditor.selection.getContent();
+            
+            window.fields = {
+                pageType : document.getElementById('pageType'),
+                subjects : document.getElementById('subject'),
+                program  : document.getElementById('program'),
+                platform : document.getElementById('platform'),
+                type     : document.getElementById('type')
+            };
 
-            this.submit.addEventListener('click', function(e) {
+            // POPOLO LE TENDINE 
+            Object.keys(window.fields).forEach(key => {
+                    if (key != "program")
+                        obj[key].forEach( function(item) { 
+                            window.fields[key].insertAdjacentHTML('beforeend', `<option value="${item.slug}">${item.name}</option>`); 
+                        });   
+                    window.fields[key].addEventListener('change', function() {
+                        getLinks(key,window.fields[key].value);
+                    });
+            });
+
+
+            this.link = document.getElementById('link');
+            this.content      = document.getElementById('content');   
+            this.content.value = tinymce.activeEditor.selection.getContent();
+
+
+            document.getElementById('submit').addEventListener('click', function(e) {
 
                 var link = this.link.value;
                 
-                
+                if (this.content.value.trim()  == '') { alert("Inserire un testo");        return; }
                 if (link  == '') { alert("Selezionare un link");  return; }
-
+                var content     = this.content.value;
                 
-                this.shortcode = `[affiliate_program_stored_link id=${link}]${this.content}[/affiliate_program_stored_link]`;
+                this.shortcode = `[affiliate_program_stored_link id=${link}]${content}[/affiliate_program_stored_link]`;
                 
                 tinyMCE.activeEditor.execCommand( 'mceInsertContent', 0, this.shortcode );
                 
                 tinyMCEPopup.close();
 
             }.bind(this));
+
+
+
         }
 
 
@@ -44,6 +80,58 @@
             new FieldsManager();
 
         }.bind(this));
+
+
+        function getLinks(key,value){
+
+            //salvo la selezione e mi prendo l'oggetto select con i links
+            attrs[key] = value;
+            var link_select = document.getElementById('link');  
+
+            //svuoto tutti i link
+            while (link_select.options.length > 0) {
+                link_select.remove(0);
+            }
+
+            //popolo la tendina dei link in base alle selezioni e costruisco un oggetto con solo le altre tassonomie selezionabili
+            var temp_obj = { subjects : [],  pageType : [],  platform : [], type : [] };  
+            obj.storedLinks.forEach( function(item) {       
+                $valid = false;
+                if (
+                    ((item.tax.pageType && item.tax.pageType[0].slug == attrs.pageType) || attrs.pageType == "") &&
+                    ((item.tax.type && item.tax.type[0].slug == attrs.type) || attrs.type == "") &&
+                    ((item.tax.platform && item.tax.platform[0].slug == attrs.platform) || attrs.platform == "") &&
+                    ((item.tax.subjects && (item.tax.subjects[0].slug == attrs.subjects || item.tax.subjects[1].slug == attrs.subjects)) || attrs.subjects == "") 
+                )  $valid = true;
+            
+                if ($valid) {
+                    link_select.insertAdjacentHTML('beforeend', `<option value="${item.id}">${item.title}</option>`); 
+                    Object.keys(item.tax).forEach(key => {
+                        item.tax[key].forEach(term => {
+                            temp_obj[key][term.term_id] = term;
+                        });
+                    });
+                }
+            });
+
+            // svuoto le tendine
+            Object.keys(window.fields).forEach(key => {
+                while (window.fields[key].options.length > 0) window.fields[key].remove(0);
+                window.fields[key].insertAdjacentHTML('beforeend', `<option value="">-- scegli --</option>`); 
+            });
+
+            // Le popolo solo con i dati selezionabili
+            Object.keys(temp_obj).forEach(key => {
+                Object.keys(temp_obj[key]).forEach(key_int => {
+                    term = temp_obj[key][key_int];
+                    option = (key == "subjects" && term.parent > 0) ? "program" : key;
+                    selected = (term.slug == attrs[key]) ? "selected = 'selected'" : "";
+                    window.fields[option].insertAdjacentHTML('beforeend', `<option ${selected} value="${term.slug}">${term.name}</option>`);
+                });
+            });
+
+        }
+
 
     </script>
 
@@ -72,17 +160,43 @@
 </head>
 <body onload="tinyMCEPopup.executeOnLoad('init();')">
     
+    <legend>Inserisci il testo</legend>
+    <input type="text" id="content" name="content" value=""/>
+
+    <legend class="stored_class">Seleziona il tipo pagina</legend>
+                        
+    <select class="stored_class" name="pageType" id="pageType">
+        <option value="">-- scegli --</option>        
+    </select>
+
+    <legend>Seleziona il subject</legend>
+                        
+    <select name="subject" id="subject">
+        <option value="">-- scegli --</option>        
+    </select>
+
+    <legend>Seleziona il programma</legend>
+           
+    <select name="program" id="program">
+        <option value="">-- scegli --</option>        
+    </select>
+
+<legend class="stored_class">Seleziona la piattaforma</legend>
+                        
+<select class="stored_class" name="platform" id="platform">
+    <option value="">-- scegli --</option>        
+</select>
+    
+<legend >Tipo pulsante</legend>
+    <select name="type" id="type"> 
+        <option value="">-- scegli --</option>            
+    </select>
+
     <legend>Seleziona il link</legend>
                         
     <select name="link" id="link">
         <option value="">-- scegli --</option>        
     </select>
-    <script>
-        var link_select = document.getElementById('link');        
-        storedLinks.forEach( function(item) {                         
-            link_select.insertAdjacentHTML('beforeend', `<option value="${item.id}">${item.title}</option>`); 
-        });      
-    </script>
 
     <input type="button" id="submit" value="Inserisci" />
     

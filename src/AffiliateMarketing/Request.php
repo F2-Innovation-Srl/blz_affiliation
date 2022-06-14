@@ -30,6 +30,8 @@ class Request {
         $this->program      = isset( $args['program'] ) ? $args['program'] : '';
         $this->position     = isset( $args['position'] ) ? $args['position'] : '';
         $this->type         = isset( $args['type'] ) ? $args['type'] : 'text';
+       
+
     }
 
     /**

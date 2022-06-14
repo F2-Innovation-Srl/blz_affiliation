@@ -15,17 +15,17 @@ class Taxonomy extends Field {
 
         // di default torna i nomi delle tassonomie
         // sarebbe meglio prendere gli slug
-        $taxonomies = array_keys( get_taxonomies() );
-       
-        $selected_taxonomies = (unserialize( $this->value )) ?: [];
+        $taxonomies = get_terms( ['taxonomy' => $this->type, 'parent' => 0 ,'hide_empty' => false] );
 
-        $select = '<select size="8" multiple name="'.$this->name.'[]">{{ options }}</select>';
-        
-        $options = array_reduce( $taxonomies, function( $markup, $taxonomy ) use  ($selected_taxonomies ) {
+        $selected_taxonomies = $this->value ?: 0;
+
+        $select = '<select name="'.$this->name.'">{{ options }}</select>';
+        $options = '<option value="0">Nessun genitore</option>';
+        $options .= array_reduce( $taxonomies, function( $markup, $taxonomy ) use  ($selected_taxonomies ) {
             
-            $selected = in_array( $taxonomy, $selected_taxonomies ) ? ' selected ' : '';
+            $selected = ( $taxonomy->term_id == $selected_taxonomies ) ? ' selected ' : '';
 
-            $markup .= '<option value="' . $taxonomy . '"' . $selected .'>' . $taxonomy . '</option>';
+            $markup .= '<option value="' . $taxonomy->term_id . '"' . $selected .'>' . $taxonomy->name . '</option>';
             return $markup;
         }, '');
     

@@ -23,6 +23,7 @@ require_once PLUGIN_PATH . '/vendor/autoload.php';
 
 use BLZ_AFFILIATION\Utils\Config;
 use BLZ_AFFILIATION\PostTypes;
+use BLZ_AFFILIATION\Taxonomies;
 use BLZ_AFFILIATION\AdminUserInterface\Settings;
 use BLZ_AFFILIATION\AdminUserInterface\Buttons;
 use BLZ_AFFILIATION\Rendering;
@@ -45,6 +46,9 @@ class BlzAffiliate {
 		/// crea i custom post type (tabelle e link "centralizzati")
 		PostTypes\AffiliateTables::init();
 		PostTypes\AffiliateLinkProgamStored::init();
+
+		// crea le tassonomie per i program link
+		Taxonomies\AffiliateLinkProgram::init();
 
 		if (!is_admin()){
 			/// effettua il rendering degli shortcode dei bottoni 
