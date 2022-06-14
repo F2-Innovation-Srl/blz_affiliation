@@ -38,12 +38,12 @@ class SettingsData {
         HTML,
         'genericButton' => 
         <<<HTML
-        <div class="blz_aff_gen_button">
+        <div class="{{ obfuscated_class }}">
             <a href="{{ url }}" data-vars-blz-affiliate="{{ ga_event }}" 
             class="btn custom_btn" target="_blank" rel="sponsored"
             >{{ content }}</a>
         </div>
-        <style>.blz_aff_gen_button { text-align:center }</style>
+        <style>.{{ obfuscated_class }} { text-align:center }</style>
         HTML,
         
     ];
