@@ -13,8 +13,8 @@ class AffiliateLinkProgram {
     public static $taxonomies = [ 
         'blz-affiliation-page-type'  => "Tipo Pagina",
         'blz-affiliation-programs'   => 'Programs',
-        'blz-affiliation-platform'   => 'Piattforma',
-        'blz-affiliation-type'       => 'Tipo pulsante' 
+        'blz-affiliation-platform'   => 'Piattaforma',
+        'blz-affiliation-type'       => 'Tipo link' 
     ];
     /**
      * Initializer for setting up action handler
@@ -149,17 +149,24 @@ class AffiliateLinkProgram {
         global $typenow;
         if ($typenow=='program_stored_link') {
              
-            $terms = get_the_terms($post_id,str_replace("-parent","",$column_id));
+            $terms = self::sort_terms(get_the_terms($post_id,str_replace("-parent","",$column_id)));
             if (is_array($terms)) {
                 foreach($terms as $key => $term) 
-                    if ($term->parent == 0 && (strpos($column_id,"-parent") === false) || $term->parent > 0 && (strpos($column_id,"-parent") !== false)) 
-                        $terms[$key] =  '<a href="'.self::createLink($term).'">' . $term->name. '</a>';
-                    else     
-                        unset( $terms[$key]);
-                echo implode(' | ',$terms);
+                    if ($term->parent == 0 && (strpos($column_id,"-parent") !== false) || (strpos($column_id,"-parent") === false)) {
+                        echo  '<a href="'.self::createLink($term).'">' . $term->slug. '</a>';
+                        return;
+                    }
+                        
+                  
             }     
            
         }
+    }
+
+    private static function sort_terms ( $terms ) {
+        if (is_array($terms) )
+            usort($terms, function($a, $b) {return strcmp($b->parent, $a->parent);});
+        return $terms;
     }
     private static function createLink($term){
         $link = "/wp/wp-admin/edit.php?post_type=program_stored_link";
