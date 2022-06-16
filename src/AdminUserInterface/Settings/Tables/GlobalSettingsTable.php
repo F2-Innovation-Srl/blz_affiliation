@@ -21,7 +21,7 @@ class GlobalSettingsTable extends Table{
 
         $this->rows[] =  [
             "Analitics Code" => new Fields\Text( $this->option_name."_ga_code", $ga_code, "text" ),
-            "Ebay CampainId" => new Fields\Text( $this->option_name."_ebay_campain_id", $ga_code, "text" ),
+            "Ebay CampainId" => new Fields\Text( $this->option_name."_ebay_campain_id", $ebay_campain_id, "text" ),
             "Tassonomie di riferimento" => new Fields\Taxonomies( $this->option_name."_taxonomy", serialize( $taxonomies ) ),
             "{website} GA" => new Fields\Text($this->option_name."_website_ga",$website_ga,"text"),
             "{website} TRK_ID" => new Fields\Text($this->option_name."_website_trk",$website_trk,"text"),
