@@ -23,6 +23,10 @@ class Ebay extends Pattern {
     /// viene richiamata dal costruttore
     public function Parse() {
 
+        $settings = get_option( "blz-affiliation-settings" );
+        $ebay_campain_id = ( isset( $settings['ebay_campain_id'] ) ? $settings['ebay_campain_id'] : "5338741871";
+
+      
         preg_match_all( $this->pattern, $this->content, $matches );
 
         return array_map( function( $link , $url ) {
@@ -35,7 +39,7 @@ class Ebay extends Pattern {
                 'mkcid=1',
                 'mkrid=724-53478-19255-0',
                 'siteid=101',
-                'campid=5338741871',
+                'campid='.$ebay_campain_id,
                 'customid={tracking_id}'
             ]);
 
