@@ -33,12 +33,9 @@ class AffiliateLinkButton {
 
         $link = str_replace(['{tracking-id}','%7Btracking-id%7D'], $tracking, $offer->link);
         /// poi accorcia il link se è diverso da ebay
-        
-        if ($offer->marketplace != "ebay") 
-            $link = ( new Shortener )->generateShortLink( $link );
-         else 
-            Helper::cleanEbayParams($link);
-
+       
+        $link = ($offer->marketplace != "ebay") ? ( new Shortener )->generateShortLink( $link ) : Helper::cleanEbayParams($link);
+            
         $content = (!empty($this->request->getContent())) ? $this->request->getContent() : $offer->price . " euro";
         return str_replace([ '{{ url }}', '{{ ga_event }}', '{{ content }}' ], [ $link, $ga_event, $content ], $template);
     }
