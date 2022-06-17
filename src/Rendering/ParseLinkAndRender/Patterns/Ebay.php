@@ -24,7 +24,7 @@ class Ebay extends Pattern {
     public function Parse() {
 
         $settings = get_option( "blz-affiliation-settings" );
-        $ebay_campain_id = ( isset( $settings['ebay_campain_id'] ) ? $settings['ebay_campain_id'] : "5338741871";
+        $ebay_campain_id = ( isset( $settings['ebay_campain_id'] ) ) ? $settings['ebay_campain_id'] : "5338741871";
 
       
         preg_match_all( $this->pattern, $this->content, $matches );
