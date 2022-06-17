@@ -4,6 +4,28 @@ namespace BLZ_AFFILIATION\Utils;
 use BLZ_AFFILIATION\AdminUserInterface\Settings\Config;
 class Helper {
 
+
+    static function cleanEbayParams($link) {
+
+        $settings = get_option( "blz-affiliation-settings" );
+        $ebay_campain_id = ( isset( $settings['ebay_campain_id'] )) ? $settings['ebay_campain_id'] : "5338741871";
+        
+        $link = ( strpos( $link, 'tag=' ) === false ) ? $link : preg_filter('/(.*)\?.*/', '$1', $link );
+
+        $params = implode( '&', [
+            'mkevt=1',
+            'toolid=10001',
+            'mkcid=1',
+            'mkrid=724-53478-19255-0',
+            'siteid=101',
+            'campid='.$ebay_campain_id,
+            'customid={tracking_id}'
+        ]);
+
+        $prefix = strpos( $link, '?' ) === false ? '?' : '&';
+        return $link . $prefix . $params;
+
+    }
     /**
      * Replace special characters and spaces in a given string
      * and return the result lowering capital letters

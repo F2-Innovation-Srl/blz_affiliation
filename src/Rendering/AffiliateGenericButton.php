@@ -59,8 +59,11 @@ class AffiliateGenericButton {
       
         Helper::isAffiliationPage();
         
-        $link = ( new Shortener )->generateShortLink( str_replace( '{tracking_id}', $tracking, $this->linkData->url));
-
+        $link = Helper::cleanEbayParams(str_replace( '{tracking_id}', $tracking, $this->linkData->url));
+        if (strpos($this->linkData->url, "ebay") === false)
+            $link = ( new Shortener )->generateShortLink($link);
+      
+            
         $content = $this->request->getContent();
 
         $rand_suffix = implode( '', array_map( function( ) { return chr( rand(65,85) ); }, range(0,10) ));
