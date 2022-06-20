@@ -27,7 +27,7 @@ class ProgramTableTaxonomies {
 	function __construct($option_name,$name) {
 
         $rows = $this->getAndSetRows($option_name);
-        $current_tab = (isset($_GET["tab"])) ? $_GET["tab"] : 'blz-affiliation-page-type';
+        $current_tab = (isset($_GET["tab"])) ? $_GET["tab"] : 'blz-affiliation-programs';
         $this->name = $name;
         for ($i=0; $i<count($rows); $i++){
             $this->rows[] =  [
