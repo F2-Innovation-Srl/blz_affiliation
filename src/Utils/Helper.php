@@ -9,8 +9,8 @@ class Helper {
 
         $settings = get_option( "blz-affiliation-settings" );
         $ebay_campain_id = ( isset( $settings['ebay_campain_id'] )) ? $settings['ebay_campain_id'] : "5338741871";
-        
-        $link = preg_filter('/(.*)\?.*/', '$1', $link );
+ 
+        $link = strpos( $link, '?' ) === false ? $link : preg_filter('/(.*)\?.*/', '$1', $link );
 
         $params = implode( '&', [
             'mkevt=1',

@@ -29,7 +29,7 @@ class AffiliateLinkButton {
 
         Helper::isAffiliationPage();
 
-    
+        
         $link = ($offer->marketplace != "ebay") ? ( new Shortener )->generateShortLink( $offer->link ) : Helper::cleanEbayParams($offer->link);
         $link = str_replace(['{tracking_id}','{tracking-id}','%7Btracking-id%7D'], $tracking, $link);
 
