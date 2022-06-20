@@ -30,8 +30,14 @@ class AffiliateLinkButton {
         Helper::isAffiliationPage();
 
         
-        $link = ($offer->marketplace != "ebay") ? ( new Shortener )->generateShortLink( $offer->link ) : Helper::cleanEbayParams($offer->link);
-        $link = str_replace(['{tracking_id}','{tracking-id}','%7Btracking-id%7D'], $tracking, $link);
+        if (strpos($offer->marketplace, "ebay") === false) {
+            $link = str_replace(['{tracking_id}','{tracking-id}','%7Btracking-id%7D'], $tracking, $offer->link);
+            $link = ( new Shortener )->generateShortLink( $link );
+
+        } else{
+            $link = Helper::cleanEbayParams($offer->link);
+            $link = str_replace(['{tracking_id}','{tracking-id}','%7Btracking-id%7D'], $tracking, $link);
+        } 
 
         $content = (!empty($this->request->getContent())) ? $this->request->getContent() : $offer->price . " euro";
         return str_replace([ '{{ url }}', '{{ ga_event }}', '{{ content }}' ], [ $link, $ga_event, $content ], $template);
