@@ -67,7 +67,11 @@ class AffiliateGenericButton {
 
         $class_name = 'blz_btn_' . $rand_suffix;
 
-        return str_replace([ '{{ url }}', '{{ ga_event }}', '{{ content }}', '{{ obfuscated_class }}' ], [ $link, $ga_event, $content, $class_name ], $template);
+        return str_replace(
+            [ '{{ url }}', '{{ ga_event }}', '{{ content }}', '{{ obfuscated_class }}' ],
+            [ $link, $ga_event, $content, $class_name ], 
+            $template
+        );
     }
 
 

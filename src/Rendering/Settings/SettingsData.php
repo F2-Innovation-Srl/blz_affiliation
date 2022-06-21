@@ -57,9 +57,9 @@ class SettingsData {
         $this->postData = PostData::getInstance();
         $this->request = $request;
         
-        $this->link_type = Helper::findbySlug($config->pages[0]->controller->settings["tabs"],$link_type);
+        $this->link_type = Helper::findbySlug( $config->pages[0]->controller->settings["tabs"],$link_type );
        
-        $this->marketplace = Helper::findbySlug($this->link_type["marketplaces"],$this->request->getMarketplaceKey());
+        $this->marketplace = Helper::findbySlug( $this->link_type["marketplaces"],$this->request->getMarketplaceKey() );
         
         $global_settings = get_option( "blz-affiliation-settings" );
         
@@ -67,8 +67,8 @@ class SettingsData {
 
             "global_settings"      => $global_settings,
             "activation_table"     => get_option($config->pages[0]->slug."-".$this->link_type["slug"]."-".$this->marketplace["slug"]),
-            "ga_event_template"    =>  ($this->request->getType() == "button" && isset($this->marketplace["ga_event_template_button"])) ? $this->marketplace["ga_event_template_button"] : $this->marketplace["ga_event_template"],
-            "tracking_id_template" =>  ($this->request->getType() == "button" && isset($this->marketplace["tracking_id_button"])) ? $this->marketplace["tracking_id_button"] : $this->marketplace["tracking_id"]
+            "ga_event_template"    =>  ( $this->request->getType() == "button" && isset($this->marketplace["ga_event_template_button"])) ? $this->marketplace["ga_event_template_button"] : $this->marketplace["ga_event_template"],
+            "tracking_id_template" =>  ( $this->request->getType() == "button" && isset($this->marketplace["tracking_id_button"])) ? $this->marketplace["tracking_id_button"] : $this->marketplace["tracking_id"]
         ];
     }
 
