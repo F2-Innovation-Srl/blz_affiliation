@@ -65,14 +65,14 @@ class ProgramTableTaxonomies {
             return $cols;
         } ).'</tr>';
         
-        return str_replace([ '{{ title }}', '{{ headings }}', '{{ rows }}' ], [ $this->title, $headings, $rows ], $this->output["table"] ); 
+        return str_replace([ '{{ headings }}', '{{ rows }}' ], [ $headings, $rows ], $this->output["table"] ); 
     }
 
     private function getAndSetRows($option_name){
         $newValue = false;
         //DELETE
         //echo "<pre>";
-        $id_to_delete = $_POST[$option_name."_hidden_for_delete"];
+        $id_to_delete = isset($_POST[$option_name."_hidden_for_delete"]) ? $_POST[$option_name."_hidden_for_delete"] : "";
         if ($id_to_delete != "" && $id_to_delete != null)  wp_delete_term( $id_to_delete,$option_name );
         //INSERT 
         if( !empty( $_POST[$option_name.'slug_new'] ) && !empty( $_POST[$option_name.'name_new'] ) ) {
