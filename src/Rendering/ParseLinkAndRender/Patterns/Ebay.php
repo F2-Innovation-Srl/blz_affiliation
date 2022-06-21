@@ -1,7 +1,7 @@
 <?php
 
 namespace BLZ_AFFILIATION\Rendering\ParseLinkAndRender\Patterns;
-
+use BLZ_AFFILIATION\Utils\Helper;
 use BLZ_AFFILIATION\Rendering\ParseLinkAndRender\Link;
 
 /**
@@ -16,32 +16,19 @@ class Ebay extends Pattern {
     protected $pattern = '/<a[^>]*href="(https?:\/\/www.ebay.it[^"]*?)".*?>/';
 
     protected $tracking_code = 'ebay';
-    
+
     /// il nome del marketplace di cui parsare i link
     public $name = 'ebay';
     
     /// viene richiamata dal costruttore
     public function Parse() {
 
+      
         preg_match_all( $this->pattern, $this->content, $matches );
 
         return array_map( function( $link , $url ) {
             
-            $url = ( strpos( $url, 'tag=' ) === false ) ? $url : preg_filter('/(.*)\?.*/', '$1', $url );
-
-            $params = implode( '&', [
-                'mkevt=1',
-                'toolid=10001',
-                'mkcid=1',
-                'mkrid=724-53478-19255-0',
-                'siteid=101',
-                'campid=5338741871',
-                'customid={tracking_id}'
-            ]);
-
-            $prefix = strpos( $url, '?' ) === false ? '?' : '&';
-
-            $url = $url . $prefix . $params;
+            $url = Helper::cleanEbayParams($url);
 
             return new Link ([
                 'old_link'    => $link,

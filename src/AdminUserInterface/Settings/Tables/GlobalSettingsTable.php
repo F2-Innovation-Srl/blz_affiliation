@@ -13,14 +13,16 @@ class GlobalSettingsTable extends Table{
 	protected function getTableFields($row) {
 
         
-        $ga_code     = ( $row[ 'ga_code' ]     != null ) ? $row[ 'ga_code' ]     : '';
-        $taxonomies  = ( $row[ 'taxonomy' ]    != null ) ? $row[ 'taxonomy' ]    : '';
-        $website_ga  = ( $row[ 'website_ga' ]  != null ) ? $row[ 'website_ga' ]  : '';
-        $website_trk = ( $row[ 'website_trk' ] != null ) ? $row[ 'website_trk' ] : '';
+        $ga_code             = ( $row[ 'ga_code' ]     != null ) ? $row[ 'ga_code' ]     : '';
+        $ebay_campain_id     = ( $row[ 'ebay_campain_id' ]     != null ) ? $row[ 'ebay_campain_id' ]     : '';
+        $taxonomies          = ( $row[ 'taxonomy' ]    != null ) ? $row[ 'taxonomy' ]    : '';
+        $website_ga          = ( $row[ 'website_ga' ]  != null ) ? $row[ 'website_ga' ]  : '';
+        $website_trk         = ( $row[ 'website_trk' ] != null ) ? $row[ 'website_trk' ] : '';
 
         $this->rows[] =  [
             "Analitics Code" => new Fields\Text( $this->option_name."_ga_code", $ga_code, "text" ),
-            "Tassonomie di riferimento" => new Fields\Taxonomy( $this->option_name."_taxonomy", serialize( $taxonomies ) ),
+            "Ebay CampainId" => new Fields\Text( $this->option_name."_ebay_campain_id", $ebay_campain_id, "text" ),
+            "Tassonomie di riferimento" => new Fields\Taxonomies( $this->option_name."_taxonomy", serialize( $taxonomies ) ),
             "{website} GA" => new Fields\Text($this->option_name."_website_ga",$website_ga,"text"),
             "{website} TRK_ID" => new Fields\Text($this->option_name."_website_trk",$website_trk,"text"),
         ];
@@ -39,10 +41,11 @@ class GlobalSettingsTable extends Table{
 
         // UPDATE
         $row = [
-            'ga_code'     => isset( $_POST[$this->option_name. '_ga_code'  ] ) ? $_POST[$this->option_name. '_ga_code' ]  : ($row[ 'ga_code'  ] ?? ''),
-            'taxonomy'    => isset( $_POST[$this->option_name. '_taxonomy' ] ) ? $_POST[$this->option_name. '_taxonomy' ] : ($row[ 'taxonomy' ] ?? ''),
-            'website_ga'  => isset( $_POST[ $this->option_name.'_website_ga' ] ) ? $_POST[$this->option_name. '_website_ga' ] : ($row['website_ga'] ?? ''),
-            'website_trk' => isset( $_POST[ $this->option_name.'_website_trk' ] ) ? $_POST[$this->option_name. '_website_trk' ] : ($row['website_trk'] ?? '')
+            'ga_code'            => isset( $_POST[$this->option_name. '_ga_code'  ] ) ? $_POST[$this->option_name. '_ga_code' ]  : ($row[ 'ga_code'  ] ?? ''),
+            'ebay_campain_id'    => isset( $_POST[$this->option_name. '_ebay_campain_id'  ] ) ? $_POST[$this->option_name. '_ebay_campain_id' ]  : ($row[ 'ebay_campain_id'  ] ?? ''),
+            'taxonomy'           => isset( $_POST[$this->option_name. '_taxonomy' ] ) ? $_POST[$this->option_name. '_taxonomy' ] : ($row[ 'taxonomy' ] ?? ''),
+            'website_ga'         => isset( $_POST[ $this->option_name.'_website_ga' ] ) ? $_POST[$this->option_name. '_website_ga' ] : ($row['website_ga'] ?? ''),
+            'website_trk'        => isset( $_POST[ $this->option_name.'_website_trk' ] ) ? $_POST[$this->option_name. '_website_trk' ] : ($row['website_trk'] ?? '')
         ];
 
         // SET

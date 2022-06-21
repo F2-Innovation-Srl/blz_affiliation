@@ -30,7 +30,7 @@ class AffiliateLinkProgramStoredButton {
 
         /// se viene inserito il content
         if( trim( $content ) != '' )
-            $shortcode = preg_replace('/(\[.*\]).*(\[.*\])/', '$1'. $content.'$2', $shortcode);
+            $shortcode = preg_replace('/\[affiliate_program_link(.*?)\].*?\[\/affiliate_program_link\]/', "[affiliate_program_link $1]" . $content . '[/affiliate_program_link]', $shortcode);
 
         /// ritorna il rendering dello shortcode
         return do_shortcode( $shortcode );

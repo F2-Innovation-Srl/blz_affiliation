@@ -74,11 +74,16 @@ class ParseLinkAndRender {
     private function FillTemplate( $marketplace, $link, $ga_event, $tracking, $template) {
             
         Helper::isAffiliationPage();
-        $link = str_replace( '{tracking_id}', $tracking, $link);
-        /// poi accorcia il link
-        if ($marketplace != "ebay")
-            $link = ( new Shortener )->generateShortLink( $link ) ;
 
+        if (strpos($marketplace, "ebay") === false) {
+            $link = str_replace(['{tracking_id}','{tracking-id}','%7Btracking-id%7D'], $tracking, $link);
+            $link = ( new Shortener )->generateShortLink( $link );
+
+        } else{
+            $link = Helper::cleanEbayParams($link);
+            $link = str_replace(['{tracking_id}','{tracking-id}','%7Btracking-id%7D'], $tracking, $link);
+        } 
+        
         return str_replace([ '{{ url }}', '{{ ga_event }}' ], [ $link, $ga_event ], $template);
     }
 

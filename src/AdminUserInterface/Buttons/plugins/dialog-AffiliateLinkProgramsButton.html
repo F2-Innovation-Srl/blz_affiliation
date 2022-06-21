@@ -9,7 +9,9 @@
 
         /// dati iniettati dal controller
         var subjects  = {{subjects}};
-        var programs  = {{programs}};
+        var pageType  = {{pageType}};
+        var platform  = {{platform}};
+        var type      = {{type}};
         var is_stored = {{is_stored}};
 
         /** 
@@ -19,36 +21,46 @@
             
             this.subject      = document.getElementById('subject');
             this.program      = document.getElementById('program');
+            this.pageType     = document.getElementById('pageType');
+            this.type         = document.getElementById('type');
+            this.platform     = document.getElementById('platform');
             this.link         = document.getElementById('link');
             this.tracking_id  = document.getElementById('tracking_id');
             this.content      = document.getElementById('content');            
             this.submit       = document.getElementById('submit');
             this.ga_event     = document.getElementById('ga_event');  
-            this.type         = document.getElementById('type');  
             if(is_stored)
                 /// rende visibile la text input
-                [].forEach.call( document.querySelectorAll('.ga_event'), function( item ) {
-                    item.classList.remove('ga_event'); 
+                [].forEach.call( document.querySelectorAll('.stored_class'), function( item ) {
+                    item.classList.remove('stored_class'); 
                 });                    
             
             this.content.value = tinymce.activeEditor.selection.getContent();
             
             this.submit.addEventListener('click', function(e) {
 
-                var subject     = `subject="${this.subject.value}"`;
+                
+
+                if (this.link.value            == '') { alert("Inserire un link");         return; }
+                if (this.content.value.trim()  == '') { alert("Inserire un testo");        return; }
+                if (this.subject.value         == '') { alert("Selezionare un subject");   return; }
+                if (this.program.value         == '') { alert("Selezionare un programma"); return; }
+                if (this.pageType.value        == '' && is_stored) { alert("Selezionare un pageType");  return; }
+                if (this.type.value            == '' && is_stored) { alert("Selezionare un type");      return; }
+                if (this.platform.value        == '' && is_stored) { alert("Selezionare una platform"); return; }
+
+                var subject     = `subject="${this.subject.value.split("||")[1]}"`;
                 var program     = `program="${this.program.value}"`;
+                var pageType    = `page-type="${this.pageType.value}"`;
+                var type        = `type="${this.type.value}"`;
+                var platform    = `platform="${this.platform.value}"`;
                 var tracking_id = `tracking_id="${this.tracking_id.value}"`;
                 var link        = `link="${decodeURIComponent(this.link.value)}"`;
                 var content     = this.content.value;
                 var ga_event    = (is_stored) ? `ga_event="${this.ga_event.value}"` : '';
-                var type        = `type="${this.type.value}"`;
-
-                if (link            == '') { alert("Inserire un link");         return; }
-                if (content.trim()  == '') { alert("Inserire un testo");        return; }
-                if (subject         == '') { alert("Selezionare un subject");   return; }
-                if (program         == '') { alert("Selezionare un programma"); return; }
                 
-                this.shortcode = `[affiliate_program_link ${type} ${link} ${ga_event} ${tracking_id} ${subject} ${program}]${content}[/affiliate_program_link]`;
+                
+                this.shortcode = `[affiliate_program_link ${type} ${link} ${subject} ${program} ${pageType} ${type} ${platform} ${ga_event} ${tracking_id}  ]${content}[/affiliate_program_link]`;
                 
                 tinyMCE.activeEditor.execCommand( 'mceInsertContent', 0, this.shortcode );
                 
@@ -84,7 +96,7 @@
             margin:20px auto;         
             display: block;   
         }
-        .ga_event { display: none;}
+        .stored_class { display: none;}
     </style>    
 </head>
 <body onload="tinyMCEPopup.executeOnLoad('init();')">
@@ -94,6 +106,36 @@
 
     <legend>Inserisci il testo</legend>
     <input type="text" id="content" name="content" value=""/>
+
+    <legend class="stored_class">Seleziona il tipo pagina</legend>
+                        
+    <select class="stored_class" name="pageType" id="pageType">
+        <option value="">-- scegli --</option>        
+    </select>
+    <script>
+        var pageType_select = document.getElementById('pageType');
+        var result = [];
+        for(var i in pageType)
+            result.push([i, pageType [i]][1]);
+        result.forEach( function(item) { 
+            pageType_select.insertAdjacentHTML('beforeend', `<option value="${item.slug}">${item.name}</option>`); 
+        });   
+    </script>
+
+    <legend class="stored_class">Seleziona la piattaforma</legend>
+                        
+    <select class="stored_class" name="platform" id="platform">
+        <option value="">-- scegli --</option>        
+    </select>
+    <script>
+        var platform_select = document.getElementById('platform');
+        var result = [];
+        for(var i in platform)
+            result.push([i, platform [i]][1]);
+        result.forEach( function(item) { 
+            platform_select.insertAdjacentHTML('beforeend', `<option value="${item.slug}">${item.name}</option>`); 
+        });   
+    </script>
 
     <legend>Seleziona il subject</legend>
                         
@@ -106,7 +148,8 @@
         for(var i in subjects)
             result.push([i, subjects [i]][1]);
         result.forEach( function(item) { 
-            subject_select.insertAdjacentHTML('beforeend', `<option value="${item.slug}">${item.name}</option>`); 
+            if (item.parent == 0)
+                subject_select.insertAdjacentHTML('beforeend', `<option value="${item.term_id}||${item.slug}">${item.name}</option>`); 
         });   
         subject_select.addEventListener('change', function() {
             var program_select = document.getElementById('program');
@@ -117,17 +160,15 @@
             
             //put new elements
             program_select.insertAdjacentHTML('beforeend', `<option value="">-- scegli --</option>`);
-            programs.forEach( function(item) { 
-                if (item.parent_slug == subject_select.value){
-                    program_select.insertAdjacentHTML('beforeend', `<option value="${item.slug}">${item.name}</option>`); 
-                }
-                
+            subjects.forEach( function(item) { 
+                if (item.parent == subject_select.value.split("||")[0])
+                    program_select.insertAdjacentHTML('beforeend', `<option value="${item.slug}">${item.name}</option>`);  
             }); 
         });   
     </script>
 
     <legend>Seleziona il programma</legend>
-                            
+           
     <select name="program" id="program">
         <option value="">-- scegli --</option>        
     </select>
@@ -135,14 +176,22 @@
     <legend>Tracking_id (lasciare vuoto)</legend>
     <input type="text" id="tracking_id" name="tracking_id" value=""/>
 
-    <legend class="ga_event">Inserisci il ga_event</legend>
-    <input class="ga_event" type="text" id="ga_event" name="ga_event" value=""/>
-
-    <select name="type" id="type">
-        <option value="text">text</option>   
-        <option value="button">button</option>       
+    <legend class="stored_class">Inserisci il ga_event</legend>
+    <input class="stored_class" type="text" id="ga_event" name="ga_event" value=""/>
+    
+    <legend >Tipo link</legend>
+    <select name="type" id="type">     
     </select>
-
+    <script>
+        var type_select = document.getElementById('type');
+        var result = [];
+        for(var i in type)
+            result.push([i, type [i]][1]);
+        result.forEach( function(item) { 
+            type_select.insertAdjacentHTML('beforeend', `<option value="${item.slug}">${item.name}</option>`); 
+        });   
+    </script>
+    
     <input type="button" id="submit" value="Inserisci" />
 </body>
 </html>
