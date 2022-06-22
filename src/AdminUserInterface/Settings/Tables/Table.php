@@ -98,8 +98,8 @@ abstract class Table {
         }
 
         //eccezioni per gestione Disclamer
-        if($this->current["marketplace"]["ga_event_template"] == "{disclamer}" && $label == "Valore GA") $return = "Disclamer";
-        if($this->current["marketplace"]["ga_event_template"] == "{disclamer}" && $label == "Valore TRK_ID") $return = "&nbsp;";
+        if(isset($this->current["marketplace"]["ga_event_template"]) && $this->current["marketplace"]["ga_event_template"] == "{disclamer}" && $label == "Valore GA") $return = "Disclamer";
+        if(isset($this->current["marketplace"]["ga_event_template"]) && $this->current["marketplace"]["ga_event_template"] == "{disclamer}" && $label == "Valore TRK_ID") $return = "&nbsp;";
         	
         return $return;
     }
