@@ -57,8 +57,18 @@ class AffiliateLinkProgramsButton {
         $link = str_replace( ['{tracking-id}','%7Btracking-id%7D'], $tracking_id, $this->request->getLink() );
         /// poi accorcia il link
         $link = ( new Shortener )->generateShortLink( $link ) ;
-        
-        return str_replace([ '{{ url }}', '{{ ga_event }}', '{{ content }}' ], [ $link, $ga_event, $this->request->getContent() ], $template);
+
+        $content = $this->request->getContent();
+
+        $rand_suffix = implode( '', array_map( function( ) { return chr( rand(65,85) ); }, range(0,10) ));
+
+        $class_name = 'blz_btn_' . $rand_suffix;
+
+        return str_replace(
+            [ '{{ url }}', '{{ ga_event }}', '{{ content }}', '{{ obfuscated_class }}' ],
+            [ $link, $ga_event, $content, $class_name ], 
+            $template
+        );
              
     }
 
