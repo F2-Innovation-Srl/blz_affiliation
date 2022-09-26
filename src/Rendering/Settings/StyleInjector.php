@@ -24,14 +24,13 @@ class StyleInjector {
         
         if ( !is_admin() ) {
             
-            /// if is amp set a special filter to inject css
             if ( function_exists( 'is_amp_endpoint' ) && @is_amp_endpoint() ) {
 
                 // Add a the css for the rendered links
                 add_filter( 'amp_css_custom_filter', [ $this, 'injectAmpCSS'] );
 
             } else {
- 
+
                 add_action( 'wp_head', [ $this, 'injectCSS' ] );
             }                    
         }
@@ -44,8 +43,10 @@ class StyleInjector {
     }
 
     public function injectAmpCSS( $css ){
-        
-        return $css . $this->custom_style;
+
+        $customStyle = strip_tags( $this->custom_style );
+
+        return $css .$customStyle;
     }
 
 }
