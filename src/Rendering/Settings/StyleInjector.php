@@ -1,4 +1,5 @@
 <?php
+
 namespace BLZ_AFFILIATION\Rendering\Settings;
 
 /**
@@ -23,14 +24,28 @@ class StyleInjector {
         
         if ( !is_admin() ) {
             
-            add_action( 'wp_head', [ $this, 'inject_css' ] );        
-                        
+            /// if is amp set a special filter to inject css
+            if ( function_exists( 'is_amp_endpoint' ) && @is_amp_endpoint() ) {
+
+                // Add a the css for the rendered links
+                add_filter( 'amp_css_custom_filter', [ $this, 'injectAmpCSS'] );
+
+            } else {
+ 
+                add_action( 'wp_head', [ $this, 'injectCSS' ] );
+            }                    
         }
     }
 
-    function inject_css() { 
+    
+    public function injectCss() { 
 
         echo $this->custom_style;
+    }
+
+    public function injectAmpCSS( $css ){
+        
+        return $css . $this->custom_style;
     }
 
 }

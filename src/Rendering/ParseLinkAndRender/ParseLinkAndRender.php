@@ -1,7 +1,7 @@
 <?php
 
 namespace BLZ_AFFILIATION\Rendering\ParseLinkAndRender;
-use BLZ_AFFILIATION\AdminUserInterface\Settings\Config;
+
 use BLZ_AFFILIATION\Rendering\ParseLinkAndRender\Link;
 use BLZ_AFFILIATION\AffiliateMarketing\Request;
 use BLZ_AFFILIATION\Rendering\Settings\SettingsData;
@@ -16,7 +16,7 @@ class ParseLinkAndRender {
     public function __construct() {
 
         // Add the custom columns to the posts post type:
-        add_filter( 'the_content', [ $this, 'ParseAndRender'] );        
+        add_filter( 'the_content', [ $this, 'parseAndRender'] );
     }
 
     /**
@@ -25,7 +25,7 @@ class ParseLinkAndRender {
      * @param string $content
      * @return string
      */
-    public function ParseAndRender( string $content ) {
+    public function parseAndRender( string $content ) {
 
         /// se non è una single non fa nulla
         if ( !is_singular() ) return $content;
@@ -49,15 +49,13 @@ class ParseLinkAndRender {
            
             // sostituiamo tutti i link che abbiamo trovato
             foreach( $pattern->data as $linkData ) {
-                //echo "<pre>";
-                
-                /// inizializzo i settingsData 
+
+                /// inizializziamo i settingsData 
                 $SettingsData = new SettingsData("parseLinkAndRender",(new Request(["marketplace" => $linkData->marketplace])));
-                $new_link = $this->FillTemplate( $pattern->name, $linkData->url, $SettingsData->getGAEvent(), $SettingsData->getTrackingID(), $SettingsData->getTemplate() );
+                $new_link = $this->fillTemplate( $pattern->name, $linkData->url, $SettingsData->getGAEvent(), $SettingsData->getTrackingID(), $SettingsData->getTemplate() );
                 
                 /// rimpiazziamo i vecchi link con i nuovi
                 $this->content = str_replace( $linkData->old_link, $new_link, $this->content );
-                
             }
         }
         
@@ -71,7 +69,7 @@ class ParseLinkAndRender {
      * @param Link $linkData
      * @return string
      */
-    private function FillTemplate( $marketplace, $link, $ga_event, $tracking, $template) {
+    private function fillTemplate( $marketplace, $link, $ga_event, $tracking, $template) {
             
         Helper::isAffiliationPage();
 
