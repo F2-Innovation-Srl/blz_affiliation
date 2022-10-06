@@ -18,6 +18,7 @@ class StyleSettingsTable extends Table{
         $this->rows[] =  [
             /// inserisce un campo "casella di testo"
             'CSS' => new Text( $this->option_name."_css_custom_style", $css_custom_style, "textarea" ),
+            'CSS_AMP' => new Text( $this->option_name."_css_amp_custom_style", $css_custom_style, "textarea" )
         ];
     }
 
@@ -34,7 +35,8 @@ class StyleSettingsTable extends Table{
 
         // UPDATE
         $row = [
-            'css_custom_style' => isset( $_POST[$this->option_name. '_css_custom_style'  ] ) ? $_POST[$this->option_name. '_css_custom_style' ]  : ( $row[ 'css_custom_style'  ] ?? '' ),            
+            'css_custom_style' => isset( $_POST[$this->option_name. '_css_custom_style'  ] ) ? $_POST[$this->option_name. '_css_custom_style' ]  : ( $row[ 'css_custom_style'  ] ?? '' ),  
+            'css_amp_custom_style' => isset( $_POST[$this->option_name. '_css_amp_custom_style'  ] ) ? $_POST[$this->option_name. '_css_amp_custom_style' ]  : ( $row[ 'css_amp_custom_style'  ] ?? '' )         
         ];
 
         // SET
