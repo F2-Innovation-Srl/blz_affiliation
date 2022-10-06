@@ -14,11 +14,12 @@ class StyleSettingsTable extends Table{
         $this->title = "Custom style"; 
     
         $css_custom_style = ( $row[ 'css_custom_style' ] != null ) ? $row[ 'css_custom_style' ] : '';
+        $css_amp_custom_style = ( $row[ 'css_amp_custom_style' ] != null ) ? $row[ 'css_amp_custom_style' ] : '';
         /// compone una riga ( insieme di campi )
         $this->rows[] =  [
             /// inserisce un campo "casella di testo"
             'CSS' => new Text( $this->option_name."_css_custom_style", $css_custom_style, "textarea" ),
-            'CSS_AMP' => new Text( $this->option_name."_css_amp_custom_style", $css_custom_style, "textarea" )
+            'CSS_AMP' => new Text( $this->option_name."_css_amp_custom_style", $css_amp_custom_style, "textarea" )
         ];
     }
 

@@ -15,7 +15,6 @@ class StyleInjector {
         $settings = get_option( "blz-affiliation-settings-css" );
 
         $this->custom_style = (isset($settings['css_custom_style'])) ? "<style>".$settings['css_custom_style']."</style>" : "";
-        $this->custom_amp_style = (isset($settings['css_amp_custom_style'])) ? "<style>".$settings['css_amp_custom_style']."</style>" : "";
         
         add_action( 'init', [ $this, 'init' ] );
         
@@ -45,7 +44,7 @@ class StyleInjector {
 
     public function injectAmpCSS( $css ){
 
-        $customStyle = strip_tags( $this->custom_amp_style );
+        $customStyle = strip_tags( $this->custom_style );
 
         return $css .$customStyle;
     }
