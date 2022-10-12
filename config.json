@@ -3,19 +3,9 @@
     "plugin_slug"     : "blz-affiliation",
     "Pages"  : [
         {
-            "name"       : "GA e TrackingID Settings",
+            "name"       : "Configuration services",
             "slug"       : "blz-affiliation",
-            "controller" : "GaTrackingIdSettings"
-        },
-        {
-            "name"       : "Program Links Options",
-            "slug"       : "blz-affiliation-program",
-            "controller" : "ProgramLinksOptions"
-        },
-        {
-            "name"       : "Global Settings",
-            "slug"       : "blz-affiliation-settings",
-            "controller" : "GlobalSettings"
+            "controller" : "ConfigSettings"
         }
     ]
 }
