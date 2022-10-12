@@ -19,7 +19,8 @@ class Config {
     private function __construct() {
         $this->is_valid = true;
         $this->is_affiliation_page = "false";
-        $config  = json_decode(get_option("blz-affiliation"), true);
+        $config  = json_decode(stripslashes(get_option("blz-affiliation")), true);
+        //print_r($config);exit;
         if (empty($config)) {
             $config = json_decode(file_get_contents(PLUGIN_PATH.'config.json'), true);
             $this->is_valid = false;

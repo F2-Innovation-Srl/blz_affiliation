@@ -13,11 +13,10 @@ class ConfigSettingsTable extends Table{
 	protected function getTableFields($row) {
 
         
-        $config             = ( $row[ 'config' ]     != null ) ? $row[ 'config' ]     : '';
-       
-
+        $config = ( $row != "" ) ? $row : "";
+   
         $this->rows[] =  [
-            "Configuration" => new Fields\Textarea( $this->option_name."_config", $ga_code, "text" ),
+            "Configuration" => new Fields\Text( $this->option_name."_config", stripslashes($config), "textarea" ),
            
         ];
     }
@@ -31,15 +30,13 @@ class ConfigSettingsTable extends Table{
     protected function getAndSetRows(){
         
         // GET
-        $row = get_option( $this->option_name );
+        $row = stripslashes(get_option("blz-affiliation"));
 
         // UPDATE
-        $row = [
-            'config'            => isset( $_POST[$this->option_name. '_config'  ] ) ? $_POST[$this->option_name. '_config' ]  : ($row[ 'config'  ] ?? ''),
-        ];
+        $row = isset( $_POST[$this->option_name. '_config'] ) ? $_POST[$this->option_name. '_config' ] : ($row ?? '');
 
         // SET
-        update_option( $this->option_name, $row );
+        update_option("blz-affiliation", $row );
 
         //RETURN
         return $row;

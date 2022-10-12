@@ -3,7 +3,7 @@
     "plugin_slug"     : "blz-affiliation",
     "Pages"  : [
         {
-            "name"       : "Configuration services",
+            "name"       : "Plugin Configuration",
             "slug"       : "blz-affiliation",
             "controller" : "ConfigSettings"
         }
