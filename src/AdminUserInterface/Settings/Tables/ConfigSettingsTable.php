@@ -16,8 +16,7 @@ class ConfigSettingsTable extends Table{
         $config = ( $row != "" ) ? $row : "";
    
         $this->rows[] =  [
-            "Configuration" => new Fields\Text( $this->option_name."_config", stripslashes($config), "textarea" ),
-           
+            "Configuration" => new Fields\Text( $this->option_name."_config", stripslashes($config), "textarea" )
         ];
     }
 
