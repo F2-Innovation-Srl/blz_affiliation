@@ -17,148 +17,151 @@ class ConfigSettings {
     protected $json_default = 
     <<<JSON
         {
-        "plugin_name": "Blazemedia Affiliation",
-        "plugin_slug": "blz-affiliation",
-        "Pages": [
-          {
-            "name": "GA e TrackingID Settings",
-            "slug": "blz-affiliation-tracking",
-            "controller": "GaTrackingIdSettings",
-            "settings": {
-              "tabs": [
-                {
-                  "name": "Editorial Links",
-                  "slug": "linkButton",
-                  "description": "Gestione dei link editoriali da bottone ",
-                  "marketplaces": [
-                    {
-                      "name": "Amazon",
-                      "slug": "amazon",
-                      "api_slug": "amazon",
-                      "description": "con prezzo dinamico per Amazon",
-                      "ga_event_template": "{website} {label} {author} {marketplace} {amp}",
-                      "tracking_id": "{website}{label}{author}{marketplace}{amp}-21"
-                    },
-                    {
-                      "name": "eBay",
-                      "slug": "ebay",
-                      "api_slug": "ebay",
-                      "description": "con prezzo dinamico per eBay",
-                      "ga_event_template": "{website} {label} {author} {marketplace} {amp}",
-                      "tracking_id": "{website}{label}{author}{marketplace}{amp}"
-                    },
-                    {
-                      "name": "Trovaprezzi",
-                      "slug": "trovaprezzi",
-                      "api_slug": "trovaprezzi",
-                      "description": "con prezzo dinamico per Trovaprezzi",
-                      "ga_event_template": "{website} {label} {author} {marketplace} {amp}",
-                      "tracking_id": ""
-                    },
-                    {
-                      "name": "Custom",
-                      "slug": "custom",
-                      "description": "per Custom",
-                      "ga_event_template": "{website} {label} {author} {marketplace} {amp}",
-                      "tracking_id": ""
-                    }
-                  ]
-                },
-                {
-                  "name": "Program Link",
-                  "slug": "linkPrograms",
-                  "description": "Gestione Program Link e Stored Program Link",
-                  "marketplaces": [
-                    {
-                      "name": "Generic",
-                      "slug": "generic",
-                      "description": "",
-                      "ga_event_template": "{website} {label} {author} {subject} {program} {amp}",
-                      "tracking_id": "{website}{label}{author}{subject}{program}{amp}",
-                      "ga_event_template_button": "{website} {label} cta-button {author} {subject} {program} {amp}",
-                      "tracking_id_button": "{website}{label}-cta-button{author}{subject}{program}{amp}"
-                    }
-                  ]
-                },
-                {
-                  "name": "Parse and Render",
-                  "slug": "parseLinkAndRender",
-                  "description": "Gestione di link automatici ",
-                  "marketplaces": [
-                    {
-                      "name": "Amazon",
-                      "slug": "amazon",
-                      "api_slug": "amazon",
-                      "description": "Amazon nel content",
-                      "ga_event_template": "{website} {label} {author} {marketplace} {amp}",
-                      "tracking_id": "{website}{label}{author}{marketplace}{amp}-21",
-                      "ga_event_template_button": "{website} {label} cta-button {author} {marketplace} {amp}",
-                      "tracking_id_button": "{website}{label}-cta-button{author}{marketplace}{amp}-21"
-                    },
-                    {
-                      "name": "eBay",
-                      "slug": "ebay",
-                      "api_slug": "ebay",
-                      "description": "eBay nel content",
-                      "ga_event_template": "{website} {label} {author} {marketplace} {amp}",
-                      "tracking_id": "{website}{label}{author}{marketplace}{amp}",
-                      "ga_event_template_button": "{website} {label} cta-button {author} {marketplace} {amp}",
-                      "tracking_id_button": "{website}{label}ctabutton{author}{marketplace}{amp}"
-                    }
-                  ]
-                },
-                {
-                  "name": "Tabella",
-                  "slug": "blz_table",
-                  "description": "Gestione dei link in tabelle di affiliazione",
-                  "marketplaces": [
-                    {
-                      "name": "Generic",
-                      "slug": "generic",
-                      "description": "",
-                      "ga_event_template": "{table-name} {label} {numero-posizione} {marketplace} {amp}",
-                      "tracking_id": ""
-                    }
-                  ]
-                },
-                {
-                  "name": "Disclamer",
-                  "slug": "blz_disclamer",
-                  "description": "Gestione del disclamer per casistiche diverse da link inserito tramite plugin",
-                  "marketplaces": [
-                    {
-                      "name": "Generic",
-                      "slug": "generic",
-                      "description": "",
-                      "ga_event_template": "{disclamer}",
-                      "tracking_id": ""
-                    }
-                  ]
-                }
-              ]
-            }
-          },
-          {
-            "name": "Program Links Options",
-            "slug": "blz-affiliation-program",
-            "controller": "ProgramLinksOptions"
-          },
-          {
-            "name": "Program Links Taxonomies",
-            "slug": "blz-affiliation-program-taxonomies",
-            "controller": "ProgramLinksTaxonomies"
-          },
-          {
-            "name": "Global Settings",
-            "slug": "blz-affiliation-settings",
-            "controller": "GlobalSettings"
-          },
-          {
-            "name": "Plugin Configuration",
-            "slug": "blz-affiliation",
-            "controller": "ConfigSettings"
-          },
-        ]
+          "plugin_name"       : "Blazemedia Affiliation",
+          "plugin_slug"     : "blz-affiliation",
+          "Pages"  : [
+              {
+                  "name"       : "GA e TrackingID Settings",
+                  "slug"       : "blz-affiliation-tracking",
+                  "controller" : "GaTrackingIdSettings",
+                  "settings" : {
+                      "tabs" : [
+                          {
+                              "name"        : "Editorial Links",
+                              "slug"        : "linkButton",
+                              "description" : "Gestione dei link editoriali da bottone ",
+                              "marketplaces":[
+                                      {
+                                          "name"              : "Amazon",
+                                          "slug"              : "amazon",
+                                          "api_slug"          : "amazon",
+                                          "description"       : "con prezzo dinamico per Amazon",
+                                          "ga_event_template" : "{website} {label} {author} {marketplace} {amp}",
+                                          "tracking_id"       : "{website}{label}{author}{marketplace}{amp}-21"
+                                      },
+                                      {
+                                          "name"              : "eBay",
+                                          "slug"              : "ebay",
+                                          "api_slug"          : "ebay",
+                                          "description"       : "con prezzo dinamico per eBay",
+                                          "ga_event_template" : "{website} {label} {author} {marketplace} {amp}",
+                                          "tracking_id"       : "{website}{label}{author}{marketplace}{amp}"
+                                      },
+                                      {
+                                          "name"              : "Trovaprezzi",
+                                          "slug"              : "trovaprezzi",
+                                          "api_slug"          : "trovaprezzi",
+                                          "description"       : "con prezzo dinamico per Trovaprezzi",
+                                          "ga_event_template" : "{website} {label} {author} {marketplace} {amp}",
+                                          "tracking_id"       : ""
+                                      },
+                                      {
+                                          "name"              : "Custom",
+                                          "slug"              : "custom",
+                                          "description"       : "per Custom",
+                                          "ga_event_template" : "{website} {label} {author} {marketplace} {amp}",
+                                          "tracking_id"       : ""
+                                      }
+                              ]
+                          },
+                          {
+                              "name"        : "Program Link",
+                              "slug"        : "linkPrograms",
+                              "description" : "Gestione Program Link e Stored Program Link",
+                              "marketplaces":[
+                                      {
+                                          "name"              : "Generic",
+                                          "slug"              : "generic",
+                                          "description"       : "",
+                                          "ga_event_template" : "{website} {label} {author} {subject} {program} {amp}",
+                                          "tracking_id"       : "{website}{label}{author}{subject}{program}{amp}",
+                                          "ga_event_template_button" : "{website} {label} cta-button {author} {subject} {program} {amp}",
+                                          "tracking_id_button"       : "{website}{label}-cta-button{author}{subject}{program}{amp}"
+
+                                      }
+                              ]
+                          },{
+                              "name"        : "Parse and Render",
+                              "slug"      : "parseLinkAndRender",
+                              "description" : "Gestione di link automatici ",
+                              "marketplaces":[
+                                      {
+                                          "name"              : "Amazon",
+                                          "slug"              : "amazon",
+                                          "api_slug"          : "amazon",
+                                          "description"       : "Amazon nel content",
+                                          "ga_event_template" : "{website} {label} {author} {marketplace} {amp}",
+                                          "tracking_id"       : "{website}{label}{author}{marketplace}{amp}-21",
+                                          "ga_event_template_button" : "{website} {label} cta-button {author} {marketplace} {amp}",
+                                          "tracking_id_button"       : "{website}{label}-cta-button{author}{marketplace}{amp}-21"
+
+                                      },
+                                      {
+                                          "name"              : "eBay",
+                                          "slug"              : "ebay",
+                                          "api_slug"          : "ebay",
+                                          "description"       : "eBay nel content",
+                                          "ga_event_template" : "{website} {label} {author} {marketplace} {amp}",
+                                          "tracking_id"       : "{website}{label}{author}{marketplace}{amp}",
+                                          "ga_event_template_button" : "{website} {label} cta-button {author} {marketplace} {amp}",
+                                          "tracking_id_button"       : "{website}{label}ctabutton{author}{marketplace}{amp}"
+
+                                      }
+                              ]
+                          },{
+                              "name"        : "Tabella",
+                              "slug"      : "blz_table",
+                              "description" : "Gestione dei link in tabelle di affiliazione",
+                              "marketplaces":[
+                                      {
+                                          "name"              : "Generic",
+                                          "slug"              : "generic",
+                                          "description"       : "",
+                                          "ga_event_template" : "{table-name} {label} {numero-posizione} {marketplace} {amp}",
+                                          "tracking_id"       : ""
+                                      }
+                              ]
+                          },
+                          {
+                              "name"        : "Disclamer",
+                              "slug"      : "blz_disclamer",
+                              "description" : "Gestione del disclamer per casistiche diverse da link inserito tramite plugin",
+                              "marketplaces":[
+                                      {
+                                          "name"              : "Generic",
+                                          "slug"              : "generic",
+                                          "description"       : "",
+                                          "ga_event_template" : "{disclamer}",
+                                          "tracking_id"       : ""
+                                      }
+                              ]
+                          }
+
+                      ]
+                      
+                  }
+              },
+              {
+                  "name"       : "Program Links Options",
+                  "slug"       : "blz-affiliation-program",
+                  "controller" : "ProgramLinksOptions"
+              },
+              {
+                "name"       : "Program Links Taxonomies",
+                "slug"       : "blz-affiliation-program-taxonomies",
+                "controller" : "ProgramLinksTaxonomies"
+            },
+              {
+                  "name"       : "Global Settings",
+                  "slug"       : "blz-affiliation-settings",
+                  "controller" : "GlobalSettings"
+              },
+              {
+                  "name"       : "Configuration services",
+                  "slug"       : "blz-affiliation",
+                  "controller" : "ConfigSettings"
+              }   
+          ]
       }
     JSON;
 

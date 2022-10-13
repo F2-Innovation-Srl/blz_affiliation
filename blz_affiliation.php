@@ -68,6 +68,9 @@ class BlzAffiliate {
 			new Rendering\AffiliateTable();
 		}
 
+		/// aggiunge la pagina dei settings del plugin backend
+		new Settings\AdminPage();
+
 		$config = Settings\Config::loadSettings();
         if ($config->is_valid) {
 			
@@ -80,11 +83,6 @@ class BlzAffiliate {
 			/// aggiunge il bottone per selezionare le tabelle di affiliazione
 			/// a aggiungere il relativo shortcode in pagina
 			new Buttons\AffiliateTableButton();
-		
-		
-			/// aggiunge la pagina dei settings del plugin backend
-			new Settings\AdminPage();
-
 		
 			/// aggiunge le dipendenze js per il tracciamento
 			new Rendering\Settings\GATracking();
