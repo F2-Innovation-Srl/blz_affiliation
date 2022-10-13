@@ -17,6 +17,11 @@ class Config {
     public  $is_affiliation_page;
     
     private function __construct() {
+
+        $roles = wp_roles();
+        $role = $roles->role_objects['administrator'];
+        $role->add_cap('edit_blz_affiliation');
+
         $this->is_valid = true;
         $this->is_affiliation_page = "false";
         $config  = json_decode(stripslashes(get_option("blz-affiliation")), true);
