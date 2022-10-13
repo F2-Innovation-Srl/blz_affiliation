@@ -72,6 +72,7 @@ class BlzAffiliate {
 		new Settings\AdminPage();
 
 		$config = Settings\Config::loadSettings();
+
         if ($config->is_valid) {
 			
 			/// aggiunge i bottoni per i link di affiliazione		
@@ -89,6 +90,9 @@ class BlzAffiliate {
 
 			/// aggiunge css con parametri presi dai settings
 			new Rendering\Settings\StyleInjector();
+
+			/// aggiunge js con parametri presi dai settings
+			new Rendering\Settings\ScriptInjector();
 
 			/// aggiunge il Disclaimer
 			new Rendering\Disclaimer();
