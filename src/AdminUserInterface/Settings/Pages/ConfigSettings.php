@@ -16,10 +16,15 @@ class ConfigSettings {
     protected $option_name;
     protected $json_default = 
     <<<JSON
-    {
+        {
         "plugin_name": "Blazemedia Affiliation",
         "plugin_slug": "blz-affiliation",
         "Pages": [
+          {
+            "name": "Plugin Configuration",
+            "slug": "blz-affiliation",
+            "controller": "ConfigSettings"
+          },
           {
             "name": "GA e TrackingID Settings",
             "slug": "blz-affiliation-tracking",
@@ -152,11 +157,6 @@ class ConfigSettings {
             "name": "Global Settings",
             "slug": "blz-affiliation-settings",
             "controller": "GlobalSettings"
-          },
-          {
-            "name": "Plugin Configuration",
-            "slug": "blz-affiliation",
-            "controller": "ConfigSettings"
           }
         ]
       }
@@ -169,20 +169,12 @@ class ConfigSettings {
         <input type="hidden" name="{{ option_name }}-sendForm" value="OK" />
         <div class="{{ option_name }}-container">
             {{ ConfigSettingsTable }}
-            Esempio:<br>
-            <code id="json_example">
-            {{ code }}
-            </code>
+            <strong>Esempio:</strong><br>
+            <pre>{{ code }}</pre>
         </div>
         {{ wp_nonce }}
         {{ submit_button }}
-        <script>
-            window.addEventListener('DOMContentLoaded', (event) => {
-                document.getElementById("json_example").innerHTML = JSON.stringify(JSON.parse(document.getElementById("json_example").innerHTML, undefined, 2);
-            });
-           
-            
-        </script>
+       
     </form>
     HTML;
 
