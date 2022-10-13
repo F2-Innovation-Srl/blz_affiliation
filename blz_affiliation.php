@@ -67,28 +67,34 @@ class BlzAffiliate {
 			/// tabelle di affiliazione
 			new Rendering\AffiliateTable();
 		}
-		/// aggiunge i bottoni per i link di affiliazione		
-		new Buttons\AffiliateLinkButton();
-		new Buttons\AffiliateGenericButton();
-		new Buttons\AffiliateLinkProgramsButton();		
-		new Buttons\AffiliateLinkProgramStoredButton();
+
+		$config = Settings\Config::loadSettings();
+        if (!isset($config->disable)) {
+			
+			/// aggiunge i bottoni per i link di affiliazione		
+			new Buttons\AffiliateLinkButton();
+			new Buttons\AffiliateGenericButton();
+			new Buttons\AffiliateLinkProgramsButton();		
+			new Buttons\AffiliateLinkProgramStoredButton();
+			
+			/// aggiunge il bottone per selezionare le tabelle di affiliazione
+			/// a aggiungere il relativo shortcode in pagina
+			new Buttons\AffiliateTableButton();
 		
-		/// aggiunge il bottone per selezionare le tabelle di affiliazione
-		/// a aggiungere il relativo shortcode in pagina
-		new Buttons\AffiliateTableButton();
-	
-	
-		/// aggiunge la pagina dei settings del plugin backend
-		new Settings\AdminPage();
+		
+			/// aggiunge la pagina dei settings del plugin backend
+			new Settings\AdminPage();
 
-		/// aggiunge le dipendenze js per il tracciamento
-		new Rendering\Settings\GATracking();
+		
+			/// aggiunge le dipendenze js per il tracciamento
+			new Rendering\Settings\GATracking();
 
-		/// aggiunge css con parametri presi dai settings
-		new Rendering\Settings\StyleInjector();
+			/// aggiunge css con parametri presi dai settings
+			new Rendering\Settings\StyleInjector();
 
-		/// aggiunge il Disclaimer
-		new Rendering\Disclaimer();
+			/// aggiunge il Disclaimer
+			new Rendering\Disclaimer();
+		}
 		
 	}
 }
