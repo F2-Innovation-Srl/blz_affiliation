@@ -24,11 +24,13 @@ class Config {
 
         $this->is_valid = true;
         $this->is_affiliation_page = "false";
-        $config  = json_decode(stripslashes(get_option("blz-affiliation")), true);
+        $config_file  = get_option("blz-affiliation");
         //print_r($config);exit;
-        if (empty($config)) {
+        if (empty($config_file)) {
             $config = json_decode(file_get_contents(PLUGIN_PATH.'config.json'), true);
             $this->is_valid = false;
+        }else{
+            $config  = json_decode(stripslashes($config_file), true);
         }
         
         $this->plugin_name = $config["plugin_name"];
