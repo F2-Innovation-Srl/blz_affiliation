@@ -21,11 +21,6 @@ class ConfigSettings {
         "plugin_slug": "blz-affiliation",
         "Pages": [
           {
-            "name": "Plugin Configuration",
-            "slug": "blz-affiliation",
-            "controller": "ConfigSettings"
-          },
-          {
             "name": "GA e TrackingID Settings",
             "slug": "blz-affiliation-tracking",
             "controller": "GaTrackingIdSettings",
@@ -157,6 +152,11 @@ class ConfigSettings {
             "name": "Global Settings",
             "slug": "blz-affiliation-settings",
             "controller": "GlobalSettings"
+          },
+          {
+            "name": "Plugin Configuration",
+            "slug": "blz-affiliation",
+            "controller": "ConfigSettings"
           }
         ]
       }

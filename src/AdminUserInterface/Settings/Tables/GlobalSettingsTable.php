@@ -18,7 +18,7 @@ class GlobalSettingsTable extends Table{
         $taxonomies          = ( $row[ 'taxonomy' ]    != null ) ? $row[ 'taxonomy' ]    : '';
         $website_ga          = ( $row[ 'website_ga' ]  != null ) ? $row[ 'website_ga' ]  : '';
         $website_trk         = ( $row[ 'website_trk' ] != null ) ? $row[ 'website_trk' ] : '';
-        $tracking            = ( $row[ 'tracking' ] != null ) ? $row[ 'tracking' ] : '';
+        $tracking            = ( $row[ 'tracking' ] != null ) ? $row[ 'tracking' ] : 'SI';
 
         $this->rows[] =  [
             "Analitics Code" => new Fields\Text( $this->option_name."_ga_code", $ga_code, "text" ),
@@ -48,7 +48,7 @@ class GlobalSettingsTable extends Table{
             'taxonomy'           => isset( $_POST[$this->option_name. '_taxonomy' ] ) ? $_POST[$this->option_name. '_taxonomy' ] : ($row[ 'taxonomy' ] ?? ''),
             'website_ga'         => isset( $_POST[ $this->option_name.'_website_ga' ] ) ? $_POST[$this->option_name. '_website_ga' ] : ($row['website_ga'] ?? ''),
             'website_trk'        => isset( $_POST[ $this->option_name.'_website_trk' ] ) ? $_POST[$this->option_name. '_website_trk' ] : ($row['website_trk'] ?? ''),
-            'tracking'           => isset( $_POST[ $this->option_name.'_tracking' ] ) ? $_POST[$this->option_name. '_tracking' ] : ($row['tracking'] ?? '')
+            'tracking'           => isset( $_POST[ $this->option_name.'_tracking' ] ) ? $_POST[$this->option_name. '_tracking' ] : ($row['tracking'] ?? 'SI')
         ];
 
         // SET
