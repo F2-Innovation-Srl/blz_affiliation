@@ -10,7 +10,7 @@ class Config {
      * @var object
      */
     private static $instance;
-    private $is_valid;
+    public $is_valid;
     public  $pages;
     public  $plugin_name;
     public  $plugin_slug;

@@ -69,7 +69,7 @@ class BlzAffiliate {
 		}
 
 		$config = Settings\Config::loadSettings();
-        if (!isset($config->disable)) {
+        if ($config->is_valid) {
 			
 			/// aggiunge i bottoni per i link di affiliazione		
 			new Buttons\AffiliateLinkButton();

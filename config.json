@@ -1,7 +1,6 @@
 {
-    "plugin_name"      : "Blazemedia Affiliation",
+    "plugin_name"       : "Blazemedia Affiliation",
     "plugin_slug"     : "blz-affiliation",
-    "disable"          : "true",
     "Pages"  : [
         {
             "name"       : "Plugin Configuration",
