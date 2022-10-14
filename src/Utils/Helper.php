@@ -109,7 +109,7 @@ class Helper {
      */
     public static function isTrackingDisabled(){
         $settings = get_option( "blz-affiliation-settings-js" );
-        return = (isset($settings['tracking_disable'])) ? $settings['tracking_disable'] : false;
+        return (isset($settings['tracking_disable'])) ? $settings['tracking_disable'] : false;
     }
 
     /**
@@ -117,7 +117,7 @@ class Helper {
      */
     public static function isTrackerDisabled(){
         $settings = get_option( "blz-affiliation-settings-js" );
-        return = (isset($settings['tracker_disable'])) ? $settings['tracker_disable'] : false;
+        return (isset($settings['tracker_disable'])) ? $settings['tracker_disable'] : false;
     }
 
 

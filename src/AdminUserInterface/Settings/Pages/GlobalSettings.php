@@ -3,6 +3,7 @@ namespace BLZ_AFFILIATION\AdminUserInterface\Settings\Pages;
 
 use BLZ_AFFILIATION\Utils\Config;
 use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\StyleSettingsTable;
+use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\ScriptSettingsTable;
 use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\DisclamerTable;
 use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\GlobalSettingsTable;
 /**
@@ -23,6 +24,8 @@ class GlobalSettings {
         <input type="hidden" name="{{ option_name }}-sendForm" value="OK" />
         <div class="{{ option_name }}-container">
             {{ GlobalSettingsTable }}
+            <hr>
+            {{ ScriptSettingsTable }}
             <hr>
             {{ DisclamerTable }}
             <hr>
