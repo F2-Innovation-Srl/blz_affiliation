@@ -27,9 +27,6 @@ class AmazonPrimeVideo extends Pattern {
 
         return array_map( function( $link, $url ) {
 
-            $url = ( strpos( $url, 'tag=' ) === false ) ? $url : preg_filter('/(.*)\?.*/', '$1', $url );
-            $url = ( strpos( $url, '?' ) === false ) ? $url .'?tag={tracking_id}' :  $url .'&tag={tracking_id}';
-
             return new Link ([
                 'old_link'    => $link,
                 'url'         => $url,

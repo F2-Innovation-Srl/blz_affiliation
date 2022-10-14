@@ -2,19 +2,18 @@
 
 namespace BLZ_AFFILIATION\Rendering\Settings;
 
+use BLZ_AFFILIATION\Utils\Helper;
 /**
  * Aggiunge CSS che usa parametri presi dai settings
  * 
  */
 class ScriptInjector {
 
-    private $tracking_disable;
+    private $tracker_disabled;
 
 	function __construct() {
         
-        $settings = get_option( "blz-affiliation-settings-css" );
-
-        $this->tracking_disable = (isset($settings['tracking_disable'])) ? $settings['tracking_disable'] : false;
+        $this->tracker_disabled = helper::isTrackerDisabled();
         
         add_action( 'init', [ $this, 'init' ] );
         
@@ -33,7 +32,7 @@ class ScriptInjector {
             );
         } else {
            
-            if (! $tracking_disable) {
+            if (! $tracker_disabled) {
                 /// dipendenze js per tracciamento
                 wp_enqueue_script('blz-affiliation-tracker',   PLUGIN_URI ."src/assets/js/libs/blz_tr.js",[], PLUGIN_VERSION,true);
                 wp_enqueue_script('blz-affiliation-activator', PLUGIN_URI ."src/assets/js/affiliate-link-activator.js",["blz-affiliation-tracker"], PLUGIN_VERSION,true);

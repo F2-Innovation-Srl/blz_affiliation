@@ -5,25 +5,49 @@ use BLZ_AFFILIATION\AdminUserInterface\Settings\Config;
 class Helper {
 
 
-    static function cleanEbayParams($link) {
+    static function cleanParams($link, $marketplace = "") {
+        
 
-        $settings = get_option( "blz-affiliation-settings" );
-        $ebay_campain_id = ( isset( $settings['ebay_campain_id'] )) ? $settings['ebay_campain_id'] : "5338741871";
- 
-        $link = strpos( $link, '?' ) === false ? $link : preg_filter('/(.*)\?.*/', '$1', $link );
+        //disabilita l'override del tracking_id da tabella attivazione solo se è un parse&render ed è flaggata la disabilitazione
+        $disable_overide = (self::isTrackingDisabled() && empty($marketplace)) ? true : false;
+        // se è un parse&render capisce il marketplace dalla url
+        if (empty($marketplace))
+            $marketPlace = (strpos($link, "ebay") !== false)  ? "ebay" : ( (strpos($link, "amazon") !== false)  ? "amazon" : "");
 
-        $params = implode( '&', [
-            'mkevt=1',
-            'toolid=10001',
-            'mkcid=1',
-            'mkrid=724-53478-19255-0',
-            'siteid=101',
-            'campid='.$ebay_campain_id,
-            'customid={tracking_id}'
-        ]);
+        if (!$disable_overide){
+        
+            if (strpos($marketplace, "amazon") !== false) {
 
-        $prefix = strpos( $link, '?' ) === false ? '?' : '&';
-        return $link . $prefix . $params;
+                $link = ( strpos( $link, 'tag=' ) === false ) ? $link : preg_filter('/(.*)\?.*/', '$1', $link );
+                $link = ( strpos( $link, '?' ) === false ) ? $link .'?tag={tracking_id}' :  $link .'&tag={tracking_id}';
+
+            }
+
+            if (strpos($marketplace, "ebay") !== false) {
+
+                $settings = get_option( "blz-affiliation-settings" );
+                $ebay_campain_id = ( isset( $settings['ebay_campain_id'] )) ? $settings['ebay_campain_id'] : "5338741871";
+        
+                $link = strpos( $link, '?' ) === false ? $link : preg_filter('/(.*)\?.*/', '$1', $link );
+
+                $params = implode( '&', [
+                    'mkevt=1',
+                    'toolid=10001',
+                    'mkcid=1',
+                    'mkrid=724-53478-19255-0',
+                    'siteid=101',
+                    'campid='.$ebay_campain_id,
+                    'customid={tracking_id}'
+                ]);
+
+                $prefix = strpos( $link, '?' ) === false ? '?' : '&';
+                return $link . $prefix . $params;
+
+            }
+
+        }else{
+            return $link;
+        }
 
     }
     /**
@@ -79,6 +103,23 @@ class Helper {
         $config = Config::loadSettings();
         return  Helper::findbySlug($config->pages[0]->controller->settings["tabs"][0]["marketplaces"],$marketplace)["api_slug"];
     }
+
+    /**
+     * Setta il Tracking è disabilitato
+     */
+    public static function isTrackingDisabled(){
+        $settings = get_option( "blz-affiliation-settings-js" );
+        return = (isset($settings['tracking_disable'])) ? $settings['tracking_disable'] : false;
+    }
+
+    /**
+     * Setta il Tracker è disabilitato
+     */
+    public static function isTrackerDisabled(){
+        $settings = get_option( "blz-affiliation-settings-js" );
+        return = (isset($settings['tracker_disable'])) ? $settings['tracker_disable'] : false;
+    }
+
 
     /**
      * Setta il valore in config che dice se la pagina ha un link affiliato

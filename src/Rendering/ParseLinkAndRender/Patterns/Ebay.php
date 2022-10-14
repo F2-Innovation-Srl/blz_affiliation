@@ -28,8 +28,6 @@ class Ebay extends Pattern {
 
         return array_map( function( $link , $url ) {
             
-            $url = Helper::cleanEbayParams($url);
-
             return new Link ([
                 'old_link'    => $link,
                 'url'         => $url,
