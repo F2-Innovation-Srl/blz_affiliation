@@ -194,7 +194,7 @@ class ConfigSettings {
      */
     public function render()
     {
-        if (!current_user_can('manage_options')) {
+        if (!current_user_can('edit_blz_affiliation')) {
             
             wp_die('Non hai i permessi per visualizzare questa pagina');
 

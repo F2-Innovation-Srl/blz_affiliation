@@ -62,7 +62,7 @@ class GaTrackingIdSettings {
     {
         
         if (!$this->is_valid_config)  wp_die('Per utilizzare il plugin occorre prima caricare le configurazioni');
-        if (!current_user_can('manage_options')) {
+        if (!current_user_can('edit_blz_affiliation')) {
             wp_die('Non hai i permessi per visualizzare questa pagina');
         } else{
             $tabs =  (new Tab($this->settings,$this->current))->render();
