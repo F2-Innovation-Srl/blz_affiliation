@@ -44,40 +44,42 @@ class GlobalSettings {
     /**
      * Print the page if the rights are grant
      */
-    public function render()
-    {
-        if (!$this->is_valid_config)  wp_die('Per utilizzare il plugin occorre prima caricare le configurazioni');
-        if (!current_user_can('edit_blz_affiliation')) {
+    public function render() {
+
+        if( !$this->is_valid_config ) {
+
+            wp_die('Per utilizzare il plugin occorre prima caricare le configurazioni');
+        }  
+
+        if( !current_user_can( 'edit_blz_affiliation' ) ) {
             
             wp_die('Non hai i permessi per visualizzare questa pagina');
+        } 
 
-        } else{
-
-            echo str_replace(
-                [ 
-                    '{{ title }}',
-                    '{{ link }}',
-                    '{{ option_name }}',
-                    '{{ GlobalSettingsTable }}',
-                    '{{ DisclamerTable }}',
-                    '{{ StyleSettingsTable }}',
-                    '{{ wp_nonce }}',
-                    '{{ submit_button }}'
-                ],
-                [ 
-                    $this->title,
-                    esc_html( admin_url( 'admin.php?page='.$_GET["page"] ) ),
-                    $this->option_name,
-                    ( new GlobalSettingsTable( $this->option_name ))->render(),
-                    ( new DisclamerTable( $this->option_name."-disclamer"))->render(),
-                    ( new StyleSettingsTable( $this->option_name."-css"))->render(),
-                    wp_nonce_field( 'program-links-options-save', 'blz-affiliation-custom-message' ),
-                    get_submit_button()
-                ],
-                $this->output
-            );
+        echo str_replace(
+            [ 
+                '{{ title }}',
+                '{{ link }}',
+                '{{ option_name }}',
+                '{{ GlobalSettingsTable }}',
+                '{{ DisclamerTable }}',
+                '{{ StyleSettingsTable }}',
+                '{{ wp_nonce }}',
+                '{{ submit_button }}'
+            ],
+            [ 
+                $this->title,
+                esc_html( admin_url( 'admin.php?page='.$_GET["page"] ) ),
+                $this->option_name,
+                ( new GlobalSettingsTable( $this->option_name ))->render(),
+                ( new DisclamerTable( $this->option_name."-disclamer"))->render(),
+                ( new StyleSettingsTable( $this->option_name."-css"))->render(),
+                wp_nonce_field( 'program-links-options-save', 'blz-affiliation-custom-message' ),
+                get_submit_button()
+            ],
+            $this->output
+        );
             
-        }
 
     }
 
