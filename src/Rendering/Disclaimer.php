@@ -13,7 +13,15 @@ class Disclaimer {
     private $text = <<<HTML
         <p id="disclaimer{{ rand }}" class='blz_affiliation_disclamer'></p>
         <script>
-            document.getElementById('disclaimer{{ rand }}').textContent = '{{ text }}';
+            document.addEventListener('DOMContentLoaded', (evt) => {
+                let blz_disclaimer = document.getElementById('disclaimer{{ rand }}');
+                let tmp = blz_disclaimer.cloneNode();
+                let container = blz_disclaimer.parentElement;
+                blz_disclaimer.remove();
+                
+                tmp.textContent = '{{ text }}';
+                container.appendChild( tmp );        
+            });
         </script>
     HTML;
 
@@ -70,6 +78,5 @@ class Disclaimer {
 
         return implode( '', array_map( function( ) { return chr( rand( 65, 85 ) ); }, range( 0, $pad ) ));
     }
-
 
 }
