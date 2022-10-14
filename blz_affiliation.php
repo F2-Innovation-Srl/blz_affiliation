@@ -8,20 +8,20 @@
  * Author URI: https://halfelf.org/
  * License: http://www.apache.org/licenses/LICENSE-2.0
  * Text Domain: blz-affiliation
- * Network: true
+ * Network: false
  *
  * @package blz-affiliation
  *
- * Copyright 2021 Blazemedia (email: techteam@blazemedia.it)
+ * Copyright 2022 Blazemedia (email: techteam@blazemedia.it)
  *
  */
 define( 'PLUGIN_PATH' , plugin_dir_path( __FILE__ ) );
 define( 'PLUGIN_URI'  , plugin_dir_url( __FILE__ ));
 define( 'PLUGIN_VERSION'  , "1.8.6");
 
+
 require_once PLUGIN_PATH . '/vendor/autoload.php';
 
-use BLZ_AFFILIATION\Utils\Config;
 use BLZ_AFFILIATION\PostTypes;
 use BLZ_AFFILIATION\Taxonomies;
 use BLZ_AFFILIATION\AdminUserInterface\Settings;
