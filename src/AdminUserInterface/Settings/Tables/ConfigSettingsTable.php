@@ -3,11 +3,11 @@ namespace BLZ_AFFILIATION\AdminUserInterface\Settings\Tables;
 use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\Fields;
  
 /**
- * Class GlobalSettingsTable
+ * Class ConfigSettingsTable
  *
  * @package BLZ_AFFILIATION
  */
-class GlobalSettingsTable extends Table{
+class ConfigSettingsTable extends Table{
     
 
 	protected function getTableFields($row) {

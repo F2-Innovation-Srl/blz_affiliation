@@ -3,7 +3,7 @@
  * Plugin Name: Blazemdia Affiliation
  * Plugin URI: https://www.blazemedia.it/
  * Description: This is a Blazemedia plugin for links affiliation management.
- * Version: 1.8.1
+ * Version: 1.8.6
  * Author: Blazemedia
  * Author URI: https://halfelf.org/
  * License: http://www.apache.org/licenses/LICENSE-2.0
@@ -17,7 +17,7 @@
  */
 define( 'PLUGIN_PATH' , plugin_dir_path( __FILE__ ) );
 define( 'PLUGIN_URI'  , plugin_dir_url( __FILE__ ));
-define( 'PLUGIN_VERSION'  , "1.8.4");
+define( 'PLUGIN_VERSION'  , "1.8.6");
 
 require_once PLUGIN_PATH . '/vendor/autoload.php';
 
@@ -32,15 +32,7 @@ use BLZ_AFFILIATION\Rendering\ParseLinkAndRender\ParseLinkAndRender;
  *
  */
 class BlzAffiliate {
-	
-	private $btn;
-	/**
-	 * Init
-	 *
-	 * @since 1.0
-	 * @access public
-	 */
-	
+			
 	public function __construct() {
 
 		/// crea i custom post type (tabelle e link "centralizzati")
@@ -50,7 +42,8 @@ class BlzAffiliate {
 		// crea le tassonomie per i program link
 		Taxonomies\AffiliateLinkProgram::init();
 
-		if (!is_admin()){
+		if( !is_admin() ) {
+
 			/// effettua il rendering degli shortcode dei bottoni 
 			/// di affiliazione
 			new Rendering\AffiliateLinkButton();
@@ -73,7 +66,7 @@ class BlzAffiliate {
 
 		$config = Settings\Config::loadSettings();
 
-        if ($config->is_valid) {
+        if( $config->is_valid ) {
 			
 			/// aggiunge i bottoni per i link di affiliazione		
 			new Buttons\AffiliateLinkButton();

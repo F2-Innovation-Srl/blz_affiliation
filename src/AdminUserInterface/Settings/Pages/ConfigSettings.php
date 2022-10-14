@@ -1,9 +1,6 @@
 <?php
 namespace BLZ_AFFILIATION\AdminUserInterface\Settings\Pages;
 
-use BLZ_AFFILIATION\Utils\Config;
-use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\StyleSettingsTable;
-use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\DisclamerTable;
 use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\ConfigSettingsTable;
 /**
  * Class ConfigSettings
@@ -194,7 +191,7 @@ class ConfigSettings {
      */
     public function render()
     {
-        if (!current_user_can('edit_blz_affiliation')) {
+        if (!current_user_can('manage_options')) {
             
             wp_die('Non hai i permessi per visualizzare questa pagina');
 
