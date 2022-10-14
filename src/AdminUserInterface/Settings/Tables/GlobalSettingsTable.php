@@ -18,6 +18,7 @@ class GlobalSettingsTable extends Table{
         $taxonomies          = ( $row[ 'taxonomy' ]    != null ) ? $row[ 'taxonomy' ]    : '';
         $website_ga          = ( $row[ 'website_ga' ]  != null ) ? $row[ 'website_ga' ]  : '';
         $website_trk         = ( $row[ 'website_trk' ] != null ) ? $row[ 'website_trk' ] : '';
+        $tracker_disable            = ( $row[ 'tracker_disable' ] != null ) ? $row[ 'tracker_disable' ] : 'false';
         $tracking_disable            = ( $row[ 'tracking_disable' ] != null ) ? $row[ 'tracking_disable' ] : 'false';
 
         $this->rows[] =  [
@@ -26,7 +27,8 @@ class GlobalSettingsTable extends Table{
             "Tassonomie di riferimento" => new Fields\Taxonomies( $this->option_name."_taxonomy", serialize( $taxonomies ) ),
             "{website} GA" => new Fields\Text($this->option_name."_website_ga",$website_ga,"text"),
             "{website} TRK_ID" => new Fields\Text($this->option_name."_website_trk",$website_trk,"text"),
-            "Disabilita tracker.js" => new Fields\Text( $this->option_name."_tracking_disable", $tracking_disable, "boolean" ),
+            "Disabilita filtro tracking id (tag=) " => new Fields\Text( $this->option_name."_tracking_disable", $tracking_disable, "boolean" ),
+            "Disabilita tracker.js" => new Fields\Text( $this->option_name."_tracker_disable", $tracker_disable, "boolean" ),
         ];
     }
 
@@ -48,7 +50,8 @@ class GlobalSettingsTable extends Table{
             'taxonomy'           => isset( $_POST[$this->option_name. '_taxonomy' ] ) ? $_POST[$this->option_name. '_taxonomy' ] : ($row[ 'taxonomy' ] ?? ''),
             'website_ga'         => isset( $_POST[ $this->option_name.'_website_ga' ] ) ? $_POST[$this->option_name. '_website_ga' ] : ($row['website_ga'] ?? ''),
             'website_trk'        => isset( $_POST[ $this->option_name.'_website_trk' ] ) ? $_POST[$this->option_name. '_website_trk' ] : ($row['website_trk'] ?? ''),
-            'tracking_disable'   => isset( $_POST[ $this->option_name.'_tracking_disable' ] ) ? $_POST[$this->option_name. '_tracking_disable' ] : ($row['tracking_disable'] ?? 'false')
+            'tracking_disable'   => isset( $_POST[ $this->option_name.'_tracking_disable' ] ) ? $_POST[$this->option_name. '_tracking_disable' ] : ($row['tracking_disable'] ?? 'false'),
+            'tracker_disable'   => isset( $_POST[ $this->option_name.'_tracker_disable' ] ) ? $_POST[$this->option_name. '_tracker_disable' ] : ($row['tracker_disable'] ?? 'false')
         ];
 
         // SET
