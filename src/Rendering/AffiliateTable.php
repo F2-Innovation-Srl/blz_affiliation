@@ -148,7 +148,7 @@ class AffiliateTable {
         }, '');
         $caption = (!empty($this->caption)) ? str_replace('{{ caption }}',$this->caption,$captionTemplate) : "";
         
-        Helper::isAffiliationPage();
+        Helper::setAffiliationPage();
 
         return str_replace(['{{ caption }}','{{ header }}','{{ rows }}' ], [ $caption, $header, $rows ], $tableTemplate );
 

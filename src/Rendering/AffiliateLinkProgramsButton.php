@@ -52,7 +52,7 @@ class AffiliateLinkProgramsButton {
 
     private function FillTemplate( $ga_event, $tracking_id, $template ) {
 
-        Helper::isAffiliationPage();
+        Helper::setAffiliationPage();
         /// se possibile inserisce il tracking id
         $link = str_replace( ['{tracking-id}','%7Btracking-id%7D'], $tracking_id, $this->request->getLink() );
         /// poi accorcia il link

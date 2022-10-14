@@ -7,14 +7,16 @@ class Helper {
 
     static function cleanParams($link, $marketplace = "") {
         
-
         //disabilita l'override del tracking_id da tabella attivazione solo se è un parse&render ed è flaggata la disabilitazione
-        $disable_overide = (self::isTrackingDisabled() && empty($marketplace)) ? true : false;
-        // se è un parse&render capisce il marketplace dalla url
-        if (empty($marketplace))
-            $marketPlace = (strpos($link, "ebay") !== false)  ? "ebay" : ( (strpos($link, "amazon") !== false)  ? "amazon" : "");
+        $disable_override = self::isTrackingDisabled() && empty($marketplace);
 
-        if (!$disable_overide){
+        // se è un parse&render capisce il marketplace dalla url
+        if( empty( $marketplace ) ){
+
+            $marketPlace = (strpos($link, "ebay") !== false)  ? "ebay" : ( (strpos($link, "amazon") !== false)  ? "amazon" : "");
+        }
+        
+        if( !$disable_override ){
         
             if (strpos($marketplace, "amazon") !== false) {
 
@@ -105,31 +107,44 @@ class Helper {
     }
 
     /**
-     * Setta il Tracking è disabilitato
+     * Ritorna true se lo stato del tracking è disabilitato, false altrimenti
+     * 
+     * @return bool
      */
-    public static function isTrackingDisabled(){
+    public static function isTrackingDisabled() {
+        
         $settings = get_option( "blz-affiliation-settings-js" );
-        return (isset($settings['tracking_disable'])) ? $settings['tracking_disable'] : false;
+
+        return isset( $settings[ 'tracking_disable' ] ) ? $settings[ 'tracking_disable' ] : false;
     }
 
     /**
-     * Setta il Tracker è disabilitato
+     * Ritorna true se il Tracker è disabilitato, false altrimenti
+     *
+     * @return bool
      */
-    public static function isTrackerDisabled(){
+    public static function isTrackerDisabled() {
+
         $settings = get_option( "blz-affiliation-settings-js" );
-        return (isset($settings['tracker_disable'])) ? $settings['tracker_disable'] : false;
+
+        return isset( $settings['tracker_disable'] ) ? $settings['tracker_disable'] : false;
     }
 
 
     /**
-     * Setta il valore in config che dice se la pagina ha un link affiliato
+     * Imposta il valore is_affiliation_page a true in config
+     * se la pagina ha un link affiliato
+     *      
      */
-    public static function isAffiliationPage(){
+    public static function setAffiliationPage() {
+
         $config = Config::loadSettings();
+
         $config->is_affiliation_page = "true"; 
     }
 
-     /**
+
+    /**
      * Torna la lista dei pattern da verificare
      *
      * @return array

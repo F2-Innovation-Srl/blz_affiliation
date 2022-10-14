@@ -20,7 +20,7 @@ class AffiliateLinkProgramStoredButton {
     
     public function printAffiliateLink ( $atts, $content, $tag ) {
 
-        Helper::isAffiliationPage();
+        Helper::setAffiliationPage();
         /// prende i dati della request e del content
         /// a partire dal link_id
         $link = get_post( $atts['id'] );

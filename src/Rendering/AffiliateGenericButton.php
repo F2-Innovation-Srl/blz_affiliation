@@ -57,7 +57,7 @@ class AffiliateGenericButton {
 
     private function FillTemplate( $ga_event, $tracking, $template) {
       
-        Helper::isAffiliationPage();
+        Helper::setAffiliationPage();
         
         $link = Helper::cleanParams($this->linkData->url);
         

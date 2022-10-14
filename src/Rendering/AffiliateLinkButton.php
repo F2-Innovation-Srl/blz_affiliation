@@ -27,7 +27,7 @@ class AffiliateLinkButton {
 
     private function FillTemplate( Offer $offer, $ga_event, $tracking, $template) {
 
-        Helper::isAffiliationPage();
+        Helper::setAffiliationPage();
 
         
         if (strpos($offer->marketplace, "ebay") === false) {

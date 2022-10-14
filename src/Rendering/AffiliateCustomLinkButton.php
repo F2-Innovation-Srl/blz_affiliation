@@ -49,7 +49,7 @@ class AffiliateCustomLinkButton {
 
     private function FillTemplate( $ga_event, $tracking, $template) {
 
-        Helper::isAffiliationPage();
+        Helper::setAffiliationPage();
         $link = str_replace(['{tracking-id}','%7Btracking-id%7D'], $tracking, $this->request->getLink());
         /// poi accorcia il link
         $link = ( new Shortener )->generateShortLink( $link ) ;

@@ -71,7 +71,7 @@ class ParseLinkAndRender {
      */
     private function fillTemplate( $marketplace, $link, $ga_event, $tracking, $template) {
             
-        Helper::isAffiliationPage();
+        Helper::setAffiliationPage();
 
         $link = Helper::cleanParams($link,$marketplace);
 
