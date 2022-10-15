@@ -11,7 +11,7 @@ use BLZ_AFFILIATION\AdminUserInterface\Settings\Config;
 class Disclaimer {
 
     private $text = <<<HTML
-        <p id="disclaimer{{ rand }}" class='blz_affiliation_disclamer'></p>
+        <p id="disclaimer{{ rand }}" class='blz_affiliation_disclaimer'></p>
         <script>
             document.addEventListener('DOMContentLoaded', (evt) => {
                 let blz_disclaimer = document.getElementById('disclaimer{{ rand }}');
@@ -42,16 +42,16 @@ class Disclaimer {
         /// 1) se esiste un affiliation link in pagina prende il disclaimer generale
         if( $config->is_affiliation_page == "true" ) {
 
-            $text_option = get_option( "blz-affiliation-settings-disclamer" );
+            $text_option = get_option( "blz-affiliation-settings-disclaimer" );
             
-            $text = !empty( $text_option["disclamer"] ) ? $text_option["disclamer"] : "";
+            $text = !empty( $text_option["disclaimer"] ) ? $text_option["disclaimer"] : "";
         }
 
-        /// 2) se c'è una regola impostata da attivatore prende il disclamer impostato ad-hoc
+        /// 2) se c'è una regola impostata da attivatore prende il disclaimer impostato ad-hoc
         $request = new Request([]);
         
         /// inizializza i settingsData 
-        $SettingsData = new SettingsData( "blz_disclamer", $request );
+        $SettingsData = new SettingsData( "blz_disclaimer", $request );
 
         if ( !empty( $SettingsData->getGAEvent() ) ) {
 

@@ -40,8 +40,8 @@ abstract class Button {
 
     function __construct($name, $action) { 
       
-        $this->base_url = PLUGIN_URI .'/src/AdminUserInterface/Buttons/';
-        $this->base_dir = PLUGIN_PATH .'/src/AdminUserInterface/Buttons/';
+        $this->base_url = BLZ_AFFILIATION_URI .'/src/AdminUserInterface/Buttons/';
+        $this->base_dir = BLZ_AFFILIATION_PATH .'/src/AdminUserInterface/Buttons/';
 
         $this->name   = $name;
         $this->action = $action;

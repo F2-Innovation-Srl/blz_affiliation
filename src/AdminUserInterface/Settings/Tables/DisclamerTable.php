@@ -6,18 +6,18 @@ use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\Fields\Text;
  * Campi per impostare gli stili
  *
  */
-class DisclamerTable extends Table{
+class DisclaimerTable extends Table{
 
 
 	protected function getTableFields($row) {
 
-        $this->title = "Disclamer "; 
+        $this->title = "Disclaimer "; 
     
-        $disclamer = ( $row[ 'disclamer' ] != null ) ? $row[ 'disclamer' ] : '';
+        $disclaimer = ( $row[ 'disclaimer' ] != null ) ? $row[ 'disclaimer' ] : '';
         /// compone una riga ( insieme di campi )
         $this->rows[] =  [
             /// inserisce un campo "casella di testo"
-            'Disclamer (per skinnare impostare le proprietà alla classe css "blz_affiliation_disclamer")' => new Text( $this->option_name."_disclamer", $disclamer, "text" ),
+            'disclaimer (per skinnare impostare le proprietà alla classe css "blz_affiliation_disclaimer")' => new Text( $this->option_name."_disclaimer", $disclaimer, "text" ),
         ];
     }
 
@@ -34,7 +34,7 @@ class DisclamerTable extends Table{
 
         // UPDATE
         $row = [
-            'disclamer' => isset( $_POST[$this->option_name. '_disclamer'  ] ) ? $_POST[$this->option_name. '_disclamer' ]  : ( $row[ 'disclamer'  ] ?? '' ),            
+            'disclaimer' => isset( $_POST[$this->option_name. '_disclaimer'  ] ) ? $_POST[$this->option_name. '_disclaimer' ]  : ( $row[ 'disclaimer'  ] ?? '' ),            
         ];
 
         // SET

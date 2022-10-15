@@ -97,9 +97,9 @@ abstract class Table {
             $return = $label;
         }
 
-        //eccezioni per gestione Disclamer
-        if(isset($this->current["marketplace"]["ga_event_template"]) && $this->current["marketplace"]["ga_event_template"] == "{disclamer}" && $label == "Valore GA") $return = "Disclamer";
-        if(isset($this->current["marketplace"]["ga_event_template"]) && $this->current["marketplace"]["ga_event_template"] == "{disclamer}" && $label == "Valore TRK_ID") $return = "&nbsp;";
+        //eccezioni per gestione disclaimer
+        if(isset($this->current["marketplace"]["ga_event_template"]) && $this->current["marketplace"]["ga_event_template"] == "{disclaimer}" && $label == "Valore GA") $return = "disclaimer";
+        if(isset($this->current["marketplace"]["ga_event_template"]) && $this->current["marketplace"]["ga_event_template"] == "{disclaimer}" && $label == "Valore TRK_ID") $return = "&nbsp;";
         	
         return $return;
     }

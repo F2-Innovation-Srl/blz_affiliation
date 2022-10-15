@@ -4,7 +4,7 @@ namespace BLZ_AFFILIATION\AdminUserInterface\Settings\Pages;
 use BLZ_AFFILIATION\Utils\Config;
 use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\StyleSettingsTable;
 use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\ScriptSettingsTable;
-use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\DisclamerTable;
+use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\DisclaimerTable;
 use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\GlobalSettingsTable;
 /**
  * Class GlobalSettings
@@ -27,7 +27,7 @@ class GlobalSettings {
             <hr>
             {{ ScriptSettingsTable }}
             <hr>
-            {{ DisclamerTable }}
+            {{ disclaimerTable }}
             <hr>
             {{ StyleSettingsTable }}
         </div>
@@ -66,7 +66,7 @@ class GlobalSettings {
                 '{{ option_name }}',
                 '{{ GlobalSettingsTable }}',
                 '{{ ScriptSettingsTable }}',
-                '{{ DisclamerTable }}',
+                '{{ disclaimerTable }}',
                 '{{ StyleSettingsTable }}',
                 '{{ wp_nonce }}',
                 '{{ submit_button }}'
@@ -77,7 +77,7 @@ class GlobalSettings {
                 $this->option_name,
                 ( new GlobalSettingsTable( $this->option_name ))->render(),
                 ( new ScriptSettingsTable( $this->option_name."-js"))->render(),
-                ( new DisclamerTable( $this->option_name."-disclamer"))->render(),
+                ( new DisclaimerTable( $this->option_name."-disclaimer"))->render(),
                 ( new StyleSettingsTable( $this->option_name."-css"))->render(),
                 wp_nonce_field( 'program-links-options-save', 'blz-affiliation-custom-message' ),
                 get_submit_button()

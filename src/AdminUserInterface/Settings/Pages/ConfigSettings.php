@@ -120,15 +120,15 @@ class ConfigSettings {
                               ]
                           },
                           {
-                              "name"        : "Disclamer",
-                              "slug"      : "blz_disclamer",
-                              "description" : "Gestione del disclamer per casistiche diverse da link inserito tramite plugin",
+                              "name"        : "disclaimer",
+                              "slug"      : "blz_disclaimer",
+                              "description" : "Gestione del disclaimer per casistiche diverse da link inserito tramite plugin",
                               "marketplaces":[
                                       {
                                           "name"              : "Generic",
                                           "slug"              : "generic",
                                           "description"       : "",
-                                          "ga_event_template" : "{disclamer}",
+                                          "ga_event_template" : "{disclaimer}",
                                           "tracking_id"       : ""
                                       }
                               ]

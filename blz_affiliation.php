@@ -3,7 +3,7 @@
  * Plugin Name: Blazemdia Affiliation
  * Plugin URI: https://www.blazemedia.it/
  * Description: This is a Blazemedia plugin for links affiliation management.
- * Version: 1.8.71
+ * Version: 1.8.72
  * Author: Blazemedia
  * Author URI: https://halfelf.org/
  * License: http://www.apache.org/licenses/LICENSE-2.0
@@ -15,12 +15,12 @@
  * Copyright 2022 Blazemedia (email: techteam@blazemedia.it)
  *
  */
-define( 'PLUGIN_PATH' , plugin_dir_path( __FILE__ ) );
-define( 'PLUGIN_URI'  , plugin_dir_url( __FILE__ ));
-define( 'PLUGIN_VERSION'  , "1.8.71");
+define( 'BLZ_AFFILIATION_PATH' , plugin_dir_path( __FILE__ ) );
+define( 'BLZ_AFFILIATION_URI'  , plugin_dir_url( __FILE__ ));
+define( 'BLZ_AFFILIATION_VERSION'  , "1.8.72");
 
 
-require_once PLUGIN_PATH . '/vendor/autoload.php';
+require_once BLZ_AFFILIATION_PATH . '/vendor/autoload.php';
 
 use BLZ_AFFILIATION\PostTypes;
 use BLZ_AFFILIATION\Taxonomies;

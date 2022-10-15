@@ -27,7 +27,7 @@ class Config {
         $config_file  = get_option("blz-affiliation");
         //print_r($config);exit;
         if (empty($config_file)) {
-            $config = json_decode(file_get_contents(PLUGIN_PATH.'config.json'), true);
+            $config = json_decode(file_get_contents(BLZ_AFFILIATION_PATH.'config.json'), true);
             $this->is_valid = false;
         }else{
             $config  = json_decode(stripslashes($config_file), true);
