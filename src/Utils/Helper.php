@@ -22,7 +22,7 @@ class Helper {
 
                 $link = ( strpos( $link, 'tag=' ) === false ) ? $link : preg_filter('/(.*)\?.*/', '$1', $link );
                 $link = ( strpos( $link, '?' ) === false ) ? $link .'?tag={tracking_id}' :  $link .'&tag={tracking_id}';
-
+                return $link;
             }
 
             if (strpos($marketplace, "ebay") !== false) {
