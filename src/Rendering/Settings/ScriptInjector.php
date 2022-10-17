@@ -32,7 +32,6 @@ class ScriptInjector {
             );
 
         } else {
-           
             if ($this->tracker_enabled) {
                 /// dipendenze js per tracciamento
                 wp_enqueue_script('blz-affiliation-tracker',   BLZ_AFFILIATION_URI ."src/assets/js/libs/blz_tr.js",[], BLZ_AFFILIATION_VERSION,true);

@@ -137,7 +137,7 @@ class Helper {
 
         $settings = get_option( "blz-affiliation-settings-js" );
 
-        return isset( $settings['tracker_enable'] ) ? $settings['tracker_enable'] : false;
+        return isset( $settings['tracker_enable'] ) ? ( ($settings[ 'tracker_enable' ] == "true") ? true : false ) : false;
     }
 
 
