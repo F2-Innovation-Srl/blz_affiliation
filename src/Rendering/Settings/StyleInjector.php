@@ -25,6 +25,10 @@ class StyleInjector {
         
         if ( !is_admin() ) {
             
+            # enqueue CSS
+            wp_enqueue_style( 'blz-affiliation-grid-css', BLZ_AFFILIATION_URI ."src/assets/css/flex-grid-lite.css", [],  BLZ_AFFILIATION_VERSION, 'all' );
+            wp_enqueue_style( 'blz-affiliation-table-css', BLZ_AFFILIATION_URI ."src/assets/css/table-rating.css", [],  BLZ_AFFILIATION_VERSION, 'all' );
+           
             if ( function_exists( 'is_amp_endpoint' ) && @is_amp_endpoint() ) {
 
                 // Add a the css for the rendered links
