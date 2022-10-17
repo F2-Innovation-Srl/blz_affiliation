@@ -13,12 +13,12 @@ class ScriptSettingsTable extends Table{
 
         $this->title = "Functions Settings"; 
     
-        $tracker_disable            = ( $row[ 'tracker_disable' ] != null ) ? $row[ 'tracker_disable' ] : 'false';
-        $tracking_disable            = ( $row[ 'tracking_disable' ] != null ) ? $row[ 'tracking_disable' ] : 'false';
+        $tracker_enable            = ( $row[ 'tracker_enable' ] != null ) ? $row[ 'tracker_enable' ] : 'true';
+        $tracking_enable            = ( $row[ 'tracking_enable' ] != null ) ? $row[ 'tracking_enable' ] : 'true';
         /// compone una riga ( insieme di campi )
         $this->rows[] =  [
-            "Disabilita filtro tracking id (tag=) " => new Fields\Text( $this->option_name."_tracking_disable", $tracking_disable, "boolean" ),
-            "Disabilita tracker.js" => new Fields\Text( $this->option_name."_tracker_disable", $tracker_disable, "boolean" )
+            "Abilita filtro tracking id (tag=) " => new Fields\Text( $this->option_name."_tracking_enable", $tracking_enable, "boolean" ),
+            "Abilita tracker.js" => new Fields\Text( $this->option_name."_tracker_enable", $tracker_enable, "boolean" )
         ];
     }
 
@@ -35,8 +35,8 @@ class ScriptSettingsTable extends Table{
 
         // UPDATE
         $row = [
-            'tracking_disable'   => isset( $_POST[ $this->option_name.'_tracking_disable' ] ) ? $_POST[$this->option_name. '_tracking_disable' ] : ($row['tracking_disable'] ?? 'false'),
-            'tracker_disable'   => isset( $_POST[ $this->option_name.'_tracker_disable' ] ) ? $_POST[$this->option_name. '_tracker_disable' ] : ($row['tracker_disable'] ?? 'false')
+            'tracking_enable'   => isset( $_POST[ $this->option_name.'_tracking_enable' ] ) ? $_POST[$this->option_name. '_tracking_enable' ] : ($row['tracking_enable'] ?? 'true'),
+            'tracker_enable'   => isset( $_POST[ $this->option_name.'_tracker_enable' ] ) ? $_POST[$this->option_name. '_tracker_enable' ] : ($row['tracker_enable'] ?? 'true')
         ];
 
         // SET

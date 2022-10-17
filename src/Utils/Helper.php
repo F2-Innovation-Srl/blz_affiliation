@@ -7,8 +7,7 @@ class Helper {
 
     static function cleanParams($link, $marketplace = "") {
         
-        //disabilita l'override del tracking_id da tabella attivazione solo se è un parse&render ed è flaggata la disabilitazione
-        $disable_override = self::isTrackingDisabled() && empty($marketplace);
+        $enabled_override = self::isTrackingEnabled($marketplace);
 
         // se è un parse&render capisce il marketplace dalla url
         if( empty( $marketplace ) ){
@@ -16,42 +15,49 @@ class Helper {
             $marketPlace = (strpos($link, "ebay") !== false)  ? "ebay" : ( (strpos($link, "amazon") !== false)  ? "amazon" : "");
         }
         
-        if( !$disable_override ){
-        
-            if (strpos($marketplace, "amazon") !== false) {
-
-                $link = ( strpos( $link, 'tag=' ) === false ) ? $link : preg_filter('/(.*)\?.*/', '$1', $link );
-                $link = ( strpos( $link, '?' ) === false ) ? $link .'?tag={tracking_id}' :  $link .'&tag={tracking_id}';
-                return $link;
-            }
-
-            if (strpos($marketplace, "ebay") !== false) {
-
-                $settings = get_option( "blz-affiliation-settings" );
-                $ebay_campain_id = ( isset( $settings['ebay_campain_id'] )) ? $settings['ebay_campain_id'] : "5338741871";
-        
-                $link = strpos( $link, '?' ) === false ? $link : preg_filter('/(.*)\?.*/', '$1', $link );
-
-                $params = implode( '&', [
-                    'mkevt=1',
-                    'toolid=10001',
-                    'mkcid=1',
-                    'mkrid=724-53478-19255-0',
-                    'siteid=101',
-                    'campid='.$ebay_campain_id,
-                    'customid={tracking_id}'
-                ]);
-
-                $prefix = strpos( $link, '?' ) === false ? '?' : '&';
-                return $link . $prefix . $params;
-
-            }
-
-        }else{
-            return $link;
+        if ( $enabled_override || (!$enabled_override  && ( strpos( $link, 'tag=' ) === false || strpos( $link, 'campid=' ) === false )) ){
+           
+            $link = self::replaceTag($link, $marketplace);
         }
 
+        return $link;
+       
+
     }
+
+
+    static function replaceTag($link, $marketplace){
+
+        if (strpos($marketplace, "amazon") !== false) {
+            $link = ( strpos( $link, 'tag=' ) === false ) ? $link : preg_filter('/(.*)\?.*/', '$1', $link );
+            $link = ( strpos( $link, '?' ) === false ) ? $link .'?tag={tracking_id}' :  $link .'&tag={tracking_id}';
+            return $link;
+        }
+        
+        if (strpos($marketplace, "ebay") !== false) {
+
+            $settings = get_option( "blz-affiliation-settings" );
+            $ebay_campain_id = ( isset( $settings['ebay_campain_id'] )) ? $settings['ebay_campain_id'] : "5338741871";
+    
+            $link = strpos( $link, '?' ) === false ? $link : preg_filter('/(.*)\?.*/', '$1', $link );
+
+            $params = implode( '&', [
+                'mkevt=1',
+                'toolid=10001',
+                'mkcid=1',
+                'mkrid=724-53478-19255-0',
+                'siteid=101',
+                'campid='.$ebay_campain_id,
+                'customid={tracking_id}'
+            ]);
+            
+            $prefix = strpos( $link, '?' ) === false ? '?' : '&';
+            return $link . $prefix . $params;
+
+        }
+    }
+
+
     /**
      * Replace special characters and spaces in a given string
      * and return the result lowering capital letters
@@ -111,11 +117,15 @@ class Helper {
      * 
      * @return bool
      */
-    public static function isTrackingDisabled() {
+    public static function isTrackingEnabled($marketplace) {
         
         $settings = get_option( "blz-affiliation-settings-js" );
+        
+        //disabilita l'override del tracking_id da tabella attivazione solo se è un parse&render ed è flaggata la disabilitazione
+        if (empty($marketplace)) return true;
 
-        return isset( $settings[ 'tracking_disable' ] ) ? $settings[ 'tracking_disable' ] : false;
+        return isset( $settings[ 'tracking_enable' ] ) ? ( ($settings[ 'tracking_enable' ] == "true") ? true : false ) : false;
+
     }
 
     /**
@@ -123,11 +133,11 @@ class Helper {
      *
      * @return bool
      */
-    public static function isTrackerDisabled() {
+    public static function isTrackerEnabled() {
 
         $settings = get_option( "blz-affiliation-settings-js" );
 
-        return isset( $settings['tracker_disable'] ) ? $settings['tracker_disable'] : false;
+        return isset( $settings['tracker_enable'] ) ? $settings['tracker_enable'] : false;
     }
 
 

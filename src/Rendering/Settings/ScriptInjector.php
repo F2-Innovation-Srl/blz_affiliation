@@ -9,11 +9,11 @@ use BLZ_AFFILIATION\Utils\Helper;
  */
 class ScriptInjector {
 
-    private $tracker_disabled;
+    private $tracker_enabled;
 
 	function __construct() {
         
-        $this->tracker_disabled = helper::isTrackerDisabled();
+        $this->tracker_enabled = helper::isTrackerEnabled();
         
         add_action( 'init', [ $this, 'init' ] );
         
@@ -32,7 +32,7 @@ class ScriptInjector {
             );
         } else {
            
-            if (! $tracker_disabled) {
+            if ($tracker_enabled) {
                 /// dipendenze js per tracciamento
                 wp_enqueue_script('blz-affiliation-tracker',   BLZ_AFFILIATION_URI ."src/assets/js/libs/blz_tr.js",[], BLZ_AFFILIATION_VERSION,true);
                 wp_enqueue_script('blz-affiliation-activator', BLZ_AFFILIATION_URI ."src/assets/js/affiliate-link-activator.js",["blz-affiliation-tracker"], BLZ_AFFILIATION_VERSION,true);
