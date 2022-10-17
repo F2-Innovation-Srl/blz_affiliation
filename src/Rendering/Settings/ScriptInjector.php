@@ -37,10 +37,7 @@ class ScriptInjector {
                 wp_enqueue_script('blz-affiliation-tracker',   BLZ_AFFILIATION_URI ."src/assets/js/libs/blz_tr.js",[], BLZ_AFFILIATION_VERSION,true);
                 wp_enqueue_script('blz-affiliation-activator', BLZ_AFFILIATION_URI ."src/assets/js/affiliate-link-activator.js",["blz-affiliation-tracker"], BLZ_AFFILIATION_VERSION,true);
             }
-            # enqueue CSS
-            wp_enqueue_style( 'blz-affiliation-grid-css', BLZ_AFFILIATION_URI ."src/assets/css/flex-grid-lite.css", [],  BLZ_AFFILIATION_VERSION, 'all' );
-            wp_enqueue_style( 'blz-affiliation-table-css', BLZ_AFFILIATION_URI ."src/assets/css/table-rating.css", [],  BLZ_AFFILIATION_VERSION, 'all' );
-            
+             
         }
     }
 
