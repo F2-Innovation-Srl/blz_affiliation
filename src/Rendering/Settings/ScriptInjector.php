@@ -30,10 +30,10 @@ class ScriptInjector {
                 BLZ_AFFILIATION_VERSION,
                 true
             );
-            
+
         } else {
            
-            if ($tracker_enabled) {
+            if ($this->tracker_enabled) {
                 /// dipendenze js per tracciamento
                 wp_enqueue_script('blz-affiliation-tracker',   BLZ_AFFILIATION_URI ."src/assets/js/libs/blz_tr.js",[], BLZ_AFFILIATION_VERSION,true);
                 wp_enqueue_script('blz-affiliation-activator', BLZ_AFFILIATION_URI ."src/assets/js/affiliate-link-activator.js",["blz-affiliation-tracker"], BLZ_AFFILIATION_VERSION,true);
