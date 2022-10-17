@@ -15,7 +15,7 @@ class Helper {
             $marketPlace = (strpos($link, "ebay") !== false)  ? "ebay" : ( (strpos($link, "amazon") !== false)  ? "amazon" : "");
         }
         
-        if ( $enabled_override || (!$enabled_override  && ( strpos( $link, 'tag=' ) === false || strpos( $link, 'campid=' ) === false )) ){
+        if ( $enabled_override || (!$enabled_override  && !( strpos( $link, 'tag=' ) !== false || strpos( $link, 'campid=' ) !== false )) ){
            
             $link = self::replaceTag($link, $marketplace);
         }
