@@ -153,7 +153,6 @@ class Helper {
         $config->is_affiliation_page = "true"; 
     }
 
-
     /**
      * Torna la lista dei pattern da verificare
      *
