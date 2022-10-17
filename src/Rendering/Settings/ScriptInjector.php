@@ -30,6 +30,7 @@ class ScriptInjector {
                 BLZ_AFFILIATION_VERSION,
                 true
             );
+            
         } else {
            
             if ($tracker_enabled) {
