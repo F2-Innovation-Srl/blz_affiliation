@@ -4,24 +4,33 @@ namespace BLZ_AFFILIATION\Utils;
 use BLZ_AFFILIATION\AdminUserInterface\Settings\Config;
 class Helper {
 
-
-    static function cleanParams($link, $marketplace = "") {
+    /**
+     * Prende in ingresso il link 
+     * 
+     * e deve pulire il link dai parametri o lo restituisce come è
+     *
+     * @param string $link
+     * @param string $marketplace
+     * @return string
+     */
+    static function cleanParams( $link, $marketplace = "" ) {
         
-        $enabled_override = self::isTrackingEnabled($marketplace);
+        /// verifica se il campo che "forza la sostituzione del tracciamento"
+        /// è flaggato o no
+        $enabled_override = self::isTrackingEnabled( $marketplace );
 
-        // se è un parse&render capisce il marketplace dalla url
+        /// se è un parse&render capisce il marketplace dalla url
         if( empty( $marketplace ) ){
 
-            $marketPlace = (strpos($link, "ebay") !== false)  ? "ebay" : ( (strpos($link, "amazon") !== false)  ? "amazon" : "");
+            $marketplace = strpos( $link, "ebay" ) !== false ? "ebay" : ( strpos($link, "amazon") !== false ? "amazon" : "" );
         }
         
-        if ( $enabled_override || (!$enabled_override  && !( strpos( $link, 'tag=' ) !== false || strpos( $link, 'campid=' ) !== false )) ){
+        if ( $enabled_override || ( !$enabled_override && !( strpos( $link, 'tag=' ) !== false || strpos( $link, 'campid=' ) !== false )) ) {
            
-            $link = self::replaceTag($link, $marketplace);
+            $link = self::replaceTag( $link, $marketplace );
         }
 
         return $link;
-       
 
     }
 

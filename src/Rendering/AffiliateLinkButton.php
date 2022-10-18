@@ -29,17 +29,14 @@ class AffiliateLinkButton {
 
         Helper::setAffiliationPage();
 
-        
-        if (strpos($offer->marketplace, "ebay") === false) {
-            $link = str_replace(['{tracking_id}','{tracking-id}','%7Btracking-id%7D'], $tracking, $offer->link);
+        $link = Helper::cleanParams( $offer->link, $offer->marketplace );
+
+        if( strpos( $offer->link, "ebay" ) === false) {
+
             $link = ( new Shortener )->generateShortLink( $link );
+        }
 
-        } else{
-            $link = Helper::cleanEbayParams($offer->link);
-            $link = str_replace(['{tracking_id}','{tracking-id}','%7Btracking-id%7D'], $tracking, $link);
-        } 
-
-        $content = (!empty($this->request->getContent())) ? $this->request->getContent() : $offer->price . " euro";
+        $content = !empty( $this->request->getContent() ) ? $this->request->getContent() : $offer->price . " euro";
 
         $rand_suffix = implode( '', array_map( function( ) { return chr( rand(65,85) ); }, range(0,10) ));
 
