@@ -48,15 +48,15 @@ class Disclaimer {
         }
 
         /// 2) se c'è una regola impostata da attivatore prende il disclaimer impostato ad-hoc
-        $request = new Request([]);
+        // $request = new Request([]);
         
         /// inizializza i settingsData 
-        $SettingsData = new SettingsData( "blz_disclaimer", $request );
-
-        if ( !empty( $SettingsData->getGAEvent() ) ) {
-
-            $text = $SettingsData->getGAEvent();
-        }
+        // $settingsData = new SettingsData( "blz_disclaimer", $request );
+        
+        //if ( !empty( $settingsData->getDisclaimer() ) ) {
+  
+        //            $text = $settingsData->getDisclaimer();
+        //}
 
         $disclaimer = empty( $text ) ? '' : str_replace(
             [ '{{ text }}', '{{ rand }}' ],
