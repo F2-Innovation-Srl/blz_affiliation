@@ -11,6 +11,10 @@ use BLZ_AFFILIATION\AdminUserInterface\Settings\Config;
 class Disclaimer {
 
     private $text = <<<HTML
+        <p id="disclaimer{{ rand }}" class='blz_affiliation_disclaimer'>{{text}}</p>
+    HTML;
+
+    private $text_js = <<<HTML
         <p id="disclaimer{{ rand }}" class='blz_affiliation_disclaimer'></p>
         <script>
             document.addEventListener('DOMContentLoaded', (evt) => {
