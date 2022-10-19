@@ -22,7 +22,7 @@ class AffiliateGenericButton {
     }
 
 
-   /**
+    /**
      * Stampa il bottone impostato da shortcode
      *     
      */
@@ -68,10 +68,22 @@ class AffiliateGenericButton {
 
         /// questa patch non dovrebbe esistere a questo livello. Bisognerà fare un refactoring.
         /// se manca il tracking id ed è un link amazon aggiunge il tag
-        if( $this->linkData->marketplace == 'amazon' && strpos($link, 'tracking') === false ) {
+        if( strpos($link, 'tracking') === false ) {
 
-            $link = $link . '?tag={tracking-id}';
-        }
+            /// deve recuperare i settings
+            $settings = get_option( "blz-affiliation-settings" );
+
+            /// recupera il campaign id
+            $ebay_campaing_id = ( isset( $settings['ebay_campain_id'] )) ? $settings['ebay_campain_id'] : "5338741871";
+
+            $tracking_suffix_map = [
+
+                'amazon' =>  '?tag={tracking-id}',
+                'ebay'   =>  '?mkevt=1&toolid=10001&mkcid=1&mkrid=724-53478-19255-0&siteid=101&campid='.$ebay_campaing_id.'&customid={tracking-id}'
+            ];
+
+            $link = $link . $tracking_suffix_map[ $this->linkData->marketplace ];
+        } 
                 
         $link = str_replace(['{tracking_id}','{tracking-id}','%7Btracking-id%7D'], $tracking, $link);
         
@@ -92,6 +104,5 @@ class AffiliateGenericButton {
             $template
         );
     }
-
 
 }
