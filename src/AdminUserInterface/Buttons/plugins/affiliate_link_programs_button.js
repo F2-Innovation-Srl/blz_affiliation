@@ -33,7 +33,7 @@
                             // callback
                             function() {
 
-                                var post = window.location.search.replace(/.*(post=\d+).*/,'$1');
+                                var post = window.location.search.replace(/.*(post=\d+).*/,'$1').replace('?','');
                                 
                                 ed.windowManager.open({                                        
                                         file : ajaxurl + '?action=affiliate_link_programs_action&' + post,
