@@ -2,6 +2,8 @@
 
 namespace BLZ_AFFILIATION\AdminUserInterface\Buttons;
 
+use BLZ_AFFILIATION\AdminUserInterface\Settings\Capability;
+
 /*
  * Class Button
  * 
@@ -55,18 +57,19 @@ abstract class Button {
     }
 
     function add() {
-    
+
         // Check if user have permission
-        if (!current_user_can('edit_posts') || !current_user_can('edit_pages')) return;
+        if( !current_user_can( Capability::USER_CAP ) ) return;
+
         
         // Check if WYSIWYG is enabled
-        if ('true' == get_user_option('rich_editing')) {
+        if( 'true' == get_user_option( 'rich_editing' ) ) {
 
             // add the plugin (add a row into the plugins list)
-            add_filter('mce_external_plugins', [ $this , 'add_plugin']);
-            // register the button into the first row of the toolbar
-            add_filter('mce_buttons',          [ $this , 'register_button']);
+            add_filter( 'mce_external_plugins', [ $this , 'add_plugin'     ]);
 
+            // register the button into the first row of the toolbar
+            add_filter( 'mce_buttons',          [ $this , 'register_button']);
         }
     }
 

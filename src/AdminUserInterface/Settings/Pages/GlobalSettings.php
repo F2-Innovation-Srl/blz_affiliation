@@ -1,6 +1,7 @@
 <?php
 namespace BLZ_AFFILIATION\AdminUserInterface\Settings\Pages;
 
+use BLZ_AFFILIATION\AdminUserInterface\Settings\Capability;
 use BLZ_AFFILIATION\Utils\Config;
 use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\StyleSettingsTable;
 use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\ScriptSettingsTable;
@@ -54,7 +55,7 @@ class GlobalSettings {
             wp_die('Per utilizzare il plugin occorre prima caricare le configurazioni');
         }  
 
-        if( !current_user_can( 'edit_blz_affiliation' ) ) {
+        if( !current_user_can( Capability::AFFILIATION_CAP ) ) {
             
             wp_die('Non hai i permessi per visualizzare questa pagina');
         } 
@@ -84,8 +85,6 @@ class GlobalSettings {
             ],
             $this->output
         );
-            
-
     }
-
+    
 }

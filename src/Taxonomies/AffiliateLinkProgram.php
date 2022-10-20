@@ -50,11 +50,11 @@ class AffiliateLinkProgram {
     }
 
     public static function register_tax() {
-
-       
         
-        //TODO we need this taxonomy?
-        $posttypes = get_post_types(['public' => 'true']);
+        // TODO - do we need this taxonomy?
+        
+        $posttypes = get_post_types( ['public' => 'true'] );
+
         foreach ( self::$taxonomies as $taxonomy_slug => $taxonomy_name){
             
             register_taxonomy( $taxonomy_slug, ['post','program_stored_link'], [

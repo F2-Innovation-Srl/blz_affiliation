@@ -1,6 +1,7 @@
 <?php
 namespace BLZ_AFFILIATION\AdminUserInterface\Settings\Pages;
 
+use BLZ_AFFILIATION\AdminUserInterface\Settings\Capability;
 use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\ConfigSettingsTable;
 /**
  * Class ConfigSettings
@@ -189,37 +190,34 @@ class ConfigSettings {
     /**
      * Print the page if the rights are grant
      */
-    public function render()
-    {
-        if (!current_user_can('manage_options')) {
+    public function render() {
+        
+        if( !current_user_can( Capability::AFFILIATION_CAP ) ) {
             
             wp_die('Non hai i permessi per visualizzare questa pagina');
+        } 
 
-        } else{
-
-            echo str_replace(
-                [ 
-                    '{{ title }}',
-                    '{{ link }}',
-                    '{{ option_name }}',
-                    '{{ ConfigSettingsTable }}',
-                    '{{ wp_nonce }}',
-                    '{{ submit_button }}',
-                    '{{ code }}'
-                ],
-                [ 
-                    $this->title,
-                    esc_html( admin_url( 'admin.php?page='.$_GET["page"] ) ),
-                    $this->option_name,
-                    ( new ConfigSettingsTable( $this->option_name ))->render(),
-                    wp_nonce_field( 'program-links-options-save', 'blz-affiliation-custom-message' ),
-                    get_submit_button(),
-                    $this->json_default
-                ],
-                $this->output
-            );
-            
-        }
+        echo str_replace(
+            [ 
+                '{{ title }}',
+                '{{ link }}',
+                '{{ option_name }}',
+                '{{ ConfigSettingsTable }}',
+                '{{ wp_nonce }}',
+                '{{ submit_button }}',
+                '{{ code }}'
+            ],
+            [ 
+                $this->title,
+                esc_html( admin_url( 'admin.php?page='.$_GET["page"] ) ),
+                $this->option_name,
+                ( new ConfigSettingsTable( $this->option_name ))->render(),
+                wp_nonce_field( 'program-links-options-save', 'blz-affiliation-custom-message' ),
+                get_submit_button(),
+                $this->json_default
+            ],
+            $this->output
+        );
 
     }
 

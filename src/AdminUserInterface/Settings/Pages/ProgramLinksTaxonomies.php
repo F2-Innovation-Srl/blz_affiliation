@@ -1,14 +1,17 @@
 <?php
 namespace BLZ_AFFILIATION\AdminUserInterface\Settings\Pages;
 
+use BLZ_AFFILIATION\AdminUserInterface\Settings\Capability;
 use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\ProgramTableTaxonomies;
 use BLZ_AFFILIATION\Taxonomies\AffiliateLinkProgram;
+
 /**
  * È una pagina di settings provvisoria per fare dei test
  *
  * @package BLZ_AFFILIATION
  */
 class ProgramLinksTaxonomies {
+
     private $is_valid_config;
     public $settings;
     protected $title;
@@ -46,39 +49,43 @@ class ProgramLinksTaxonomies {
 
 	/**
      * Print page if have correct permission
-    **/
-    public function render()
-    {
-        if (!$this->is_valid_config)  wp_die('Per utilizzare il plugin occorre prima caricare le configurazioni');
-        if ( !current_user_can('edit_blz_affiliation') ) {
-            wp_die('Non hai i permessi per visualizzare questa pagina');
-        } else {
-            
-            
-         
-            foreach (AffiliateLinkProgram::$taxonomies as $taxonomy_slug => $taxonomy_name)
-                      $programTables[$taxonomy_slug] = (new ProgramTableTaxonomies($taxonomy_slug,$taxonomy_name))->render(); 
-            
-          
-             echo str_replace(
-                [ 
-                    '{{ title }}',
-                    '{{ link }}',
-                    '{{ tabs }}',
-                    '{{ ProgramTable }}',
-                    '{{ wp_nonce }}'
-                ],
-                [ 
-                    $this->title,
-                    esc_html( admin_url( 'admin.php?page='.$_GET["page"].'&tab='.$this->current_tab ) ),
-                    $this->renderTabs(),
-                    $programTables[$this->current_tab],
-                    wp_nonce_field( 'program-links-options-save', 'blz-affiliation-custom-message' )
-                ],
-                $this->output["table"]
-            );
+     */
+    public function render() {
+
+        if( !$this->is_valid_config ) {
+
+            wp_die('Per utilizzare il plugin occorre prima caricare le configurazioni');
         }
+
+        if( !current_user_can( Capability::AFFILIATION_CAP) ) {
+            
+            wp_die('Non hai i permessi per visualizzare questa pagina');
+        } 
+        
+        foreach( AffiliateLinkProgram::$taxonomies as $taxonomy_slug => $taxonomy_name ) {
+
+            $programTables[ $taxonomy_slug ] = ( new ProgramTableTaxonomies($taxonomy_slug,$taxonomy_name) )->render(); 
+        }
+        
+        echo str_replace(
+            [ 
+                '{{ title }}',
+                '{{ link }}',
+                '{{ tabs }}',
+                '{{ ProgramTable }}',
+                '{{ wp_nonce }}'
+            ],
+            [ 
+                $this->title,
+                esc_html( admin_url( 'admin.php?page='.$_GET["page"].'&tab='.$this->current_tab ) ),
+                $this->renderTabs(),
+                $programTables[$this->current_tab],
+                wp_nonce_field( 'program-links-options-save', 'blz-affiliation-custom-message' )
+            ],
+            $this->output["table"]
+        );
     }
+
 
     public function renderTabs(){
         $tabs = "";    

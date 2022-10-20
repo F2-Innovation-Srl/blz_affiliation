@@ -2,6 +2,8 @@
 
 namespace BLZ_AFFILIATION\AdminUserInterface\Buttons;
 
+use BLZ_AFFILIATION\AdminUserInterface\Settings\Capability;
+
 /*
  *  Class AffiliateLinkButton
  *  
@@ -30,10 +32,11 @@ class AffiliateGenericButton extends Button {
     public function ajax_action() {
 
         // check for rights
-        if (! current_user_can('publish_posts'))  { die( __("Vietato") ); } 
+        if ( !current_user_can( Capability::USER_CAP ))  { die( __("Vietato") ); } 
         
         // get the template 
         $html = file_get_contents( $this->base_dir .'plugins/dialog-AffiliateGenericButton.html');
+        
         //include_once(get_template_directory() .'/src/UserInterface/Editor/Buttons/plugins/dialog-AffiliateGenericButton.html' );
 
         // print the block

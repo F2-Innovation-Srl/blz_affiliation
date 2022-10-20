@@ -2,6 +2,8 @@
 
 namespace BLZ_AFFILIATION\AdminUserInterface\Buttons;
 
+use BLZ_AFFILIATION\AdminUserInterface\Settings\Capability;
+
 /*
  *  Class AffiliateLinkButton
  *  
@@ -30,10 +32,11 @@ class AffiliateLinkButton extends Button {
     public function ajax_action() {
 
         // check for rights
-        if (! current_user_can('publish_posts'))  { die( __("Vietato") ); } 
+        if ( !current_user_can( Capability::USER_CAP ) ) { die( __("Vietato") ); } 
         
         // get the template 
         $html = file_get_contents( $this->base_dir .'plugins/dialog-AffiliateLinkButton.html');
+        
         //include_once(get_template_directory() .'/src/UserInterface/Editor/Buttons/plugins/dialog-AffiliateButton.html' );
 
         $tracking_ids =  [
@@ -44,8 +47,10 @@ class AffiliateLinkButton extends Button {
         ];    
         
         // inject the variables into the html template
-        foreach($tracking_ids as $mkt => $tracking_id)
+        foreach( $tracking_ids as $mkt => $tracking_id ) {
+
             $html = str_replace ( '{{'.$mkt.'-tracking-id}}' , $tracking_id , $html );
+        }
 
         // print the block
         header('Content-Type: ' . get_option('html_type') . '; charset=' . get_option('blog_charset'));

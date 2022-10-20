@@ -1,6 +1,7 @@
 <?php
 namespace BLZ_AFFILIATION\AdminUserInterface\Settings\Pages;
 
+use BLZ_AFFILIATION\AdminUserInterface\Settings\Capability;
 use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\ProgramTable;
 use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\ProgramSubjectTable;
 /**
@@ -39,37 +40,43 @@ class ProgramLinksOptions {
 	/**
      * Print page if have correct permission
     **/
-    public function render()
-    {
-        if (!$this->is_valid_config)  wp_die('Per utilizzare il plugin occorre prima caricare le configurazioni');
-        if ( !current_user_can('edit_blz_affiliation') ) {
-            wp_die('Non hai i permessi per visualizzare questa pagina');
-        } else {
-            /*
-            $taxonomies = [ 
-                'blz-affiliation-programs' => 'Programs',
-                'blz-affiliation-subjects' => 'Subjects'
-            ]; 
+    public function render() {
 
-            foreach ($taxonomies as $taxonomy_slug => $taxonomy_name)
-                      $programTables[] = (new ProgramTable($taxonomy_slug,null,$taxonomy_name))->render(); 
-            */
-             echo str_replace(
-                [ 
-                    '{{ title }}',
-                    '{{ link }}',
-                    '{{ ProgramTable }}',
-                    '{{ wp_nonce }}'
-                ],
-                [ 
-                    $this->title,
-                    esc_html( admin_url( 'admin.php?page='.$_GET["page"] ) ),
-                    (new ProgramTable($this->option_name))->render(),
-                    wp_nonce_field( 'program-links-options-save', 'blz-affiliation-custom-message' )
-                ],
-                $this->output
-            );
+        if( !$this->is_valid_config ){
+        
+            wp_die('Per utilizzare il plugin occorre prima caricare le configurazioni');
         }
+        
+        if( !current_user_can( Capability::AFFILIATION_CAP ) ) {
+
+            wp_die('Non hai i permessi per visualizzare questa pagina');
+        } 
+
+        /*
+        $taxonomies = [ 
+            'blz-affiliation-programs' => 'Programs',
+            'blz-affiliation-subjects' => 'Subjects'
+        ]; 
+
+        foreach ($taxonomies as $taxonomy_slug => $taxonomy_name)
+            $programTables[] = (new ProgramTable($taxonomy_slug,null,$taxonomy_name))->render(); 
+        */
+        
+        echo str_replace(
+            [ 
+                '{{ title }}',
+                '{{ link }}',
+                '{{ ProgramTable }}',
+                '{{ wp_nonce }}'
+            ],
+            [ 
+                $this->title,
+                esc_html( admin_url( 'admin.php?page='.$_GET["page"] ) ),
+                (new ProgramTable($this->option_name))->render(),
+                wp_nonce_field( 'program-links-options-save', 'blz-affiliation-custom-message' )
+            ],
+            $this->output
+        );
     }
 
 }
