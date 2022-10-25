@@ -75,6 +75,17 @@ class BlzAffiliate {
 		/// tabelle di affiliazione
 		new Rendering\AffiliateTable();
 
+		/// aggiunge le dipendenze js per il tracciamento
+		new Rendering\Settings\GATracking();
+
+		/// aggiunge css con parametri presi dai settings
+		new Rendering\Settings\StyleInjector();
+
+		/// aggiunge js con parametri presi dai settings
+		new Rendering\Settings\ScriptInjector();
+
+		/// aggiunge il Disclaimer
+		new Rendering\Disclaimer();
 
 	}
 
@@ -96,22 +107,10 @@ class BlzAffiliate {
 			/// aggiunge il bottone per selezionare le tabelle di affiliazione
 			/// a aggiungere il relativo shortcode in pagina
 			new Buttons\AffiliateTableButton();
-		
-			/// aggiunge le dipendenze js per il tracciamento
-			new Rendering\Settings\GATracking();
 
-			/// aggiunge css con parametri presi dai settings
-			new Rendering\Settings\StyleInjector();
-
-			/// aggiunge js con parametri presi dai settings
-			new Rendering\Settings\ScriptInjector();
-
-			/// aggiunge il Disclaimer
-			new Rendering\Disclaimer();
 		}
 	}
 }
-
 
 
 $blzAffiliate = new BlzAffiliate();
