@@ -32,7 +32,7 @@ class AffiliateLinkButton extends Button {
     public function ajax_action() {
 
         // check for rights
-        if ( !current_user_can( Capability::USER_CAP ) ) { die( __("Vietato") ); } 
+        if ( !Capability::isAuthorEnabled() ) { die( __("Vietato") ); } 
         
         // get the template 
         $html = file_get_contents( $this->base_dir .'plugins/dialog-AffiliateLinkButton.html');

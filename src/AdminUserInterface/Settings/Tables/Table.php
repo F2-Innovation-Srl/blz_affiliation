@@ -41,28 +41,32 @@ abstract class Table {
     abstract protected function getAndSetRows();
 
 	/**
-     * Print page if have correct permission
-    **/
+     * stampa la tabella
+     */
     public function render(){
+
         $rows = "";
-        $headings = array_reduce( array_keys( $this->rows[0] ), function( $cols, $key ) { 
 
-            $cols .= "<th>". $this->removeHiddenLabel($key) ."</th>";
-            return $cols;
-        } );
+        $fields = array_keys( $this->rows[0] );
 
-        foreach ($this->rows as $row)
-        $rows.= '<tr valign="top">'.array_reduce( $row, function( $cols, $field ) { 
+        $headings = array_reduce( $fields, function( $headings, $field ) { 
 
-            $cols .= '<td >' . $field->render() . '</td>';
-            return $cols;
-        } ).'</tr>';
+            return $headings .= "<th>". $this->removeHiddenLabel( $field ) ."</th>";
+        }, '' );
+
+        $rows = array_reduce( $this->rows , function( $table_rows, $row ) {
+
+            return $table_rows .= '<tr valign="top">'.array_reduce( $row, function( $cols, $field ) { 
+
+                return $cols .= '<td >' . $field->render() . '</td>';;
+            } ).'</tr>';
+
+        }, '' );
         
-        return str_replace([ '{{ title }}', '{{ headings }}', '{{ rows }}' ], [ $this->title, $headings, $rows ], $this->output["table"] );       
-
+        return str_replace([ '{{ title }}', '{{ headings }}', '{{ rows }}' ], [ $this->title, $headings, $rows ], $this->output["table"] );
     }
 
-    protected function down($a,$x) {
+    protected function down( $a, $x ) {
         if( count($a)-1 > $x ) {
             $b = array_slice($a,0,$x,true);
             $b[] = $a[$x+1];
@@ -98,8 +102,8 @@ abstract class Table {
         }
 
         //eccezioni per gestione disclaimer
-        if(isset($this->current["marketplace"]["ga_event_template"]) && $this->current["marketplace"]["ga_event_template"] == "{disclaimer}" && $label == "Valore GA") $return = "disclaimer";
-        if(isset($this->current["marketplace"]["ga_event_template"]) && $this->current["marketplace"]["ga_event_template"] == "{disclaimer}" && $label == "Valore TRK_ID") $return = "&nbsp;";
+        if( isset($this->current["marketplace"]["ga_event_template"] ) && $this->current["marketplace"]["ga_event_template"] == "{disclaimer}" && $label == "Valore GA")     $return = "disclaimer";
+        if( isset($this->current["marketplace"]["ga_event_template"] ) && $this->current["marketplace"]["ga_event_template"] == "{disclaimer}" && $label == "Valore TRK_ID") $return = "&nbsp;";
         	
         return $return;
     }

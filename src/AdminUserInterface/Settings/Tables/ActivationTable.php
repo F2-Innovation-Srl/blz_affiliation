@@ -13,57 +13,90 @@ class ActivationTable extends table{
 
         $this->title = "Tabella di attivazione";
 
-        $hiddenGA = (empty($this->current["marketplace"]["ga_event_template"]) ) ? "hidden" : "text"; 
-        $hiddenTrack = (empty($this->current["marketplace"]["tracking_id"]) ) ? "hidden" : "text"; 
+        $hiddenGA    = empty( $this->current["marketplace"]["ga_event_template"] ) ? "hidden" : "text"; 
+        $hiddenTrack = empty( $this->current["marketplace"]["tracking_id"]       ) ? "hidden" : "text"; 
         
-        for ($i=0; $i<count($rows); $i++){
-            $this->rows[] =  [
-                "hidden_up" => new Fields\Arrow($i,"","UP",["hidden_field" => $this->option_name]),
-                "hidden_down" => new Fields\Arrow($i,"","DOWN",["hidden_field" => $this->option_name]),
-                "Attivatore" => new Fields\Activator($this->option_name."_attivatore".$i,$rows[$i]["attivatore"]),
-                "Regola" => new Fields\Rule($this->option_name."_regola".$i,$rows[$i]["regola"],$rows[$i]["attivatore"]),
-                "Label" => new Fields\Label($this->option_name."_ga_label".$i,$rows[$i]["ga_label"],"GA",$this->current),
-                "Valore GA" => new Fields\Text($this->option_name."_ga_val".$i,$rows[$i]["ga_val"],$hiddenGA),
-                "Valore TRK_ID" => new Fields\Text($this->option_name."_trk_val".$i,$rows[$i]["trk_val"],$hiddenTrack),
-                "Update" => new Fields\Text($i,"Update","button"),
-                "Delete" => new Fields\Text($i,"Delete","button",["hidden_field" => $this->option_name])
+        $this->rows = array_map( function( $i, $row ) use ( $hiddenGA, $hiddenTrack ) {
+
+            return [
+                
+                /// freccie su e giù
+                "hidden_up"     => new Fields\Arrow( $i, "", "UP",   [ "hidden_field" => $this->option_name ] ),
+                "hidden_down"   => new Fields\Arrow( $i, "", "DOWN", [ "hidden_field" => $this->option_name ] ),
+                
+                /// regole
+                "Attivatore"    => new Fields\Activator( $this->option_name."_attivatore".$i, $row[ "attivatore"] ),
+                "Regola"        => new Fields\Rule(      $this->option_name."_regola".$i,     $row[ "regola"    ], $row["attivatore"] ),
+                "Label"         => new Fields\Label(     $this->option_name."_ga_label".$i,   $row[ "ga_label"  ], "GA", $this->current ),
+                "Valore GA"     => new Fields\Text(      $this->option_name."_ga_val".$i,     $row[ "ga_val"    ], $hiddenGA ),
+                "Valore TRK_ID" => new Fields\Text(      $this->option_name."_trk_val".$i,    $row[ "trk_val"   ], $hiddenTrack ),
+                
+                /// bottoni 
+                "Update"        => new Fields\Text(  $i, "Update", "button" ),
+                "Delete"        => new Fields\Text(  $i, "Delete", "button", [ "hidden_field" => $this->option_name ] )
+
             ];
-        }
-        // FOR NEW INSERT
+
+        }, array_keys($rows), $rows );
+
+        
+        /// nuove righe
         $this->rows[] =  [
-            "hidden_up" => new Fields\Text($this->option_name."_hidden_for_up","","hidden"),
-            "hidden_down" => new Fields\Text($this->option_name."_hidden_for_down","","hidden"),
-            "Attivatore" => new Fields\Activator($this->option_name."_attivatore_new",""),
-            "Regola" => new Fields\Rule($this->option_name."_regola_new",""),
-            "Label" => new Fields\Label($this->option_name."_ga_label_new","","GA",$this->current),
-            "Valore GA" => new Fields\Text($this->option_name."_ga_val_new","",$hiddenGA),
-            "Valore TRK_ID" => new Fields\Text($this->option_name."_trk_val_new","",$hiddenTrack),
-            "New" => new Fields\Text($this->option_name."_new",'Aggiungi',"button"),
-            "hidden" => new Fields\Text($this->option_name."_hidden_for_delete",'',"hidden")
+            
+            /// mmm campi vuoti per rispettare l'incolonnamento
+            "hidden_up"     => new Fields\Text( $this->option_name."_hidden_for_up",   "", "hidden" ),
+            "hidden_down"   => new Fields\Text( $this->option_name."_hidden_for_down", "", "hidden" ),
+
+            /// nuova regola
+            "Attivatore"    => new Fields\Activator( $this->option_name."_attivatore_new", "" ),
+            "Regola"        => new Fields\Rule(      $this->option_name."_regola_new",     "" ),
+            "Label"         => new Fields\Label(     $this->option_name."_ga_label_new",   "", "GA", $this->current ),
+            "Valore GA"     => new Fields\Text(      $this->option_name."_ga_val_new",     "", $hiddenGA ),
+            "Valore TRK_ID" => new Fields\Text(      $this->option_name."_trk_val_new",    "", $hiddenTrack ),
+            
+            /// bottoni
+            "New"           => new Fields\Text( $this->option_name."_new",               'Aggiungi', "button" ),
+            "hidden"        => new Fields\Text( $this->option_name."_hidden_for_delete", '',         "hidden" )
         ];
     }
 
 
-    protected function getAndSetRows(){
+    protected function getAndSetRows() {
         
         //GET
-        $rows = get_option($this->option_name);
-        //UPDATE
-        if(empty($_POST[$this->option_name. "_activation_import"]) )
-            $rows = ($rows) ? array_map( function ( $row, $idx  ) {
-            return [
-                'id' => $idx,
-                'attivatore' => isset( $_POST[$this->option_name. '_attivatore'.$idx ] ) ? $_POST[$this->option_name. '_attivatore'.$idx ] : ($row['attivatore'] ?? ''),
-                'regola' => isset( $_POST[ $this->option_name.'_regola'.$idx ] ) ? $_POST[ $this->option_name.'_regola'.$idx ] : ($row['regola'] ?? ''),
-                'ga_label' => isset( $_POST[ $this->option_name.'_ga_label'.$idx ] ) ? $_POST[ $this->option_name.'_ga_label'.$idx ] : ($row['ga_label'] ?? ''),
-                'ga_val' => isset( $_POST[ $this->option_name.'_ga_val'.$idx ] ) ? $_POST[$this->option_name. '_ga_val'.$idx ] : ($row['ga_val'] ?? ''),
-                'trk_val' => isset( $_POST[ $this->option_name.'_trk_val'.$idx ] ) ? $_POST[ $this->option_name.'_trk_val'.$idx ] : ($row['trk_val'] ?? ''),
-            ];
+        $rows = get_option( $this->option_name );
         
-        }, $rows, array_keys($rows) ) : [];
+        //UPDATE
 
-        //DELETE
-        $id_to_delete = isset($_POST[$this->option_name."_hidden_for_delete"]) ? $_POST[$this->option_name."_hidden_for_delete"] : null;
+        /// se è vuoto il campo activation_import
+        if( empty( $_POST[$this->option_name. "_activation_import"] ) ) {
+
+            $rows = empty( $rows ) ? [] : array_map( function ( $row, $idx  ) {
+                
+                return [
+                    'id'         => $idx,
+                    'attivatore' => isset( $_POST[ $this->option_name.'_attivatore'.$idx ] ) ? $_POST[ $this->option_name.'_attivatore'.$idx ] : ( $row['attivatore'] ?? '' ),
+                    'regola'     => isset( $_POST[ $this->option_name.'_regola'.$idx     ] ) ? $_POST[ $this->option_name.'_regola'.$idx     ] : ( $row['regola']     ?? '' ),
+                    'ga_label'   => isset( $_POST[ $this->option_name.'_ga_label'.$idx   ] ) ? $_POST[ $this->option_name.'_ga_label'.$idx   ] : ( $row['ga_label']   ?? '' ),
+                    'ga_val'     => isset( $_POST[ $this->option_name.'_ga_val'.$idx     ] ) ? $_POST[ $this->option_name.'_ga_val'.$idx     ] : ( $row['ga_val']     ?? '' ),
+                    'trk_val'    => isset( $_POST[ $this->option_name.'_trk_val'.$idx    ] ) ? $_POST[ $this->option_name.'_trk_val'.$idx    ] : ( $row['trk_val']    ?? '' )
+                ];
+            
+            }, $rows, array_keys( $rows ) );
+
+        }
+            
+        
+        /// DELETE
+        $id_to_delete = isset( $_POST[ $this->option_name."_hidden_for_delete" ] ) ? $_POST[$this->option_name."_hidden_for_delete"] : null;
+
+        if( 11 == get_current_user_id() ) {
+
+            var_dump( $id_to_delete ); die;
+
+        }
+
+        
         if ($id_to_delete != "" && $id_to_delete != null){
             $rows = array_values(array_filter($rows,function($row) use($id_to_delete) {
                     return $row["id"] != $id_to_delete;

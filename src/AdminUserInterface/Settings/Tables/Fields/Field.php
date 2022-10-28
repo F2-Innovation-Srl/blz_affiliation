@@ -15,10 +15,10 @@ abstract class Field {
     /**
      * prende in ingresso un nome e un valore per il field
      *
-     * @param string $name
-     * @param string $value
-     * @param string $type
-     * @param array $params
+     * @param string $name   - nome del campo
+     * @param string $value  - valore di default
+     * @param string $type   - tipo di campo ( è un sottotipo previsto dalla specifica classe )
+     * @param array  $params - parametri vari...
      */
     public function __construct( string $name, string $value = '', string $type = '', array $params = []) {
 

@@ -3,12 +3,15 @@ namespace BLZ_AFFILIATION\AdminUserInterface\Settings\Pages;
 
 use BLZ_AFFILIATION\AdminUserInterface\Settings\Capability;
 use BLZ_AFFILIATION\AdminUserInterface\Settings\Tables\ConfigSettingsTable;
+
 /**
- * Class ConfigSettings
+ * Pagina delle configurazioni di base del plugin. 
+ * Questa dovrebbe essere sempre caricata per default.
  *
  * @package BLZ_AFFILIATION
  */
 class ConfigSettings {
+
     protected $title;
     public $settings;
     protected $option_name;
@@ -153,12 +156,7 @@ class ConfigSettings {
                   "name"       : "Global Settings",
                   "slug"       : "blz-affiliation-settings",
                   "controller" : "GlobalSettings"
-              },
-              {
-                  "name"       : "Configuration services",
-                  "slug"       : "blz-affiliation",
-                  "controller" : "ConfigSettings"
-              }   
+              }
           ]
       }
     JSON;
@@ -179,7 +177,8 @@ class ConfigSettings {
     </form>
     HTML;
 
-	function __construct($is_valid_config,$title, $slug, $settings) {
+	function __construct( $is_valid_config, $title, $slug, $settings ) {
+        
         $this->is_valid_config     = $is_valid_config;
         $this->title               = $title;
         $this->settings            = $settings; 
@@ -197,6 +196,20 @@ class ConfigSettings {
             wp_die('Non hai i permessi per visualizzare questa pagina');
         } 
 
+        /// link alla pagina corrente
+        $page_link = esc_html( admin_url( 'admin.php?page='.$_GET["page"] ) );
+
+        /// sarebbe l'oggetto che genera il markup ( in genere si tratta di una tabella )
+        $optionSettings = new ConfigSettingsTable( $this->option_name );
+        
+        /// il markup delle opzioni
+        $optionsMarkup = $optionSettings->render();
+
+        /// il campo per validare la form
+        $formValidationField = wp_nonce_field( 'program-links-options-save', 'blz-affiliation-custom-message' );
+
+
+
         echo str_replace(
             [ 
                 '{{ title }}',
@@ -209,10 +222,10 @@ class ConfigSettings {
             ],
             [ 
                 $this->title,
-                esc_html( admin_url( 'admin.php?page='.$_GET["page"] ) ),
+                $page_link,
                 $this->option_name,
-                ( new ConfigSettingsTable( $this->option_name ))->render(),
-                wp_nonce_field( 'program-links-options-save', 'blz-affiliation-custom-message' ),
+                $optionsMarkup,
+                $formValidationField,
                 get_submit_button(),
                 $this->json_default
             ],

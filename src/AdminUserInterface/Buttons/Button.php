@@ -59,7 +59,7 @@ abstract class Button {
     function add() {
 
         // Check if user have permission
-        if( !current_user_can( Capability::USER_CAP ) ) return;
+        if( !Capability::isAuthorEnabled() ) return;
 
         
         // Check if WYSIWYG is enabled

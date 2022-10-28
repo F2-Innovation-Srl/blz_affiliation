@@ -2,6 +2,8 @@
 
 namespace BLZ_AFFILIATION\AdminUserInterface\Buttons;
 
+use BLZ_AFFILIATION\AdminUserInterface\Settings\Capability;
+
 /*
  *  Class AffiliateLinkButton
  *  
@@ -30,7 +32,7 @@ class AffiliateLinkProgramStoredButton extends Button {
     public function ajax_action() {
 
         // check for rights
-        if (! current_user_can('publish_posts'))  { die( __("Vietato") ); } 
+        if ( !Capability::isAuthorEnabled() )  { die( __("Vietato") ); } 
         
         // get the template 
         $html = file_get_contents( $this->base_dir .'plugins/dialog-AffiliateLinkProgramStoredButton.html');
