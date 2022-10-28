@@ -11,15 +11,18 @@ class Text extends Field {
 
         $output = '';
 
-        $hidden_field = isset($this->params["hidden_field"]) ? $this->params["hidden_field"] : "";
+        $hidden_field = isset( $this->params["hidden_field"] ) ? $this->params["hidden_field"] : "";
 
         switch ($this->type) {
+
             case "number":
                 return '<input type="number" name="'.$this->name.'" value="'.$this->value.'" />';
                 break;
+                
             case "text":
                 return '<input type="text" style="width:100%" name="'.$this->name.'" value="'.$this->value.'" />';
                 break;
+                
             case "textarea":
                 return '<textarea rows="15" cols="110" name="'.$this->name.'" >'.$this->value.'</textarea>';
                 break;

@@ -9,36 +9,23 @@ use BLZ_AFFILIATION\Utils\Helper;
  */
 class ScriptInjector {
 
-    private $tracker_enabled;
+    private $is_tracking_enabled;
 
 	function __construct() {
         
-        $this->tracker_enabled = helper::isTrackerEnabled();
-        
-        add_action( 'init', [ $this, 'init' ] );
+        $this->is_tracking_enabled = helper::isTrackerEnabled();
+
+        if ( $this->is_tracking_enabled ) {
+            add_action( 'init', [ $this, 'injectTrackingScripts' ] );
+        }
         
 	}
 
-	function init() { 
+	function injectTrackingScripts() { 
         
-        if (is_admin()) {
-            # enqueue scripts
-            wp_enqueue_script(
-                'blz-affiliation-adminjs',
-                BLZ_AFFILIATION_URI ."src/assets/js/admin.js",
-                [],
-                BLZ_AFFILIATION_VERSION,
-                true
-            );
-
-        } else {
-            if ($this->tracker_enabled) {
-                /// dipendenze js per tracciamento
-                wp_enqueue_script('blz-affiliation-tracker',   BLZ_AFFILIATION_URI ."src/assets/js/libs/blz_tr.js",[], BLZ_AFFILIATION_VERSION,true);
-                wp_enqueue_script('blz-affiliation-activator', BLZ_AFFILIATION_URI ."src/assets/js/affiliate-link-activator.js",["blz-affiliation-tracker"], BLZ_AFFILIATION_VERSION,true);
-            }
-             
-        }
+        /// dipendenze js per tracciamento
+        wp_enqueue_script('blz-affiliation-tracker',   BLZ_AFFILIATION_URI ."src/assets/js/libs/blz_tr.js",[], BLZ_AFFILIATION_VERSION,true);
+        wp_enqueue_script('blz-affiliation-activator', BLZ_AFFILIATION_URI ."src/assets/js/affiliate-link-activator.js",["blz-affiliation-tracker"], BLZ_AFFILIATION_VERSION,true);        
     }
 
 }

@@ -36,7 +36,7 @@ class BlzAffiliate {
 
 		/// Imposta ruolo Affiliation Manager e assegna le capability
 		/// per quel ruolo e per gli amministratori
-		$blz_aff_cap = new Settings\Capability();
+		$blz_aff_cap = Settings\Capability::getInstance();
 
 		/// crea i custom post type (tabelle e link "centralizzati")
 		PostTypes\AffiliateTables::init();
@@ -107,6 +107,8 @@ class BlzAffiliate {
 			/// aggiunge il bottone per selezionare le tabelle di affiliazione
 			/// a aggiungere il relativo shortcode in pagina
 			new Buttons\AffiliateTableButton();
+
+			new Settings\AdminScriptInjector;
 
 		}
 	}

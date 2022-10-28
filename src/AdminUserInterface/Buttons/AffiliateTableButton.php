@@ -26,7 +26,7 @@ class AffiliateTableButton extends Button {
     public function ajax_action() {
 
         // check for rights
-        if (! current_user_can('publish_posts'))  { die( __("Vietato") ); } 
+        if ( !Capability::isAuthorEnabled() )  { die( __("Vietato") ); } 
 
 
         // get the template 

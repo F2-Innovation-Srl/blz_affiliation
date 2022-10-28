@@ -10,7 +10,10 @@ class Config {
      * @var object
      */
     private static $instance;
+    
+    /// esiste una config option valida
     public $is_valid;
+
     public  $pages;
     public  $plugin_name;
     public  $plugin_slug;
@@ -18,28 +21,54 @@ class Config {
     
     private function __construct() {
 
-        $this->is_valid = true;
         $this->is_affiliation_page = "false";
-        $config_file  = get_option("blz-affiliation");
-        //print_r($config);exit;
-        if (empty($config_file)) {
-            $config = json_decode(file_get_contents(BLZ_AFFILIATION_PATH.'config.json'), true);
-            $this->is_valid = false;
-        }else{
-            $config  = json_decode(stripslashes($config_file), true);
+        
+        /// prende la conf minima 
+        $config_file = file_get_contents( BLZ_AFFILIATION_PATH . 'config.json' );
+
+        $basic_config = empty( $config_file ) ? [] : json_decode( $config_file, true );
+
+        /// il campo serializzato con le impostazioni di base del plugin
+        $config_option = get_option( "blz-affiliation-basic" );
+
+        /// esiste una config option valida 
+        $this->is_valid = is_array( $config_option ) && !empty( $config_option['config'] );
+
+        $config_json = $this->is_valid ? stripslashes( $config_option['config'] ) : '';
+
+        $config = json_decode( $config_json, true );
+
+        /// crea l'array associativo dal JSON
+        if( empty( $config ) ) {
+
+            $config = $basic_config;
+
+        }  else {
+
+            $config[ 'Pages' ] = array_merge( $config[ 'Pages' ], $basic_config ['Pages'] );
         }
+    
         
         $this->plugin_name = $config["plugin_name"];
         $this->plugin_slug = $config["plugin_slug"];
-        $this->pages = array_map(function($page){ 
-                $controller = "BLZ_AFFILIATION\\AdminUserInterface\\Settings\\Pages\\". $page["controller"];
-                $settings = isset($page["settings"]) ? $page["settings"] : null;
-                return new Page([
-                    "name"       => $page["name"],
-                    "slug"       => $page["slug"],
-                    "controller" => new $controller($this->is_valid,$page["name"],$page["slug"],$settings)
-                ]);
-        }, $config["Pages"]);
+        
+        /// setup delle pagine
+        $this->pages = array_map( function( $page ) { 
+            
+            /// prende la classe che dovrà gestire la pagina
+            $controller = "BLZ_AFFILIATION\\AdminUserInterface\\Settings\\Pages\\". $page[ "controller" ];
+            
+            /// raccoglie eventuali impostazioni specifiche della pagina
+            $settings = isset( $page[ "settings" ] ) ? $page["settings"] : null;
+
+            /// crea la pagina 
+            return new Page([
+                "name"       => $page[ "name" ],
+                "slug"       => $page[ "slug" ],
+                "controller" => new $controller( $this->is_valid, $page[ "name" ], $page[ "slug" ], $settings )
+            ]);
+
+        }, $config[ "Pages" ] );
     }
 
     /**
@@ -47,12 +76,13 @@ class Config {
      * @return object|Config
      */
     public static function loadSettings() {
-        if ( !isset(self::$instance) ) {
+
+        if ( !isset( self::$instance ) ) {
+            
             self::$instance = new Config();
         }
+        
         return self::$instance;
     }
-
-
 
 }

@@ -8,15 +8,18 @@ namespace BLZ_AFFILIATION\AdminUserInterface\Settings;
  */
 class Capability {
 
+    private static $instance;
+
     const AFFILIATION_ROLE_NAME = 'Affiliation Manager';
     const AFFILIATION_ROLE      = 'affiliation_manager';
     const AFFILIATION_CAP       = 'edit_blz_affiliation';
-    const USER_CAP              = 'edit_posts';
 
 
     private $roles;
-    
-    public function __construct() {
+
+    public $author_capabilities;
+
+    private function __construct() {
 
         /// crea il ruolo di Affiliation Manager
         $this->createAffiliationMgrRole();
@@ -24,6 +27,8 @@ class Capability {
         $this->roles = wp_roles();
 
         $this->assignCapToRoles( [ 'administrator', Capability::AFFILIATION_ROLE ]);
+
+        $this->setAuthorCaps();
         
     }
 
@@ -102,6 +107,47 @@ class Capability {
                 'moderate_comments' => false,                
             ]
         );
+    }
+
+    private function setAuthorCaps() {
+
+        /// il campo serializzato con le impostazioni di base del plugin
+        $config_option = get_option( "blz-affiliation-basic" );
+
+        /// imposta le capabilities per gli autori
+        $caps_exists = is_array( $config_option ) && !empty( $config_option['author_capabilities'] );
+
+        /// esiste una config option valida 
+        $this->author_capabilities = $caps_exists ? explode( ',', $config_option['author_capabilities'] ) : ['edit_posts'];
+
+    }
+
+    /**
+     * Array delle capabilities per accedere al plugin
+     *
+     * @return array
+     */
+    public static function isAuthorEnabled() {
+
+        return !empty( array_filter( self::$instance->author_capabilities, function( $capability) {
+
+            return current_user_can( $capability );
+        }));     
+    }
+
+    
+    /**
+     * Metodo pubblico per l'accesso all'istanza unica di classe.
+     * @return object|
+     */
+    public static function getInstance() {
+
+        if ( !isset( self::$instance ) ) {
+            
+            self::$instance = new Capability();
+        }
+        
+        return self::$instance;
     }
 
 }

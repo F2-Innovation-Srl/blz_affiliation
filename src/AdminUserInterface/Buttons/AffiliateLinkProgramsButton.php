@@ -31,7 +31,7 @@ class AffiliateLinkProgramsButton extends Button {
     public function ajax_action() {
 
         // check for rights
-        if( !current_user_can( Capability::USER_CAP ) )  { die( __("Vietato") ); } 
+        if( !Capability::isAuthorEnabled() )  { die( __("Vietato") ); } 
 
       
         
