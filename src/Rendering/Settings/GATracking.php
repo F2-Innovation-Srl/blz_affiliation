@@ -11,7 +11,7 @@ class GATracking {
 	/**
 	 * Page constructor.
 	 */
-    private $ga_code;
+    private $ga_code = '';
     
     private $analitics_track =   <<<HTML
        
@@ -54,37 +54,45 @@ class GATracking {
 
     HTML;
 
+
 	function __construct() {
         
         $settings = get_option( "blz-affiliation-settings" );
        
-        if( isset( $settings['ga_code'] ) ){
-
-            $this->ga_code = $settings['ga_code'];
+        /// verifica che esista una impostazione per ga_code
+        if( !isset( $settings['ga_code'] ) || is_admin() ) return ; 
         
-            add_action( 'init', [ $this, 'onInit' ] );
-        }
-	}
+        $this->ga_code = $settings['ga_code'];
 
+        add_action( 'init', [ $this, 'onInit' ] );
+    }
+    
 	function onInit() { 
+
         if ( !is_admin() ) {
-            
+
             //aggiunge variabile GA in header
-            add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_js' ] );            
+            add_action( 'wp_head',  [ $this, 'enqueue_js' ] , 10  );
             
             //aggiunge analitics su pagine AMP
-            add_filter( 'the_content',  [ $this, 'add_amp_track'], 20 );
+            add_filter( 'the_content',  [ $this, 'add_amp_track'], 20 );       
         }
     }
 
     function enqueue_js() { 
-        ?>
-        <script>
-            // custom blz_affiliation JS code
-            var blz_affiliation_ga = "<?php echo $this->ga_code;?>";
-        </script>
-        <?php
+
+        if( !is_single() ) return ;
+
+        $script = <<<HTML
+            <script>
+                var blz_affiliation_ga = "{{ ga_code }}";
+            </script>
+        HTML;
+        
+        echo str_replace('{{ ga_code }}', $this->ga_code, $script );
     }
+
+    
     /**
      * Add a icon to the beginning of every post page.
      *
@@ -92,12 +100,13 @@ class GATracking {
      */
     function add_amp_track( $content ) {
 
-        $is_amp = (function_exists('is_amp_endpoint')) ? is_amp_endpoint() : false;
+        $is_amp = function_exists('is_amp_endpoint') ? is_amp_endpoint() : false;
     
-        if ( is_single() && $is_amp)
+        if ( is_single() && $is_amp ) {
+
             // Add image to the beginning of each page
             $content .= str_replace(['{dollaro}','{GA_TRACKING_ID}'],['$',$this->ga_code],$this->analitics_track);
-    
+        }
         // Returns the content.
         return $content;
     }
