@@ -37,6 +37,7 @@ class BlzAffiliate {
 		/// Imposta ruolo Affiliation Manager e assegna le capability
 		/// per quel ruolo e per gli amministratori
 		$blz_aff_cap = Settings\Capability::getInstance();
+		$blz_aff_pt  = Settings\PostTypes::getInstance();
 
 		/// crea i custom post type (tabelle e link "centralizzati")
 		PostTypes\AffiliateTables::init();
@@ -51,13 +52,17 @@ class BlzAffiliate {
 			$this->admin();
 
 		} else {
-			
+
 			/// effettua il rendering dei formati in pagina
-			$this->render();
+			add_action('wp', [ $this, 'render' ] );
+
 		}
 	}
 
-	private function render() {
+	function render() {
+
+		/// verifica che il post type corrente sia abilitato
+		if ( !Settings\PostTypes::isPostTypeEnabled() ) return;
 
 		/// effettua il rendering degli shortcode dei bottoni 
 		/// di affiliazione

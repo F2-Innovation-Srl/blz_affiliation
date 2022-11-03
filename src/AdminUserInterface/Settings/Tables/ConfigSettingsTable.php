@@ -18,9 +18,11 @@ class ConfigSettingsTable extends Table {
 
         $config      = empty( $rows ) ? '' : stripslashes( $rows['config'] );
         $author_caps = empty( $rows ) ? '' : $rows['author_capabilities'];
+        $post_types  = empty( $rows ) ? '' : $rows['post_types'];
    
         $this->rows[] =  [
             "Custom Author Capabilities" => new Fields\Text( $this->option_name."_author_capabilities", $author_caps, "text" ),
+            "Custom Post Types"          => new Fields\Text( $this->option_name."_post_types", $post_types, "text" ),
             "Configuration"              => new Fields\Text( $this->option_name."_config", stripslashes( $config ), "textarea" )            
         ];
     }
