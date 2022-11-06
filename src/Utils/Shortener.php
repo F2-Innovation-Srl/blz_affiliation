@@ -21,6 +21,7 @@ class Shortener {
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,
+            CURLOPT_HEADER => 1,
             CURLOPT_TIMEOUT => 3,
             CURLOPT_CONNECTTIMEOUT => 3,
             CURLOPT_FOLLOWLOCATION => true,
@@ -30,7 +31,18 @@ class Shortener {
             CURLOPT_CUSTOMREQUEST => "GET",
         ));
 
-        $short_data = json_decode(curl_exec($curl));
+        $response = curl_exec($curl);
+
+        // Then, after your curl_exec call:
+        $header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
+        $header = substr($response, 0, $header_size);
+        $body = substr($response, $header_size);
+        $findme = 'X-GG-Cache-Status: MISS';
+
+        if (strpos($header, $findme) !== false) 
+            error_log("###HEADER MISS###: ".$url, 0);
+
+        $short_data = json_decode($body);
         curl_close($curl);
         return (isset($short_data->shorturl)) ? ($short_data->shorturl) : $link;
 

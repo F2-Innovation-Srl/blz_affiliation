@@ -12,6 +12,7 @@ class HttpRequest {
         curl_setopt_array($curl, [
             CURLOPT_URL => $url,
             CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_HEADER => 1,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,
             CURLOPT_TIMEOUT => 1,
@@ -23,11 +24,20 @@ class HttpRequest {
             CURLOPT_CUSTOMREQUEST => "GET",
         ]);
 
-        $data = curl_exec($curl);
+        $response = curl_exec($curl);
+
+        // Then, after your curl_exec call:
+        $header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
+        $header = substr($response, 0, $header_size);
+        $body = substr($response, $header_size);
+        $findme = 'X-GG-Cache-Status: MISS';
+
+        if (strpos($header, $findme) !== false) 
+            error_log("###HEADER MISS###: ".$url, 0);
 
         curl_close($curl);
 
-        return $data;
+        return $body;
 
         //$ctx = stream_context_create(['https'=>[ 'timeout' => 3]]);
         //return @file_get_contents($url, false, $ctx);
