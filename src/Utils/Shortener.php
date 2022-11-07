@@ -40,7 +40,7 @@ class Shortener {
         $findme = 'X-GG-Cache-Status: MISS';
 
         if (strpos($header, $findme) !== false) 
-            error_log("###HEADER MISS###: ".$url, 0);
+            error_log("###HEADER_MISS###: ".$url, 0);
 
         $short_data = json_decode($body);
         curl_close($curl);
