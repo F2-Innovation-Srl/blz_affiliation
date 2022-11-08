@@ -15,9 +15,12 @@ class Shortener {
         $baseurl=preg_replace("/^(.*?)\.(.*)$/","$2",$_SERVER["HTTP_HOST"]);
        
         $curl = curl_init();
-//die("https://shortener.".$baseurl."/yourls-api.php?baseurl=".$baseurl."&username=".$username."&action=shorturl&format=json&password=".$password."&url=".urlencode($link));
+
+        $url = "https://shortener.".$baseurl."/yourls-api.php?baseurl=".$baseurl."&username=".$username."&action=shorturl&format=json&password=".$password."&url=".urlencode($link);
+    
+    
         curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://shortener.".$baseurl."/yourls-api.php?baseurl=".$baseurl."&username=".$username."&action=shorturl&format=json&password=".$password."&url=".urlencode($link),
+            CURLOPT_URL => $url,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,
@@ -39,13 +42,16 @@ class Shortener {
         $body = substr($response, $header_size);
         $findme = 'X-GG-Cache-Status: MISS';
 
-        if (strpos($header, $findme) !== false) 
+        if (strpos($header, $findme) !== false) {
+
             error_log("###HEADER_MISS###: ".$url, 0);
+        }            
 
         $short_data = json_decode($body);
+        
         curl_close($curl);
-        return (isset($short_data->shorturl)) ? ($short_data->shorturl) : $link;
 
+        return (isset($short_data->shorturl)) ? ($short_data->shorturl) : $link;
     }
 
 }
