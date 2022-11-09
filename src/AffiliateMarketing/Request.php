@@ -19,19 +19,24 @@ class Request {
     function __construct( $args, $content = '' ) 
     {
         $this->marketplace  = isset( $args['marketplace'] ) ? $args['marketplace'] : 'amazon';
-        $this->keyword      = isset( $args['keyword'] ) ? $args['keyword'] : '__default__';
-        $this->code         = isset( $args['code'] ) ? $args['code'] : (isset( $args['asins'] ) ? $args['asins'] : null); //CONTROLLO ASIN PER RETROCOMPATIBILITA'
-        $this->min_price    = isset( $args['min_price'] ) ? $args['min_price'] : '20';
-        $this->content      = !empty( $content ) ? $content : (isset( $args['text'] ) ? $args['text'] : '');
-        $this->tracking_id  = isset( $args['tracking_id'] ) ? $args['tracking_id'] : (isset( $args['store'] ) ? $args['store'] : null); //CONTROLLO store PER RETROCOMPATIBILITA'
-        $this->link         = isset( $args['url'] ) ? $args['url'] : (isset( $args['link'] ) ? $args['link'] : '');
-        $this->ga_event     = isset( $args['ga_event'] ) ? $args['ga_event'] : (isset( $args['data-affiliate'] ) ? $args['data-affiliate'] : null); //CONTROLLO data-affiliate PER RETROCOMPATIBILITA'
-        $this->subject      = isset( $args['subject'] ) ? $args['subject'] : '';
-        $this->program      = isset( $args['program'] ) ? $args['program'] : '';
-        $this->position     = isset( $args['position'] ) ? $args['position'] : '';
-        $this->type         = isset( $args['type'] ) ? $args['type'] : 'text';
-       
+        $this->keyword      = isset( $args['keyword'    ] ) ? $args['keyword'    ] : '__default__';        
+        $this->min_price    = isset( $args['min_price'  ] ) ? $args['min_price'  ] : '20';                
+        $this->subject      = isset( $args['subject'    ] ) ? $args['subject'    ] : '';
+        $this->program      = isset( $args['program'    ] ) ? $args['program'    ] : '';
+        $this->position     = isset( $args['position'   ] ) ? $args['position'   ] : '';
+        $this->type         = isset( $args['type'       ] ) ? $args['type'       ] : 'text';
+        $this->link         = isset( $args['url'        ] ) ? $args['url'        ] : ( isset( $args['link'] ) ? $args['link'] : '' );
 
+        $this->content      = !empty( $content ) ? $content : (isset( $args['text'] ) ? $args['text'] : '');        
+
+        //CONTROLLO ASIN PER RETROCOMPATIBILITA'
+        $this->code         = isset( $args['code'] ) ? $args['code'] : (isset( $args['asins'] ) ? $args['asins'] : null); 
+
+        //CONTROLLO data-affiliate PER RETROCOMPATIBILITA'
+        $this->ga_event     = isset( $args['ga_event'] ) ? $args['ga_event'] : (isset( $args['data-affiliate'] ) ? $args['data-affiliate'] : null); 
+
+        //CONTROLLO store PER RETROCOMPATIBILITA'
+        $this->tracking_id  = isset( $args['tracking_id'] ) ? $args['tracking_id'] : (isset( $args['store'] ) ? $args['store'] : null); 
     }
 
     /**

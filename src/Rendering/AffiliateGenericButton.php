@@ -17,43 +17,69 @@ class AffiliateGenericButton {
     private $linkData;
 
     function __construct() {
+
         // Add the shortcode to print the links
         add_shortcode( 'affiliate_generic', [ $this, 'printAffiliateLink'] );
     }
 
 
-    /**
-     * Stampa il bottone impostato da shortcode
-     *     
+
+    /**     
+     * Prende i parametri dello shortcode e ritorna il markup del bottone 
+     * 
+     * @param [type] $atts
+     * @param [type] $content
+     * @param [type] $tag
+     * @return void
      */
     public function printAffiliateLink( $atts, $content, $tag ) {
-
-        // recupera i pattern per ogni 
-        /// tipologia di link da sostituire
-        $patterns = array_map( function( $patternClass ) use ($atts) {
-
-            $patternClass = 'BLZ_AFFILIATION\\Rendering\\ParseLinkAndRender\\Patterns\\' . $patternClass;
-            return new $patternClass("<a href=\"".$atts["url"]."\">");
-        },  Helper::getMarketplacePatterns() );
-
-       
         
-        /// cerca il link tra i pattern
-        foreach( $patterns as $pattern ) {
-            foreach( $pattern->data as $linkData ) {
+        $url = isset( $atts["url"] ) ? $atts["url"] : '';
+        
+        if( empty( $url ) ) return '';
 
-                if ( $linkData->url == $atts['url'] ) $this->linkData = $linkData;
-            }                
-        }
+        /// tutti i nomi delle classi che contengono dei modelli per il match di link
+        /// per i diversi marketplace
+        $patternClassNames = Helper::getMarketplacePatterns();
+
+        /// array che contiene oggetti "Link" per il link rilevato (oppure insieme vuoto)
+        $links = array_map( function( $patterns, $patternClassName ) use ( $url ) {
+
+            $patternClass = 'BLZ_AFFILIATION\\Rendering\\ParseLinkAndRender\\Patterns\\' . $patternClassName;
+
+            /// gli oggetti pattern fanno in realtà pattern matching e prendono 
+            /// in ingresso un content che deve essere arricchito/modificato        
+            /// in questo caso creiamo un markup per il nostro link 
+            /// e lo passiamo come content minimale
+            $pattern = new $patternClass( '<a href="' . $url . '">' );
+
+            /// prendiamo solo il primo dei dati ( se data non è vuoto )
+            $link = empty( $pattern->data ) ? null : array_shift( $pattern->data );
+
+            return $link;
+
+        }, $patternClassNames ); 
+
+        /// filtra solo i link che non risultano vuoti ( ce ne dovrebbe essere uno solo o nessuno )
+        $links = array_filter( $links, function( $link ) { return !empty( $link ); } );
+
+        /// se non ce n'è alcuno ritorna stringa vuota
+        if( empty( $links ) ) return '';
+
+        /// altrimenti salva il primo link ( anche l'unico ) nella property linkData
+        $this->linkData = array_shift( $links );
             
+        /// Arricchisce le atts passate allo shortcode
+        /// impostando il marketplace corrente
         $atts[ "marketplace" ] = $this->linkData->marketplace;
 
-        /// prende la request
+        /// effettua la request
         $this->request = new Request( $atts );
 
-        /// inizializza i settingsData 
-        $settingsData = new SettingsData("parseLinkAndRender",$this->request);
+        /// inizializza i settingsData per arricchire con gli attributi il link
+        $settingsData = new SettingsData( "parseLinkAndRender", $this->request );
 
+        /// ritorna il markup definitivo
         return $this->FillTemplate( $settingsData->getGAEvent(), $settingsData->getTrackingID(), $settingsData->getTemplate() );
     }
 
