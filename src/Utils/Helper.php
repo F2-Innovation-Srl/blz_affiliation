@@ -2,12 +2,20 @@
 
 namespace BLZ_AFFILIATION\Utils;
 use BLZ_AFFILIATION\AdminUserInterface\Settings\Config;
+
+/**
+ * [todo] Meglio non avere una classe Helper, che è un potenziale buco nero.
+ */
+
 class Helper {
 
     /**
      * Prende in ingresso il link 
      * 
      * e deve pulire il link dai parametri o lo restituisce come è
+     * 
+     * [ todo ] O facciamo un trait, o creiamo una classe apposit aper la gestione dei parametri 
+     *          oppure diventa un elemento di una classe base ereditato da altre classi che lo usano
      *
      * @param string $link
      * @param string $marketplace
@@ -35,6 +43,14 @@ class Helper {
     }
 
 
+    /**
+     * [ todo ] Meglio definire una classe apposita per le fuzionalità 
+     *          in questo caso potrebbe essere LinkTagOverride
+     *
+     * @param [type] $link
+     * @param [type] $marketplace
+     * @return void
+     */
     static function replaceTag($link, $marketplace){
 
         if (strpos($marketplace, "amazon") !== false) {
@@ -70,6 +86,16 @@ class Helper {
     /**
      * Replace special characters and spaces in a given string
      * and return the result lowering capital letters
+     * 
+     * [ todo ] Esiste una funzione di wordpress che si chiama 
+     *          sanitize_title() dovremmo utilizzare quella
+     *          altrimenti possiamo creare una classe TextHelper, StringHelper o solo Text
+     *          che espone metodi che modificano testi o stringhe
+     *          esempio
+     *          Text::sanitize( $text ) 
+     *          oppure
+     *          Text::slugify( $text ) 
+     * 
      */
     static function slugify($text) {
 
@@ -97,6 +123,7 @@ class Helper {
         return $text;
     }
 
+
     public static function pre($obj,$die)
     {
         echo "<pre>";
@@ -108,6 +135,8 @@ class Helper {
 
     /**
      * Cerca nel config tramite chiave
+     * 
+     * [ todo ] Qui si tratta di creare un gestore delle options, da riprogettare
      */
     public static function findbySlug($obj,$val){
         return $obj[array_search($val, array_column($obj, 'slug'))];
@@ -115,6 +144,8 @@ class Helper {
 
     /**
      * Torna l'api name dal settings
+     * 
+     * [ todo ] Qui si tratta di creare un gestore delle options, da riprogettare
      */
     public static function getApiSlug($marketplace){
         $config = Config::loadSettings();
@@ -123,6 +154,8 @@ class Helper {
 
     /**
      * Ritorna true se lo stato del tracking è disabilitato, false altrimenti
+     * 
+     * [ todo ] Ma è duplicata?
      * 
      * @return bool
      */
@@ -139,6 +172,9 @@ class Helper {
 
     /**
      * Ritorna true se il Tracker è disabilitato, false altrimenti
+     * 
+     * [ todo ] Creare un punto di accesso più esplicito alle opzioni
+     *          in questo caso sarebbe meglio avere un TrackerOption
      *
      * @return bool
      */
@@ -162,9 +198,13 @@ class Helper {
         $config->is_affiliation_page = "true"; 
     }
 
+
     /**
      * Torna la lista dei pattern da verificare
-     *
+     * 
+     * [ todo ] se serve bisogna metterla in un file di configurazione e richiamarla come proprietà statica
+     *          dove la utilizziamo?         
+     * 
      * @return array
      */
     public static  function getMarketplacePatterns() {
