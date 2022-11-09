@@ -43,7 +43,7 @@ class AffiliateGenericButton {
         $patternClassNames = Helper::getMarketplacePatterns();
 
         /// array che contiene oggetti "Link" per il link rilevato (oppure insieme vuoto)
-        $links = array_map( function( $patterns, $patternClassName ) use ( $url ) {
+        $links = array_map( function( $patternClassName ) use ( $url ) {
 
             $patternClass = 'BLZ_AFFILIATION\\Rendering\\ParseLinkAndRender\\Patterns\\' . $patternClassName;
 
