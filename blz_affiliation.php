@@ -17,7 +17,7 @@
  */
 define( 'BLZ_AFFILIATION_PATH' , plugin_dir_path( __FILE__ ) );
 define( 'BLZ_AFFILIATION_URI'  , plugin_dir_url( __FILE__ ));
-define( 'BLZ_AFFILIATION_VERSION'  , "1.8.82");
+define( 'BLZ_AFFILIATION_VERSION'  , "1.8.847");
 
 
 require_once BLZ_AFFILIATION_PATH . '/vendor/autoload.php';
