@@ -3,9 +3,9 @@
  * Plugin Name: Blazemdia Affiliation
  * Plugin URI: https://www.blazemedia.it/
  * Description: This is a Blazemedia plugin for links affiliation management.
- * Version: 1.8.82
+ * Version: 1.8.847
  * Author: Blazemedia
- * Author URI: https://halfelf.org/
+ * Author URI: https://blazemedia.it/
  * License: http://www.apache.org/licenses/LICENSE-2.0
  * Text Domain: blz-affiliation
  * Network: false
