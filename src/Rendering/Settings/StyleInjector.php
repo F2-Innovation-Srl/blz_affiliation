@@ -2,56 +2,60 @@
 
 namespace BLZ_AFFILIATION\Rendering\Settings;
 
+use BLZ_AFFILIATION\AdminUserInterface\Settings\PostTypes;
+
 /**
  * Aggiunge CSS che usa parametri presi dai settings
  * 
  */
 class StyleInjector {
 
-    private $custom_style;
+    private $style;
+    private $amp_style;
 
-	function __construct() {
+    function __construct() {
         
+        /// prende le regole scritte nelle options
         $settings = get_option( "blz-affiliation-settings-css" );
 
-        $this->custom_style = (isset($settings['css_custom_style'])) ? "<style>".$settings['css_custom_style']."</style>" : "";
-        $this->custom_amp_style = (isset($settings['css_amp_custom_style'])) ? "<style>".$settings['css_amp_custom_style']."</style>" : "";
+        $this->style     = isset( $settings[ 'css_custom_style'     ] ) ? $settings[ 'css_custom_style'     ] : '';
+        $this->amp_style = isset( $settings[ 'css_amp_custom_style' ] ) ? $settings[ 'css_amp_custom_style' ] : '';
         
-        add_action( 'init', [ $this, 'init' ] );
+        /// usa wp_enqueue_style ( quindi l'hook corretto è wp_enqueue_scripts )
+        add_action( 'wp_enqueue_scripts', [ $this, 'injectExternalStyles' ] );
+        
+        /// inserisce gli stili in wp_head
+        add_action( 'wp_head', [ $this, 'injectCustomStyles' ] );
         
 	}
 
-	function init() { 
+    function injectExternalStyles() {
+
+        # enqueue CSS
+        wp_enqueue_style( 'blz-affiliation-grid-css',  BLZ_AFFILIATION_URI ."src/assets/css/flex-grid-lite.css", [], BLZ_AFFILIATION_VERSION, 'all' );
+        wp_enqueue_style( 'blz-affiliation-table-css', BLZ_AFFILIATION_URI ."src/assets/css/table-rating.css",   [], BLZ_AFFILIATION_VERSION, 'all' );
+    }
+
+
+	function injectCustomStyles() { 
         
-        if ( !is_admin() ) {
-            
-            # enqueue CSS
-            wp_enqueue_style( 'blz-affiliation-grid-css', BLZ_AFFILIATION_URI ."src/assets/css/flex-grid-lite.css", [],  BLZ_AFFILIATION_VERSION, 'all' );
-            wp_enqueue_style( 'blz-affiliation-table-css', BLZ_AFFILIATION_URI ."src/assets/css/table-rating.css", [],  BLZ_AFFILIATION_VERSION, 'all' );
-           
-            if ( function_exists( 'is_amp_endpoint' ) && @is_amp_endpoint() ) {
+        /// set css rules for amp pages
+        if ( function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) {
 
-                // Add a the css for the rendered links
-                add_filter( 'amp_css_custom_filter', [ $this, 'injectAmpCSS'] );
+            add_filter( 'amp_css_custom_filter', [ $this, 'injectAmpCSS'] );
 
-            } else {
-
-                add_action( 'wp_head', [ $this, 'injectCSS' ] );
-            }                    
+            return;
         }
+        
+        echo '<style>' . $this->style . '</style>';
     }
 
-    
-    public function injectCss() { 
 
-        echo $this->custom_style;
-    }
+    public function injectAmpCSS( $css ) {
 
-    public function injectAmpCSS( $css ){
+        $ampStyle = strip_tags( $this->amp_style );
 
-        $customStyle = strip_tags( $this->custom_amp_style );
-
-        return $css .$customStyle;
+        return $css . $ampStyle;
     }
 
 }

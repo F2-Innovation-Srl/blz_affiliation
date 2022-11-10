@@ -3,7 +3,7 @@
  * Plugin Name: Blazemdia Affiliation
  * Plugin URI: https://www.blazemedia.it/
  * Description: This is a Blazemedia plugin for links affiliation management.
- * Version: 1.8.847
+ * Version: 1.8.8
  * Author: Blazemedia
  * Author URI: https://blazemedia.it/
  * License: http://www.apache.org/licenses/LICENSE-2.0
@@ -16,8 +16,8 @@
  *
  */
 define( 'BLZ_AFFILIATION_PATH' , plugin_dir_path( __FILE__ ) );
-define( 'BLZ_AFFILIATION_URI'  , plugin_dir_url( __FILE__ ));
-define( 'BLZ_AFFILIATION_VERSION'  , "1.8.847");
+define( 'BLZ_AFFILIATION_URI'  , plugin_dir_url( __FILE__ ) );
+define( 'BLZ_AFFILIATION_VERSION'  , "1.8.8");
 
 
 require_once BLZ_AFFILIATION_PATH . '/vendor/autoload.php';
@@ -54,15 +54,21 @@ class BlzAffiliate {
 		} else {
 
 			/// effettua il rendering dei formati in pagina
-			add_action('wp', [ $this, 'render' ] );
-
+			add_action( 'wp', [ $this, 'render' ] );
 		}
 	}
 
 	function render() {
 
 		/// verifica che il post type corrente sia abilitato
+		/// per funzionare deve essre già pronta la query
 		if ( !Settings\PostTypes::isPostTypeEnabled() ) return;
+
+		/// aggiunge css con parametri presi dai settings
+		new Rendering\Settings\StyleInjector();
+
+		/// aggiunge js con parametri presi dai settings
+		new Rendering\Settings\ScriptInjector();
 
 		/// effettua il rendering degli shortcode dei bottoni 
 		/// di affiliazione
@@ -82,12 +88,6 @@ class BlzAffiliate {
 
 		/// aggiunge le dipendenze js per il tracciamento
 		new Rendering\Settings\GATracking();
-
-		/// aggiunge css con parametri presi dai settings
-		new Rendering\Settings\StyleInjector();
-
-		/// aggiunge js con parametri presi dai settings
-		new Rendering\Settings\ScriptInjector();
 
 		/// aggiunge il Disclaimer
 		new Rendering\Disclaimer();
