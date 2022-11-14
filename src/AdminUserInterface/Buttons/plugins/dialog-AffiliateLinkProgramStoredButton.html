@@ -110,7 +110,7 @@
                     ((item.tax.type && item.tax.type[0].slug == attrs.type) || attrs.type == "") &&
                     ((item.tax.platform && item.tax.platform[0].slug == attrs.platform) || attrs.platform == "") &&
                     ((item.tax.subjects && item.tax.subjects[0].slug == attrs.subjects) || attrs.subjects == "") &&
-                    ((item.tax.subjects && item.tax.subjects[1].slug == attrs.program)  || attrs.program == "") 
+                    ((item.tax.subjects.lenght == 2 && item.tax.subjects[1].slug == attrs.program)  || attrs.program == "") 
                 )  $valid = true;
             
                 if ($valid) {
