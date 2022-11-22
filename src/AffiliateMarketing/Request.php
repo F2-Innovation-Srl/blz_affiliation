@@ -16,7 +16,7 @@ class Request {
     private $position;
     private $type;
     private $content;
-    private tracking_id;
+    private $tracking_id;
 
     function __construct( $args, $content = '' ) 
     {
