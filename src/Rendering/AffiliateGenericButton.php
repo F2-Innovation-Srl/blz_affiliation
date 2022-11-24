@@ -122,7 +122,7 @@ class AffiliateGenericButton {
 
         $rand_suffix = implode( '', array_map( function( ) { return chr( rand(65,85) ); }, range(0,10) ));
 
-        $class_name = 'blz_btn_' . $rand_suffix;
+        $class_name = ''; //'blz_btn_' . $rand_suffix;
 
         return str_replace(
             [ '{{ url }}', '{{ ga_event }}', '{{ content }}', '{{ obfuscated_class }}' ],
