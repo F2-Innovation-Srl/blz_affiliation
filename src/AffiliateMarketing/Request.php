@@ -15,6 +15,8 @@ class Request {
     private $program;
     private $position;
     private $type;
+    private $content;
+    private $tracking_id;
 
     function __construct( $args, $content = '' ) 
     {
@@ -73,4 +75,21 @@ class Request {
         return isset($MarketPlaceMap[$this->marketplace]) ? $MarketPlaceMap[$this->marketplace] : $this->marketplace;
     }
 
+    public function toString() {
+
+        $string = $this->marketplace .
+                  $this->keyword.  
+                  $this->min_price.
+                  $this->content.
+                  $this->link.
+                  $this->subject.
+                  $this->program.
+                  $this->position.
+                  $this->type.
+                  ( $this->code == null ? '' : $this->code ).
+                  ( $this->tracking_id == null ? '' : $this->tracking_id ).
+                  ( $this->ga_event == null ? '' : $this->ga_event );
+
+        return sanitize_title( $string );
+    }
 }
