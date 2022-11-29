@@ -63,21 +63,18 @@ class GATracking {
         if( !isset( $settings['ga_code'] ) || is_admin() ) return ; 
         
         $this->ga_code = $settings['ga_code'];
-
-        add_action( 'init', [ $this, 'onInit' ] );
-    }
-    
-	function onInit() { 
-
+        
         if ( !is_admin() ) {
-
             //aggiunge variabile GA in header
             add_action( 'wp_head',  [ $this, 'enqueue_js' ] , 10  );
-            
             //aggiunge analitics su pagine AMP
-            add_filter( 'the_content',  [ $this, 'add_amp_track'], 20 );       
+            add_filter( 'the_content',  [ $this, 'add_amp_track'], 20 );  
         }
+      
+      
     }
+    
+
 
     function enqueue_js() { 
 
