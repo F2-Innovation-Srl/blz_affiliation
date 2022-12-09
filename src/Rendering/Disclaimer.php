@@ -57,9 +57,10 @@ class Disclaimer {
         $settingsData = new SettingsData( "blz_disclaimer", $request );
         if ( !empty( $settingsData->getGAEvent() ) )  $text = $settingsData->getGAEvent();
 
+
         $disclaimer = empty( $text ) ? '' : str_replace(
             [ '{{ text }}', '{{ rand }}' ],
-            [ $text, $this->randomID() ],
+            [ str_replace("\'","'",stripslashes($text)), $this->randomID() ],
             $this->text
         );
 
