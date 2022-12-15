@@ -12,7 +12,7 @@
  *
  * @package blz-affiliation
  *
- * Copyright 2022 Blazemedia (email: techteam@blazemedia.it)
+ * Copyright 2023 Blazemedia (email: techteam@blazemedia.it)
  *
  */
 define( 'BLZ_AFFILIATION_PATH' , plugin_dir_path( __FILE__ ) );
@@ -114,6 +114,9 @@ class BlzAffiliate {
 			new Buttons\AffiliateTableButton();
 
 			new Settings\AdminScriptInjector;
+
+			/// 2023 - Nuovi bottoni per inserire gli shortcode
+			// new Buttons\AffiliateButton();
 
 		}
 	}
