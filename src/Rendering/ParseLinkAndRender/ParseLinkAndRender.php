@@ -28,7 +28,7 @@ class ParseLinkAndRender {
     public function parseAndRender( string $content ) {
 
         /// se non è una single non fa nulla
-        if ( !is_singular() ) return $content;
+        //if ( !is_singular() ) return $content;
 
         $this->content = $content;
         
