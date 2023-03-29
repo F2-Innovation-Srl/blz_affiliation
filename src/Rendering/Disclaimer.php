@@ -4,7 +4,6 @@ use BLZ_AFFILIATION\AffiliateMarketing\Request;
 use BLZ_AFFILIATION\Rendering\Settings\SettingsData;
 use BLZ_AFFILIATION\AdminUserInterface\Settings\Config;
 
-
 /**
  * Scrive il disclaimer in pagina prendendolo dai settings
  */
@@ -31,16 +30,47 @@ class Disclaimer {
 
 
 	public function __construct() {
-
         // Add the custom columns to the posts post type:
-        add_filter( 'the_content', [ $this, 'add'], 99 );        
+        //add_filter( 'the_content', [ $this, 'add'], 99 );   
+        add_shortcode( 'disclaimer', [ $this, 'printDisclaimer'] ); 
+        //add_filter( 'wp_insert_post_data', [ $this, 'addDisclamerFilter' ],10,3);  
+    }
+    /**
+     * Stampa il disclamer impostato da shortcode
+     *     
+     */
+    public function printDisclaimer( $atts, $content, $tag ) {
+        $disclaimer = $this->add("");
+        return $disclaimer;
+
     }
 
+    /** 
+     * Aggiunge lo shortcode in pagina
+     */
+    function addDisclamerFilter( $data, $postarr, $unsanitized_postarr){
+        $disclaimer = $this->add("");
+        
+        if ($disclaimer){
 
-	function add( $content ) { 
+            $content = $data['post_content'];
+            // FIX MOMENTANEO PER PROBLEMA H2 LEADPACK
+            $pos = strrpos($content, "[disclaimer]");
+            if ($pos === false) { 
+                $content .= "[disclaimer]";
+            }
 
+            $data['post_content'] = $content;
+        }
+        print_r($data['post_content']);exit;
+        return $data;
+    }
+    
+
+	function add( $content) { 
+        
         $config = Config::loadSettings();
-
+        
         $text = '';
 
         /// 1) se esiste un affiliation link in pagina prende il disclaimer generale
@@ -60,12 +90,13 @@ class Disclaimer {
 
         $disclaimer = empty( $text ) ? '' : str_replace(
             [ '{{ text }}', '{{ rand }}' ],
-            [ str_replace( "\'", "'", stripslashes($text) ), $this->randomID() ],
+            [ str_replace("\'","'",stripslashes($text)), $this->randomID() ],
             $this->text
         );
 
-
+        
         return $content . $disclaimer;
+        
     }
 
 
