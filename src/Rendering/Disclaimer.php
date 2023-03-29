@@ -52,20 +52,27 @@ class Disclaimer {
         $disclaimer = $this->add("");
         
         if ($disclaimer){
+            
+            $pos = strrpos($data['post_content'], "[disclaimer]");
+            $data['post_content'] .= ($pos === false) ? "[disclaimer]" : "";
 
-            $content = $data['post_content'];
-            // FIX MOMENTANEO PER PROBLEMA H2 LEADPACK
-            $pos = strrpos($content, "[disclaimer]");
-            if ($pos === false) { 
-                $content .= "[disclaimer]";
-            }
-
-            $data['post_content'] = $content;
         }
-        print_r($data['post_content']);exit;
+        
         return $data;
     }
-    
+
+    /**
+     * Fix momentaneo per risolvere il problema di compatibilità con LeadPack
+     *
+     * @param string $content
+     * @return string
+     */
+    function filtroH2LeadPack( string $content ) : string {
+
+        $pos = strrpos($content, "[disclaimer]");
+
+        return $content . ( $pos === false ? "[disclaimer]" : '' );
+   }
 
 	function add( $content) { 
         
