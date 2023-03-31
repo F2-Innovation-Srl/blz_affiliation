@@ -31,9 +31,8 @@ class Disclaimer {
 
 	public function __construct() {
         // Add the custom columns to the posts post type:
-        //add_filter( 'the_content', [ $this, 'add'], 99 );   
+        add_filter( 'the_content', [ $this, 'add'], 99 );   
         add_shortcode( 'disclaimer', [ $this, 'printDisclaimer'] ); 
-        //add_filter( 'wp_insert_post_data', [ $this, 'addDisclamerFilter' ],10,3);  
     }
     /**
      * Stampa il disclamer impostato da shortcode
@@ -57,22 +56,10 @@ class Disclaimer {
             $data['post_content'] .= ($pos === false) ? "[disclaimer]" : "";
 
         }
-        
+
         return $data;
     }
 
-    /**
-     * Fix momentaneo per risolvere il problema di compatibilità con LeadPack
-     *
-     * @param string $content
-     * @return string
-     */
-    function filtroH2LeadPack( string $content ) : string {
-
-        $pos = strrpos($content, "[disclaimer]");
-
-        return $content . ( $pos === false ? "[disclaimer]" : '' );
-   }
 
 	function add( $content) { 
         
